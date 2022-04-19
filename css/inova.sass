@@ -1,0 +1,91 @@
+$lightsmokeColor: #f6f6f6
+$primaryColor: #f55a4e
+$textColor: #444444
+
+body
+    background: $lightsmokeColor
+
+a
+    color: $textColor
+    &:hover
+        color: $primaryColor
+        text-decoration: none
+
+#create_card_form
+    display: none
+    padding: 20px
+
+.inova_card
+    margin: 15px 0
+
+    h3
+        font-family: Arial, Helvetica, sans-serif
+        background-color: $lightsmokeColor
+
+    .mui-panel
+        margin: 0
+
+    .function_icon 
+        ul 
+            margin: 5px 0 0
+            padding: 0
+
+            li
+                list-style: none
+                display: inline list-item
+    
+                a 
+                    display: inline flow-root list-item
+                    border: 1px solid $lightsmokeColor
+                    box-shadow: 1px 1px 3px lightgray
+                    border-radius: 5px
+                    padding: 8px 10px    
+                    width: 18px
+                    text-align: center
+                    &:hover
+                        background-color: $primaryColor
+                        color: white
+
+
+#login
+    max-width: 100%
+    background-color: $lightsmokeColor
+    align-items: center
+    justify-content: center
+    display: flex
+
+    .large_left
+        width: 66%
+        height: 100vh
+        background-image: url('https://infusionsoft.com.vn/wp-content/uploads/2019/04/business-background-check.jpg')
+        background-position: left bottom
+        background-size: cover
+        background-repeat: no-repeat
+
+    .small_right
+        width: 34%
+        height: 100vh
+        display: grid
+        margin: 0
+        padding: 0 15px
+
+#header_bar
+    padding: 0 15px
+    text-align: center
+
+    .logo
+        display: inline-block
+        font-size: 32px
+        padding: 0
+
+    .main_menu
+        float: right
+
+        .mui-btn
+            padding: 0 10px
+            font-size: 24px
+
+        .mui-dropdown__menu
+            right: 0
+                
+    

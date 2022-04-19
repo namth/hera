@@ -1,0 +1,113 @@
+body {
+  background: #f6f6f6;
+}
+
+a {
+  color: #444444;
+}
+
+a:hover {
+  color: #f55a4e;
+  text-decoration: none;
+}
+
+#create_card_form {
+  display: none;
+  padding: 20px;
+}
+
+.inova_card {
+  margin: 15px 0;
+}
+
+.inova_card h3 {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #f6f6f6;
+}
+
+.inova_card .mui-panel {
+  margin: 0;
+}
+
+.inova_card .function_icon ul {
+  margin: 5px 0 0;
+  padding: 0;
+}
+
+.inova_card .function_icon ul li {
+  list-style: none;
+  display: inline list-item;
+}
+
+.inova_card .function_icon ul li a {
+  display: inline flow-root list-item;
+  border: 1px solid #f6f6f6;
+  -webkit-box-shadow: 1px 1px 3px lightgray;
+          box-shadow: 1px 1px 3px lightgray;
+  border-radius: 5px;
+  padding: 8px 10px;
+  width: 18px;
+  text-align: center;
+}
+
+.inova_card .function_icon ul li a:hover {
+  background-color: #f55a4e;
+  color: white;
+}
+
+#login {
+  max-width: 100%;
+  background-color: #f6f6f6;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+#login .large_left {
+  width: 66%;
+  height: 100vh;
+  background-image: url("https://infusionsoft.com.vn/wp-content/uploads/2019/04/business-background-check.jpg");
+  background-position: left bottom;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+#login .small_right {
+  width: 34%;
+  height: 100vh;
+  display: -ms-grid;
+  display: grid;
+  margin: 0;
+  padding: 0 15px;
+}
+
+#header_bar {
+  padding: 0 15px;
+  text-align: center;
+}
+
+#header_bar .logo {
+  display: inline-block;
+  font-size: 32px;
+  padding: 0;
+}
+
+#header_bar .main_menu {
+  float: right;
+}
+
+#header_bar .main_menu .mui-btn {
+  padding: 0 10px;
+  font-size: 24px;
+}
+
+#header_bar .main_menu .mui-dropdown__menu {
+  right: 0;
+}
+/*# sourceMappingURL=inova.css.map */
