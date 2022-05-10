@@ -1,5 +1,5 @@
 body {
-  background: #f6f6f6;
+  background: #eeeeee;
 }
 
 a {
@@ -9,6 +9,56 @@ a {
 a:hover {
   color: #f55a4e;
   text-decoration: none;
+}
+
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+img {
+  max-width: 100%;
+  max-height: 100%;
+  display: block;
+}
+
+.mb0 {
+  margin-bottom: 0 !important;
+}
+
+.mb10 {
+  margin-bottom: 10px !important;
+}
+
+.mb20 {
+  margin-bottom: 20px !important;
+}
+
+.hera-btn {
+  border-radius: 8px;
+  -webkit-box-shadow: 0 3px 2px lightgray;
+          box-shadow: 0 3px 2px lightgray;
+  background: #f55a4e;
+  color: white;
+}
+
+.hera-btn:hover {
+  color: white;
+  background: #f55a4e;
+  opacity: 0.8;
+}
+
+#mui-overlay {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 15px;
 }
 
 #create_card_form {
@@ -22,42 +72,16 @@ a:hover {
 
 .inova_card h3 {
   font-family: Arial, Helvetica, sans-serif;
-  background-color: #f6f6f6;
+  background-color: #eeeeee;
 }
 
 .inova_card .mui-panel {
   margin: 0;
 }
 
-.inova_card .function_icon ul {
-  margin: 5px 0 0;
-  padding: 0;
-}
-
-.inova_card .function_icon ul li {
-  list-style: none;
-  display: inline list-item;
-}
-
-.inova_card .function_icon ul li a {
-  display: inline flow-root list-item;
-  border: 1px solid #f6f6f6;
-  -webkit-box-shadow: 1px 1px 3px lightgray;
-          box-shadow: 1px 1px 3px lightgray;
-  border-radius: 5px;
-  padding: 8px 10px;
-  width: 18px;
-  text-align: center;
-}
-
-.inova_card .function_icon ul li a:hover {
-  background-color: #f55a4e;
-  color: white;
-}
-
 #login {
   max-width: 100%;
-  background-color: #f6f6f6;
+  background-color: #eeeeee;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -95,7 +119,8 @@ a:hover {
 #header_bar .logo {
   display: inline-block;
   font-size: 32px;
-  padding: 0;
+  padding: 5px;
+  height: 50px;
 }
 
 #header_bar .main_menu {
@@ -109,5 +134,293 @@ a:hover {
 
 #header_bar .main_menu .mui-dropdown__menu {
   right: 0;
+}
+
+.main_menu {
+  list-style: none;
+  margin: 0;
+  line-height: 34px;
+  padding: 0;
+}
+
+.main_menu li a {
+  padding: 3px 15px;
+  width: 100%;
+  display: block;
+}
+
+.main_menu li.current-menu-item {
+  background: #ffe8de;
+}
+
+.main_menu li:hover {
+  background: #fff7de;
+}
+
+#cart_bar {
+  display: flow-root;
+  position: fixed;
+  bottom: 0px;
+  width: 100%;
+  padding: 8px 15px;
+  text-align: center;
+  margin: 0;
+}
+
+#cart_bar span {
+  padding: 0 5px;
+}
+
+.breadcrumb {
+  font-size: large;
+  padding: 5px 0 15px;
+}
+
+.breadcrumb .fa {
+  font-size: small;
+  color: #f55a4e;
+  padding: 10px;
+}
+
+.title_general {
+  margin: 15px 0 20px;
+}
+
+#loi_moi .mui-textfield {
+  padding: 0;
+  margin-bottom: 8px;
+}
+
+#loi_moi .mui-textfield textarea {
+  min-height: 64px;
+  background: #eeeeee;
+  padding: 15px;
+  border-radius: 5px;
+  resize: vertical;
+}
+
+#loi_moi button {
+  margin-bottom: 20px;
+}
+
+.mui-table thead tr {
+  background: #eaeaea;
+  border-top: 1px solid lightgray;
+  border-bottom: 1px solid lightgray;
+}
+
+.mui-table thead tr th {
+  border: none;
+}
+
+.mui-table tbody tr td {
+  border-bottom: 1px solid lightgray;
+}
+
+.mui-table tbody tr td a {
+  color: #f55a4e;
+}
+
+.mui-table tbody tr td .fa {
+  font-size: large;
+  color: #f55a4e;
+  padding: 3px 5px;
+}
+
+#search_box {
+  position: relative;
+  padding: 20px;
+  margin-bottom: 50px;
+  display: block;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  text-align: center;
+}
+
+#search_box .back-btn {
+  position: absolute;
+  text-align: left;
+  left: 15px;
+  top: 0;
+}
+
+#search_box form .search_bar {
+  position: relative;
+  width: 50%;
+  background: white;
+  padding: 5px;
+  border: 1px solid #d7c8c8;
+}
+
+#search_box form .search_bar input {
+  border: none;
+  padding: 10px;
+  font-size: 18px;
+}
+
+#search_box form .search_bar button {
+  position: absolute;
+  height: 38px;
+  border-radius: 5px;
+  top: 2px;
+  right: 2px;
+  background: #ffefe0;
+  border: 1px solid #d7c8c8;
+  padding: 0 20px;
+  font-size: large;
+  color: #b94f47;
+  cursor: pointer;
+}
+
+.heracard_list {
+  margin-top: 20px;
+}
+
+.heracard_list .addnew_card {
+  text-align: center;
+  height: 153px;
+  width: 100%;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  border: 2px dashed #4a4a4a;
+  border-radius: 5px;
+  color: #4a4a4a;
+  background: #eee;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.heracard_list .addnew_card .fa {
+  font-size: 48px;
+}
+
+.heracard_list .addnew_card:hover {
+  color: #1c1c1c;
+  border-color: #4a4a4a;
+  background: #f4f4f4;
+}
+
+.heracard_list .heracard {
+  position: relative;
+  -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16);
+          box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16);
+  padding: 0;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-bottom: 30px;
+}
+
+.heracard_list .heracard .images {
+  width: 100%;
+  padding-bottom: 75%;
+}
+
+.heracard_list .heracard .info_card {
+  padding: 5px 10px;
+  line-height: 33px;
+}
+
+.heracard_list .heracard .user_action {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  z-index: 9;
+}
+
+.heracard_list .heracard .user_action a {
+  display: block;
+  position: relative;
+  padding: 5px;
+  font-size: large;
+  color: white;
+  text-shadow: 1px 2px 1px #444444;
+}
+
+.heracard_list .heracard .user_action a span {
+  position: absolute;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  right: 33px;
+  top: 7px;
+  font-size: small;
+  padding: 2px 8px;
+  background: #0000008a;
+  border-radius: 4px;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.heracard_list .heracard .user_action a:hover {
+  color: #ffefe0;
+}
+
+.heracard_list .heracard .user_action a:hover span {
+  opacity: 1;
+  visibility: visible;
+}
+
+.heracard_list .heracard .caption {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  background: black;
+  background: -webkit-gradient(linear, left bottom, left top, from(rgba(0, 0, 0, 0.63)), color-stop(54%, rgba(0, 0, 0, 0)));
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.63) 0%, rgba(0, 0, 0, 0) 54%);
+  opacity: 0;
+  visibility: hidden;
+}
+
+.heracard_list .heracard .caption .caption_title {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: list-item;
+  padding: 15px 10px;
+  color: white;
+  text-shadow: 1px 2px 1px #444444;
+}
+
+.heracard_list .heracard .caption .caption_title span {
+  float: left;
+}
+
+.heracard_list .heracard .caption .caption_title .like_share {
+  float: right;
+}
+
+.heracard_list .heracard .caption .caption_title .like_share .fa {
+  padding-left: 5px;
+}
+
+.heracard_list .heracard .caption .bg-overlay {
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 5;
+}
+
+.heracard_list .heracard:hover .caption {
+  visibility: visible;
+  opacity: 1;
+}
+
+#list_my_card {
+  margin-bottom: 80px;
 }
 /*# sourceMappingURL=inova.css.map */

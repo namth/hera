@@ -1,6 +1,8 @@
-$lightsmokeColor: #f6f6f6
+$lightsmokeColor: #eeeeee
 $primaryColor: #f55a4e
 $textColor: #444444
+$lightBGBorder: #d7c8c8
+$lightBG: #ffefe0
 
 body
     background: $lightsmokeColor
@@ -10,6 +12,40 @@ a
     &:hover
         color: $primaryColor
         text-decoration: none
+
+*
+    box-sizing: border-box
+
+img
+    max-width: 100%
+    max-height: 100%
+    display: block
+
+.mb0
+    margin-bottom: 0 !important
+
+.mb10
+    margin-bottom: 10px !important
+
+.mb20
+    margin-bottom: 20px !important
+
+.hera-btn
+    border-radius: 8px
+    box-shadow: 0 3px 2px lightgray
+    background: $primaryColor
+    color: white
+
+    &:hover
+        color: white
+        background: $primaryColor
+        opacity: 0.8
+
+#mui-overlay
+    display: flex
+    justify-content: center
+    align-items: center
+    padding: 15px
 
 #create_card_form
     display: none
@@ -24,28 +60,6 @@ a
 
     .mui-panel
         margin: 0
-
-    .function_icon 
-        ul 
-            margin: 5px 0 0
-            padding: 0
-
-            li
-                list-style: none
-                display: inline list-item
-    
-                a 
-                    display: inline flow-root list-item
-                    border: 1px solid $lightsmokeColor
-                    box-shadow: 1px 1px 3px lightgray
-                    border-radius: 5px
-                    padding: 8px 10px    
-                    width: 18px
-                    text-align: center
-                    &:hover
-                        background-color: $primaryColor
-                        color: white
-
 
 #login
     max-width: 100%
@@ -76,7 +90,8 @@ a
     .logo
         display: inline-block
         font-size: 32px
-        padding: 0
+        padding: 5px
+        height: 50px
 
     .main_menu
         float: right
@@ -87,5 +102,238 @@ a
 
         .mui-dropdown__menu
             right: 0
-                
-    
+
+.main_menu
+    list-style: none
+    margin: 0
+    line-height: 34px
+    padding: 0
+
+    li
+        a
+            padding: 3px 15px
+            width: 100%
+            display: block
+
+        &.current-menu-item
+            background: #ffe8de
+
+        &:hover
+            background: #fff7de
+
+#cart_bar
+    display: flow-root
+    position: fixed
+    bottom: 0px
+    width: 100%
+    padding: 8px 15px
+    text-align: center
+    margin: 0
+
+    span
+        padding: 0 5px
+
+.breadcrumb
+    font-size: large
+    padding: 5px 0 15px
+
+    .fa
+        font-size: small
+        color: $primaryColor
+        padding: 10px
+
+.title_general
+    margin: 15px 0 20px
+
+#loi_moi
+    .mui-textfield
+        padding: 0
+        margin-bottom: 8px
+
+        textarea
+            min-height: 64px
+            background: $lightsmokeColor
+            padding: 15px
+            border-radius: 5px
+            resize: vertical
+
+    button
+        margin-bottom: 20px
+
+.mui-table
+    thead tr
+        background: #eaeaea
+        border-top: 1px solid lightgray
+        border-bottom: 1px solid lightgray
+
+        th
+            border: none
+
+    tbody tr
+        td
+            border-bottom: 1px solid lightgray
+
+            a
+                color: $primaryColor
+
+            .fa
+                font-size: large
+                color: $primaryColor
+                padding: 3px 5px
+
+#search_box
+    position: relative
+    padding: 20px
+    margin-bottom: 50px
+    display: block
+    justify-content: center
+    align-items: center
+    text-align: center
+
+    .back-btn
+        position: absolute
+        text-align: left
+        left: 15px
+        top: 0
+
+    form
+        .search_bar
+            position: relative
+            width: 50%
+            background: white
+            padding: 5px
+            border: 1px solid $lightBGBorder
+
+            input
+                border: none
+                padding: 10px
+                font-size: 18px
+
+            button
+                position: absolute
+                height: 38px
+                border-radius: 5px
+                top: 2px
+                right: 2px
+                background: $lightBG
+                border: 1px solid $lightBGBorder
+                padding: 0 20px
+                font-size: large
+                color: #b94f47
+                cursor: pointer
+
+.heracard_list
+    margin-top: 20px
+
+    .addnew_card
+        text-align: center
+        height: 153px
+        width: 100%
+        box-sizing: border-box
+        border: 2px dashed #4a4a4a
+        border-radius: 5px
+        color: #4a4a4a
+        background: #eee
+        display: flex
+        justify-content: center
+        align-items: center
+
+        .fa
+            font-size: 48px
+
+        &:hover
+            color: #1c1c1c
+            border-color: #4a4a4a
+            background: #f4f4f4
+
+    .heracard
+        position: relative
+        box-shadow: 0 2px 2px 0 rgba(0,0,0,.16)
+        padding: 0
+        border-radius: 5px
+        overflow: hidden
+        margin-bottom: 30px
+
+        .images
+            width: 100%
+            padding-bottom: 75%
+
+        .info_card
+            padding: 5px 10px
+            line-height: 33px
+
+        .user_action
+            position: absolute
+            right: 5px
+            top: 5px
+            z-index: 9
+
+            a
+                display: block
+                position: relative
+                padding: 5px
+                font-size: large
+                color: white
+                text-shadow: 1px 2px 1px $textColor
+
+                span
+                    position: absolute
+                    width: max-content
+                    right: 33px
+                    top: 7px
+                    font-size: small
+                    padding: 2px 8px
+                    background: #0000008a
+                    border-radius: 4px
+                    opacity: 0
+                    visibility: hidden
+
+                &:hover
+                    color: $lightBG
+
+                    span
+                        opacity: 1
+                        visibility: visible
+
+        .caption
+            position: absolute
+            top: 0
+            height: 100%
+            width: 100%
+            background: rgb(0,0,0)
+            background: linear-gradient(0deg, rgba(0,0,0,.63) 0%, rgba(0,0,0,0) 54%)
+            opacity: 0
+            visibility: hidden
+
+            .caption_title
+                position: absolute
+                bottom: 0
+                left: 0
+                display: list-item
+                padding: 15px 10px
+                color: white
+                text-shadow: 1px 2px 1px $textColor
+
+                span
+                    float: left
+                .like_share
+                    float: right
+                    .fa
+                        padding-left: 5px
+
+            .bg-overlay
+                display: block
+                position: absolute
+                width: 100%
+                height: 100%
+                top: 0
+                left: 0
+                z-index: 5
+
+        &:hover
+            .caption
+                visibility: visible
+                opacity: 1
+
+#list_my_card
+    margin-bottom: 80px

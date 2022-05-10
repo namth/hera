@@ -1,111 +1,86 @@
-<?php 
-    get_header();
-    get_template_part('header','topbar');
+<?php
+/* 
+    Template Name: List Card from API
+*/
+get_header();
+get_template_part('header', 'topbar');
 
-    if (isset($_POST['card_name'])) {
-        $args = array(
-            'post_title'    => $_POST['card_name'],
-            'post_status'   => 'publish',
-            'post_type'     => 'inova_card',
-        );
+$current_user_id = get_current_user_id();
 
-        $inserted = wp_insert_post( $args, $error );
-    }
+if (isset($_POST['search'])) {
+    $search = strip_tags($_POST['search']);
+} else $search = "";
 
-    if ( have_posts() ) {
-        while ( have_posts() ) {
-            the_post();
 ?>
-    <div class="mui-container-fluid">
-        <div class="mui-row">
-            <div class="mui-col-md-2">
-                <button class="mui-btn mui-btn--danger" onclick="activateModal()">Tạo thiệp mới</button>
+<div class="mui-container-fluid">
+    <div class="mui-row">
+        <div class="mui-col-md-12" id="search_box">
+            <div class="back-btn">
+                <a href="<?php echo get_bloginfo('url'); ?>"><i class="fa fa-arrow-left"></i> Trang chủ </a>
             </div>
-            <div class="mui-col-md-7">
-                <div class="mui-panel">
-                    <h3>Danh sách thiệp của tôi</h3>
-                    <div class="mui-divider"></div>
-                    <div class="mui-row">
-                        <?php 
-                            $current_user = wp_get_current_user();
+            <h1>Mẫu thiệp cưới cho mọi người</h1>
+            <h4>Hàng trăm mẫu thiệp mới nhất được cập nhật tại đây.</h4>
+            <form class="mui-form--inline" method="POST">
+                <div class="mui-textfield search_bar">
+                    <input type="text" name="search" placeholder="Tìm kiếm tất cả mẫu thiệp tại đây" value="<?php echo $search; ?>">
+                    <button class=""><i class="fa fa-search"></i></button>
+                </div>
+            </form>
+        </div>
+        <div class="mui-col-md-12">
+            <div class="mui-panel">
+                <div class="heracard_list mui-row">
+                    <?php
+                    $api = 'http://localhost/inovacards/index.php/api-list-cards/';
+                    $content_json = file_get_contents($api);
 
-                            // xử lý phân trang
-                            $paged = ( get_query_var( 'paged' ) ) ? absint( get_query_var( 'paged' ) ) : 1;
+                    $content_array = json_decode($content_json);
 
-                            $args   = array(
-                                'post_type'     => 'inova_card',
-                                'paged'         => $paged,
-                                'posts_per_page'=> 20,
-                            );
+                    // print_r($content_array);
 
-                            $query = new WP_Query( $args );
+                    foreach ($content_array as $card) {
 
-                            if( $query->have_posts() ) {
-                                while ( $query->have_posts() ) {
-                                    $query->the_post();
-
-                        ?>
-                        <div class="mui-col-md-4 inova_card">
-                            <a href="<?php echo get_permalink( 16 ) . '?postid=' . get_the_ID(); ?>">
-                                <div class="mui-panel">
-                                    <img src="" alt="">
-                                    <?php the_title(); ?>
+                        if ($card->thumbnail) {
+                            $card_thumbnail = $card->thumbnail;
+                        } else {
+                            $card_thumbnail = get_template_directory_uri() . '/img/no-img.png';
+                        }
+                    ?>
+                    <div class="mui-col-md-3">
+                        <div class="heracard">
+                            <div class="images" style="<?php 
+                                echo 'background: url('. $card_thumbnail .') no-repeat 50% 50%;';
+                                echo 'background-size: cover;';
+                            ?>">
+                                
+                            </div>
+                            <div class="caption">
+                                <div class="user_action">
+                                    <a href="#"><i class="fa fa-heart"></i><span>Thích</span></a>
+                                    <a href="#"><i class="fa fa-star"></i><span>Thêm vào danh sách yêu thích</span></a>
+                                    <a href="#"><i class="fa fa-share-alt"></i><span>Chia sẻ</span></a>
                                 </div>
-                            </a>
-                            <div class="function_icon">
-                                <ul>
-                                    <li>
-                                        <a href="<?php echo get_permalink( 16 ) . '?postid=' . get_the_ID(); ?>"><i class="fas fa-broom"></i></a>
-                                    </li>
-                                    <li>
-                                        <a href="<?php echo get_permalink( 28 ) . '?id=' . get_the_ID(); ?>"><i class="fas fa-code"></i></a>
-                                    </li>
-                                    <li>
-                                        <a href="<?php echo get_permalink(); ?>" target="_blank"><i class="fas fa-eye"></i></a>
-                                    </li>
-                                    <li>
-                                        <a href=""><i class="fas fa-pencil-alt"></i></a>
-                                    </li>
-                                    <li>
-                                        <a href="?delete=<?php echo get_the_ID(); ?>"><i class="far fa-trash-alt"></i></a>
-                                    </li>
-                                </ul>
+                                <div class="caption_title mui-col-md-12">
+                                    <span><?php echo $card->title; ?></span>
+                                    <div class="like_share">
+                                        <i class="fa fa-heart"> 892</i>
+                                        <i class="fa fa-vcard-o"> 12</i>
+                                    </div>
+                                </div>
+                                <a href="#detail_">
+                                    <div class="bg-overlay"></div>
+                                </a>
                             </div>
                         </div>
-                        <?php 
-                                } wp_reset_postdata();
-                            }
-                        ?>
                     </div>
-                    <div class="pagination justify-content-center">
-                        <?php 
-                            $big = 999999999; // need an unlikely integer
-
-                            echo paginate_links( array(
-                                'base'      => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
-                                'format'    => '?paged=%#%',
-                                'current'   => max( 1, get_query_var('paged') ),
-                                'total'     => $query->max_num_pages,
-                                'type'      => 'list',
-                            ) );
-                        ?>
-                    </div>
+                    <?php 
+                    }
+                    ?>
                 </div>
             </div>
-            <div class="mui-col-md-3"></div>
         </div>
     </div>
-    <div class="mui-col-md-4" id="create_card_form">
-        <form class="mui-form" method="POST">
-            <legend>Tạo thiệp mới</legend>
-            <div class="mui-textfield">
-                <input type="text" placeholder="Tên mẫu" name="card_name">
-            </div>
-            <button type="submit" class="mui-btn mui-btn--primary">Submit</button>
-        </form>
-    </div>
-<?php 
-        }
-    }
-    get_footer();
+</div>
+<?php
+get_footer();
 ?>
