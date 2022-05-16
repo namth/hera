@@ -31,7 +31,7 @@ if (isset($_POST['search'])) {
             <div class="mui-panel">
                 <div class="heracard_list mui-row">
                     <?php
-                    $api = 'http://localhost/inovacards/index.php/api-list-cards/';
+                    $api = 'https://design.inova.ltd/api-list-cards/';
                     $content_json = file_get_contents($api);
 
                     $content_array = json_decode($content_json);
@@ -50,7 +50,7 @@ if (isset($_POST['search'])) {
                         <div class="heracard">
                             <div class="images" style="<?php 
                                 echo 'background: url('. $card_thumbnail .') no-repeat 50% 50%;';
-                                echo 'background-size: cover;';
+                                echo 'background-size: contain;';
                             ?>">
                                 
                             </div>

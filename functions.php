@@ -57,6 +57,7 @@ function edit_guest(){
             if ($stt == $guestid) {
                 $xung_ho = explode('/', get_sub_field('xung_ho'));
                 $data = array(
+                    'id'            => $guestid,
                     'name'          => get_sub_field('name'),
                     'guest_attach'  => get_sub_field('guest_attach'),
                     'mine'          => $xung_ho[0],

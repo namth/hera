@@ -60,7 +60,7 @@ get_template_part('header', 'topbar');
                         <table class="mui-table">
                             <thead>
                                 <tr>
-                                    <th>Tên</th>
+                                    <th>Khách mời</th>
                                     <th>Cách xưng hô</th>
                                     <th>Số điện thoại</th>
                                     <th>Link thiệp mời</th>

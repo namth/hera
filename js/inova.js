@@ -58,6 +58,7 @@ jQuery(document).ready(function ($) {
                 modalEl.firstElementChild[3].value = obj['your'];
                 modalEl.firstElementChild[4].value = obj['phone'];
                 modalEl.firstElementChild[5].value = '1';
+                modalEl.firstElementChild[6].value = obj['id'];
                 console.log(modalEl.firstElementChild);
                 mui.overlay('on', modalEl);
             },

@@ -12,37 +12,76 @@ if (
     $vai_ve = $_POST['vai_ve'];
     $xung_ho = $_POST['xung_ho'];
     $sdt = $_POST['sdt'];
+    $update = $_POST['update'];
 
-    # nếu guest_id chưa có thì set = 1
-    if (!$guest_id) {
-        $guest_id = 1;
-    } else $guest_id++;
-
-    if (!$vai_ve) {
-        $vai_ve = "Bạn";
-    }
-
-    if (!$xung_ho) {
-        $xung_ho = "Tôi";
-    }
-
-    if ($guest_name) {
-        $row_update = array(
-            'stt'           => $guest_id,
-            'name'          => $guest_name,
-            'guest_attach'  => $guest_attach,
-            'xung_ho'       => $vai_ve . "/" . $xung_ho,
-            'phone'         => $sdt,
-            'sent'          => false,
-            'joined'        => false,
-            'thanh_toan'    => false,
-        );
-
-        add_row('field_61066efde7dbc', $row_update);
-        update_field('field_610ffbbe6d701', $guest_id);
+    if (!$update){
+        # nếu guest_id chưa có thì set = 1
+        if (!$guest_id) {
+            $guest_id = 1;
+        } else $guest_id++;
+    
+        if (!$vai_ve) {
+            $vai_ve = "Bạn";
+        }
+    
+        if (!$xung_ho) {
+            $xung_ho = "Tôi";
+        }
+    
+        if ($guest_name) {
+            $row_update = array(
+                'stt'           => $guest_id,
+                'name'          => $guest_name,
+                'guest_attach'  => $guest_attach,
+                'xung_ho'       => $vai_ve . "/" . $xung_ho,
+                'phone'         => $sdt,
+                'sent'          => false,
+                'joined'        => false,
+                'thanh_toan'    => false,
+            );
+    
+            add_row('field_61066efde7dbc', $row_update);
+            update_field('field_610ffbbe6d701', $guest_id);
+        }
     } else {
+        # if you are in update mode
+        $guestid = $_POST['guestid'];
+
+        # check position of guest where want to update
+        if ($guest_name) {
+            if (have_rows('guest_list') && $guest_id) {
+                while (have_rows('guest_list')) {
+                    the_row();
+                    
+                    $stt        = get_sub_field('stt');
+                    $sent       = get_sub_field('sent');
+                    $joined     = get_sub_field('joined');
+                    $thanh_toan = get_sub_field('thanh_toan');
+                    
+                    if ($stt == $guestid) {
+                        $row = get_row_index();
+                        $row_update = array(
+                            'stt'           => $guest_id,
+                            'name'          => $guest_name,
+                            'guest_attach'  => $guest_attach,
+                            'xung_ho'       => $vai_ve . "/" . $xung_ho,
+                            'phone'         => $sdt,
+                            'sent'          => $sent,
+                            'joined'        => $joined,
+                            'thanh_toan'    => $thanh_toan,
+                        );
+                        
+                        $updateok = "test";
+                        
+                        update_row('field_61066efde7dbc', $row, $row_update);
+                        continue;
+                    }
+                }
+            }
+        }
     }
 }
+
 get_header();
 get_template_part('header', 'topbar');
 if (have_posts()) {
@@ -60,7 +99,7 @@ if (have_posts()) {
                     <div class="breadcrumb">
                         <a href="<?php echo get_bloginfo('url'); ?>">Trang chủ</a>
                         <i class="fa fa-chevron-right"></i>
-                        <span> <?php the_title(); ?></span>
+                        <span> <?php the_title(); echo $updateok; ?></span>
                     </div>
                     <div class="mui-panel">
                         <h3 class="title_general">Mẫu thiệp</h3>
@@ -106,7 +145,7 @@ if (have_posts()) {
                                 <table class="mui-table">
                                     <thead>
                                         <tr>
-                                            <th>Tên</th>
+                                            <th>Khách mời</th>
                                             <th>Cách xưng hô</th>
                                             <th>Số điện thoại</th>
                                             <th>Link thiệp mời</th>
@@ -124,7 +163,9 @@ if (have_posts()) {
 
                                                 $sent = get_sub_field('sent');
                                                 $joined = get_sub_field('joined');
-
+                                                $name = get_sub_field('name');
+                                                $guest_attach = get_sub_field('guest_attach');
+                                                
                                                 # Xoá khách mời
                                                 if (isset($_GET['delete']) && ($_GET['delete'] != "")) {
                                                     $delete_number = $_GET['delete'];
@@ -137,9 +178,12 @@ if (have_posts()) {
                                                     }
                                                 }
 
+                                                if ($guest_attach) {
+                                                    $guests = $name . ' và ' . $guest_attach;
+                                                } else $guests = $name;
                                         ?>
                                                 <tr>
-                                                    <td><?php echo get_sub_field('name'); ?></td>
+                                                    <td><?php echo $guests; ?></td>
                                                     <td><?php echo get_sub_field('xung_ho'); ?></td>
                                                     <td><?php echo get_sub_field('phone'); ?></td>
                                                     <td><a href="#">Copy link</a></td>
@@ -193,6 +237,7 @@ if (have_posts()) {
                     <label>Số điện thoại</label>
                 </div>
                 <input type="hidden" name="update" value="0">
+                <input type="hidden" name="guestid" value="0">
                 <?php
                 wp_nonce_field('post_nonce', 'post_nonce_field');
                 ?>
