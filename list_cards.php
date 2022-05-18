@@ -82,8 +82,8 @@ if (isset($_POST['search'])) {
     </div>
 </div>
 
-<div class="mui-col-md-12 mui-col-sm-12" id="detail_card">
-    <h1>test</h1>
+<div class="mui-container-fluid" id="detail_card">
+    
 </div>
 <?php
 get_footer();

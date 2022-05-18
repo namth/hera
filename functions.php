@@ -3,10 +3,12 @@
 register_nav_menus(array('main-menu' => esc_html__('Main Menu', 'inovacards')));
 add_theme_support('title-tag');
 
+/*
+* Call design-cards enqueue 
+*/
 add_action('wp_enqueue_scripts', 'inovacards_load_scripts');
 function inovacards_load_scripts()
 {
-    /** Call design-cards enqueue */
     
     /* Css */
     wp_enqueue_style('main-style', get_template_directory_uri() . '/style.css');
@@ -70,5 +72,26 @@ function edit_guest(){
     }
 
     echo json_encode($data);
+    exit;
+}
+
+/*
+* Setup view to display detail card when customer click to each card.
+*/ 
+add_action('wp_ajax_viewDetailCard', 'viewDetailCard');
+add_action('wp_ajax_nopriv_viewDetailCard', 'viewDetailCard');
+function viewDetailCard(){
+    $cardid = $_POST['cardid'];
+    ?>
+    <div class="mui-row" id="detail_card_popup">
+        <div class="mui-col-md-9">
+            <img src="https://img.freepik.com/free-photo/portrait-african-handsome-man-suit-posing-camera-with-flower-isolated-yellow-background_274679-32703.jpg?w=1060" alt="">
+        </div>
+        <div class="mui-col-md-3" id="detail_data_box">
+            <h2>Thiệp cưới cao cấp chanh sả nhiều level</h2>
+            
+        </div>
+    </div>
+    <?php
     exit;
 }
