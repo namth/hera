@@ -67,7 +67,7 @@ if (isset($_POST['search'])) {
                                         <i class="fa fa-vcard-o"> 12</i>
                                     </div>
                                 </div>
-                                <a href="#detail_">
+                                <a href="#detail_" class="viewcard" data-cardid="<?php echo $card->ID; ?>">
                                     <div class="bg-overlay"></div>
                                 </a>
                             </div>
@@ -80,6 +80,10 @@ if (isset($_POST['search'])) {
             </div>
         </div>
     </div>
+</div>
+
+<div class="mui-col-md-12 mui-col-sm-12" id="detail_card">
+    <h1>test</h1>
 </div>
 <?php
 get_footer();

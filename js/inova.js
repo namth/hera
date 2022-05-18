@@ -10,23 +10,12 @@ function activateModal() {
     setTimeout(function() { document.getElementById("group_input").focus(); }, 1000);
 }
 
-function editguest(guestid) {
-    // var data = 
-    var modalEl = document.getElementById('create_card_form').cloneNode(true);
-    modalEl.style.backgroundColor = '#fff';
-    modalEl.style.display = 'block';
-    modalEl.style.float = 'inherit';
-    
-    modalEl.firstElementChild[0].value = "Name " + guestid;
-    modalEl.firstElementChild[1].value = "Called " + guestid;
-    modalEl.firstElementChild[2].value = "Phone " + guestid;
-    console.log(modalEl.firstElementChild);
-    mui.overlay('on', modalEl);
-    
-
-}
-
 jQuery(document).ready(function ($) {
+
+    /*
+    * Edit guest in each single card group.
+    * Get guestid and check it in database, then call ajax to process all the edited parts.
+    */ 
     $(".edit_guest").click(function(){
         var groupid = $("input[name=groupid]").val();
         var guestid = $(this).data('guest');
@@ -66,4 +55,35 @@ jQuery(document).ready(function ($) {
 
         return false;
     });
+
+    /*
+    * Setup view to display detail card when customer click to each card.
+    */ 
+    $(".viewcard").click(function(){
+        var cardid = $(this).data('cardid');
+
+        $.ajax({
+            type: "POST",
+            url: AJAX.ajax_url,
+            data: {
+              action: "viewDetailCard",
+              cardid: cardid,
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+              console.log(xhr.status);
+              console.log(xhr.responseText);
+              console.log(thrownError);
+            },
+            success: function (resp) {
+                var detailcard = document.getElementById('detail_card').cloneNode(true);
+                
+                detailcard.style.backgroundColor = '#fff';
+                detailcard.style.display = 'block';
+                detailcard.style.float = 'inherit';
+                detailcard.innerHTML = resp;
+                mui.overlay('on', detailcard);
+            },
+        });
+    });
+    
 });
