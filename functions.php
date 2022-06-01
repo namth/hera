@@ -48,8 +48,9 @@ if (function_exists('acf_add_options_page')) {
 add_action('wp_ajax_edit_guest', 'edit_guest');
 add_action('wp_ajax_nopriv_edit_guest', 'edit_guest');
 function edit_guest(){
-    $groupid = $_POST['groupid'];
-    $guestid = $_POST['guestid'];
+    $groupid    = $_POST['groupid'];
+    $guestid    = $_POST['guestid'];
+    $data       = array();
 
     if (have_rows('guest_list', $groupid)) {
         while (have_rows('guest_list', $groupid)) {
