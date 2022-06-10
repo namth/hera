@@ -103,7 +103,7 @@ function viewDetailCard(){
             <h2><?php echo $mycard->title; ?></h2>
             
             <div class="button_group">
-                <button class="mui-btn mui-btn--raised"><i class="fa fa-heart"></i> Like</button>
+                <button class="mui-btn mui-btn--raised"><i class="fa fa-heart"></i></button>
                 <button class="mui-btn mui-btn--raised"><i class="fa fa-star" aria-hidden="true"></i> Lưu</button>
                 <button class="mui-btn mui-btn--raised"><i class="fa fa-share-alt" aria-hidden="true"></i> Chia sẻ</button>
             </div>

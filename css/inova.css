@@ -460,4 +460,16 @@ img {
 #detail_card #detail_card_popup #detail_data_box .button_group .mui-btn {
   padding: 0 12px;
 }
+
+.fa-heart {
+  color: crimson;
+}
+
+.fa-star {
+  color: gold;
+}
+
+.fa-share-alt {
+  color: steelblue;
+}
 /*# sourceMappingURL=inova.css.map */
