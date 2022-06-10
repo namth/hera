@@ -1,4 +1,11 @@
 <?php
+add_action('init','all_my_hooks');
+function all_my_hooks(){
+    $dir = dirname( __FILE__ );
+    # API function library
+    require_once( $dir . '/inc/api_function.php');
+}
+
 // function
 register_nav_menus(array('main-menu' => esc_html__('Main Menu', 'inovacards')));
 add_theme_support('title-tag');
@@ -83,14 +90,24 @@ add_action('wp_ajax_viewDetailCard', 'viewDetailCard');
 add_action('wp_ajax_nopriv_viewDetailCard', 'viewDetailCard');
 function viewDetailCard(){
     $cardid = $_POST['cardid'];
+    $token = get_token();
+    $api_url = 'https://design.inova.ltd/wp-json/inova/v1/card/' . $cardid;
+    $mycard = inova_api($api_url, $token, 'GET', '');
+
     ?>
     <div class="mui-row" id="detail_card_popup">
-        <div class="mui-col-md-9">
-            <img src="https://img.freepik.com/free-photo/portrait-african-handsome-man-suit-posing-camera-with-flower-isolated-yellow-background_274679-32703.jpg?w=1060" alt="">
+        <div class="mui-col-md-9 card_thumbnail">
+            <img src="<?php echo $mycard->thumbnail; ?>" alt="">
         </div>
         <div class="mui-col-md-3" id="detail_data_box">
-            <h2>Thiệp cưới cao cấp chanh sả nhiều level</h2>
+            <h2><?php echo $mycard->title; ?></h2>
             
+            <div class="button_group">
+                <button class="mui-btn mui-btn--raised"><i class="fa fa-heart"></i> Like</button>
+                <button class="mui-btn mui-btn--raised"><i class="fa fa-star" aria-hidden="true"></i> Lưu</button>
+                <button class="mui-btn mui-btn--raised"><i class="fa fa-share-alt" aria-hidden="true"></i> Chia sẻ</button>
+            </div>
+            <button class="mui-btn mui-btn--raised mui-btn--primary fullwidth"><i class="fa fa-map" aria-hidden="true"></i> Thử mẫu thiệp này</button>
         </div>
     </div>
     <?php

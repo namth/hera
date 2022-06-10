@@ -61,6 +61,7 @@ jQuery(document).ready(function ($) {
     */ 
     $(".viewcard").click(function(){
         var cardid = $(this).data('cardid');
+        var detailcard = document.getElementById('detail_card').cloneNode(true);
 
         $.ajax({
             type: "POST",
@@ -69,19 +70,26 @@ jQuery(document).ready(function ($) {
               action: "viewDetailCard",
               cardid: cardid,
             },
+            beforeSend: function() {
+                detailcard.style.backgroundColor = '#fff';
+                detailcard.style.display = 'block';
+                detailcard.style.float = 'inherit';
+                // detailcard.innerHTML = resp;
+                mui.overlay('on', detailcard);
+            },
             error: function (xhr, ajaxOptions, thrownError) {
               console.log(xhr.status);
               console.log(xhr.responseText);
               console.log(thrownError);
             },
             success: function (resp) {
-                var detailcard = document.getElementById('detail_card').cloneNode(true);
+                // var detailcard = document.getElementById('detail_card').cloneNode(true);
                 
-                detailcard.style.backgroundColor = '#fff';
-                detailcard.style.display = 'block';
-                detailcard.style.float = 'inherit';
+                // detailcard.style.backgroundColor = '#fff';
+                // detailcard.style.display = 'block';
+                // detailcard.style.float = 'inherit';
                 detailcard.innerHTML = resp;
-                mui.overlay('on', detailcard);
+                // mui.overlay('on', detailcard);
             },
         });
     });

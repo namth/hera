@@ -31,20 +31,22 @@ if (isset($_POST['search'])) {
             <div class="mui-panel">
                 <div class="heracard_list mui-row">
                     <?php
-                    $api = 'https://design.inova.ltd/api-list-cards/';
-                    $content_json = file_get_contents($api);
+                    $token = get_token();
+                    $api_url = 'https://design.inova.ltd/wp-json/inova/v1/cards';
+                    $listcards = inova_api($api_url, $token, 'GET', '');
+                
+                    // print_r($listcards);
 
-                    $content_array = json_decode($content_json);
-
-                    // print_r($content_array);
-
-                    foreach ($content_array as $card) {
+                    foreach ($listcards as $card) {
 
                         if ($card->thumbnail) {
                             $card_thumbnail = $card->thumbnail;
                         } else {
                             $card_thumbnail = get_template_directory_uri() . '/img/no-img.png';
                         }
+
+                        $liked = $card->liked?$card->liked:0;
+                        $used = $card->used?$card->used:0;
                     ?>
                     <div class="mui-col-md-3">
                         <div class="heracard">
@@ -62,12 +64,12 @@ if (isset($_POST['search'])) {
                                 </div>
                                 <div class="caption_title mui-col-md-12">
                                     <span><?php echo $card->title; ?></span>
-                                    <div class="like_share">
-                                        <i class="fa fa-heart"> 892</i>
-                                        <i class="fa fa-vcard-o"> 12</i>
-                                    </div>
+                                    <!-- <div class="like_share">
+                                        <i class="fa fa-heart"></i> <?php echo $liked; ?>
+                                        <i class="fa fa-vcard-o"></i> <?php echo $used; ?>
+                                    </div> -->
                                 </div>
-                                <a href="#detail_" class="viewcard" data-cardid="<?php echo $card->ID; ?>">
+                                <a href="#" class="viewcard" data-cardid="<?php echo $card->ID; ?>">
                                     <div class="bg-overlay"></div>
                                 </a>
                             </div>
@@ -82,8 +84,8 @@ if (isset($_POST['search'])) {
     </div>
 </div>
 
-<div class="mui-container-fluid" id="detail_card">
-    
+<div class="mui-container-fluid" id="detail_card" style="display: none;">
+    <img src="<?php echo get_template_directory_uri() . '/img/flower_puzzles_preloader.gif'; ?>" style="margin: 0 auto;">
 </div>
 <?php
 get_footer();
