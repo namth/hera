@@ -3,13 +3,19 @@ get_header();
 get_template_part('header', 'topbar');
 
 if (isset($_POST['group_name'])) {
+    $group_name = strip_tags($_POST['group_name']);
     $args = array(
-        'post_title'    => $_POST['group_name'],
+        'post_title'    => $group_name,
         'post_status'   => 'publish',
         'post_type'     => 'thiep_moi',
     );
 
     $inserted = wp_insert_post($args, $error);
+
+    if ($inserted) {
+        # Tạo nhóm khách mời xong thì set trạng thái nhóm là đang hoạt động
+        update_field('field_62a34ca619e78', "Running", $inserted);
+    }
 }
 
 $current_user_id = get_current_user_id();
@@ -27,6 +33,9 @@ $current_user_id = get_current_user_id();
                 <h3 class="title_general mui--divider-bottom">Danh sách thiệp của tôi</h3>
                 <div class="heracard_list mui-row">
                     <?php
+                    $token = get_field('token', 'option');
+                    $api_base_url = get_field('api_base_url', 'option');
+                    
                     $args   = array(
                         'post_type'     => 'thiep_moi',
                         'posts_per_page' => -1,
@@ -40,7 +49,14 @@ $current_user_id = get_current_user_id();
                             $query->the_post();
 
                             $image = get_field('thumbnail');
-                            $card_thumbnail = get_template_directory_uri() . '/img/no-img.png';
+                            $cardid = get_field('card_id');
+                            
+                            if ($image) {
+                                $card_thumbnail = $image;
+                            } else {
+                                $card_thumbnail = get_template_directory_uri() . '/img/no-img.png';
+                            }
+
 
                     ?>
                             <div class="mui-col-md-3">
@@ -48,7 +64,7 @@ $current_user_id = get_current_user_id();
                                 <div class="heracard">
                                     <div class="images" style="<?php
                                                                 echo 'background: url(' . $card_thumbnail . ') no-repeat 50% 50%;';
-                                                                echo 'background-size: cover;';
+                                                                echo 'background-size: contain;';
                                                                 ?>">
 
                                     </div>

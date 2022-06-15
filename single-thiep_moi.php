@@ -70,9 +70,7 @@ if (
                             'joined'        => $joined,
                             'thanh_toan'    => $thanh_toan,
                         );
-                        
-                        $updateok = "test";
-                        
+                                                
                         update_row('field_61066efde7dbc', $row, $row_update);
                         continue;
                     }
@@ -87,6 +85,13 @@ get_template_part('header', 'topbar');
 if (have_posts()) {
     while (have_posts()) {
         the_post();
+
+        $image = get_field('thumbnail');
+        if ($image) {
+            $card_thumbnail = $image;
+        } else {
+            $card_thumbnail = get_template_directory_uri() . '/img/no-img.png';
+        }
 ?>
         <div class="mui-container-fluid">
             <div class="mui-row">
@@ -99,7 +104,8 @@ if (have_posts()) {
                     <div class="breadcrumb">
                         <a href="<?php echo get_bloginfo('url'); ?>">Trang chủ</a>
                         <i class="fa fa-chevron-right"></i>
-                        <span> <?php the_title(); echo $updateok; ?></span>
+                        <span contenteditable="true" class="title" data-guestid="<?php echo get_the_ID(); ?>"> <?php the_title(); ?></span>
+                        <span class="loader"><img src="<?php echo get_template_directory_uri() . '/img/heart-preloader.gif'; ?>" alt=""></span>
                     </div>
                     <div class="mui-panel">
                         <h3 class="title_general">Mẫu thiệp</h3>
@@ -107,7 +113,7 @@ if (have_posts()) {
                             <div class="mui-col-md-3">
                                 <div class="heracard">
                                     <div class="images">
-                                        <img src="<?php echo get_template_directory_uri(); ?>/img/no-img.png" alt="">
+                                        <img src="<?php echo $card_thumbnail; ?>" alt="">
                                     </div>
                                 </div>
                             </div>
@@ -120,7 +126,7 @@ if (have_posts()) {
                         <div class="mui-divider"></div>
 
                         <h3 class="mb0">Lời mời</h3>
-                        <p>Lời mời riêng dành cho nhóm (nếu có). Thêm {vai_ve} và {xung_ho} vào vị trí bạn muốn thay đổi.</p>
+                        <p>Lời mời riêng dành cho nhóm (nếu có). Thêm {1} và {2} vào vị trí bạn muốn thay đổi. <a href="#" class="mui--text-danger">Xem hướng dẫn chi tiết.</a></p>
                         <form id="loi_moi" class="mui-form" method="POST">
                             <div class="mui-textfield">
                                 <textarea placeholder="Ghi lời mời tại đây ... " name="loi_moi"></textarea>

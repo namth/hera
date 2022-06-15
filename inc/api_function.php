@@ -1,8 +1,9 @@
 <?php
 # get authentication code
-function get_token()
+# refresh token everyday
+function refresh_token()
 {
-    $api_url  = "https://design.inova.ltd";
+    $api_url  = get_field('api_base_url', 'option') . '/wp-json/inova/v1/gettoken';
     $username = "inovacard";
     $password = "matkhaumoi2@@";
 
@@ -17,21 +18,21 @@ function get_token()
 
     # authenticate to get token
     $jwt = wp_remote_post(
-        $api_url . '/wp-json/api/v1/token',
+        $api_url,
         array(
             'method'        => 'POST',
-            'timeout'       => '45',
-            'headers'       => array('Content-Type' => 'application/json; charset=utf-8'),
-            'body'          => json_encode($user),
+            'timeout'       => '60',
+            'body'          => $user,
         )
     );
 
     $token = json_decode(wp_remote_retrieve_body($jwt));
     // print_r($token);
-    if (!$token->jwt_token) {
+    if (!$token->token) {
         return false;
     } else {
-        return $token->jwt_token;
+        update_field('field_62a6a717c5658', $token->token, 'option');
+        return $token->token;
     }
 };
 
@@ -39,10 +40,10 @@ function get_token()
 function inova_api($api, $token, $method, $body) {
     $args = array(
         'method'    => $method,
-        'timeout'   => '45',
+        'timeout'   => '60',
         'headers'   => array(
             'Content-Type'  => 'application/json; charset=utf-8',
-            'Authorization' => 'Bearer ' . $token,
+            'Authorization' => $token,
         ),
         'body'  => json_encode($body),
     );
@@ -56,3 +57,5 @@ function inova_api($api, $token, $method, $body) {
 
     return $response_body;
 }
+
+

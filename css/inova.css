@@ -1,3 +1,4 @@
+@charset "UTF-8";
 body {
   background: #eeeeee;
 }
@@ -187,6 +188,13 @@ img {
   padding: 10px;
 }
 
+.breadcrumb .loader {
+  display: inline-block;
+  width: 20px;
+  vertical-align: middle;
+  opacity: 0;
+}
+
 .title_general {
   margin: 15px 0 20px;
 }
@@ -283,6 +291,19 @@ img {
 
 .heracard_list {
   margin-top: 20px;
+}
+
+.heracard_list .loader {
+  text-align: center;
+  display: block;
+  font-size: 18px;
+  color: chocolate;
+  font-style: italic;
+  width: 100%;
+}
+
+.heracard_list .loader img {
+  margin: 0 auto;
 }
 
 .heracard_list .addnew_card {
@@ -471,5 +492,143 @@ img {
 
 .fa-share-alt {
   color: steelblue;
+}
+
+.use_card form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  gap: 8px;
+  padding: 12px 3px;
+  background: whitesmoke;
+}
+
+.use_card form .form_element {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 30%;
+  min-height: 84px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  text-align: center;
+  border: 1px solid lightgray;
+  border-radius: 10px;
+  -webkit-box-shadow: 0px 1px 5px lightgray;
+          box-shadow: 0px 1px 5px lightgray;
+  background: white;
+}
+
+.use_card form .form_element input[type="checkbox"] {
+  display: none;
+}
+
+.use_card form .form_element input[type="checkbox"]:checked + label:before {
+  content: "✓";
+  -webkit-transform: scale(1);
+          transform: scale(1);
+  background: #ff5a5a;
+  color: #fff;
+  border: none;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+
+.use_card form .form_element input[type="checkbox"]:checked + label .img_icon {
+  color: #41c7fb;
+}
+
+.use_card form .form_element input[type="checkbox"]:checked + label .customer_name {
+  color: #41c7fb;
+}
+
+.use_card form .form_element label {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.use_card form .form_element label:before {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  top: 4px;
+  left: 4px;
+  border: 1px solid #bbbbbb;
+  text-align: center;
+  line-height: 18px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 50%;
+  opacity: 1;
+  -webkit-box-shadow: inset 0px 1px 1px #a6a6a6;
+          box-shadow: inset 0px 1px 1px #a6a6a6;
+  -webkit-transform: scale(0.75);
+          transform: scale(0.75);
+  -webkit-transition: all 200ms ease-in-out;
+  transition: all 200ms ease-in-out;
+}
+
+.use_card form .form_element label .img_icon {
+  font-size: 30px;
+  color: #555;
+  -webkit-transition: all 200ms ease-in-out;
+  transition: all 200ms ease-in-out;
+}
+
+.use_card form .form_element label .customer_name {
+  font-size: 13px;
+  color: #555;
+  padding: 0px;
+  -webkit-transition: all 200ms ease-in-out;
+  transition: all 200ms ease-in-out;
+}
+
+.success_notification {
+  background: #ceffc4;
+  color: #089108;
+  padding: 5px 10px;
+  font-style: italic;
+}
+
+.error_notification {
+  background: #ffeaea;
+  color: #dd2929;
+  padding: 5px 10px;
+  font-style: italic;
+}
+
+.error_messages {
+  text-align: center;
+}
+
+.error_messages img {
+  width: 350px;
+  display: block;
+  margin: 0 auto;
+}
+
+.error_messages span {
+  display: block;
+  font-size: 18px;
 }
 /*# sourceMappingURL=inova.css.map */

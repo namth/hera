@@ -1,17 +1,44 @@
 function activateModal() {
-    // initialize modal element
+    // tạo popup
     var modalEl = document.getElementById('create_card_form').cloneNode(true);
     modalEl.style.backgroundColor = '#fff';
     modalEl.style.display = 'block';
     modalEl.style.float = 'inherit';
 
-    // show modal
+    // hiển thị popup
     mui.overlay('on', modalEl);
     setTimeout(function() { document.getElementById("group_input").focus(); }, 1000);
 }
 
 jQuery(document).ready(function ($) {
-
+  
+    /* Edit nhóm khách hàng trực tiếp khi click vào chữ trên tiêu đề */
+    $(document.body).on('blur', '.breadcrumb .title', function(){
+      var content = $('.breadcrumb .title').text();
+      var guestid = $('.breadcrumb .title').data('guestid');
+      
+      $.ajax({
+        type: "POST",
+        url: AJAX.ajax_url,
+        data: {
+          action: "updateCustomerGroup",
+          content: content,
+          guestid: guestid,
+        },
+        beforeSend: function() {
+          $('.breadcrumb .loader').css('opacity', 1);
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+          console.log(xhr.status);
+          console.log(xhr.responseText);
+          console.log(thrownError);
+        },
+        success: function (resp) {
+          $('.breadcrumb .loader').css('opacity', 0);
+        },
+      });
+    });
+    
     /*
     * Edit guest in each single card group.
     * Get guestid and check it in database, then call ajax to process all the edited parts.
@@ -59,7 +86,7 @@ jQuery(document).ready(function ($) {
     /*
     * Setup view to display detail card when customer click to each card.
     */ 
-    $(".viewcard").click(function(){
+    $(document.body).on('click', '.viewcard', function(){
         var cardid = $(this).data('cardid');
         var detailcard = document.getElementById('detail_card').cloneNode(true);
 
@@ -83,15 +110,54 @@ jQuery(document).ready(function ($) {
               console.log(thrownError);
             },
             success: function (resp) {
-                // var detailcard = document.getElementById('detail_card').cloneNode(true);
-                
-                // detailcard.style.backgroundColor = '#fff';
-                // detailcard.style.display = 'block';
-                // detailcard.style.float = 'inherit';
                 detailcard.innerHTML = resp;
-                // mui.overlay('on', detailcard);
             },
         });
     });
     
+    $(document.body).on('click', '#select_card', function(){
+      $('.use_card form').toggle(200);
+    });
+    $(document.body).on('click', '#close_select_card', function(){
+      $('.use_card form').hide(200);
+      return false;
+    });
+    /* 
+    * Khi click chọn vào các group khách mời và ấn chọn thiệp này thì sẽ bổ sung mẫu thiệp vào cho group khách mời
+    */
+    $(document.body).on("click", ".use_card form input[type='submit']", function(){
+      var $data = $(".use_card form").serialize();
+      $.ajax({
+        type: "POST",
+        url: AJAX.ajax_url,
+        data: {
+          action: "addCardToCustomerGroup",
+          data: $data,
+        },
+        beforeSend: function () 
+        {
+          $(".use_card form").fadeOut(200);
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+          console.log(xhr.status);
+          console.log(xhr.responseText);
+          console.log(thrownError);
+        },
+        success: function (resp) {
+          firstDiv = '<div id="notification">';
+          endDiv = '</div>';
+          $('.use_card').append(firstDiv + resp + endDiv).show(200);
+          setTimeout(function(){
+            if ($('#notification').length > 0) {
+              $('#notification').remove();
+            }
+          }, 5000)
+        },
+      });
+      return false;
+    });
+
+    $(document).on('click', "#like", function(){
+      alert('alo');
+    });
 });
