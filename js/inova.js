@@ -38,6 +38,37 @@ jQuery(document).ready(function ($) {
         },
       });
     });
+
+    /* 
+    * Xử lý ajax khi bấm nút xoá một khách mời trong một group
+    */
+    $(".del_customer").click(function(){
+      var selector = $(this).parents().eq(1);
+      var del_data = $(this).data('del');
+      $.ajax({
+        type: "POST",
+        url: AJAX.ajax_url,
+        data: {
+          action: "deleteCustomer",
+          content: del_data,
+        },
+        beforeSend: function() {
+          selector.addClass('delete');
+          console.log(selector);
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+          console.log(xhr.status);
+          console.log(xhr.responseText);
+          console.log(thrownError);
+        },
+        success: function (resp) {
+          var selector = $(".delete");
+          selector.remove();
+        },
+      });
+
+      return false;
+    });
     
     /*
     * Edit guest in each single card group.
@@ -89,13 +120,19 @@ jQuery(document).ready(function ($) {
     $(document.body).on('click', '.viewcard', function(){
         var cardid = $(this).data('cardid');
         var detailcard = document.getElementById('detail_card').cloneNode(true);
-
+        var groupid;
+        if($('input[name="groupid"]').val()){
+          groupid = $('input[name="groupid"]').val();
+        } else {
+          groupid = 0;
+        }
         $.ajax({
             type: "POST",
             url: AJAX.ajax_url,
             data: {
               action: "viewDetailCard",
               cardid: cardid,
+              groupid: groupid,
             },
             beforeSend: function() {
                 detailcard.style.backgroundColor = '#fff';
@@ -116,7 +153,36 @@ jQuery(document).ready(function ($) {
     });
     
     $(document.body).on('click', '#select_card', function(){
-      $('.use_card form').toggle(200);
+      var groupid = $('#select_card').data('groupid');
+      var loading = $('#select_card').data('loading');
+      if(groupid){
+        var cardid = $('input[name="cardid"]').val();
+        var thumbnail = $('input[name="thumbnail"]').val();
+        $.ajax({
+          type: "POST",
+          url: AJAX.ajax_url,
+          data: {
+            action: "addCardToSelectedGroup",
+            cardid: cardid,
+            groupid: groupid,
+            thumbnail: thumbnail,
+          },
+          beforeSend: function() {
+              $('#select_card').hide(); 
+              $('#detail_data_box').append('<button class="mui-btn mui-btn--raised mui-btn--primary fullwidth loading" disabled><img src="' + loading + '" style="margin: 0 auto;"/></button>');
+          },
+          error: function (xhr, ajaxOptions, thrownError) {
+            console.log(xhr.status);
+            console.log(xhr.responseText);
+            console.log(thrownError);
+          },
+          success: function (resp) {
+            window.location.replace(resp);
+          },
+        });
+      } else {
+        $('.use_card form').toggle(200);
+      }
     });
     $(document.body).on('click', '#close_select_card', function(){
       $('.use_card form').hide(200);
@@ -157,6 +223,9 @@ jQuery(document).ready(function ($) {
       return false;
     });
 
+    /* 
+    * Khi bấm like cho card, ... 
+    */
     $(document).on('click', "#like", function(){
       alert('alo');
     });

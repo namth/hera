@@ -40,6 +40,7 @@ $current_user_id = get_current_user_id();
                         'post_type'     => 'thiep_moi',
                         'posts_per_page' => -1,
                         'author'        => $current_user_id,
+                        'post_status'   => 'publish',
                     );
 
                     $query = new WP_Query($args);

@@ -1,6 +1,7 @@
 <?php
 $guest_list = get_field('guest_list');
 $guest_id = get_field('guest_id');
+$current_user = wp_get_current_user();
 
 # Thêm mới khách mời
 if (
@@ -80,18 +81,43 @@ if (
     }
 }
 
+# xử lý xoá nhóm và chuyển về trang chủ
+if (isset($_GET['d']) && ($_GET['d'] != '')) {
+    $delete = json_decode(inova_encrypt($_GET['d'], 'd'));
+
+    if (wp_verify_nonce($delete->nonce, 'delete') && ($current_user->ID == $delete->userid)) {
+        # soft delete nhóm bằng cách chuyển nhóm sang trạng thái đã xoá và private.
+        update_field('field_62a34ca619e78', 'Deleted', $delete->groupid);
+        $update = wp_update_post(array(
+            'ID'            => $delete->groupid,
+            'post_status'   => 'private',
+        ));
+        wp_redirect( get_bloginfo('url') );
+    }
+}
+
 get_header();
 get_template_part('header', 'topbar');
 if (have_posts()) {
     while (have_posts()) {
         the_post();
 
+        $groupid = get_the_ID();
         $image = get_field('thumbnail');
+        $status = get_field('status');
+
         if ($image) {
             $card_thumbnail = $image;
         } else {
             $card_thumbnail = get_template_directory_uri() . '/img/no-img.png';
         }
+
+        $data_token = inova_encrypt(json_encode(array(
+            'groupid'   => $groupid,
+            'userid'    => $current_user->ID,
+        )), 'e');
+
+        $link_select_card = get_bloginfo('url') . '/danh-sach-mau/?g=' . $data_token;
 ?>
         <div class="mui-container-fluid">
             <div class="mui-row">
@@ -118,7 +144,7 @@ if (have_posts()) {
                                 </div>
                             </div>
                             <div class="mui-col-md-9">
-                                <a href="#" class="mui-btn hera-btn">Chọn thiệp</a><br>
+                                <a href="<?php echo $link_select_card; ?>" class="mui-btn hera-btn">Chọn thiệp</a><br>
                                 <a href="#" class="mui-btn hera-btn">Xem mẫu</a>
                             </div>
                         </div>
@@ -148,7 +174,7 @@ if (have_posts()) {
                                 <a href="#" class="mui-btn hera-btn"><i class="fa fa-cloud-upload"></i> Upload danh sách</a>
                             </div>
                             <div class="mui-col-md-12">
-                                <table class="mui-table">
+                                <table class="mui-table" id="list_customer">
                                     <thead>
                                         <tr>
                                             <th>Khách mời</th>
@@ -171,22 +197,21 @@ if (have_posts()) {
                                                 $joined = get_sub_field('joined');
                                                 $name = get_sub_field('name');
                                                 $guest_attach = get_sub_field('guest_attach');
+                                                $stt = get_sub_field('stt');
                                                 
                                                 # Xoá khách mời
-                                                if (isset($_GET['delete']) && ($_GET['delete'] != "")) {
-                                                    $delete_number = $_GET['delete'];
-
-                                                    $stt = get_sub_field('stt');
-                                                    if ($stt == $delete_number) {
-                                                        $row = get_row_index();
-                                                        delete_row('field_61066efde7dbc', $row);
-                                                        continue;
-                                                    }
-                                                }
+                                                $del_data = inova_encrypt(json_encode(array(
+                                                    'groupid'   => get_the_ID(),
+                                                    'stt'       => $stt,
+                                                    'row_index' => get_row_index(),
+                                                    'nonce'     => wp_create_nonce('delcustomer_' . $stt),
+                                                )), 'e');
 
                                                 if ($guest_attach) {
                                                     $guests = $name . ' và ' . $guest_attach;
                                                 } else $guests = $name;
+
+                                                $viewlink = get_bloginfo('url') . '/myacc/' . $current_user->user_login . '/' . inova_encrypt(get_the_ID(), 'e') . '/' . inova_encrypt($stt, 'e');
                                         ?>
                                                 <tr>
                                                     <td><?php echo $guests; ?></td>
@@ -200,9 +225,10 @@ if (have_posts()) {
                                                                                     echo "checked";
                                                                                 } ?>></td>
                                                     <td>
-                                                        <!-- <button onclick="editguest(<?php echo get_sub_field('stt'); ?>)"><i class="fa fa-pencil"></i></button> -->
+                                                        <a href="<?php echo $viewlink; ?>"><i class="fa fa-eye"></i></a>
                                                         <a href="#" class="edit_guest" data-guest="<?php echo get_sub_field('stt'); ?>"><i class="fa fa-pencil"></i></a>
-                                                        <a href="?delete=<?php echo get_sub_field('stt'); ?>"><i class="fa fa-trash"></i></a>
+                                                        <a href="#" data-del="<?php echo $del_data; ?>" class="del_customer"><i class="fa fa-trash"></i></a>
+                                                        <span class="loader"><img src="<?php echo get_template_directory_uri() . '/img/heart-preloader.gif'; ?>" alt=""></span>
                                                     </td>
                                                 </tr>
                                         <?php
@@ -213,6 +239,17 @@ if (have_posts()) {
                                 </table>
                             </div>
                         </div>
+                    </div>
+                    <div class="footer_section mui--text-center">
+                        <?php 
+                            $dnonce = wp_create_nonce('delete');
+                            $del_token = inova_encrypt(json_encode(array(
+                                'groupid'   => $groupid,
+                                'userid'    => $current_user->ID,
+                                'nonce'     => $dnonce,
+                            )), 'e');
+                        ?>
+                        <a href="?d=<?php echo $del_token ?>" class="mui--text-danger">Xoá nhóm này?</a>
                     </div>
                 </div>
                 <div class="mui-col-md-2"></div>

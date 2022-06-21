@@ -11,6 +11,10 @@ if (isset($_POST['search'])) {
     $search = strip_tags($_POST['search']);
 } else $search = "";
 
+if (isset($_GET['g']) && ($_GET['g'] != "")) {
+    $data = json_decode(inova_encrypt($_GET['g'], 'd'));
+}
+
 ?>
 <div class="mui-container-fluid">
     <div class="mui-row">
@@ -28,12 +32,15 @@ if (isset($_POST['search'])) {
             </form>
         </div>
         <div class="mui-col-md-12">
+            <?php 
+                if ($data->userid == $current_user_id) {
+                    echo '<input type="hidden" name="groupid" value="' . $data->groupid  . '">';
+                }
+            ?>
             <div class="mui-panel">
                 <div class="heracard_list mui-row">
                     <span class="loader"><img src="<?php echo get_template_directory_uri() . '/img/flower_loading.gif'; ?>" alt="">Đang tải ...</span>
-                    <?php
                     
-                    ?>
                 </div>
             </div>
         </div>

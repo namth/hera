@@ -53,9 +53,13 @@ function inova_api($api, $token, $method, $body) {
         $args
     );
 
-    $response_body = json_decode(wp_remote_retrieve_body($response));
-
-    return $response_body;
+    if (is_wp_error($response)) {
+        return $response;
+    } else {
+        $response_body = json_decode(wp_remote_retrieve_body($response));
+        return $response_body;
+    }
 }
 
-
+# gọi API để lấy HTML khi đã chọn thiệp 
+function getHTML($cardid){}

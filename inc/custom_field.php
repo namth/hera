@@ -271,6 +271,7 @@ if( function_exists('acf_add_local_field_group') ):
                     'Running' => 'Running',
                     'Expired' => 'Expired',
                     'Closed' => 'Closed',
+                    'Deleted' => 'Deleted',
                 ),
                 'default_value' => 'Running',
                 'allow_null' => 0,

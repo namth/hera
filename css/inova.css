@@ -631,4 +631,21 @@ img {
   display: block;
   font-size: 18px;
 }
+
+.footer_section {
+  margin-bottom: 20px;
+}
+
+#list_customer .loader {
+  display: none;
+  width: 20px;
+}
+
+#list_customer .delete td a {
+  display: none;
+}
+
+#list_customer .delete td .loader {
+  display: block;
+}
 /*# sourceMappingURL=inova.css.map */
