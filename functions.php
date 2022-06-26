@@ -51,20 +51,28 @@ add_theme_support('title-tag');
 add_action('wp_enqueue_scripts', 'inovacards_load_scripts');
 function inovacards_load_scripts()
 {
-    /* Css */
-    wp_enqueue_style('main-style', get_template_directory_uri() . '/style.css');
-    wp_enqueue_style('mui', get_template_directory_uri() . '/css/mui.min.css');
-    wp_enqueue_style('font-awesome', get_template_directory_uri() . '/css/font-awesome.css');
-    wp_enqueue_style('inova', get_template_directory_uri() . '/css/inova.css');
-    
     /* Js */
     wp_enqueue_script('jquery');
-    wp_enqueue_script('mui', get_template_directory_uri() . '/js/mui.min.js', array('jquery'), '1.0', true);
-    wp_enqueue_script('inova', get_template_directory_uri() . '/js/inova.js', array('jquery', 'mui'), '1.0', true);
-    // wp_enqueue_script('font-awesome', 'https://kit.fontawesome.com/dfe5b27416.js', array(), '4.0', true);
-    wp_localize_script('inova', 'AJAX', array(
-        'ajax_url' => admin_url('admin-ajax.php')
-    ));
+    if (is_page(72)) {
+        wp_enqueue_script('mycards', get_template_directory_uri() . '/js/mycards.js', array('jquery'), '1.0', true);
+        wp_localize_script('mycards', 'AJAX', array(
+            'ajax_url' => admin_url('admin-ajax.php')
+        ));
+    } else {
+        /* Css */
+        wp_enqueue_style('main-style', get_template_directory_uri() . '/style.css');
+        wp_enqueue_style('mui', get_template_directory_uri() . '/css/mui.min.css');
+        wp_enqueue_style('font-awesome', get_template_directory_uri() . '/css/font-awesome.css');
+        wp_enqueue_style('inova', get_template_directory_uri() . '/css/inova.css');
+        
+        /* Js */
+        wp_enqueue_script('mui', get_template_directory_uri() . '/js/mui.min.js', array('jquery'), '1.0', true);
+        wp_enqueue_script('inova', get_template_directory_uri() . '/js/inova.js', array('jquery', 'mui'), '1.0', true);
+        // wp_enqueue_script('font-awesome', 'https://kit.fontawesome.com/dfe5b27416.js', array(), '4.0', true);
+        wp_localize_script('inova', 'AJAX', array(
+            'ajax_url' => admin_url('admin-ajax.php')
+        ));
+    }
 }
 
 /* Redirect after logout */
@@ -103,3 +111,14 @@ function do_output_buffer() {
     ob_start();
 }
 
+# replace content by any template
+function replace_content($arr_replace, $content)
+{
+    if (is_array($arr_replace)) {
+        foreach ($arr_replace as $key => $value) {
+            $content = str_replace($key, $value, $content);
+        }
+
+        return $content;
+    }
+}

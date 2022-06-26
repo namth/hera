@@ -221,9 +221,13 @@ if (have_posts()) {
                                                     <td><input type="checkbox" <?php if ($sent) {
                                                                                     echo "checked";
                                                                                 } ?>></td>
-                                                    <td><input type="checkbox" <?php if ($joined) {
-                                                                                    echo "checked";
-                                                                                } ?>></td>
+                                                    <td><?php 
+                                                        if ($joined=="Y") {
+                                                            echo "Có";
+                                                        } else if ($joined == "N") echo "Không"; 
+                                                        else echo "Chưa trả lời";
+                                                        ?>
+                                                    </td>
                                                     <td>
                                                         <a href="<?php echo $viewlink; ?>"><i class="fa fa-eye"></i></a>
                                                         <a href="#" class="edit_guest" data-guest="<?php echo get_sub_field('stt'); ?>"><i class="fa fa-pencil"></i></a>

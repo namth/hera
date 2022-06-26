@@ -1,4 +1,4 @@
-function activateModal() {
+function activateModal(data) {
     // tạo popup
     var modalEl = document.getElementById('create_card_form').cloneNode(true);
     modalEl.style.backgroundColor = '#fff';
@@ -7,10 +7,13 @@ function activateModal() {
 
     // hiển thị popup
     mui.overlay('on', modalEl);
-    setTimeout(function() { document.getElementById("group_input").focus(); }, 1000);
+    modalEl.firstElementChild[1].value = data;
+    setTimeout(function() { modalEl.firstElementChild[0].focus(); }, 100);
 }
 
 jQuery(document).ready(function ($) {
+
+
   
     /* Edit nhóm khách hàng trực tiếp khi click vào chữ trên tiêu đề */
     $(document.body).on('blur', '.breadcrumb .title', function(){

@@ -326,3 +326,68 @@ function deleteCustomer() {
     } else echo false;
     exit;
 }
+
+/* 
+* Xử lý khi nhập dữ liệu đám cưới ở trang nhập liệu
+*/
+add_action('wp_ajax_addWeddingInfo', 'addWeddingInfo');
+add_action('wp_ajax_nopriv_addWeddingInfo', 'addWeddingInfo');
+function addWeddingInfo(){
+    $current_user_id = get_current_user_id();
+    $data = parse_str($_POST['data'], $output);
+    $refer_link = array_pop($output);
+    if (isset($output['wedding_field']) && wp_verify_nonce($output['wedding_field'], 'wedding')) {
+        $nonce = array_pop($output);
+        foreach ($output as $key => $value) {
+            update_field($key, $value, 'user_' . $current_user_id);
+        }
+    }
+    exit;
+}
+
+/* Cho phép sửa nhanh nội dung trên giao diện hiển thị thông tin đám cưới */
+add_action('wp_ajax_updateWeddingInfo', 'updateWeddingInfo');
+add_action('wp_ajax_nopriv_updateWeddingInfo', 'updateWeddingInfo');
+function updateWeddingInfo() {
+    $current_user_id = get_current_user_id();
+    if($_POST['content']!=""){
+        update_field($_POST['field'], $_POST['content'], 'user_' . $current_user_id);
+    }
+    exit;
+}
+
+/* Xử lý khi click vào nút đồng ý hoặc từ chối tham dự */
+add_action('wp_ajax_acceptInvite', 'acceptInvite');
+add_action('wp_ajax_nopriv_acceptInvite', 'acceptInvite');
+function acceptInvite() {
+    $group = inova_encrypt($_POST['group'], 'd');
+    $invitee = inova_encrypt($_POST['invitee'], 'd');
+    $answer = $_POST['answer'];
+
+    if (($answer=='Y')||($answer == 'N')) {
+        # nếu đồng ý tham gia thì tìm người có mã số là $invitee trong nhóm $group để update 
+        if (have_rows('guest_list', $group)) {
+            while (have_rows('guest_list', $group)) {
+                the_row();
+        
+                $stt = get_sub_field('stt');
+                if ($stt != $invitee) {
+                    continue;
+                } else {
+                    # nếu tìm thấy khách thì update thông tin rồi break ra khỏi vòng lặp
+                    update_sub_field('joined', $answer);
+                    $found_customer = true;
+                    break;
+                }
+                $found_customer= false;
+            }
+        } else $found_customer= false;
+    }
+    if ($found_customer) {
+        $notification = $answer=='Y'?'<div class="accept notification">Đã xác nhận tham dự.</div>':'<div class="deny notification">Đã xác nhận không tham dự được.</div>';
+        echo $notification;
+    } else {
+        echo '<div class="deny notification">Không thể cập nhật bạn vào dữ liệu thiệp, hãy kiểm tra lại.</div>';
+    }
+    exit;
+}

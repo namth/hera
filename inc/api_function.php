@@ -40,12 +40,13 @@ function refresh_token()
 function inova_api($api, $token, $method, $body) {
     $args = array(
         'method'    => $method,
-        'timeout'   => '60',
+        'timeout'   => '120',
         'headers'   => array(
             'Content-Type'  => 'application/json; charset=utf-8',
             'Authorization' => $token,
         ),
-        'body'  => json_encode($body),
+        'body'      => json_encode($body),
+        'sslverify' => true,
     );
 
     $response = wp_remote_post(
@@ -62,4 +63,11 @@ function inova_api($api, $token, $method, $body) {
 }
 
 # gọi API để lấy HTML khi đã chọn thiệp 
-function getHTML($cardid){}
+function getHTML($cardid){
+    $token = refresh_token();
+    $api_base_url = get_field('api_base_url', 'option');
+    $api_url = $api_base_url . '/wp-json/inova/v1/html/' . $cardid;
+    $mycard = inova_api($api_url, $token, 'GET', '');
+
+    return $mycard->html;
+}

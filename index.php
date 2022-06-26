@@ -4,6 +4,7 @@ get_template_part('header', 'topbar');
 
 if (isset($_POST['group_name'])) {
     $group_name = strip_tags($_POST['group_name']);
+    $category = strip_tags($_POST['category']);
     $args = array(
         'post_title'    => $group_name,
         'post_status'   => 'publish',
@@ -15,10 +16,18 @@ if (isset($_POST['group_name'])) {
     if ($inserted) {
         # Tạo nhóm khách mời xong thì set trạng thái nhóm là đang hoạt động
         update_field('field_62a34ca619e78', "Running", $inserted);
+
+        # Nếu có category thì set nhóm vào category tương ứng của nhà trai hoặc nhà gái.
+        if ($category == 'bride') {
+            wp_set_object_terms($inserted,"Nhà gái", 'category');
+        } else {
+            wp_set_object_terms($inserted,"Nhà trai", 'category');
+        }
     }
 }
 
 $current_user_id = get_current_user_id();
+$cards_array = array();
 
 ?>
 <div class="mui-container-fluid">
@@ -30,17 +39,16 @@ $current_user_id = get_current_user_id();
         </div>
         <div class="mui-col-md-8">
             <div class="mui-panel" id="list_my_card">
-                <h3 class="title_general mui--divider-bottom">Danh sách thiệp của tôi</h3>
+                <h3 class="title_general mui--divider-bottom">Danh sách thiệp mời của nhà trai</h3>
                 <div class="heracard_list mui-row">
                     <?php
-                    $token = get_field('token', 'option');
-                    $api_base_url = get_field('api_base_url', 'option');
                     
                     $args   = array(
                         'post_type'     => 'thiep_moi',
                         'posts_per_page' => -1,
                         'author'        => $current_user_id,
                         'post_status'   => 'publish',
+                        'category_name' => 'Nhà trai',
                     );
 
                     $query = new WP_Query($args);
@@ -51,6 +59,8 @@ $current_user_id = get_current_user_id();
 
                             $image = get_field('thumbnail');
                             $cardid = get_field('card_id');
+                            $customer = get_field('guest_list');
+                            $status = get_field('status');
                             
                             if ($image) {
                                 $card_thumbnail = $image;
@@ -58,7 +68,14 @@ $current_user_id = get_current_user_id();
                                 $card_thumbnail = get_template_directory_uri() . '/img/no-img.png';
                             }
 
-
+                            if ($cardid && ($status == "Running")) {
+                                # nếu đã chọn thiệp thì mới tính tiền
+                                $cards_array[] = array (
+                                    'group_name'        => get_the_title(),
+                                    'guest_total'       => count($customer),
+                                    'card_thumbnail'    => $card_thumbnail,
+                                );
+                            }
                     ?>
                             <div class="mui-col-md-3">
                                 <a href="<?php the_permalink(); ?>">
@@ -82,14 +99,107 @@ $current_user_id = get_current_user_id();
 
                     ?>
                     <div class="mui-col-md-3">
-                        <button class="addnew_card" onclick="activateModal()">
+                        <button class="addnew_card" onclick="activateModal('groom')">
+                            <i class="fa fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+                <h3 class="title_general mui--divider-bottom">Danh sách thiệp mời của nhà gái</h3>
+                <div class="heracard_list mui-row">
+                    <?php
+                    
+                    $args   = array(
+                        'post_type'     => 'thiep_moi',
+                        'posts_per_page' => -1,
+                        'author'        => $current_user_id,
+                        'post_status'   => 'publish',
+                        'category_name' => 'Nhà gái',
+                    );
+
+                    $query = new WP_Query($args);
+
+                    if ($query->have_posts()) {
+                        while ($query->have_posts()) {
+                            $query->the_post();
+
+                            $image = get_field('thumbnail');
+                            $cardid = get_field('card_id');
+                            $customer = get_field('guest_list');
+                            $status = get_field('status');
+                            
+                            if ($image) {
+                                $card_thumbnail = $image;
+                            } else {
+                                $card_thumbnail = get_template_directory_uri() . '/img/no-img.png';
+                            }
+
+                            if ($cardid && ($status == "Running")) {
+                                # nếu đã chọn thiệp thì mới tính tiền
+                                $cards_array[] = array (
+                                    'group_name'        => get_the_title(),
+                                    'guest_total'       => count($customer),
+                                    'card_thumbnail'    => $card_thumbnail,
+                                );
+                            }
+                    ?>
+                            <div class="mui-col-md-3">
+                                <a href="<?php the_permalink(); ?>">
+                                <div class="heracard">
+                                    <div class="images" style="<?php
+                                                                echo 'background: url(' . $card_thumbnail . ') no-repeat 50% 50%;';
+                                                                echo 'background-size: contain;';
+                                                                ?>">
+
+                                    </div>
+                                    <div class="info_card">
+                                        <?php echo get_the_title(); ?>
+                                    </div>
+                                </div>
+                                </a>
+                            </div>
+                    <?php
+                        }
+                        wp_reset_postdata();
+                    }
+
+                    ?>
+                    <div class="mui-col-md-3">
+                        <button class="addnew_card" onclick="activateModal('bride')">
                             <i class="fa fa-plus"></i>
                         </button>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="mui-col-md-2"></div>
+        <div class="mui-col-md-2">
+            <div id="cart_section">
+                <?php 
+                if (!empty($cards_array)) {
+                ?>
+                <h4>Tổng số thiệp</h4>
+                <ul>
+                    <?php 
+                    
+                    # hiển thị giỏ hàng, những thiệp chưa thanh toán 
+                    foreach ($cards_array as $card) {
+                    ?>
+                    <li>
+                        <img src="<?php echo $card['card_thumbnail'] ?>" alt="">
+                        <div>
+                            <span><?php echo $card['group_name'] ?></span>
+                            <span class="quantity mui--divider-bottom"><?php echo $card['guest_total'] ?> x 3.500 đ</span>
+                            <span class="sub_total">Tổng: 105.000 đ</span>
+                        </div>
+                    </li>
+                    <?php 
+                    }
+                    ?>
+                </ul>
+                <?php
+                }
+                ?>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -105,6 +215,7 @@ $current_user_id = get_current_user_id();
         <legend>Tạo nhóm khách mới</legend>
         <div class="mui-textfield">
             <input id="group_input" type="text" placeholder="VD: Bạn cấp 3" name="group_name">
+            <input type="hidden" name="category">
         </div>
         <button type="submit" class="mui-btn mui-btn--danger">Tạo</button>
     </form>
