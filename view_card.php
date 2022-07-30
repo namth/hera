@@ -68,8 +68,8 @@ $data_replace = array(
     '{co_dau}'      => $bride,
     '{ngay_gio_cuoi_hoi}' => $wedding_time,
     '{dia_diem_to_chuc}'  => $wedding_adress,
-    '{1}'           => $xung_ho[0],
-    '{2}'           => $xung_ho[1],
+    '{2}'           => strtolower($xung_ho[0]),
+    '{1}'           => strtolower($xung_ho[1]),
     '{function_button}'   => $function_div,
 );
 

@@ -12,10 +12,6 @@ function refresh_token()
         'password' => $password,
     );
 
-    // echo "Connect to " . $api_url . " ...<br>";
-    // echo "Username: " . $username . "<br>";
-    // echo "Password: " . $password . "<br>";
-
     # authenticate to get token
     $jwt = wp_remote_post(
         $api_url,
@@ -71,3 +67,6 @@ function getHTML($cardid){
 
     return $mycard->html;
 }
+
+# chạy cronjob để refresh_token hàng ngày.
+add_action( 'daily_refresh_token', 'refresh_token' );

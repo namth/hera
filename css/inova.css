@@ -1,4 +1,9 @@
 @charset "UTF-8";
+@font-face {
+  font-family: 'Aphrodite';
+  src: url("../fonts/aphrodite.ttf") format("truetype");
+}
+
 body {
   background: #eeeeee;
 }
@@ -703,9 +708,11 @@ img {
   width: calc(50% - 65px);
   padding: 10px 25px;
   font-size: x-large;
-  background: #eee;
+  background: #fff4f4;
+  color: #d52831;
   margin: 20px;
   text-align: center;
+  font-family: 'Aphrodite';
 }
 
 #main-info .heart_icon {
@@ -763,7 +770,7 @@ img {
   margin-left: 7px;
 }
 
-#addition_info .content_info div {
+#addition_info .content_info > div {
   padding: 0 0 0 18px;
   background: #f4f4f4;
   display: block;
@@ -772,16 +779,41 @@ img {
   border: 1px solid #ebebeb;
 }
 
-#addition_info .content_info div:hover {
+#addition_info .content_info > div:hover {
   background: #e5f5ff;
   border: 1px solid #87adde;
 }
 
-#addition_info .content_info div span {
+#addition_info .content_info > div span {
   display: inline-block;
   padding: 9px 9px 9px 9px;
   max-width: calc(100% - 24px);
   vertical-align: middle;
+}
+
+#addition_info .content_info > div .date_input {
+  display: none;
+  padding-right: 15px;
+}
+
+#addition_info .content_info > div .date_input input {
+  width: calc(100% - 99px);
+  margin: 4px 0;
+  line-height: 28px;
+  border: 0;
+  background: #f4f4f4;
+}
+
+#addition_info .content_info > div .date_input button.hera-btn {
+  margin: -2px 0 0 0;
+}
+
+#addition_info .content_info > div .date_input .close-btn-mini {
+  margin: 0;
+  border-radius: 15px;
+  background: white;
+  padding: 0 9px;
+  border: 1px solid #ddd;
 }
 
 #cart_section ul {

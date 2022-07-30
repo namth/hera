@@ -102,14 +102,40 @@ $active_bride   = get_field('active_bride', 'user_' . $current_user_id);
                                     if ($groom_wedding_adress) {
                                         echo '<h4>Địa điểm, thời gian tổ chức hôn lễ</h4>';
                                         echo '<div><i class="fa fa-building"></i> <span class="diveditable" contenteditable=true data-field="field_62b12acd93a81">' . $groom_wedding_adress . '</span></div>';
-                                        echo '<div><i class="fa fa-calendar"></i> <span class="diveditable" contenteditable=true data-field="field_62b12b8f93a83">' . $groom_wedding_time . '</span></div>';
-                                        echo '<div><i class="fa fa-calendar"></i> (âm lịch)<span class="diveditable" contenteditable=true data-field="field_62b135cb93a85">' . $groom_wedding_moontime . '</span></div>';
+                                        echo '<div class="date_editable">
+                                                <div class="date_data">
+                                                    <i class="fa fa-calendar"></i> <span class="diveditable">' . $groom_wedding_time . '</span>
+                                                </div>
+                                                <div class="date_input">
+                                                    <form method="post">
+                                                        <input name="solartime" type="datetime-local">
+                                                        <input type="hidden" name="solartime_field" value="field_62b12b8f93a83">
+                                                        <input type="hidden" name="lunartime_field" value="field_62b135cb93a85">
+                                                        <button class="mui-btn mui-btn--small hera-btn">Sửa</button>
+                                                        <button class="mui-btn mui-btn--small close-btn-mini">X</button>
+                                                    </form>
+                                                </div>
+                                            </div>';
+                                        echo '<div class="lunar_date"><i class="fa fa-calendar-o"></i> (âm lịch)<span class="diveditable">' . $groom_wedding_moontime . '</span></div>';
                                     }
                                     if ($groom_party_address) {
                                         echo '<h4>Địa điểm, thời gian tổ chức tiệc cưới</h4>';
                                         echo '<div><i class="fa fa-building"></i> <span class="diveditable" contenteditable=true data-field="field_62b12b4593a82">' . $groom_party_address . '</span></div>';
-                                        echo '<div><i class="fa fa-calendar"></i> <span class="diveditable" contenteditable=true data-field="field_62b12bb293a84">' . $groom_party_time . '</span></div>';
-                                        echo '<div><i class="fa fa-calendar"></i> (âm lịch)<span class="diveditable" contenteditable=true data-field="field_62b13605bfa89">' . $groom_party_moontime . '</span></div>';
+                                        echo '<div class="date_editable">
+                                                <div class="date_data">
+                                                    <i class="fa fa-calendar"></i> <span class="diveditable">' . $groom_party_time . '</span>
+                                                </div>
+                                                <div class="date_input">
+                                                    <form method="post">
+                                                        <input name="solartime" type="datetime-local">
+                                                        <input type="hidden" name="solartime_field" value="field_62b12bb293a84">
+                                                        <input type="hidden" name="lunartime_field" value="field_62b13605bfa89">
+                                                        <button class="mui-btn mui-btn--small hera-btn">Sửa</button>
+                                                        <button class="mui-btn mui-btn--small close-btn-mini">X</button>
+                                                    </form>
+                                                </div>
+                                            </div>';
+                                        echo '<div class="lunar_date"><i class="fa fa-calendar-o"></i> (âm lịch)<span class="diveditable">' . $groom_party_moontime . '</span></div>';
                                     }
                                 ?>
                             </div>
@@ -136,15 +162,51 @@ $active_bride   = get_field('active_bride', 'user_' . $current_user_id);
                                     if ($bride_wedding_adress) {
                                         echo '<h4>Địa điểm, thời gian tổ chức lễ vu quy</h4>';
                                         echo '<div><i class="fa fa-building"></i> <span class="diveditable" contenteditable=true data-field="field_62b1363fb06a6">' . $bride_wedding_adress . '</span></div>';
-                                        echo '<div><i class="fa fa-calendar"></i> <span class="diveditable" contenteditable=true data-field="field_62b1363fb06af">' . $bride_wedding_time . '</span></div>';
-                                        echo '<div><i class="fa fa-calendar"></i> (âm lịch)<span class="diveditable" contenteditable=true data-field="field_62b1363fb06b7">' . $bride_wedding_moontime . '</span></div>';
+                                        echo '<div class="date_editable">
+                                                <div class="date_data">
+                                                    <i class="fa fa-calendar"></i> <span class="diveditable">' . $bride_wedding_time . '</span>
+                                                </div>
+                                                <div class="date_input">
+                                                    <form method="post">
+                                                        <input name="solartime" type="datetime-local">
+                                                        <input type="hidden" name="solartime_field" value="field_62b1363fb06af">
+                                                        <input type="hidden" name="lunartime_field" value="field_62b1363fb06b7">
+                                                        <button class="mui-btn mui-btn--small hera-btn">Sửa</button>
+                                                        <button class="mui-btn mui-btn--small close-btn-mini">X</button>
+                                                    </form>
+                                                </div>
+                                            </div>';
+                                        echo '<div class="lunar_date"><i class="fa fa-calendar-o"></i> (âm lịch)<span class="diveditable">' . $bride_wedding_moontime . '</span></div>';
                                     }
                                     if ($bride_party_address) {
                                         echo '<h4>Địa điểm, thời gian tổ chức tiệc cưới</h4>';
                                         echo '<div><i class="fa fa-building"></i> <span class="diveditable" contenteditable=true data-field="field_62b1363fb06bf">' . $bride_party_address . '</span></div>';
-                                        echo '<div><i class="fa fa-calendar"></i> <span class="diveditable" contenteditable=true data-field="field_62b1363fb06c7">' . $bride_party_time . '</span></div>';
-                                        echo '<div><i class="fa fa-calendar"></i> (âm lịch)<span class="diveditable" contenteditable=true data-field="field_62b1363fb06cf">' . $bride_party_moontime . '</span></div>';
+                                        echo '<div class="date_editable">
+                                                <div class="date_data">
+                                                    <i class="fa fa-calendar"></i> <span class="diveditable">' . $bride_party_time . '</span>
+                                                </div>
+                                                <div class="date_input">
+                                                    <form method="post">
+                                                        <input name="solartime" type="datetime-local">
+                                                        <input type="hidden" name="solartime_field" value="field_62b1363fb06c7">
+                                                        <input type="hidden" name="lunartime_field" value="field_62b1363fb06cf">
+                                                        <button class="mui-btn mui-btn--small hera-btn">Sửa</button>
+                                                        <button class="mui-btn mui-btn--small close-btn-mini">X</button>
+                                                    </form>
+                                                </div>    
+                                            </div>';
+                                        echo '<div class="lunar_date"><i class="fa fa-calendar-o"></i> (âm lịch)<span class="diveditable">' . $bride_party_moontime . '</span></div>';
                                     }
+
+                                    // $day = '2022-07-23T02:42';
+                                    // $today = new DateTime($day);
+                                    // $lunar = ShowLunarDate($today, 'YYYY-mm-dd');
+
+                                    // echo $today->format('d/m/Y g:i a');
+                                    // echo "<br>";
+                                    // print_r($lunar . substr($day, 10));
+                                    // update_field('field_62b1363fb06c7', strtotime($day), 'user_' . $current_user_id);
+                                    // update_field('field_62b1363fb06cf', strtotime($lunar . substr($day, 10)), 'user_' . $current_user_id);
                                 ?>
                             </div>
                         </div>
@@ -155,20 +217,20 @@ $active_bride   = get_field('active_bride', 'user_' . $current_user_id);
                             <form class="mui-form" method="POST">
                                 <h4>Họ nhà trai</h4>
                                 <div class="mui-textfield">
-                                    <input type="text" name="field_62b128ec93a7f">
+                                    <input type="text" name="field_62b128ec93a7f" value="<?php echo $groom_father; ?>">
                                     <label for="">Bố chú rể</label>
                                 </div>
                                 <div class="mui-textfield">
-                                    <input type="text" name="field_62b129b693a80">
+                                    <input type="text" name="field_62b129b693a80" value="<?php echo $groom_mother; ?>">
                                     <label for="">Mẹ chú rể</label>
                                 </div>
                                 <h4>Họ nhà gái</h4>
                                 <div class="mui-textfield">
-                                    <input type="text" name="field_62b1363fb0691">
+                                    <input type="text" name="field_62b1363fb0691" value="<?php echo $bride_father; ?>">
                                     <label for="">Bố cô dâu</label>
                                 </div>
                                 <div class="mui-textfield">
-                                    <input type="text" name="field_62b1363fb069e">
+                                    <input type="text" name="field_62b1363fb069e" value="<?php echo $bride_mother; ?>">
                                     <label for="">Mẹ cô dâu</label>
                                 </div>
                                 <?php
@@ -188,11 +250,11 @@ $active_bride   = get_field('active_bride', 'user_' . $current_user_id);
                                     <label for="">Địa điểm</label>
                                 </div>
                                 <div class="mui-textfield">
-                                    <input type="text" name="field_62b12b8f93a83">
+                                    <input type="datetime-local" name="field_62b12b8f93a83">
                                     <label for="">Thời gian (dương lịch)</label>
                                 </div>
                                 <div class="mui-textfield">
-                                    <input type="text" name="field_62b135cb93a85">
+                                    <input type="datetime-local" name="field_62b135cb93a85">
                                     <label for="">Thời gian (âm lịch)</label>
                                 </div>
                                 <?php
@@ -212,11 +274,11 @@ $active_bride   = get_field('active_bride', 'user_' . $current_user_id);
                                     <label for="">Địa điểm</label>
                                 </div>
                                 <div class="mui-textfield">
-                                    <input type="text" name="field_62b12bb293a84">
+                                    <input type="datetime-local" name="field_62b12bb293a84">
                                     <label for="">Thời gian (dương lịch)</label>
                                 </div>
                                 <div class="mui-textfield">
-                                    <input type="text" name="field_62b13605bfa89">
+                                    <input type="datetime-local" name="field_62b13605bfa89">
                                     <label for="">Thời gian (âm lịch)</label>
                                 </div>
                                 <?php
@@ -236,11 +298,11 @@ $active_bride   = get_field('active_bride', 'user_' . $current_user_id);
                                     <label for="">Địa điểm</label>
                                 </div>
                                 <div class="mui-textfield">
-                                    <input type="text" name="field_62b1363fb06af">
+                                    <input type="datetime-local" name="field_62b1363fb06af">
                                     <label for="">Thời gian (dương lịch)</label>
                                 </div>
                                 <div class="mui-textfield">
-                                    <input type="text" name="field_62b1363fb06b7">
+                                    <input type="datetime-local" name="field_62b1363fb06b7">
                                     <label for="">Thời gian (âm lịch)</label>
                                 </div>
                                 <?php
@@ -260,11 +322,11 @@ $active_bride   = get_field('active_bride', 'user_' . $current_user_id);
                                     <label for="">Địa điểm</label>
                                 </div>
                                 <div class="mui-textfield">
-                                    <input type="text" name="field_62b1363fb06c7">
+                                    <input type="datetime-local" name="field_62b1363fb06c7">
                                     <label for="">Thời gian (dương lịch)</label>
                                 </div>
                                 <div class="mui-textfield">
-                                    <input type="text" name="field_62b1363fb06cf">
+                                    <input type="datetime-local" name="field_62b1363fb06cf">
                                     <label for="">Thời gian (âm lịch)</label>
                                 </div>
                                 <?php
@@ -382,6 +444,54 @@ $active_bride   = get_field('active_bride', 'user_' . $current_user_id);
                 success: function (resp) {
                     parent.find('.loading').remove();
                     parent.find('i').show();
+                },
+            });
+            return false;
+        });
+
+        /* Khi click vào sửa ngày tháng thì sẽ hiện form sửa ngày dương lịch, sau đó tự động update vào ngày âm lịch */
+        $('.date_data').click(function() {
+            $(this).hide();
+            $(this).parent().find('.date_input').show();
+        });
+
+        /* Xử lý khi click vào nút đóng button close-btn-mini */
+        $('.close-btn-mini').click(function() {
+            var date_div = $(this).parent().parent();
+            date_div.hide();
+            date_div.prev().show();
+            return false;
+        });
+
+        // xử lý ajax khi click vào nút sửa thời gian
+        $('.date_input form').submit(function () {
+            // lấy dữ liệu từ form và mã hoá thành chuỗi
+            var $data = $(this).serialize();
+            var $divUpdate = $(this).parents(2);
+            var $solarUpdate = $divUpdate.children('.date_data').children('.diveditable');
+            var $lunarUpdate = $divUpdate.next().children('.diveditable');
+            // console.log($data);
+            $.ajax({
+                type: "POST",
+                url: AJAX.ajax_url,
+                data: {
+                    action: "weddingDateInput",
+                    data: $data,
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(xhr.responseText);
+                    console.log(thrownError);
+                },
+                success: function (resp) {
+                    var obj = JSON.parse(resp);
+                    console.log(obj);
+                    /* Hiện lại div ngày tháng, ẩn div nhập dữ liệu ngày tháng */
+                    $divUpdate.find('.date_input').hide();
+                    $divUpdate.find('.date_data').show(200);
+                    /* Hiển thị nội dung mới */
+                    $solarUpdate.html(obj["solarUpdate"]);
+                    $lunarUpdate.html(obj["lunarUpdate"]);
                 },
             });
             return false;

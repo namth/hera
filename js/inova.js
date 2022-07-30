@@ -172,7 +172,7 @@ jQuery(document).ready(function ($) {
           },
           beforeSend: function() {
               $('#select_card').hide(); 
-              $('#detail_data_box').append('<button class="mui-btn mui-btn--raised mui-btn--primary fullwidth loading" disabled><img src="' + loading + '" style="margin: 0 auto;"/></button>');
+              $('#detail_data_box').append('<button class="mui-btn mui-btn--raised mui-btn--primary fullwidth" disabled><img src="' + loading + '" style="margin: 0 auto;"/></button>');
           },
           error: function (xhr, ajaxOptions, thrownError) {
             console.log(xhr.status);

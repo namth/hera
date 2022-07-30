@@ -1,5 +1,6 @@
 <?php
 /* 
+* Source: single-thiep_moi.php
 * Xử lý khi bấm vào nút sửa khách mời và sửa thông tin trên popup 
 */
 add_action('wp_ajax_edit_guest', 'edit_guest');
@@ -34,6 +35,7 @@ function edit_guest(){
 }
 
 /*
+* Source: list_cards.php
 * Setup view to display detail card when customer click to each card.
 */ 
 add_action('wp_ajax_viewDetailCard', 'viewDetailCard');
@@ -143,7 +145,9 @@ function viewDetailCard(){
     exit;
 }
 
-/* Cho phép khách chọn thiệp ở trang danh sách thiệp */
+/* 
+* Source: list_cards.php (trong popup, khi không có target trước)
+* Cho phép khách chọn thiệp ở trang danh sách thiệp */
 add_action('wp_ajax_addCardToCustomerGroup', 'addCardToCustomerGroup');
 add_action('wp_ajax_nopriv_addCardToCustomerGroup', 'addCardToCustomerGroup');
 function addCardToCustomerGroup(){
@@ -198,7 +202,9 @@ function addCardToCustomerGroup(){
     exit;
 }
 
-/* Set card vào khách mời */
+/* 
+* Source: list_cards.php (trong popup, khi biết trước target)
+* Set card vào khách mời */
 add_action('wp_ajax_addCardToSelectedGroup', 'addCardToSelectedGroup');
 add_action('wp_ajax_nopriv_addCardToSelectedGroup', 'addCardToSelectedGroup');
 function addCardToSelectedGroup(){
@@ -218,7 +224,9 @@ function addCardToSelectedGroup(){
 }
 
 
-/* Sửa tên của nhóm khách mời */
+/* 
+* Source: single-thiep_moi.php
+* Sửa tên của nhóm khách mời */
 add_action('wp_ajax_updateCustomerGroup', 'updateCustomerGroup');
 add_action('wp_ajax_nopriv_updateCustomerGroup', 'updateCustomerGroup');
 function updateCustomerGroup(){
@@ -243,7 +251,9 @@ function updateCustomerGroup(){
     exit;
 }
 
-/* Liệt kê các mẫu thiệp thông qua API */
+/* 
+* Source: list_cards.php
+* Liệt kê các mẫu thiệp thông qua API */
 add_action('wp_ajax_listCardFromAPI', 'listCardFromAPI');
 add_action('wp_ajax_nopriv_listCardFromAPI', 'listCardFromAPI');
 function listCardFromAPI() {
@@ -251,6 +261,9 @@ function listCardFromAPI() {
         $token = refresh_token();
     } else {
         $token = get_field('token', 'option');
+        if (!$token) {
+            $token = refresh_token();
+        }
     }
     $api_base_url = get_field('api_base_url', 'option');
     $api_url = $api_base_url . '/wp-json/inova/v1/cards';
@@ -265,7 +278,16 @@ function listCardFromAPI() {
             <img src="<?php echo get_template_directory_uri() . '/img/f_loading.gif'; ?>" alt="" style="display: none;">
         </div>
         <?php
-    } else {
+    } else if(!empty($listcards->errors)) {
+        ?>
+        <div class="error_messages">
+            <span>Xin lỗi, server hệ thống đang phản hồi chậm. Hãy thử lại sau một lát nữa.</span>
+            <span><?php echo $listcards->errors['http_request_failed'][0]; ?></span>
+            <button class="mui-btn hera-btn" id='reload_card'>Tải lại</button>
+            <img src="<?php echo get_template_directory_uri() . '/img/f_loading.gif'; ?>" alt="" style="display: none;">
+        </div>
+        <?php
+    } else{
         foreach ($listcards as $card) {
 
             if ($card->thumbnail) {
@@ -311,6 +333,7 @@ function listCardFromAPI() {
 }
 
 /* 
+* Source: single-thiep_moi.php
 * Xử lý ajax khi bấm nút xoá một khách mời trong một group
 */
 add_action('wp_ajax_deleteCustomer', 'deleteCustomer');
@@ -328,6 +351,7 @@ function deleteCustomer() {
 }
 
 /* 
+* Source: wedding-infomation.php
 * Xử lý khi nhập dữ liệu đám cưới ở trang nhập liệu
 */
 add_action('wp_ajax_addWeddingInfo', 'addWeddingInfo');
@@ -345,7 +369,9 @@ function addWeddingInfo(){
     exit;
 }
 
-/* Cho phép sửa nhanh nội dung trên giao diện hiển thị thông tin đám cưới */
+/* 
+* Source: wedding-infomation.php
+* Cho phép sửa nhanh nội dung trên giao diện hiển thị thông tin đám cưới */
 add_action('wp_ajax_updateWeddingInfo', 'updateWeddingInfo');
 add_action('wp_ajax_nopriv_updateWeddingInfo', 'updateWeddingInfo');
 function updateWeddingInfo() {
@@ -356,7 +382,38 @@ function updateWeddingInfo() {
     exit;
 }
 
-/* Xử lý khi click vào nút đồng ý hoặc từ chối tham dự */
+/* 
+* Source: wedding-infomation.php
+* Cho phép sửa nhanh ngày tháng trên giao diện hiển thị thông tin đám cưới */
+add_action('wp_ajax_weddingDateInput', 'weddingDateInput');
+add_action('wp_ajax_nopriv_weddingDateInput', 'weddingDateInput');
+function weddingDateInput() {
+    $current_user_id = get_current_user_id();
+    $data = parse_str($_POST['data'], $output);
+    $solartime_field = $output['solartime_field'];
+    $lunartime_field = $output['lunartime_field'];
+    
+    # tính toán ngày tháng 
+    $time = substr($output['solartime'], 10);
+    $today = new DateTime($output['solartime']);
+    $lunar= ShowLunarDate($today, 'YYYY-mm-dd') . $time;
+    $lunartime = new DateTime($lunar);
+    
+    # cập nhật vào cơ sở dữ liệu
+    update_field($solartime_field, strtotime($output['solartime']), 'user_' . $current_user_id); // thời gian dương lịch
+    update_field($lunartime_field, strtotime($lunar), 'user_' . $current_user_id); // thời gian dương lịch
+
+    # output để hiển thị
+    $data['solarUpdate'] = $today->format('d/m/Y g:i a');
+    $data['lunarUpdate'] = $lunartime->format('d/m/Y g:i a');
+    echo json_encode($data);
+    exit;
+}
+
+
+/* 
+* Source: view_card.php
+* Xử lý khi click vào nút đồng ý hoặc từ chối tham dự */
 add_action('wp_ajax_acceptInvite', 'acceptInvite');
 add_action('wp_ajax_nopriv_acceptInvite', 'acceptInvite');
 function acceptInvite() {
