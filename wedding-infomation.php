@@ -93,6 +93,11 @@ $active_bride   = get_field('active_bride', 'user_' . $current_user_id);
                                     $groom_party_time       = get_field('groom_party_time', 'user_' . $current_user_id);
                                     $groom_party_moontime   = get_field('groom_party_moontime', 'user_' . $current_user_id);
 
+                                    $_groom_wedding_time    = DateTime::createFromFormat('d/m/Y H:i', $groom_wedding_time);
+                                    $_groom_wedding_moontime= DateTime::createFromFormat('d/m/Y H:i', $groom_wedding_moontime);
+                                    $_groom_party_time      = DateTime::createFromFormat('d/m/Y H:i', $groom_party_time);
+                                    $_groom_party_moontime  = DateTime::createFromFormat('d/m/Y H:i', $groom_party_moontime);
+
                                     if ($groom_father) {
                                         echo '<div><i class="fa fa-male"></i> <span class="diveditable" contenteditable=true data-field="field_62b128ec93a7f">' . $groom_father . '</span></div>';
                                     }
@@ -104,11 +109,11 @@ $active_bride   = get_field('active_bride', 'user_' . $current_user_id);
                                         echo '<div><i class="fa fa-building"></i> <span class="diveditable" contenteditable=true data-field="field_62b12acd93a81">' . $groom_wedding_adress . '</span></div>';
                                         echo '<div class="date_editable">
                                                 <div class="date_data">
-                                                    <i class="fa fa-calendar"></i> <span class="diveditable">' . $groom_wedding_time . '</span>
+                                                    <i class="fa fa-calendar"></i> <span class="diveditable">' . $_groom_wedding_time->format('d/m/Y g:i a') . '</span>
                                                 </div>
                                                 <div class="date_input">
                                                     <form method="post">
-                                                        <input name="solartime" type="datetime-local">
+                                                        <input name="solartime" type="datetime-local" value="' . $_groom_wedding_time->format('Y-m-d\TH:i:s') . '">
                                                         <input type="hidden" name="solartime_field" value="field_62b12b8f93a83">
                                                         <input type="hidden" name="lunartime_field" value="field_62b135cb93a85">
                                                         <button class="mui-btn mui-btn--small hera-btn">Sửa</button>
@@ -116,18 +121,18 @@ $active_bride   = get_field('active_bride', 'user_' . $current_user_id);
                                                     </form>
                                                 </div>
                                             </div>';
-                                        echo '<div class="lunar_date"><i class="fa fa-calendar-o"></i> (âm lịch)<span class="diveditable">' . $groom_wedding_moontime . '</span></div>';
+                                        echo '<div class="lunar_date"><i class="fa fa-calendar-o"></i> (âm lịch)<span class="diveditable">' . $_groom_wedding_moontime->format('d/m/Y g:i a') . '</span></div>';
                                     }
                                     if ($groom_party_address) {
                                         echo '<h4>Địa điểm, thời gian tổ chức tiệc cưới</h4>';
                                         echo '<div><i class="fa fa-building"></i> <span class="diveditable" contenteditable=true data-field="field_62b12b4593a82">' . $groom_party_address . '</span></div>';
                                         echo '<div class="date_editable">
                                                 <div class="date_data">
-                                                    <i class="fa fa-calendar"></i> <span class="diveditable">' . $groom_party_time . '</span>
+                                                    <i class="fa fa-calendar"></i> <span class="diveditable">' . $_groom_party_time->format('d/m/Y g:i a') . '</span>
                                                 </div>
                                                 <div class="date_input">
                                                     <form method="post">
-                                                        <input name="solartime" type="datetime-local">
+                                                        <input name="solartime" type="datetime-local" value="' . $_groom_party_time->format('Y-m-d\TH:i:s') . '">
                                                         <input type="hidden" name="solartime_field" value="field_62b12bb293a84">
                                                         <input type="hidden" name="lunartime_field" value="field_62b13605bfa89">
                                                         <button class="mui-btn mui-btn--small hera-btn">Sửa</button>
@@ -135,7 +140,7 @@ $active_bride   = get_field('active_bride', 'user_' . $current_user_id);
                                                     </form>
                                                 </div>
                                             </div>';
-                                        echo '<div class="lunar_date"><i class="fa fa-calendar-o"></i> (âm lịch)<span class="diveditable">' . $groom_party_moontime . '</span></div>';
+                                        echo '<div class="lunar_date"><i class="fa fa-calendar-o"></i> (âm lịch)<span class="diveditable">' . $_groom_party_moontime->format('d/m/Y g:i a') . '</span></div>';
                                     }
                                 ?>
                             </div>
@@ -153,6 +158,11 @@ $active_bride   = get_field('active_bride', 'user_' . $current_user_id);
                                     $bride_party_time       = get_field('bride_party_time', 'user_' . $current_user_id);
                                     $bride_party_moontime   = get_field('bride_party_moontime', 'user_' . $current_user_id);
 
+                                    $_bride_wedding_time    = DateTime::createFromFormat('d/m/Y H:i', $bride_wedding_time);
+                                    $_bride_wedding_moontime= DateTime::createFromFormat('d/m/Y H:i', $bride_wedding_moontime);
+                                    $_bride_party_time      = DateTime::createFromFormat('d/m/Y H:i', $bride_party_time);
+                                    $_bride_party_moontime  = DateTime::createFromFormat('d/m/Y H:i', $bride_party_moontime);
+
                                     if ($bride_father) {
                                         echo '<div><i class="fa fa-male"></i> <span class="diveditable" contenteditable=true data-field="field_62b1363fb0691">' . $bride_father . '</span></div>';
                                     }
@@ -164,11 +174,11 @@ $active_bride   = get_field('active_bride', 'user_' . $current_user_id);
                                         echo '<div><i class="fa fa-building"></i> <span class="diveditable" contenteditable=true data-field="field_62b1363fb06a6">' . $bride_wedding_adress . '</span></div>';
                                         echo '<div class="date_editable">
                                                 <div class="date_data">
-                                                    <i class="fa fa-calendar"></i> <span class="diveditable">' . $bride_wedding_time . '</span>
+                                                    <i class="fa fa-calendar"></i> <span class="diveditable">' . $_bride_wedding_time->format('d/m/Y g:i a') . '</span>
                                                 </div>
                                                 <div class="date_input">
                                                     <form method="post">
-                                                        <input name="solartime" type="datetime-local">
+                                                        <input name="solartime" type="datetime-local" value="' . $_bride_wedding_time->format('Y-m-d\TH:i:s') . '">
                                                         <input type="hidden" name="solartime_field" value="field_62b1363fb06af">
                                                         <input type="hidden" name="lunartime_field" value="field_62b1363fb06b7">
                                                         <button class="mui-btn mui-btn--small hera-btn">Sửa</button>
@@ -176,18 +186,18 @@ $active_bride   = get_field('active_bride', 'user_' . $current_user_id);
                                                     </form>
                                                 </div>
                                             </div>';
-                                        echo '<div class="lunar_date"><i class="fa fa-calendar-o"></i> (âm lịch)<span class="diveditable">' . $bride_wedding_moontime . '</span></div>';
+                                        echo '<div class="lunar_date"><i class="fa fa-calendar-o"></i> (âm lịch)<span class="diveditable">' . $_bride_wedding_moontime->format('d/m/Y g:i a') . '</span></div>';
                                     }
                                     if ($bride_party_address) {
                                         echo '<h4>Địa điểm, thời gian tổ chức tiệc cưới</h4>';
                                         echo '<div><i class="fa fa-building"></i> <span class="diveditable" contenteditable=true data-field="field_62b1363fb06bf">' . $bride_party_address . '</span></div>';
                                         echo '<div class="date_editable">
                                                 <div class="date_data">
-                                                    <i class="fa fa-calendar"></i> <span class="diveditable">' . $bride_party_time . '</span>
+                                                    <i class="fa fa-calendar"></i> <span class="diveditable">' . $_bride_party_time->format('d/m/Y g:i a') . '</span>
                                                 </div>
                                                 <div class="date_input">
                                                     <form method="post">
-                                                        <input name="solartime" type="datetime-local">
+                                                        <input name="solartime" type="datetime-local" value="' . $_bride_party_time->format('Y-m-d\TH:i:s') . '">
                                                         <input type="hidden" name="solartime_field" value="field_62b1363fb06c7">
                                                         <input type="hidden" name="lunartime_field" value="field_62b1363fb06cf">
                                                         <button class="mui-btn mui-btn--small hera-btn">Sửa</button>
@@ -195,15 +205,14 @@ $active_bride   = get_field('active_bride', 'user_' . $current_user_id);
                                                     </form>
                                                 </div>    
                                             </div>';
-                                        echo '<div class="lunar_date"><i class="fa fa-calendar-o"></i> (âm lịch)<span class="diveditable">' . $bride_party_moontime . '</span></div>';
+                                        echo '<div class="lunar_date"><i class="fa fa-calendar-o"></i> (âm lịch)<span class="diveditable">' . $_bride_party_moontime->format('d/m/Y g:i a') . '</span></div>';
                                     }
 
-                                    // $day = '2022-07-23T02:42';
-                                    // $today = new DateTime($day);
-                                    // $lunar = ShowLunarDate($today, 'YYYY-mm-dd');
+                                    // $day = '26/07/2022 12:56';
+                                    // $today = DateTime::createFromFormat('d/m/Y H:i', $bride_party_time);
 
-                                    // echo $today->format('d/m/Y g:i a');
-                                    // echo "<br>";
+                                    // print_r($today->format('Y-m-d\TH:i:s'));
+                                    // echo "br";
                                     // print_r($lunar . substr($day, 10));
                                     // update_field('field_62b1363fb06c7', strtotime($day), 'user_' . $current_user_id);
                                     // update_field('field_62b1363fb06cf', strtotime($lunar . substr($day, 10)), 'user_' . $current_user_id);
@@ -246,15 +255,15 @@ $active_bride   = get_field('active_bride', 'user_' . $current_user_id);
                             <form class="mui-form" method="POST">
                                 <h4>Địa điểm tổ chức hôn lễ tại nhà trai</h4>
                                 <div class="mui-textfield">
-                                    <input type="text" name="field_62b12acd93a81">
+                                    <input type="text" name="field_62b12acd93a81" value="<?php echo $groom_wedding_adress; ?>">
                                     <label for="">Địa điểm</label>
                                 </div>
                                 <div class="mui-textfield">
-                                    <input type="datetime-local" name="field_62b12b8f93a83">
+                                    <input type="datetime-local" name="field_62b12b8f93a83" value="<?php echo $_groom_wedding_time->format('Y-m-d\TH:i:s'); ?>">
                                     <label for="">Thời gian (dương lịch)</label>
                                 </div>
                                 <div class="mui-textfield">
-                                    <input type="datetime-local" name="field_62b135cb93a85">
+                                    <input type="datetime-local" name="field_62b135cb93a85" value="<?php echo $_groom_wedding_moontime->format('Y-m-d\TH:i:s'); ?>">
                                     <label for="">Thời gian (âm lịch)</label>
                                 </div>
                                 <?php
@@ -270,15 +279,15 @@ $active_bride   = get_field('active_bride', 'user_' . $current_user_id);
                             <form class="mui-form" method="POST">
                                 <h4>Địa điểm dự tiệc của nhà trai</h4>
                                 <div class="mui-textfield">
-                                    <input type="text" name="field_62b12b4593a82">
+                                    <input type="text" name="field_62b12b4593a82" value="<?php echo $groom_party_address; ?>">
                                     <label for="">Địa điểm</label>
                                 </div>
                                 <div class="mui-textfield">
-                                    <input type="datetime-local" name="field_62b12bb293a84">
+                                    <input type="datetime-local" name="field_62b12bb293a84" value="<?php echo $_groom_party_time->format('Y-m-d\TH:i:s'); ?>">
                                     <label for="">Thời gian (dương lịch)</label>
                                 </div>
                                 <div class="mui-textfield">
-                                    <input type="datetime-local" name="field_62b13605bfa89">
+                                    <input type="datetime-local" name="field_62b13605bfa89" value="<?php echo $_groom_party_moontime->format('Y-m-d\TH:i:s'); ?>">
                                     <label for="">Thời gian (âm lịch)</label>
                                 </div>
                                 <?php
@@ -294,15 +303,15 @@ $active_bride   = get_field('active_bride', 'user_' . $current_user_id);
                             <form class="mui-form" method="POST">
                                 <h4>Địa điểm tổ chức lễ vu quy tại nhà gái</h4>
                                 <div class="mui-textfield">
-                                    <input type="text" name="field_62b1363fb06a6">
+                                    <input type="text" name="field_62b1363fb06a6" value="<?php echo $bride_wedding_adress; ?>">
                                     <label for="">Địa điểm</label>
                                 </div>
                                 <div class="mui-textfield">
-                                    <input type="datetime-local" name="field_62b1363fb06af">
+                                    <input type="datetime-local" name="field_62b1363fb06af" value="<?php echo $_bride_wedding_time->format('Y-m-d\TH:i:s'); ?>">
                                     <label for="">Thời gian (dương lịch)</label>
                                 </div>
                                 <div class="mui-textfield">
-                                    <input type="datetime-local" name="field_62b1363fb06b7">
+                                    <input type="datetime-local" name="field_62b1363fb06b7" value="<?php echo $_bride_wedding_moontime->format('Y-m-d\TH:i:s'); ?>">
                                     <label for="">Thời gian (âm lịch)</label>
                                 </div>
                                 <?php
@@ -318,15 +327,15 @@ $active_bride   = get_field('active_bride', 'user_' . $current_user_id);
                             <form class="mui-form" method="POST">
                                 <h4>Địa điểm dự tiệc của nhà gái</h4>
                                 <div class="mui-textfield">
-                                    <input type="text" name="field_62b1363fb06bf">
+                                    <input type="text" name="field_62b1363fb06bf" value="<?php echo $bride_party_address; ?>">
                                     <label for="">Địa điểm</label>
                                 </div>
                                 <div class="mui-textfield">
-                                    <input type="datetime-local" name="field_62b1363fb06c7">
+                                    <input type="datetime-local" name="field_62b1363fb06c7" value="<?php echo $_bride_party_time->format('Y-m-d\TH:i:s'); ?>">
                                     <label for="">Thời gian (dương lịch)</label>
                                 </div>
                                 <div class="mui-textfield">
-                                    <input type="datetime-local" name="field_62b1363fb06cf">
+                                    <input type="datetime-local" name="field_62b1363fb06cf" value="<?php echo $_bride_party_moontime->format('Y-m-d\TH:i:s'); ?>">
                                     <label for="">Thời gian (âm lịch)</label>
                                 </div>
                                 <?php
@@ -485,13 +494,15 @@ $active_bride   = get_field('active_bride', 'user_' . $current_user_id);
                 },
                 success: function (resp) {
                     var obj = JSON.parse(resp);
-                    console.log(obj);
-                    /* Hiện lại div ngày tháng, ẩn div nhập dữ liệu ngày tháng */
-                    $divUpdate.find('.date_input').hide();
-                    $divUpdate.find('.date_data').show(200);
-                    /* Hiển thị nội dung mới */
-                    $solarUpdate.html(obj["solarUpdate"]);
-                    $lunarUpdate.html(obj["lunarUpdate"]);
+                    // console.log(obj);
+                    if (obj['status']) {
+                        /* Hiện lại div ngày tháng, ẩn div nhập dữ liệu ngày tháng */
+                        $divUpdate.find('.date_input').hide();
+                        $divUpdate.find('.date_data').show(200);
+                        /* Hiển thị nội dung mới */
+                        $solarUpdate.html(obj["solarUpdate"]);
+                        $lunarUpdate.html(obj["lunarUpdate"]);
+                    }
                 },
             });
             return false;

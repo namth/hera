@@ -1,9 +1,8 @@
 @charset "UTF-8";
 @font-face {
-  font-family: 'Aphrodite';
+  font-family: "Aphrodite";
   src: url("../fonts/aphrodite.ttf") format("truetype");
 }
-
 body {
   background: #eeeeee;
 }
@@ -11,15 +10,13 @@ body {
 a {
   color: #444444;
 }
-
 a:hover {
   color: #f55a4e;
   text-decoration: none;
 }
 
 * {
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 img {
@@ -46,12 +43,10 @@ img {
 
 .hera-btn {
   border-radius: 8px;
-  -webkit-box-shadow: 0 3px 2px lightgray;
-          box-shadow: 0 3px 2px lightgray;
+  box-shadow: 0 3px 2px lightgray;
   background: #f55a4e;
   color: white;
 }
-
 .hera-btn:hover {
   color: white;
   background: #f55a4e;
@@ -59,17 +54,11 @@ img {
 }
 
 #mui-overlay {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  justify-content: center;
+  align-items: center;
   padding: 15px;
-  background: #323740f0;
+  background: rgba(50, 55, 64, 0.9411764706);
 }
 
 #create_card_form {
@@ -80,12 +69,10 @@ img {
 .inova_card {
   margin: 15px 0;
 }
-
 .inova_card h3 {
   font-family: Arial, Helvetica, sans-serif;
   background-color: #eeeeee;
 }
-
 .inova_card .mui-panel {
   margin: 0;
 }
@@ -93,17 +80,10 @@ img {
 #login {
   max-width: 100%;
   background-color: #eeeeee;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  display: -webkit-box;
-  display: -ms-flexbox;
+  align-items: center;
+  justify-content: center;
   display: flex;
 }
-
 #login .large_left {
   width: 66%;
   height: 100vh;
@@ -112,37 +92,35 @@ img {
   background-size: cover;
   background-repeat: no-repeat;
 }
-
 #login .small_right {
   width: 34%;
   height: 100vh;
-  display: -ms-grid;
   display: grid;
   margin: 0;
   padding: 0 15px;
 }
 
 #header_bar {
-  padding: 0 15px;
+  padding: 4px 15px;
   text-align: center;
 }
-
 #header_bar .logo {
   display: inline-block;
   font-size: 32px;
-  padding: 5px;
-  height: 50px;
+  padding: 10px;
+  height: 64px;
+  position: absolute;
+  background: white;
+  border-radius: 50px;
+  box-shadow: 0px 3px 3px #b0b0b0;
 }
-
 #header_bar .main_menu {
   float: right;
 }
-
 #header_bar .main_menu .mui-btn {
   padding: 0 10px;
   font-size: 24px;
 }
-
 #header_bar .main_menu .mui-dropdown__menu {
   right: 0;
 }
@@ -153,17 +131,14 @@ img {
   line-height: 34px;
   padding: 0;
 }
-
 .main_menu li a {
   padding: 3px 15px;
   width: 100%;
   display: block;
 }
-
 .main_menu li.current-menu-item {
   background: #e6e6e6;
 }
-
 .main_menu li:hover {
   background: #fff7de;
 }
@@ -177,29 +152,45 @@ img {
   text-align: center;
   margin: 0;
 }
-
-#cart_bar span {
-  padding: 0 5px;
+#cart_bar .card_total {
+  display: inline-block;
+  padding: 5px 15px;
+  border-right: 1px solid #a4815d;
+}
+#cart_bar .card_license {
+  display: inline-block;
+}
+#cart_bar .card_license span {
+  padding: 5px 10px;
+  text-align: left;
+}
+#cart_bar .card_link {
+  padding: 8px 20px;
+  color: #6da84b;
+  background: #e5fad7;
+  border: 1px solid;
+  border-radius: 5px;
+}
+#cart_bar .card_link:hover {
+  color: #b78613;
+  background: #faecd7;
 }
 
 .breadcrumb {
   font-size: large;
   padding: 5px 0 15px;
 }
-
 .breadcrumb .fa {
   font-size: small;
   color: #f55a4e;
   padding: 10px;
 }
-
 .breadcrumb .loader {
   display: inline-block;
   width: 20px;
   vertical-align: middle;
   opacity: 0;
 }
-
 .breadcrumb .title {
   padding: 5px 10px 5px 0;
 }
@@ -218,7 +209,6 @@ img {
   padding: 0;
   margin-bottom: 8px;
 }
-
 #loi_moi .mui-textfield textarea {
   min-height: 64px;
   background: #eeeeee;
@@ -226,7 +216,6 @@ img {
   border-radius: 5px;
   resize: vertical;
 }
-
 #loi_moi button {
   margin-bottom: 20px;
 }
@@ -236,19 +225,15 @@ img {
   border-top: 1px solid lightgray;
   border-bottom: 1px solid lightgray;
 }
-
 .mui-table thead tr th {
   border: none;
 }
-
 .mui-table tbody tr td {
   border-bottom: 1px solid lightgray;
 }
-
 .mui-table tbody tr td a {
   color: #f55a4e;
 }
-
 .mui-table tbody tr td .fa {
   font-size: large;
   color: #f55a4e;
@@ -260,22 +245,16 @@ img {
   padding: 20px;
   margin-bottom: 50px;
   display: block;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  justify-content: center;
+  align-items: center;
   text-align: center;
 }
-
 #search_box .back-btn {
   position: absolute;
   text-align: left;
   left: 15px;
   top: 0;
 }
-
 #search_box form .search_bar {
   position: relative;
   width: 50%;
@@ -283,13 +262,11 @@ img {
   padding: 5px;
   border: 1px solid #d7c8c8;
 }
-
 #search_box form .search_bar input {
   border: none;
   padding: 10px;
   font-size: 18px;
 }
-
 #search_box form .search_bar button {
   position: absolute;
   height: 38px;
@@ -307,7 +284,6 @@ img {
 .heracard_list {
   margin-top: 20px;
 }
-
 .heracard_list .loader {
   text-align: center;
   display: block;
@@ -316,42 +292,30 @@ img {
   font-style: italic;
   width: 100%;
 }
-
 .heracard_list .loader img {
   margin: 0 auto;
 }
-
 .heracard_list .addnew_card {
   text-align: center;
   height: 153px;
   width: 100%;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
   border: 2px dashed #4a4a4a;
   border-radius: 5px;
   color: #4a4a4a;
   background: #eee;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  justify-content: center;
+  align-items: center;
 }
-
 .heracard_list .addnew_card .fa {
   font-size: 48px;
 }
-
 .heracard_list .addnew_card:hover {
   color: #1c1c1c;
   border-color: #4a4a4a;
   background: #f4f4f4;
 }
-
 .heracard_list .heracard {
   position: relative;
   padding: 0;
@@ -359,24 +323,27 @@ img {
   overflow: hidden;
   margin-bottom: 30px;
 }
-
 .heracard_list .heracard .images {
   width: 100%;
   padding-bottom: 75%;
 }
-
 .heracard_list .heracard .info_card {
+  position: relative;
   padding: 5px 10px;
   line-height: 33px;
 }
-
+.heracard_list .heracard .info_card .quantity {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  line-height: 33px;
+}
 .heracard_list .heracard .user_action {
   position: absolute;
   right: 5px;
   top: 5px;
   z-index: 9;
 }
-
 .heracard_list .heracard .user_action a {
   display: block;
   position: relative;
@@ -385,7 +352,6 @@ img {
   color: white;
   text-shadow: 1px 2px 1px #444444;
 }
-
 .heracard_list .heracard .user_action a span {
   position: absolute;
   width: -webkit-max-content;
@@ -395,33 +361,28 @@ img {
   top: 7px;
   font-size: small;
   padding: 2px 8px;
-  background: #0000008a;
+  background: rgba(0, 0, 0, 0.5411764706);
   border-radius: 4px;
   opacity: 0;
   visibility: hidden;
 }
-
 .heracard_list .heracard .user_action a:hover {
   color: #ffefe0;
 }
-
 .heracard_list .heracard .user_action a:hover span {
   opacity: 1;
   visibility: visible;
 }
-
 .heracard_list .heracard .caption {
   position: absolute;
   top: 0;
   height: 100%;
   width: 100%;
-  background: black;
-  background: -webkit-gradient(linear, left bottom, left top, from(rgba(0, 0, 0, 0.63)), color-stop(54%, rgba(0, 0, 0, 0)));
+  background: rgb(0, 0, 0);
   background: linear-gradient(0deg, rgba(0, 0, 0, 0.63) 0%, rgba(0, 0, 0, 0) 54%);
   opacity: 0;
   visibility: hidden;
 }
-
 .heracard_list .heracard .caption .caption_title {
   position: absolute;
   bottom: 0;
@@ -431,19 +392,15 @@ img {
   color: white;
   text-shadow: 1px 2px 1px #444444;
 }
-
 .heracard_list .heracard .caption .caption_title span {
   float: left;
 }
-
 .heracard_list .heracard .caption .caption_title .like_share {
   float: right;
 }
-
 .heracard_list .heracard .caption .caption_title .like_share .fa {
   padding-left: 5px;
 }
-
 .heracard_list .heracard .caption .bg-overlay {
   display: block;
   position: absolute;
@@ -453,7 +410,6 @@ img {
   left: 0;
   z-index: 5;
 }
-
 .heracard_list .heracard:hover .caption {
   visibility: visible;
   opacity: 1;
@@ -466,33 +422,24 @@ img {
 #detail_card {
   position: absolute;
   top: 20px;
-  width: calc( 100% - 200px);
-  min-height: calc( 100vh - 40px);
-  max-height: calc( 100vh - 20px);
+  width: calc(100% - 200px);
+  min-height: calc(100vh - 40px);
+  max-height: calc(100vh - 20px);
   overflow: scroll;
 }
-
 #detail_card #detail_card_popup .card_thumbnail {
   padding: 20px;
   background: whitesmoke;
-  min-height: calc( 100vh - 40px);
-  display: -webkit-box;
-  display: -ms-flexbox;
+  min-height: calc(100vh - 40px);
   display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  align-items: center;
+  justify-content: center;
   height: 100%;
 }
-
 #detail_card #detail_card_popup .card_thumbnail img {
   margin: 0 auto;
   max-height: calc(100vh - 60px);
 }
-
 #detail_card #detail_card_popup #detail_data_box .button_group .mui-btn {
   padding: 0 12px;
 }
@@ -510,77 +457,49 @@ img {
 }
 
 .use_card form {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
+  justify-content: center;
+  flex-wrap: wrap;
   gap: 8px;
   padding: 12px 3px;
   background: whitesmoke;
 }
-
 .use_card form .form_element {
   position: relative;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
   width: 30%;
   min-height: 84px;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  align-items: center;
+  justify-content: center;
   text-align: center;
   border: 1px solid lightgray;
   border-radius: 10px;
-  -webkit-box-shadow: 0px 1px 5px lightgray;
-          box-shadow: 0px 1px 5px lightgray;
+  box-shadow: 0px 1px 5px lightgray;
   background: white;
 }
-
-.use_card form .form_element input[type="checkbox"] {
+.use_card form .form_element input[type=checkbox] {
   display: none;
 }
-
-.use_card form .form_element input[type="checkbox"]:checked + label:before {
+.use_card form .form_element input[type=checkbox]:checked + label:before {
   content: "✓";
-  -webkit-transform: scale(1);
-          transform: scale(1);
+  transform: scale(1);
   background: #ff5a5a;
   color: #fff;
   border: none;
-  -webkit-box-shadow: none;
-          box-shadow: none;
+  box-shadow: none;
 }
-
-.use_card form .form_element input[type="checkbox"]:checked + label .img_icon {
+.use_card form .form_element input[type=checkbox]:checked + label .img_icon {
   color: #41c7fb;
 }
-
-.use_card form .form_element input[type="checkbox"]:checked + label .customer_name {
+.use_card form .form_element input[type=checkbox]:checked + label .customer_name {
   color: #41c7fb;
 }
-
 .use_card form .form_element label {
   width: 100%;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  justify-content: center;
+  flex-direction: column;
 }
-
 .use_card form .form_element label:before {
   content: "";
   position: absolute;
@@ -595,26 +514,19 @@ img {
   font-weight: 600;
   border-radius: 50%;
   opacity: 1;
-  -webkit-box-shadow: inset 0px 1px 1px #a6a6a6;
-          box-shadow: inset 0px 1px 1px #a6a6a6;
-  -webkit-transform: scale(0.75);
-          transform: scale(0.75);
-  -webkit-transition: all 200ms ease-in-out;
+  box-shadow: inset 0px 1px 1px #a6a6a6;
+  transform: scale(0.75);
   transition: all 200ms ease-in-out;
 }
-
 .use_card form .form_element label .img_icon {
   font-size: 30px;
   color: #555;
-  -webkit-transition: all 200ms ease-in-out;
   transition: all 200ms ease-in-out;
 }
-
 .use_card form .form_element label .customer_name {
   font-size: 13px;
   color: #555;
   padding: 0px;
-  -webkit-transition: all 200ms ease-in-out;
   transition: all 200ms ease-in-out;
 }
 
@@ -635,13 +547,11 @@ img {
 .error_messages {
   text-align: center;
 }
-
 .error_messages img {
   width: 350px;
   display: block;
   margin: 0 auto;
 }
-
 .error_messages span {
   display: block;
   font-size: 18px;
@@ -655,11 +565,9 @@ img {
   display: none;
   width: 20px;
 }
-
 #list_customer .delete td a {
   display: none;
 }
-
 #list_customer .delete td .loader {
   display: block;
 }
@@ -667,38 +575,31 @@ img {
 #wedding_infomation {
   padding: 0 18px;
 }
-
 #wedding_infomation form .mui-textfield {
   display: inline-block;
   width: calc(50% - 25px);
   padding: 25px 10px 0;
 }
-
 #wedding_infomation form .mui-textfield input {
   padding: 10px 20px;
-  color: #1e2532;
-  -webkit-transition: color 0.1s ease 0s;
+  color: rgb(30, 37, 50);
   transition: color 0.1s ease 0s;
-  background-color: #eff2f9;
+  background-color: rgb(239, 242, 249);
   height: 45px;
   border-radius: 6px;
 }
-
 #wedding_infomation form .mui-textfield label {
   color: #369bf4;
   font-size: 13px;
 }
-
 #wedding_infomation form .heart_icon {
   display: inline-table;
   width: 40px;
 }
-
 #wedding_infomation form .heart_icon img {
   display: table-cell;
   vertical-align: middle;
 }
-
 #wedding_infomation form .submit_div {
   padding: 0 10px;
 }
@@ -712,14 +613,12 @@ img {
   color: #d52831;
   margin: 20px;
   text-align: center;
-  font-family: 'Aphrodite';
+  font-family: "Aphrodite";
 }
-
 #main-info .heart_icon {
   display: inline-table;
   width: 40px;
 }
-
 #main-info .heart_icon img {
   display: table-cell;
   vertical-align: middle;
@@ -727,8 +626,7 @@ img {
 
 #add_section .section_name {
   display: inline-block;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
   padding: 10px 20px;
   background: #f4f4f4;
   margin: 5px 3px;
@@ -738,20 +636,16 @@ img {
 #add_more_form {
   position: relative;
 }
-
 #add_more_form form {
   background: #f9f7f5;
   padding: 20px 10px;
 }
-
 #add_more_form form h4 {
   padding-left: 10px;
 }
-
 #add_more_form .hide_form {
   display: none;
 }
-
 #add_more_form .close_button {
   position: absolute;
   top: 43px;
@@ -765,11 +659,9 @@ img {
 #addition_info .content_info {
   margin-bottom: 20px;
 }
-
 #addition_info .content_info h4 {
   margin-left: 7px;
 }
-
 #addition_info .content_info > div {
   padding: 0 0 0 18px;
   background: #f4f4f4;
@@ -778,24 +670,20 @@ img {
   margin: 5px;
   border: 1px solid #ebebeb;
 }
-
 #addition_info .content_info > div:hover {
   background: #e5f5ff;
   border: 1px solid #87adde;
 }
-
 #addition_info .content_info > div span {
   display: inline-block;
   padding: 9px 9px 9px 9px;
   max-width: calc(100% - 24px);
   vertical-align: middle;
 }
-
 #addition_info .content_info > div .date_input {
   display: none;
   padding-right: 15px;
 }
-
 #addition_info .content_info > div .date_input input {
   width: calc(100% - 99px);
   margin: 4px 0;
@@ -803,11 +691,9 @@ img {
   border: 0;
   background: #f4f4f4;
 }
-
 #addition_info .content_info > div .date_input button.hera-btn {
   margin: -2px 0 0 0;
 }
-
 #addition_info .content_info > div .date_input .close-btn-mini {
   margin: 0;
   border-radius: 15px;
@@ -816,38 +702,234 @@ img {
   border: 1px solid #ddd;
 }
 
-#cart_section ul {
-  list-style: none;
-  padding: 0;
-}
-
-#cart_section ul li {
+.checkout_input {
+  border-radius: 10px;
+  background: white;
+  border: 1px solid #69C6C0;
+  min-height: 194px;
+  position: relative;
   margin-bottom: 20px;
 }
-
-#cart_section ul li img {
+.checkout_input h4 {
+  margin: 15px 20px;
+  font-weight: bold;
+}
+.checkout_input span {
+  display: block;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 20px;
+}
+.checkout_input span.total {
+  padding: 8px;
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0;
+  border-color: #69C6C0;
+  position: absolute;
+  bottom: 0;
+}
+.checkout_input.green {
+  background: #FAFFEF;
+  border: 1px solid #94B877;
+}
+.checkout_input.green .total {
+  border-color: #94B877;
+}
+.checkout_input.orange {
+  background: #FFF7EF;
+  border: 1px solid #C69569;
+}
+.checkout_input.orange .total {
+  border-color: #C69569;
+}
+.checkout_input .sub_title {
+  font-size: 14px;
+  color: #f50;
+  margin: 15px 20px 10px;
+}
+.checkout_input .sub_title span {
+  display: inline;
+  font-size: 12px;
+  font-weight: normal;
+  color: gray;
+}
+.checkout_input .sub_total {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.checkout_input .sub_total.no_coupon {
+  font-size: 32px;
+  line-height: 100px;
+}
+.checkout_input .coupon {
+  display: none;
+  margin-bottom: 10px;
+  background: #f2f2f2;
+  border: 1px solid #d9d9d9;
+  border-left: none;
+  border-right: none;
+}
+.checkout_input .coupon .code {
+  width: 40%;
+  background: #8EC746;
+  color: white;
   display: inline-block;
-  width: 40px;
+  padding: 4px;
+  font-size: 16px;
+  font-weight: bold;
+}
+.checkout_input .coupon .code .title {
+  color: black;
+  font-size: 11px;
+  text-align: left;
+}
+.checkout_input .coupon .code span {
+  margin-bottom: 2px;
+}
+.checkout_input .coupon .value {
+  display: inline-block;
+  font-size: 18px;
+  font-weight: bold;
+  width: 58%;
   vertical-align: top;
-}
-
-#cart_section ul li div {
-  display: inline-block;
-  width: calc(100% - 44px);
   padding-left: 5px;
+  vertical-align: initial;
 }
 
-#cart_section ul li div span {
+.numberstyle-qty {
+  position: relative;
+  border-radius: 6px;
+  background-color: #FFFFFF;
+  overflow: hidden;
+  box-shadow: 0 2px 6px #d5d5d5;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  margin: 20px auto 10px;
+}
+.numberstyle-qty input,
+.numberstyle-qty .qty-btn {
+  position: relative;
+  display: block;
+  float: left;
+  height: 40px;
+  padding: 0;
+  margin: 0;
+  border: 0px;
+  text-align: center;
+  line-height: 40px;
+  outline: 0;
+  box-shadow: 0px;
+}
+.numberstyle-qty .qty-btn {
+  width: 40px;
+  font-size: 18px;
+  cursor: pointer;
+  z-index: 2;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  transition: all 250ms ease;
+}
+.numberstyle-qty .qty-btn.disabled {
+  cursor: default;
+  color: rgba(116, 116, 116, 0.5019607843);
+}
+.numberstyle-qty input {
+  width: 60px;
+  border-left: 0;
+  border-right: 0;
+  font-size: 24px;
+  font-weight: 700;
+  z-index: 1;
+}
+.numberstyle-qty input:focus {
+  outline: 0;
+  box-shadow: 0px;
+}
+.numberstyle-qty input[type=number] {
+  -moz-appearance: textfield;
+}
+.numberstyle-qty input[type=number]::-webkit-inner-spin-button, .numberstyle-qty input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.info_title {
+  margin-top: 0;
+  font-weight: bold;
+}
+
+.checkout_infomation h5 {
+  font-weight: bold;
+}
+.checkout_infomation span {
+  display: block;
+}
+.checkout_infomation .link_edit {
+  margin-top: 20px;
   display: block;
 }
 
-#cart_section ul li div .quantity {
-  font-size: 0.9em;
-  font-weight: bold;
+.checkout_btn {
+  text-align: right;
 }
 
-#cart_section ul li div .sub_total {
-  font-size: 0.9em;
+.coupon_form {
+  display: none;
+}
+.coupon_form input {
+  line-height: 28px;
+  margin: 5px auto;
+  vertical-align: middle;
+}
+
+/* Trang thanh toán */
+#checkout #status {
+  text-align: right;
+}
+#checkout #status span {
+  padding: 12px 20px;
+  font-size: 16px;
+  border-radius: 8px;
+}
+#checkout #invoice {
+  margin-top: 15px;
+}
+#checkout #invoice h4 {
   font-weight: bold;
 }
-/*# sourceMappingURL=inova.css.map */
+#checkout #invoice table {
+  border-collapse: unset;
+  border-spacing: 0;
+  width: 100%;
+}
+#checkout #invoice table th {
+  border-bottom: 1px solid lightgray;
+  padding: 8px 0;
+  text-align: left;
+}
+#checkout #invoice table tr td {
+  padding: 5px 0;
+}
+#checkout #invoice table .coupon .code {
+  font-size: 12px;
+  background: #cbffcb;
+  color: green;
+  border: 1px solid;
+  padding: 2px 5px;
+  border-radius: 4px;
+}
+#checkout #invoice table .total td {
+  border-top: 1px solid lightgray;
+}
+#checkout #invoice table .final_total td {
+  background: #f2f2f2;
+  border-top: 1px solid #b9b9b9;
+  border-bottom: 1px solid #b9b9b9;
+  padding: 10px 0;
+  font-weight: bold;
+}/*# sourceMappingURL=inova.css.map */

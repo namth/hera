@@ -20,6 +20,7 @@ function cptui_register_my_cpts() {
 		"show_in_rest" => true,
 		"rest_base" => "",
 		"rest_controller_class" => "WP_REST_Posts_Controller",
+		"rest_namespace" => "wp/v2",
 		"has_archive" => false,
 		"show_in_menu" => true,
 		"show_in_nav_menus" => true,
@@ -28,13 +29,91 @@ function cptui_register_my_cpts() {
 		"capability_type" => "post",
 		"map_meta_cap" => true,
 		"hierarchical" => false,
+		"can_export" => true,
 		"rewrite" => [ "slug" => "thiep_moi", "with_front" => true ],
 		"query_var" => true,
-		"supports" => [ "title", "editor", "thumbnail" ],
+		"supports" => [ "title", "editor", "thumbnail", "excerpt" ],
+		"taxonomies" => [ "category", "post_tag" ],
 		"show_in_graphql" => false,
 	];
 
 	register_post_type( "thiep_moi", $args );
+
+	/**
+	 * Post Type: Đơn hàng.
+	 */
+
+	$labels = [
+		"name" => __( "Đơn hàng", "custom-post-type-ui" ),
+		"singular_name" => __( "Đơn hàng", "custom-post-type-ui" ),
+	];
+
+	$args = [
+		"label" => __( "Đơn hàng", "custom-post-type-ui" ),
+		"labels" => $labels,
+		"description" => "",
+		"public" => true,
+		"publicly_queryable" => true,
+		"show_ui" => true,
+		"show_in_rest" => true,
+		"rest_base" => "",
+		"rest_controller_class" => "WP_REST_Posts_Controller",
+		"rest_namespace" => "wp/v2",
+		"has_archive" => false,
+		"show_in_menu" => true,
+		"show_in_nav_menus" => true,
+		"delete_with_user" => false,
+		"exclude_from_search" => false,
+		"capability_type" => "post",
+		"map_meta_cap" => true,
+		"hierarchical" => false,
+		"can_export" => false,
+		"rewrite" => [ "slug" => "inova_order", "with_front" => true ],
+		"query_var" => true,
+		"supports" => [ "title", "editor", "thumbnail" ],
+		"taxonomies" => [ "category" ],
+		"show_in_graphql" => false,
+	];
+
+	register_post_type( "inova_order", $args );
+
+	/**
+	 * Post Type: Mã giảm giá.
+	 */
+
+	$labels = [
+		"name" => __( "Mã giảm giá", "custom-post-type-ui" ),
+		"singular_name" => __( "Mã giảm giá", "custom-post-type-ui" ),
+	];
+
+	$args = [
+		"label" => __( "Mã giảm giá", "custom-post-type-ui" ),
+		"labels" => $labels,
+		"description" => "",
+		"public" => true,
+		"publicly_queryable" => true,
+		"show_ui" => true,
+		"show_in_rest" => true,
+		"rest_base" => "",
+		"rest_controller_class" => "WP_REST_Posts_Controller",
+		"rest_namespace" => "wp/v2",
+		"has_archive" => false,
+		"show_in_menu" => true,
+		"show_in_nav_menus" => true,
+		"delete_with_user" => false,
+		"exclude_from_search" => false,
+		"capability_type" => "post",
+		"map_meta_cap" => true,
+		"hierarchical" => false,
+		"can_export" => false,
+		"rewrite" => [ "slug" => "coupon", "with_front" => true ],
+		"query_var" => true,
+		"supports" => [ "title", "editor", "thumbnail" ],
+		"taxonomies" => [ "category", "post_tag" ],
+		"show_in_graphql" => false,
+	];
+
+	register_post_type( "coupon", $args );
 }
 
 add_action( 'init', 'cptui_register_my_cpts' );

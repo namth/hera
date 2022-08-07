@@ -26,8 +26,12 @@ if (isset($_POST['group_name'])) {
     }
 }
 
+# Khai báo một số biến cần dùng
 $current_user_id = get_current_user_id();
-$cards_array = array();
+$cards_array    = array();
+$total_customer = 0;
+$normal_license = get_field('normal_card', 'user_' . $current_user_id);
+$vip_license    = get_field('vip_card', 'user_' . $current_user_id);
 
 ?>
 <div class="mui-container-fluid">
@@ -42,7 +46,6 @@ $cards_array = array();
                 <h3 class="title_general mui--divider-bottom">Danh sách thiệp mời của nhà trai</h3>
                 <div class="heracard_list mui-row">
                     <?php
-                    
                     $args   = array(
                         'post_type'     => 'thiep_moi',
                         'posts_per_page' => -1,
@@ -61,6 +64,7 @@ $cards_array = array();
                             $cardid = get_field('card_id');
                             $customer = get_field('guest_list');
                             $status = get_field('status');
+                            $_customer = count($customer);
                             
                             if ($image) {
                                 $card_thumbnail = $image;
@@ -68,14 +72,7 @@ $cards_array = array();
                                 $card_thumbnail = get_template_directory_uri() . '/img/no-img.png';
                             }
 
-                            if ($cardid && ($status == "Running")) {
-                                # nếu đã chọn thiệp thì mới tính tiền
-                                $cards_array[] = array (
-                                    'group_name'        => get_the_title(),
-                                    'guest_total'       => count($customer),
-                                    'card_thumbnail'    => $card_thumbnail,
-                                );
-                            }
+                            $total_customer += $_customer;
                     ?>
                             <div class="mui-col-md-3">
                                 <a href="<?php the_permalink(); ?>">
@@ -83,11 +80,15 @@ $cards_array = array();
                                     <div class="images" style="<?php
                                                                 echo 'background: url(' . $card_thumbnail . ') no-repeat 50% 50%;';
                                                                 echo 'background-size: contain;';
-                                                                ?>">
+                                                            ?>">
 
                                     </div>
                                     <div class="info_card">
                                         <?php echo get_the_title(); ?>
+                                        <div class="quantity">
+                                            <i class="fa fa-user-o" aria-hidden="true"></i>
+                                            <?php echo $_customer; ?>
+                                        </div>
                                     </div>
                                 </div>
                                 </a>
@@ -126,6 +127,7 @@ $cards_array = array();
                             $cardid = get_field('card_id');
                             $customer = get_field('guest_list');
                             $status = get_field('status');
+                            $_customer = count($customer);
                             
                             if ($image) {
                                 $card_thumbnail = $image;
@@ -133,14 +135,7 @@ $cards_array = array();
                                 $card_thumbnail = get_template_directory_uri() . '/img/no-img.png';
                             }
 
-                            if ($cardid && ($status == "Running")) {
-                                # nếu đã chọn thiệp thì mới tính tiền
-                                $cards_array[] = array (
-                                    'group_name'        => get_the_title(),
-                                    'guest_total'       => count($customer),
-                                    'card_thumbnail'    => $card_thumbnail,
-                                );
-                            }
+                            $total_customer += $_customer;
                     ?>
                             <div class="mui-col-md-3">
                                 <a href="<?php the_permalink(); ?>">
@@ -148,11 +143,15 @@ $cards_array = array();
                                     <div class="images" style="<?php
                                                                 echo 'background: url(' . $card_thumbnail . ') no-repeat 50% 50%;';
                                                                 echo 'background-size: contain;';
-                                                                ?>">
+                                                            ?>">
 
                                     </div>
                                     <div class="info_card">
                                         <?php echo get_the_title(); ?>
+                                        <div class="quantity">
+                                            <i class="fa fa-user-o" aria-hidden="true"></i>
+                                            <?php echo $_customer; ?>
+                                        </div>
                                     </div>
                                 </div>
                                 </a>
@@ -173,41 +172,25 @@ $cards_array = array();
         </div>
         <div class="mui-col-md-2">
             <div id="cart_section">
-                <?php 
-                if (!empty($cards_array)) {
-                ?>
-                <h4>Tổng số thiệp</h4>
-                <ul>
-                    <?php 
-                    
-                    # hiển thị giỏ hàng, những thiệp chưa thanh toán 
-                    foreach ($cards_array as $card) {
-                    ?>
-                    <li>
-                        <img src="<?php echo $card['card_thumbnail'] ?>" alt="">
-                        <div>
-                            <span><?php echo $card['group_name'] ?></span>
-                            <span class="quantity mui--divider-bottom"><?php echo $card['guest_total'] ?> x 3.500 đ</span>
-                            <span class="sub_total">Tổng: 105.000 đ</span>
-                        </div>
-                    </li>
-                    <?php 
-                    }
-                    ?>
-                </ul>
-                <?php
-                }
-                ?>
+                
             </div>
         </div>
     </div>
 </div>
 
 <div class="mui-panel" id="cart_bar">
-    <span>Ban co: 115 thiep.</span>
-    <span>Tong tien: 456.000d</span>
-    <a href="#">Xem chi tiet</a>
-    <button class="mui-btn mui-btn--danger">Thanh toán</button>
+    <?php 
+    
+    ?>
+    <div class="card_total">Bạn có <b><?php echo $total_customer; ?></b> thiệp</div>
+    <div class="card_license">
+        <?php 
+            
+        ?>
+        <span>Thiệp thường: 0<?php echo $normal_license; ?></span>
+        <span>Thiệp VIP: 0<?php echo $vip_license; ?></span>
+    </div>
+    <a href="#" class="card_link"><i class="fa fa-cart-plus" aria-hidden="true"></i> Mua thêm thiệp</a>
 </div>
 
 <div class="mui-col-md-4 mui-col-sm-12" id="create_card_form">

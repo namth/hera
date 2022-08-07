@@ -122,3 +122,27 @@ function replace_content($arr_replace, $content)
         return $content;
     }
 }
+
+# Tìm kiếm bài post theo từ khoá nằm trong customfield cụ thể
+# Tham số truyền vào $key: là tên customfield (dạng slug) không phải dạng field_...
+# Giá trị trả về: post_ID hoặc false
+function search_customfield($post_type, $search, $key){
+    $args   = array(
+        'post_type' => $post_type,
+        'meta_query' => array(
+            array(
+                'key'     => $key,
+                'value'   => $search,
+                'compare' => '='
+            ),
+        )
+    );
+    $query = new WP_Query($args);
+    if ($query->have_posts()) {
+        while ($query->have_posts()) {
+            $query->the_post();
+            return get_the_ID();
+        } wp_reset_postdata();
+    } else return false;
+}
+
