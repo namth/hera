@@ -898,6 +898,7 @@ img {
 }
 #checkout #invoice {
   margin-top: 15px;
+  margin-bottom: 15px;
 }
 #checkout #invoice h4 {
   font-weight: bold;
@@ -915,6 +916,9 @@ img {
 #checkout #invoice table tr td {
   padding: 5px 0;
 }
+#checkout #invoice table .coupon {
+  color: #b0b0b0;
+}
 #checkout #invoice table .coupon .code {
   font-size: 12px;
   background: #cbffcb;
@@ -923,8 +927,14 @@ img {
   padding: 2px 5px;
   border-radius: 4px;
 }
+#checkout #invoice table .total {
+  color: #b0b0b0;
+}
 #checkout #invoice table .total td {
   border-top: 1px solid lightgray;
+}
+#checkout #invoice table .sub_total td {
+  border-color: lightgray;
 }
 #checkout #invoice table .final_total td {
   background: #f2f2f2;
@@ -932,4 +942,46 @@ img {
   border-bottom: 1px solid #b9b9b9;
   padding: 10px 0;
   font-weight: bold;
+}
+#checkout #payment .mui-tabs__bar li.mui--is-active {
+  border-bottom: none;
+}
+#checkout #payment .mui-tabs__bar li a {
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+}
+#checkout #payment .mui-tabs__bar li.bank_transfer {
+  padding-right: 5px;
+}
+#checkout #payment .mui-tabs__bar li.bank_transfer a {
+  background: #0571AD;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+#checkout #payment .mui-tabs__bar li.pay_momo {
+  padding-left: 5px;
+}
+#checkout #payment .mui-tabs__bar li.pay_momo a {
+  background: #A50064;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+#checkout #payment #bank_transfer {
+  border: 1px solid #0571ad;
+  padding: 15px;
+}
+#checkout #payment #bank_transfer .payment_notification {
+  background: #DEF1FF;
+  padding: 5px 20px;
+}
+#checkout #payment #pay_momo {
+  border: 1px solid #A50064;
+  padding: 8px 15px;
+}
+#checkout #payment #pay_momo form {
+  text-align: center;
+}
+#checkout #payment #pay_momo form button {
+  background: #A50064;
 }/*# sourceMappingURL=inova.css.map */

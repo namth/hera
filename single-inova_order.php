@@ -1,13 +1,11 @@
 <?php 
-get_header();
-get_template_part('header', 'topbar');
-
+print_r($_POST);
 if (have_posts()) {
     while (have_posts()) {
         the_post();
 
         # get data from invoice
-        $id_invoice = get_the_ID();
+        $id_invoice = 'HD' . sprintf('%06d', get_the_ID());
         $customer = get_field('customer');
         $status = get_field('status');
         $normal_cards = get_field('normal_cards');
@@ -30,6 +28,64 @@ if (have_posts()) {
         $coupon_name = get_field('coupon_name', $coupon_id);
         $coupon_type = get_field('coupon_type', $coupon_id);
         $coupon_value = get_field('coupon_value', $coupon_id);
+
+        if ( isset($_POST['momo_field']) &&
+        wp_verify_nonce($_POST['momo_field'], 'momo') ) {
+            
+            $config = file_get_contents(get_template_directory_uri() . '/inc/config.json');
+            $array = json_decode($config, true);
+            
+            
+            $endpoint = "https://test-payment.momo.vn/gw_payment/transactionProcessor";
+            
+            print_r($array);
+            $partnerCode = $array["partnerCode"];
+            $accessKey = $array["accessKey"];
+            $secretKey = $array["secretKey"];
+            $orderInfo = "Thanh toán qua MoMo";
+            $amount = $final_total;
+            $orderId = time() . "";
+            $returnUrl = "http://localhost/hera/inova_order/000162_hera/";
+            $notifyurl = "http://localhost/hera/inova_order/000162_hera/";
+            // Lưu ý: link notifyUrl không phải là dạng localhost
+            $extraData = "";
+
+            $requestId = time() . "";
+            $requestType = "captureMoMoWallet";
+            
+            //before sign HMAC SHA256 signature
+            $rawHash = "partnerCode=" . $partnerCode . 
+                        "&accessKey=" . $accessKey . 
+                        "&requestId=" . $requestId . 
+                        "&amount=" . $amount . 
+                        "&orderId=" . $orderId . 
+                        "&orderInfo=" . $orderInfo . 
+                        "&returnUrl=" . $returnUrl . 
+                        "&notifyUrl=" . $notifyurl . 
+                        "&extraData=" . $extraData;
+            $signature = hash_hmac("sha256", $rawHash, $secretKey);
+            $data = array('partnerCode' => $partnerCode,
+                'accessKey' => $accessKey,
+                'requestId' => $requestId,
+                'requestType' => $requestType,
+                'amount' => $amount,
+                'orderId' => $orderId,
+                'orderInfo' => $orderInfo,
+                'returnUrl' => $returnUrl,
+                'notifyUrl' => $notifyurl,
+                'extraData' => $extraData,
+                'signature' => $signature);
+            $result = execPostRequest($endpoint, json_encode($data));
+            $jsonResult = json_decode($result, true);  // decode json
+            
+            print_r($jsonResult);
+            // header('Location: ' . $jsonResult['payUrl']);
+        }
+
+        get_header();
+        get_template_part('header', 'topbar');
+
+
 ?>
 <div class="mui-container-fluid">
     <div class="mui-row">
@@ -86,7 +142,7 @@ if (have_posts()) {
                                                 <td>Thiệp thường</td>
                                                 <td>" . $normal_cards . "</td>
                                                 <td>" . number_format($normal_price) . " ₫</td>
-                                                <td>" . number_format($normal_cards * $normal_price) . "</td>
+                                                <td>" . number_format($normal_cards * $normal_price) . " ₫</td>
                                             </tr>";
                                     
                                     }
@@ -121,8 +177,8 @@ if (have_posts()) {
                                     if ($sub_total) {
                                         echo "<tr class='sub_total'>
                                                 <td colspan='2'></td>
-                                                <td>Tổng tiền sau giảm giá</td>
-                                                <td>" . number_format($sub_total) . " ₫</td>
+                                                <td style='border-top: 1px solid lightgray;'>Tổng tiền sau giảm giá</td>
+                                                <td style='border-top: 1px solid lightgray;'>" . number_format($sub_total) . " ₫</td>
                                             </tr>";
                                     
                                     }
@@ -130,36 +186,38 @@ if (have_posts()) {
                                 <tr class="vat">
                                     <td colspan="2"></td>
                                     <td>Thuế VAT (10%)</td>
-                                    <td><?php echo number_format($vat); ?></td>
+                                    <td><?php echo number_format($vat) . " ₫"; ?></td>
                                 </tr>
                                 <tr class="final_total">
                                     <td colspan="2"></td>
                                     <td>Tổng tiền thanh toán</td>
-                                    <td><?php echo number_format($final_total); ?></td>
+                                    <td><?php echo number_format($final_total) . " ₫"; ?></td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                     <div class="mui-col-md-12" id="payment">
                         <ul class="mui-tabs__bar mui-tabs__bar--justified">
-                            <li class="mui--is-active"><a data-mui-toggle="tab" data-mui-controls="bank_transfer">Tab-1</a></li>
-                            <li><a data-mui-toggle="tab" data-mui-controls="pay_momo">Tab-2</a></li>
+                            <li class="mui--is-active bank_transfer"><a data-mui-toggle="tab" data-mui-controls="bank_transfer">CHUYỂN KHOẢN NGÂN HÀNG</a></li>
+                            <li class="pay_momo"><a data-mui-toggle="tab" data-mui-controls="pay_momo">THANH TOÁN QUA MOMO</a></li>
                         </ul>
                         <div class="mui-tabs__pane mui--is-active" id="bank_transfer">
                             <div class="payment_notification">
-                                <h5>Lưu ý</h5>
-                                <p>Để hệ thống tự động kích hoạt ngay trong 1 phút (ngay sau khi AZDIGI nhận đủ thanh toán qua ngân hàng), quý khách vui lòng thực hiện đủ các bước sau:
+                                <h5><b>Lưu ý</b></h5>
+                                <p>Để hệ thống tự động kích hoạt ngay trong 1 phút (ngay sau khi chúng tôi nhận đủ thanh toán qua ngân hàng), quý khách vui lòng thực hiện đủ các bước sau:</p>
+                                <ul>
+                                    <li>Nhập chính xác <b><?php echo $id_invoice; ?></b> vào nội dung chuyển khoản.</li>
+                                    <li>Chuyển khoản đúng số tiền là <b><?php echo number_format($final_total) . " ₫"; ?></b> để hệ thống tự nhận diện kích hoạt ngay.</li>
+                                </ul>
 
-                                    Nhập chính xác HD179410 vào nội dung chuyển khoản.
-                                    Chuyển khoản đúng số tiền là 3,049,200 đ để hệ thống tự nhận diện kích hoạt ngay.
-
-                                    Nếu quý khách chuyển khoản khác ngân hàng có thể dùng hình thức chuyển khoản nhanh để được kích hoạt ngay.
-
-                                    Quý khách nhận hóa đơn VAT vui lòng gửi yêu cầu tại đây. Hóa đơn sẽ được gửi cho quý khách trong vòng 7 ngày kể từ ngày yêu cầu.</p>
+                                <p>Nếu quý khách chuyển khoản khác ngân hàng có thể dùng hình thức chuyển khoản nhanh để được kích hoạt ngay.</p>
                             </div>
                         </div>
                         <div class="mui-tabs__pane" id="pay_momo">
-                            <button class="mui-btn hera-btn">Thanh toan momo</button>
+                            <form action="#" method="POST">
+                                <?php wp_nonce_field('momo', 'momo_field'); ?>
+                                <button class="mui-btn hera-btn">QR CODE</button>
+                            </form>
                         </div>
                     </div>
                 </div>
