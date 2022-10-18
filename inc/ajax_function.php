@@ -14,8 +14,8 @@ function edit_guest(){
         while (have_rows('guest_list', $groupid)) {
             the_row();
 
-            $stt = get_sub_field('stt');
-            if ($stt == $guestid) {
+            $row_index = get_row_index();
+            if ($row_index == $guestid) {
                 $xung_ho = explode('/', get_sub_field('xung_ho'));
                 $data = array(
                     'id'            => $guestid,
@@ -268,7 +268,6 @@ function listCardFromAPI() {
     $api_base_url = get_field('api_base_url', 'option');
     $api_url = $api_base_url . '/wp-json/inova/v1/cards';
     $listcards = inova_api($api_url, $token, 'GET', '');
-    // print_r($listcards);
 
     if ($listcards->code === "rest_forbidden") {
         ?>
@@ -342,7 +341,7 @@ function deleteCustomer() {
     $data = json_decode(inova_encrypt($_POST['content'], 'd'));
 
     /* Kiểm tra tính xác thực */
-    if (wp_verify_nonce($data->nonce, 'delcustomer_' . $data->stt)) {
+    if (wp_verify_nonce($data->nonce, 'delcustomer_' . $data->row_index)) {
         /* Delete customer from group post by id */
         delete_row('field_61066efde7dbc', $data->row_index, $data->groupid);
         echo true;
@@ -434,8 +433,8 @@ function acceptInvite() {
             while (have_rows('guest_list', $group)) {
                 the_row();
         
-                $stt = get_sub_field('stt');
-                if ($stt != $invitee) {
+                $row_index = get_row_index();
+                if ($row_index != $invitee) {
                     continue;
                 } else {
                     # nếu tìm thấy khách thì update thông tin rồi break ra khỏi vòng lặp
@@ -544,29 +543,19 @@ function createInvoice() {
     } else if ($coupon->type == 'fix'){
         $sub_total = ($total > $coupon->value)?($total - $coupon->value):0;
     } else {
-        $sub_total = 0;
+        $sub_total = $total;
     }
     $vat_total = $sub_total * $vat / 100;
     $final_total = $sub_total + $vat_total;
+    $order_code = incrementalHash(8);
 
     # Tạo hoá đơn mới
     $args = array(
-        'post_title'    => "Hoa don test",
+        'post_title'    => $order_code,
         'post_status'   => 'publish',
         'post_type'     => 'inova_order',
     );
     $inserted = wp_insert_post($args);
-
-    # Thay đổi title bằng chính số ID của bài post
-    $invoice_title = '#' . sprintf('%06d', $inserted) . ' - ' . $current_user->display_name;
-
-    $post_update = array(
-        'ID'         => $inserted,
-        'post_title' => $invoice_title,
-        'post_name'  => sprintf('%06d', $inserted) . '_' . $current_user->display_name,
-    );
-
-    wp_update_post( $post_update );
 
     # Update dữ liệu vào hoá đơn mới tạo
     update_field('field_62e6ae7175ee5', $current_user->ID, $inserted); # customer

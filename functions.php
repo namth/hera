@@ -159,11 +159,117 @@ function execPostRequest($url, $data)
             'Content-Type: application/json',
             'Content-Length: ' . strlen($data))
     );
-    curl_setopt($ch, CURLOPT_TIMEOUT, 5);
-    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 60);
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 60);
     //execute post
     $result = curl_exec($ch);
     //close connection
     curl_close($ch);
     return $result;
+}
+
+/* 
+* Generate 6 charactor by time to create order id
+*/
+function incrementalHash($len = 6){
+    $seed = str_split('abcdefghijklmnopqrstuvwxyz'
+                 .'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+                 .'0123456789'); // and any other characters
+    shuffle($seed);
+    $rand = '';
+    foreach (array_rand($seed, $len) as $k) $rand .= $seed[$k];
+    return $rand;
+}
+
+/* 
+* Check xem thanh toán nào quá hạn 7 ngày thì chuyển sang trạng thái huỷ thanh toán
+*/
+function check_payment_status(){
+    $status = 'Chưa thanh toán';
+    $now = current_time('timestamp', 7);
+
+    /* query tat ca nhung don hang chua thanh toan */
+    $args   = array(
+        'post_type'     => 'inova_order',
+        'posts_per_page' => -1,
+        'post_status'   => 'publish',
+        'meta_query'    => array(
+            array(
+                'key'       => 'status',
+                'value'     => $status,
+                'compare'   => '=',
+            ),
+        ),
+    );
+
+    $query = new WP_Query($args);
+
+    if ($query->have_posts()) {
+        while ($query->have_posts()) {
+            $query->the_post();
+
+            /* Kiểm tra ngày hiện tại và ngày tạo đơn có quá 7 ngày không */
+            $start_date = strtotime(get_the_date('d-m-Y'));
+            $end_date = strtotime("+7 day", $start_date);
+
+            # miss deadline
+            if ($now > $end_date) {
+                # cập nhật trạng thái huỷ
+                update_field('field_62eb93b78ca79', 'Huỷ'); # status
+            }
+        }
+    }
+}
+
+# reading excel PHPExcel
+function wp_reading_excel($tmp_name)
+{
+    try {
+        $inputFileType = PHPExcel_IOFactory::identify($tmp_name);
+        $objReader = PHPExcel_IOFactory::createReader($inputFileType);
+        $objPHPExcel = $objReader->load($tmp_name);
+    } catch (Exception $e) {
+        die('Lỗi không thể đọc file "' . pathinfo($tmp_name, PATHINFO_BASENAME) . '": ' . $e->getMessage());
+    }
+
+    // Lấy sheet hiện tại
+    $sheet = $objPHPExcel->getSheet(0);
+
+    // Lấy tổng số dòng của file
+    $highestRow = $sheet->getHighestRow();
+    // Lấy tổng số cột của file
+    $highestColumn = $sheet->getHighestColumn();
+
+    //  Thực hiện việc lặp qua từng dòng của file, để lấy thông tin
+    for ($row = 1; $row <= $highestRow; $row++) {
+        // Lấy dữ liệu từng dòng và đưa vào mảng $rowData
+        $data = $sheet->rangeToArray('A' . $row . ':' . $highestColumn . $row, NULL, TRUE, FALSE);
+        if ($data[0][0]) {
+            $rowData[] = $data[0];
+        }
+    }
+
+    return $rowData;
+}
+
+# Search groupID theo tên và userID
+function search_group($groupName, $userID) {
+    $author_query_id = array(
+        'author'    => $userID, 
+        'post_type' => 'thiep_moi',
+        's'         => $groupName,
+    );
+    $query = new WP_Query($author_query_id);
+
+    if ($query->have_posts()) {
+        while ($query->have_posts()) {
+            $query->the_post();
+
+            if (get_the_title() == $groupName){
+                return get_the_ID();
+            }
+        }
+    } else {
+        return false;
+    }
 }

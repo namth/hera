@@ -4,6 +4,7 @@
 */
 get_header();
 get_template_part('header', 'topbar');
+$current_user_id = get_current_user_id();
 
 $normal_price = get_field('normal_price','option');
 $vip_price = get_field('vip_price','option');
@@ -19,7 +20,34 @@ $vip_price = get_field('vip_price','option');
             <div class="mui-panel" id="checkout">
                 <h3 class="title_general mui--divider-bottom">Mua thiệp cưới</h3>
                 <p>Bạn hãy chọn số lượng của từng loại thiệp mua ở box phía bên dưới.</p>
+                <div class="notification">
+                <?php 
+                    $status = 'Chưa thanh toán';
+                    $args   = array(
+                        'post_type'     => 'inova_order',
+                        'posts_per_page' => 20,
+                        'paged'         => $paged,
+                        'author'        => $current_user_id,
+                        'post_status'   => 'publish',
+                        'meta_query'    => array(
+                            array(
+                                'key'       => 'status',
+                                'value'     => $status,
+                                'compare'   => '=',
+                            ),
+                        ),
+                    );
 
+                    $query = new WP_Query($args);
+
+                    if ($query->have_posts()) {
+                        echo "<span>Bạn đang có " . $query->post_count . " hoá đơn chưa thanh toán</span>";
+                        echo "<a class='card_link' href='". get_bloginfo('url') ."/danh-sach-don-hang/'>
+                                <i class='fa fa-cart-plus' aria-hidden='true'></i>
+                                Thanh toán ngay</a>";
+                    }
+                ?>
+                </div>
                 <form action="#" method="POST">
                     <div class="mui-row">
                         <div class="mui-col-md-8">
@@ -28,7 +56,7 @@ $vip_price = get_field('vip_price','option');
                                     <div class="checkout_input green">
                                         <h4>Thiệp thường</h4>
                                         <input class="numberstyle" type="number" name="normal_card_qtt" value="0" min="0" step="10" data-price="5000">
-                                        <span>5.000 ₫ / thiệp</span>
+                                        <span><?php echo number_format($normal_price); ?> ₫ / thiệp</span>
                                         <span class="total  mui--divider-top">0 ₫</span>
                                     </div>
                                 </div>
@@ -36,7 +64,7 @@ $vip_price = get_field('vip_price','option');
                                     <div class="checkout_input orange">
                                         <h4>Thiệp VIP</h4>
                                         <input class="numberstyle" type="number" name="vip_card_qtt" value="0" min="0" step="10" data-price="10000">
-                                        <span>10.000 ₫ / thiệp</span>
+                                        <span><?php echo number_format($vip_price); ?> ₫ / thiệp</span>
                                         <span class="total  mui--divider-top">0 ₫</span>
                                     </div>
                                 </div>
@@ -50,7 +78,7 @@ $vip_price = get_field('vip_price','option');
                                                 <span class="title">
                                                     Mã giảm giá
                                                 </span>
-                                                <span class="coupon_name">MSKJ2022</span>
+                                                <span class="coupon_name"></span>
                                             </div>
                                             <div class="value"></div>
                                             <input type="hidden" name="coupon" value="">

@@ -255,15 +255,15 @@ $active_bride   = get_field('active_bride', 'user_' . $current_user_id);
                             <form class="mui-form" method="POST">
                                 <h4>Địa điểm tổ chức hôn lễ tại nhà trai</h4>
                                 <div class="mui-textfield">
-                                    <input type="text" name="field_62b12acd93a81" value="<?php echo $groom_wedding_adress; ?>">
+                                    <input type="text" name="field_62b12acd93a81" value="<?php if ($groom_wedding_adress) echo $groom_wedding_adress; ?>">
                                     <label for="">Địa điểm</label>
                                 </div>
                                 <div class="mui-textfield">
-                                    <input type="datetime-local" name="field_62b12b8f93a83" value="<?php echo $_groom_wedding_time->format('Y-m-d\TH:i:s'); ?>">
+                                    <input type="datetime-local" name="field_62b12b8f93a83" value="<?php if ($_groom_wedding_time) echo $_groom_wedding_time->format('Y-m-d\TH:i:s'); ?>">
                                     <label for="">Thời gian (dương lịch)</label>
                                 </div>
                                 <div class="mui-textfield">
-                                    <input type="datetime-local" name="field_62b135cb93a85" value="<?php echo $_groom_wedding_moontime->format('Y-m-d\TH:i:s'); ?>">
+                                    <input type="datetime-local" name="field_62b135cb93a85" value="<?php if ($_groom_wedding_moontime) echo $_groom_wedding_moontime->format('Y-m-d\TH:i:s'); ?>">
                                     <label for="">Thời gian (âm lịch)</label>
                                 </div>
                                 <?php
@@ -279,15 +279,15 @@ $active_bride   = get_field('active_bride', 'user_' . $current_user_id);
                             <form class="mui-form" method="POST">
                                 <h4>Địa điểm dự tiệc của nhà trai</h4>
                                 <div class="mui-textfield">
-                                    <input type="text" name="field_62b12b4593a82" value="<?php echo $groom_party_address; ?>">
+                                    <input type="text" name="field_62b12b4593a82" value="<?php if ($groom_party_address) echo $groom_party_address; ?>">
                                     <label for="">Địa điểm</label>
                                 </div>
                                 <div class="mui-textfield">
-                                    <input type="datetime-local" name="field_62b12bb293a84" value="<?php echo $_groom_party_time->format('Y-m-d\TH:i:s'); ?>">
+                                    <input type="datetime-local" name="field_62b12bb293a84" value="<?php if ($_groom_party_time) echo $_groom_party_time->format('Y-m-d\TH:i:s'); ?>">
                                     <label for="">Thời gian (dương lịch)</label>
                                 </div>
                                 <div class="mui-textfield">
-                                    <input type="datetime-local" name="field_62b13605bfa89" value="<?php echo $_groom_party_moontime->format('Y-m-d\TH:i:s'); ?>">
+                                    <input type="datetime-local" name="field_62b13605bfa89" value="<?php if ($_groom_party_moontime) echo $_groom_party_moontime->format('Y-m-d\TH:i:s'); ?>">
                                     <label for="">Thời gian (âm lịch)</label>
                                 </div>
                                 <?php
@@ -303,15 +303,15 @@ $active_bride   = get_field('active_bride', 'user_' . $current_user_id);
                             <form class="mui-form" method="POST">
                                 <h4>Địa điểm tổ chức lễ vu quy tại nhà gái</h4>
                                 <div class="mui-textfield">
-                                    <input type="text" name="field_62b1363fb06a6" value="<?php echo $bride_wedding_adress; ?>">
+                                    <input type="text" name="field_62b1363fb06a6" value="<?php if ($bride_wedding_adress) echo $bride_wedding_adress; ?>">
                                     <label for="">Địa điểm</label>
                                 </div>
                                 <div class="mui-textfield">
-                                    <input type="datetime-local" name="field_62b1363fb06af" value="<?php echo $_bride_wedding_time->format('Y-m-d\TH:i:s'); ?>">
+                                    <input type="datetime-local" name="field_62b1363fb06af" value="<?php if ($_bride_wedding_time) echo $_bride_wedding_time->format('Y-m-d\TH:i:s'); ?>">
                                     <label for="">Thời gian (dương lịch)</label>
                                 </div>
                                 <div class="mui-textfield">
-                                    <input type="datetime-local" name="field_62b1363fb06b7" value="<?php echo $_bride_wedding_moontime->format('Y-m-d\TH:i:s'); ?>">
+                                    <input type="datetime-local" name="field_62b1363fb06b7" value="<?php if ($_bride_wedding_moontime) echo $_bride_wedding_moontime->format('Y-m-d\TH:i:s'); ?>">
                                     <label for="">Thời gian (âm lịch)</label>
                                 </div>
                                 <?php
@@ -327,15 +327,15 @@ $active_bride   = get_field('active_bride', 'user_' . $current_user_id);
                             <form class="mui-form" method="POST">
                                 <h4>Địa điểm dự tiệc của nhà gái</h4>
                                 <div class="mui-textfield">
-                                    <input type="text" name="field_62b1363fb06bf" value="<?php echo $bride_party_address; ?>">
+                                    <input type="text" name="field_62b1363fb06bf" value="<?php if ($bride_party_address) echo $bride_party_address; ?>">
                                     <label for="">Địa điểm</label>
                                 </div>
                                 <div class="mui-textfield">
-                                    <input type="datetime-local" name="field_62b1363fb06c7" value="<?php echo $_bride_party_time->format('Y-m-d\TH:i:s'); ?>">
+                                    <input type="datetime-local" name="field_62b1363fb06c7" value="<?php if ($_bride_party_time) echo $_bride_party_time->format('Y-m-d\TH:i:s'); ?>">
                                     <label for="">Thời gian (dương lịch)</label>
                                 </div>
                                 <div class="mui-textfield">
-                                    <input type="datetime-local" name="field_62b1363fb06cf" value="<?php echo $_bride_party_moontime->format('Y-m-d\TH:i:s'); ?>">
+                                    <input type="datetime-local" name="field_62b1363fb06cf" value="<?php if ($_bride_party_moontime) echo $_bride_party_moontime->format('Y-m-d\TH:i:s'); ?>">
                                     <label for="">Thời gian (âm lịch)</label>
                                 </div>
                                 <?php

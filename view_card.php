@@ -31,8 +31,8 @@ if (have_rows('guest_list', $group)) {
     while (have_rows('guest_list', $group)) {
         the_row();
 
-        $stt = get_sub_field('stt');
-        if ($stt != $customer) {
+        $row_index = get_row_index();
+        if ($row_index != $customer) {
             continue;
         } else {
             # nếu tìm thấy khách thì lấy thông tin rồi break ra khỏi vòng lặp
@@ -85,11 +85,15 @@ if ($cardid) {
     <head>
         <meta charset="utf-8">
         <title><?php bloginfo('name'); ?> &raquo; <?php is_front_page() ? bloginfo('description') : wp_title(''); ?></title>
-        <meta content="Best Free Open Source Responsive Websites Builder" name="description">
+        <meta content="Thiệp cưới online cao cấp HERA" name="description">
 
         <link rel="icon" href="<?php echo get_template_directory_uri(); ?>/img/favicon.png" type="image/x-icon"/>
         <link rel="shortcut icon" href="<?php echo get_template_directory_uri(); ?>/img/favicon.png" type="image/x-icon"/>
-        
+        <?php echo $mycard->css; ?>
+
+        <?php 
+            if ($mycard->type != 'HTML') {
+        ?>
         <style>
             #function_action a {
                 display: inline-block;
@@ -119,8 +123,10 @@ if ($cardid) {
                 color: #950202;
             }
         </style>
-        <?php wp_head() ?>
-        
+        <?php 
+            }
+            wp_head() 
+        ?>
     </head>
         <body>
         <?php
@@ -132,7 +138,10 @@ if ($cardid) {
             echo '<input type="hidden" name="invitee" value="' . $_invitee . '">';
         ?>
         </body>
-        <?php wp_footer(); ?>
+        <?php 
+            echo $mycard->js;
+            wp_footer(); 
+        ?>
     </html>
     <?php
 } else {

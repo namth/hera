@@ -1,5 +1,5 @@
 <?php 
-print_r($_POST);
+// print_r($_POST);
 if (have_posts()) {
     while (have_posts()) {
         the_post();
@@ -37,16 +37,17 @@ if (have_posts()) {
             
             
             $endpoint = "https://test-payment.momo.vn/gw_payment/transactionProcessor";
+            // $endpoint = "https://test-payment.momo.vn/v2/gateway/api/create";
             
-            print_r($array);
+            // print_r($array);
             $partnerCode = $array["partnerCode"];
             $accessKey = $array["accessKey"];
             $secretKey = $array["secretKey"];
             $orderInfo = "Thanh toán qua MoMo";
             $amount = $final_total;
             $orderId = time() . "";
-            $returnUrl = "http://localhost/hera/inova_order/000162_hera/";
-            $notifyurl = "http://localhost/hera/inova_order/000162_hera/";
+            $returnUrl = get_permalink();
+            $notifyurl = $returnUrl;
             // Lưu ý: link notifyUrl không phải là dạng localhost
             $extraData = "";
 
@@ -54,7 +55,8 @@ if (have_posts()) {
             $requestType = "captureMoMoWallet";
             
             //before sign HMAC SHA256 signature
-            $rawHash = "partnerCode=" . $partnerCode . 
+            $rawHash = 
+                        "partnerCode=" . $partnerCode . 
                         "&accessKey=" . $accessKey . 
                         "&requestId=" . $requestId . 
                         "&amount=" . $amount . 
@@ -64,6 +66,8 @@ if (have_posts()) {
                         "&notifyUrl=" . $notifyurl . 
                         "&extraData=" . $extraData;
             $signature = hash_hmac("sha256", $rawHash, $secretKey);
+            echo "Signature: ";
+            print_r($signature);
             $data = array('partnerCode' => $partnerCode,
                 'accessKey' => $accessKey,
                 'requestId' => $requestId,
@@ -75,9 +79,10 @@ if (have_posts()) {
                 'notifyUrl' => $notifyurl,
                 'extraData' => $extraData,
                 'signature' => $signature);
-            $result = execPostRequest($endpoint, json_encode($data));
-            $jsonResult = json_decode($result, true);  // decode json
+            $result = wp_remote_post($endpoint, $data);
+            $jsonResult = json_decode(wp_remote_retrieve_body($result));
             
+            echo "Ket qua goi API: ";
             print_r($jsonResult);
             // header('Location: ' . $jsonResult['payUrl']);
         }
@@ -95,8 +100,15 @@ if (have_posts()) {
             ?>
         </div>
         <div class="mui-col-md-10">
+            <div class="breadcrumb">
+                <a href="<?php echo get_bloginfo('url'); ?>">Trang chủ</a>
+                <i class="fa fa-chevron-right"></i>
+                <a href="<?php echo get_bloginfo('url') ."/danh-sach-don-hang/"; ?>">Danh sách hoá đơn</a>
+                <i class="fa fa-chevron-right"></i>
+                <span><?php echo get_the_title(); ?></span>
+            </div>
             <div class="mui-panel" id="checkout">
-                <h3 class="title_general mui--divider-bottom">Hoá đơn số <?php echo get_the_title(); ?></h3>
+                <h3 class="title_general mui--divider-bottom">Mã đơn hàng: <b><?php echo get_the_title(); ?></b></h3>
                 <div class="mui-row">
                     <div class="mui-col-md-6">
                         <table>
@@ -153,7 +165,6 @@ if (have_posts()) {
                                                 <td>" . number_format($vip_price) . " ₫</td>
                                                 <td>" . number_format($vip_cards * $vip_price) . " ₫</td>
                                             </tr>";
-                                    
                                     }
                                 ?>
                                 <tr class="total">
@@ -174,7 +185,7 @@ if (have_posts()) {
                                                 <td>" . $coupon . "</td>
                                             </tr>";
                                     }
-                                    if ($sub_total) {
+                                    if ($sub_total && ($sub_total!=$total)) {
                                         echo "<tr class='sub_total'>
                                                 <td colspan='2'></td>
                                                 <td style='border-top: 1px solid lightgray;'>Tổng tiền sau giảm giá</td>
@@ -196,6 +207,9 @@ if (have_posts()) {
                             </tbody>
                         </table>
                     </div>
+                    <?php 
+                        if ($status=="Chưa thanh toán") {
+                    ?>
                     <div class="mui-col-md-12" id="payment">
                         <ul class="mui-tabs__bar mui-tabs__bar--justified">
                             <li class="mui--is-active bank_transfer"><a data-mui-toggle="tab" data-mui-controls="bank_transfer">CHUYỂN KHOẢN NGÂN HÀNG</a></li>
@@ -214,12 +228,15 @@ if (have_posts()) {
                             </div>
                         </div>
                         <div class="mui-tabs__pane" id="pay_momo">
-                            <form action="#" method="POST">
+                            <form action="#" method="POST" enctype="multipart/form-data">
                                 <?php wp_nonce_field('momo', 'momo_field'); ?>
                                 <button class="mui-btn hera-btn">QR CODE</button>
                             </form>
                         </div>
                     </div>
+                    <?php 
+                        }
+                    ?>
                 </div>
             </div>
         </div>

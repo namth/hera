@@ -68,5 +68,6 @@ function getHTML($cardid){
     return $mycard->html;
 }
 
-# chạy cronjob để refresh_token hàng ngày.
+# tạo hook cronjob để refresh_token hàng ngày.
 add_action( 'daily_refresh_token', 'refresh_token' );
+add_action( 'daily_check_payment_status', 'check_payment_status' );

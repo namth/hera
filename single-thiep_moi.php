@@ -31,45 +31,38 @@ if (
     
         if ($guest_name) {
             $row_update = array(
-                'stt'           => $guest_id,
                 'name'          => $guest_name,
                 'guest_attach'  => $guest_attach,
                 'xung_ho'       => $vai_ve . "/" . $xung_ho,
                 'phone'         => $sdt,
                 'sent'          => false,
                 'joined'        => false,
-                'thanh_toan'    => false,
             );
     
             add_row('field_61066efde7dbc', $row_update);
-            update_field('field_610ffbbe6d701', $guest_id);
         }
     } else {
         # if you are in update mode
-        $guestid = $_POST['guestid'];
+        $guestid = $_POST["guestid"];
 
         # check position of guest where want to update
         if ($guest_name) {
-            if (have_rows('guest_list') && $guest_id) {
+            if (have_rows('guest_list') && $guestid) {
                 while (have_rows('guest_list')) {
                     the_row();
                     
-                    $stt        = get_sub_field('stt');
                     $sent       = get_sub_field('sent');
                     $joined     = get_sub_field('joined');
-                    $thanh_toan = get_sub_field('thanh_toan');
+                    $row        = get_row_index();
                     
-                    if ($stt == $guestid) {
-                        $row = get_row_index();
+                    if ($row == $guestid) {
                         $row_update = array(
-                            'stt'           => $guest_id,
                             'name'          => $guest_name,
                             'guest_attach'  => $guest_attach,
                             'xung_ho'       => $vai_ve . "/" . $xung_ho,
                             'phone'         => $sdt,
                             'sent'          => $sent,
                             'joined'        => $joined,
-                            'thanh_toan'    => $thanh_toan,
                         );
                                                 
                         update_row('field_61066efde7dbc', $row, $row_update);
@@ -118,6 +111,7 @@ if (have_posts()) {
         )), 'e');
 
         $link_select_card = get_bloginfo('url') . '/danh-sach-mau/?g=' . $data_token;
+        $link_upload = get_bloginfo('url') . '/tai-khach-hang-qua-file-excel/?g=' . $data_token;
 ?>
         <div class="mui-container-fluid">
             <div class="mui-row">
@@ -170,8 +164,8 @@ if (have_posts()) {
                                 <button class="mui-btn hera-btn" onclick="activateModal()">
                                     <i class="fa fa-user-plus"></i> Thêm mới
                                 </button>
-                                <a href="#" class="mui-btn hera-btn"><i class="fa fa-cloud-download"></i> Tải file mẫu</a>
-                                <a href="#" class="mui-btn hera-btn"><i class="fa fa-cloud-upload"></i> Upload danh sách</a>
+                                <a id="download_sample" href="<?php echo get_bloginfo('url'); ?>/download-sample" class="mui-btn hera-btn"><i class="fa fa-cloud-download"></i> Tải file mẫu</a>
+                                <a id="upload_data" href="<?php echo $link_upload; ?>" class="mui-btn hera-btn"><i class="fa fa-cloud-upload"></i> Upload danh sách</a>
                             </div>
                             <div class="mui-col-md-12">
                                 <table class="mui-table" id="list_customer">
@@ -197,21 +191,20 @@ if (have_posts()) {
                                                 $joined = get_sub_field('joined');
                                                 $name = get_sub_field('name');
                                                 $guest_attach = get_sub_field('guest_attach');
-                                                $stt = get_sub_field('stt');
+                                                $row_index = get_row_index();
                                                 
                                                 # Xoá khách mời
                                                 $del_data = inova_encrypt(json_encode(array(
                                                     'groupid'   => get_the_ID(),
-                                                    'stt'       => $stt,
-                                                    'row_index' => get_row_index(),
-                                                    'nonce'     => wp_create_nonce('delcustomer_' . $stt),
+                                                    'row_index' => $row_index,
+                                                    'nonce'     => wp_create_nonce('delcustomer_' . $row_index),
                                                 )), 'e');
 
                                                 if ($guest_attach) {
                                                     $guests = $name . ' và ' . $guest_attach;
                                                 } else $guests = $name;
 
-                                                $viewlink = get_bloginfo('url') . '/myacc/' . $current_user->user_login . '/' . inova_encrypt(get_the_ID(), 'e') . '/' . inova_encrypt($stt, 'e');
+                                                $viewlink = get_bloginfo('url') . '/myacc/' . $current_user->user_login . '/' . inova_encrypt(get_the_ID(), 'e') . '/' . inova_encrypt($row_index, 'e');
                                         ?>
                                                 <tr>
                                                     <td><?php echo $guests; ?></td>
@@ -230,7 +223,7 @@ if (have_posts()) {
                                                     </td>
                                                     <td>
                                                         <a href="<?php echo $viewlink; ?>"><i class="fa fa-eye"></i></a>
-                                                        <a href="#" class="edit_guest" data-guest="<?php echo get_sub_field('stt'); ?>"><i class="fa fa-pencil"></i></a>
+                                                        <a href="#" class="edit_guest" data-guest="<?php echo $row_index; ?>"><i class="fa fa-pencil"></i></a>
                                                         <a href="#" data-del="<?php echo $del_data; ?>" class="del_customer"><i class="fa fa-trash"></i></a>
                                                         <span class="loader"><img src="<?php echo get_template_directory_uri() . '/img/heart-preloader.gif'; ?>" alt=""></span>
                                                     </td>
@@ -291,7 +284,6 @@ if (have_posts()) {
                 <button type="submit" class="mui-btn mui-btn--danger">Cập nhật</button>
             </form>
         </div>
-
 
 <?php
     }
