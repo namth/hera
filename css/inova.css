@@ -61,7 +61,6 @@ img {
   background: rgba(50, 55, 64, 0.9411764706);
 }
 
-#upload_exel,
 #create_card_form {
   display: none;
   padding: 20px;
@@ -1049,4 +1048,47 @@ img {
   border-radius: 10px;
   display: block;
   margin: 10px 2px;
+}
+
+#loginform {
+  padding: 50px;
+}
+#loginform .login-username label,
+#loginform .login-password label {
+  display: block;
+  margin: 12px 0 5px;
+}
+#loginform .login-username input,
+#loginform .login-password input {
+  width: 100%;
+  line-height: 35px;
+  padding: 0 12px;
+  border-radius: 8px;
+  border: 1px solid darkgray;
+  background: #f4f4f4;
+}
+#loginform .login-username input:hover,
+#loginform .login-password input:hover {
+  box-shadow: 0px 3px 5px #ececec;
+}
+#loginform .login-remember {
+  margin-top: 15px;
+}
+#loginform .login-submit input#wp-submit {
+  width: 100%;
+  margin-top: 8px;
+  line-height: 39px;
+  text-transform: uppercase;
+  border-radius: 8px;
+  border: none;
+  background: #b89062;
+  color: white;
+  font-size: 16px;
+}
+#loginform .login-submit input#wp-submit:hover {
+  box-shadow: 0px 3px 5px #c4c4c4;
+}
+
+#page {
+  padding: 10px 25px;
 }/*# sourceMappingURL=inova.css.map */

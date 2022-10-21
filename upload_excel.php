@@ -30,8 +30,11 @@ if (isset($_POST['post_upload_field']) && wp_verify_nonce($_POST['post_upload_fi
         $userID = get_current_user_id();
     }
 
-    # Reading Excel
-    $rowData = wp_reading_excel($file_excel['tmp_name']);
+    if ($file_excel) {
+        # Reading Excel
+        $rowData = wp_reading_excel($file_excel['tmp_name']);
+    }
+
     //In dữ liệu ra file excel
     if ($rowData) {
         # remove the first item, that's the header.
@@ -39,7 +42,7 @@ if (isset($_POST['post_upload_field']) && wp_verify_nonce($_POST['post_upload_fi
 
         foreach ($rowData as $new_customer) {
             if ($new_customer[0]) {
-                # if it have an email, then ...
+                # 
                 if (!$fromCard) {
                     $groupID = 0;
                     $ownName = "";
@@ -51,7 +54,9 @@ if (isset($_POST['post_upload_field']) && wp_verify_nonce($_POST['post_upload_fi
                 $xung_ho    = implode('/', array($vocative1, $vocative2));
                 $phone      = $new_customer[4];
                 if (!$ownName) {
-                    $ownName    = $new_customer[5];
+                    if (in_array(strtoupper($new_customer[5]),["NHÀ TRAI", "NHÀ GÁI"])) {
+                        $ownName    = ucfirst($new_customer[5]);
+                    }
                     $groupName  = $new_customer[6];
                 }
 
@@ -87,7 +92,7 @@ if (isset($_POST['post_upload_field']) && wp_verify_nonce($_POST['post_upload_fi
                                 'name'          => $name,
                                 'guest_attach'  => $attach,
                                 'xung_ho'       => $xung_ho,
-                                'phone'         => $sdt,
+                                'phone'         => $phone,
                                 'sent'          => false,
                                 'joined'        => false,
                             );
@@ -101,23 +106,27 @@ if (isset($_POST['post_upload_field']) && wp_verify_nonce($_POST['post_upload_fi
                             'post_type'     => 'thiep_moi',
                         );
                         $groupID = wp_insert_post($args);
+
+                        wp_set_object_terms($groupID, $ownName, 'category');
                         
                         # Thêm mới dữ liệu
                         $row_update = array(
                             'name'          => $name,
                             'guest_attach'  => $attach,
                             'xung_ho'       => $xung_ho,
-                            'phone'         => $sdt,
+                            'phone'         => $phone,
                             'sent'          => false,
                             'joined'        => false,
                         );
                         add_row('field_61066efde7dbc', $row_update, $groupID);
                     }
-                    
                 }
-                
             }
         }
+
+        wp_redirect(get_permalink($groupID));
+    } else {
+        $thongbao = "Không có dữ liệu";
     }
 
 }
@@ -129,6 +138,7 @@ get_template_part('header', 'topbar');
         <div class="mui-col-md-2">
             <?php
             get_sidebar();
+            echo $thongbao;
             ?>
         </div>
         <div class="mui-col-md-10">
@@ -143,7 +153,7 @@ get_template_part('header', 'topbar');
                     <div class="mui-col-md-4"></div>
                     <div class="mui-col-md-4 mui-col-sm-12">
                         <div class="mui-textfield">
-                            <input type="file" name="fileupload">
+                            <input name="fileupload" type="file">
                         </div>
                     </div>
                     <div class="mui-col-md-4 mui-col-sm-12"></div>
@@ -154,7 +164,7 @@ get_template_part('header', 'topbar');
                         ?>
                     </div>
                     <div class="mui-col-md-2 mui-col-sm-12">
-                        <input type="submit" value="Import" class="mui-btn mui-btn--danger full_width">
+                        <input type="submit" value="Import" class="mui-btn mui-btn--danger">
                     </div>
                     <div class="mui-col-md-5 mui-col-sm-12"></div>
                 </form>

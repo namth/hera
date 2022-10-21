@@ -76,28 +76,14 @@ get_header();
         } else if ($error_password) {
             echo $error_password;
         }
-        ?>
 
-        <form class="mui-form" method="POST">
-            <legend>Login</legend>
-            <div class="mui-textfield mui-textfield--float-label">
-                <input type="text" required name="username">
-                <label>Username</label>
-            </div>
-            <div class="mui-textfield mui-textfield--float-label">
-                <input type="password" required name="password">
-                <label>Password</label>
-            </div>
-            <?php
-            wp_nonce_field('post_nonce', 'post_nonce_field');
-            ?>
-            <div class="mui-checkbox">
-                <label for="remember">
-                    <input id="remember" type="checkbox" checked name="remember"> Ghi nhớ.
-                </label>
-            </div>
-            <button type="submit" class="mui-btn mui-btn--raised mui-btn--primary">Đăng nhập</button>
-        </form>
+        $args = [
+            'label_username'    => 'Tên đăng nhập',
+            'redirect'          => get_bloginfo('url'),
+        ];
+
+        wp_login_form($args);
+        ?>
 
     </div>
 </div>
