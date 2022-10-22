@@ -281,3 +281,37 @@ function remove_admin_bar() {
         show_admin_bar(false);
     }
 }
+
+# Zalo API login
+function get_access_token() {
+    $refresh_token = '1DeRHgohDqLYnJCVnB83R47n6m2yiIXtAle3CSIq27rOzpn4eOy0BGwC8tUxzJqSIBCCQzB7LpqGiszsZFLQJd6UNX7Pt4TILAOC3f7RAaOzamawo_44GrMtCNEQpm9Q4umpAPd5ly8Fq9c5eAcPoeyWbxSdLBhch5kaoXPAkCt5MRN0AcQRpgnFqS8rBfgRpt_2nLaclGdp0CwI5Ji';
+    $data = array(
+        'refresh_token' => $refresh_token,
+        'app_id'        => '3812610181368191268',
+        'grant_type'    => 'refresh_token',
+    );
+    
+    $ch = curl_init();
+
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+        "secret_key: PsjmsfgO9B1PQKmHlUS7",
+    ));
+    
+    curl_setopt($ch, CURLOPT_URL,"https://oauth.zaloapp.com/v4/oa/access_token");
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data) );
+    
+    // Receive server response ...
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    
+    $server_output = curl_exec($ch);
+    
+    curl_close ($ch);
+
+    $output = json_decode($server_output);
+
+    # update refresh_token to db
+    update_field('field_62419013d4ef2',$output->refresh_token , 'option');
+
+    return $output->access_token;
+}
