@@ -13,7 +13,7 @@ if (isset($_GET['code'])) {
     echo "<br>Get access_code ...<br>";
     $data = array(
         'code'          => $authorization_code,
-        'app_id'        => '3812610181368191268',
+        'app_id'        => '4424878354763274341',
         'grant_type'    => 'authorization_code',
         'code_verifier' => $code_verifier,
     );
@@ -21,10 +21,10 @@ if (isset($_GET['code'])) {
     $ch = curl_init();
 
     curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-        "secret_key: PsjmsfgO9B1PQKmHlUS7",
+        "secret_key: 1qFDWGD94kuPapqjryca",
     ));
     
-    curl_setopt($ch, CURLOPT_URL,"https://oauth.zaloapp.com/v4/oa/access_token");
+    curl_setopt($ch, CURLOPT_URL,"https://oauth.zaloapp.com/v4/access_token");
     curl_setopt($ch, CURLOPT_POST, 1);
     curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data) );
     
@@ -38,10 +38,9 @@ if (isset($_GET['code'])) {
     $output = json_decode($server_output);
 
     # update refresh_token to db
-    update_field('field_62419013d4ef2',$output->refresh_token , 'option');
+    update_field('field_6354e8e2fd49e',$output->refresh_token , 'option');
 
-    echo "Access token: " . $output->access_token;   
-    /* $access_token = get_access_token();
+    $access_token = $output->access_token;
 
     print_r($access_token);
     echo "<br>";
@@ -68,7 +67,7 @@ if (isset($_GET['code'])) {
 
     $output = json_decode($server_output);
 
-    print_r($output); */
+    print_r($output);
 } else {
     $code_verify = generate_verify_code();
     // update_field('field_62431f72801e6', $code_verifier, 'option');
