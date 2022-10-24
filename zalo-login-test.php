@@ -4,7 +4,7 @@
 */
 if (isset($_GET['code'])) {
     $authorization_code = $_GET['code'];
-    $code_verifier = get_field('code_verifier', 'option');
+    $code_verifier = get_field('zalo_code_verifier', 'option');
 
     echo "<br>Authorization_code: <br><br>";
     echo $authorization_code;
@@ -70,7 +70,7 @@ if (isset($_GET['code'])) {
     print_r($output);
 } else {
     $code_verify = generate_verify_code();
-    // update_field('field_62431f72801e6', $code_verifier, 'option');
+    update_field('field_6356c04455afc', $code_verifier, 'option');
 
     echo "Code verify: " . $code_verify;
     $code_challenge = generate_code_challenge($code_verify);

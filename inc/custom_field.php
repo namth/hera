@@ -1185,6 +1185,25 @@ if( function_exists('acf_add_local_field_group') ):
                 'append' => '',
                 'maxlength' => '',
             ),
+            array(
+                'key' => 'field_6356c04455afc',
+                'label' => 'Zalo Code Verifier',
+                'name' => 'zalo_code_verifier',
+                'type' => 'text',
+                'instructions' => '',
+                'required' => 0,
+                'conditional_logic' => 0,
+                'wrapper' => array(
+                    'width' => '',
+                    'class' => '',
+                    'id' => '',
+                ),
+                'default_value' => '',
+                'placeholder' => '',
+                'prepend' => '',
+                'append' => '',
+                'maxlength' => '',
+            ),
         ),
         'location' => array(
             array(
