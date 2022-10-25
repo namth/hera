@@ -1,5 +1,8 @@
 <?php
 if (is_user_logged_in()) {
+    $user = wp_get_current_user();
+
+    $link_avatar = get_avatar_url($user->ID);
 ?>
     <div class="mui-panel" id="header_bar">
         <div class="logo">
@@ -7,16 +10,9 @@ if (is_user_logged_in()) {
                 <img src="<?php echo get_template_directory_uri(); ?>/img/logo.png" alt="">
             </a>
         </div>
-        <div class="mui-dropdown main_menu">
-            <button class="mui-btn" data-mui-toggle="dropdown">
-                <i class="fa fa-user"></i>
-            </button>
-            <?php
-            wp_nav_menu(array(
-                'container' => '',
-                'menu_class' => 'mui-dropdown__menu'
-            ));
-            ?>
+        <div class="mui-dropdown greeting">
+            <span>Xin chào, <b><?php echo $user->data->display_name; ?></b></span>
+            <img src="<?php echo $link_avatar; ?>" alt="">
         </div>
     </div>
 <?php

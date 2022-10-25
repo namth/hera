@@ -114,15 +114,17 @@ img {
   border-radius: 50px;
   box-shadow: 0px 3px 3px #b0b0b0;
 }
-#header_bar .main_menu {
-  float: right;
+#header_bar .greeting {
+  display: flex;
+  justify-content: end;
+  align-items: center;
 }
-#header_bar .main_menu .mui-btn {
-  padding: 0 10px;
-  font-size: 24px;
+#header_bar .greeting span {
+  margin-right: 10px;
 }
-#header_bar .main_menu .mui-dropdown__menu {
-  right: 0;
+#header_bar .greeting img {
+  width: 42px;
+  border-radius: 24px;
 }
 
 .main_menu {

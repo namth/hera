@@ -149,8 +149,7 @@ function search_customfield($post_type, $search, $key){
 /* 
 * File helper.php của momo
 */
-function execPostRequest($url, $data)
-{
+function execPostRequest($url, $data) {
     $ch = curl_init($url);
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
     curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
@@ -316,4 +315,50 @@ function get_access_token() {
     }
 
     return $output->access_token;
+}
+
+# Zalo generate verifier code
+function generate_verify_code(){
+    $random = openssl_random_pseudo_bytes(32);
+    $verifier = base64_encode($random);
+    return $verifier;
+}
+
+# Zalo generate code challenge
+function generate_code_challenge($str) {
+    return base64url_encode(pack('H*', hash('sha256', $str)));
+}
+
+# encode for zalo generate code
+function base64url_encode($plainText)
+{
+    $base64 = base64_encode($plainText);
+    $base64 = trim($base64, "=");
+    $base64url = strtr($base64, '+/', '-_');
+    return ($base64url);
+}
+
+# add image from url to set avatar for user
+function Generate_Featured_Image( $image_url, $userID  ){
+    $upload_dir = wp_upload_dir();
+    $image_data = file_get_contents($image_url);
+    $filename = basename($image_url);
+    if(wp_mkdir_p($upload_dir['path']))     $file = $upload_dir['path'] . '/' . $filename;
+    else                                    $file = $upload_dir['basedir'] . '/' . $filename;
+    file_put_contents($file, $image_data);
+
+    $wp_filetype = wp_check_filetype($filename, null );
+    $attachment = array(
+        'post_mime_type' => $wp_filetype['type'],
+        'post_title' => sanitize_file_name($filename),
+        'post_content' => '',
+        'post_status' => 'inherit'
+    );
+    $attach_id = wp_insert_attachment( $attachment, $file );
+    require_once(ABSPATH . 'wp-admin/includes/image.php');
+    $attach_data = wp_generate_attachment_metadata( $attach_id, $file );
+    wp_update_attachment_metadata( $attach_id, $attach_data );
+    $res= update_user_meta($userID, 'hrc_user_avatar', $attach_id);
+
+    return $res;
 }

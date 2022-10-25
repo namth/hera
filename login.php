@@ -83,6 +83,15 @@ get_header();
         ];
 
         wp_login_form($args);
+
+        # Zalo login link
+        $code_verify = generate_verify_code();
+        update_field('field_6356c04455afc', $code_verify, 'option');
+
+        $code_challenge = generate_code_challenge($code_verify);
+        $url = get_bloginfo('url') . '/zalo-login';
+        
+        echo "<br><a href='https://oauth.zaloapp.com/v4/permission?app_id=4424878354763274341&redirect_uri=" . $url . "&code_challenge=" . $code_challenge . "&state=" . $code_verify . "'>Login Zalo</a>";
         ?>
 
     </div>
