@@ -98,10 +98,9 @@ if (isset($_GET['code'])) {
 
             # Set avatar for user
             $result = Generate_Featured_Image($output->picture->data->url, $user);
-            print_r($result);
             # Sau đó chuyển về trang chủ
-            /* wp_redirect( get_bloginfo('url') );
-            exit; */
+            wp_redirect( get_bloginfo('url') );
+            exit;
         }
     }
 } else {
