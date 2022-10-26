@@ -12,7 +12,14 @@ if (is_user_logged_in()) {
         </div>
         <div class="mui-dropdown greeting">
             <span>Xin chào, <b><?php echo $user->data->display_name; ?></b></span>
-            <img src="<?php echo $link_avatar; ?>" alt="">
+            <img src="<?php echo $link_avatar; ?>" alt="" data-mui-toggle="dropdown">
+            <?php 
+                wp_nav_menu(array(
+                    'menu'      => 2,
+                    'container' => '',
+                    'menu_class' => 'mui-dropdown__menu'
+                ));
+            ?>
         </div>
     </div>
 <?php

@@ -79,43 +79,74 @@ img
     .large_left
         width: 66%
         height: 100vh
-        background-image: url('https://margoandbees.com/thumbs/887/templates/template_7/8/images/products/407/002GNBo/wedding-invitations-gold-rose-gold-silver-glitter-002-gn-z.jpg')
         background-position: left bottom
-        background-size: cover
         background-repeat: no-repeat
 
     .small_right
+        display: grid
         width: 34%
         height: 100vh
-        display: grid
         margin: 0
         padding: 0 15px
 
+        img
+            margin: 0 auto
+
+        .social_login
+            margin-top: 30px
+
+            .social_btn
+                a
+                    display: block
+                    text-align: left
+                    margin: 10px 15%
+                    padding: 2px 15px
+                    background: white
+                    border-radius: 8px
+                    box-shadow: 0px 2px 3px lightgray
+
+                    &:hover
+                        color: initial
+                        background: #fbfbfb
+
+                    img
+                        display: inline-block
+                        width: 27px
+
+                    span
+                        display: inline-block
+                        line-height: 36px
+                        vertical-align: text-bottom
+                        padding-left: 10px
+
 #header_bar
-    padding: 4px 15px
-    text-align: center
+    display: table
+    padding: 0px 15px
+    width: 100%
 
     .logo
-        display: inline-block
+        display: table-cell
         font-size: 32px
-        padding: 10px
-        height: 64px
-        position: absolute
-        background: white
-        border-radius: 50px
-        box-shadow: 0px 3px 3px #b0b0b0
+        padding: 2px
+        height: 54px
+        width: 54px
 
     .greeting
-        display: flex
-        justify-content: end
-        align-items: center
+        display: table-cell
+        text-align: right
 
         span
             margin-right: 10px
+            vertical-align: top
+            line-height: 42px
 
         img
+            display: inline-block
             width: 42px
             border-radius: 24px
+
+        .mui-dropdown__menu
+            right: 0
 
 .main_menu
     list-style: none
