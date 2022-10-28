@@ -99,6 +99,7 @@ img {
 }
 #login .small_right img {
   margin: 0 auto;
+  width: 150px;
 }
 #login .small_right .register_greeting {
   margin: 0 15%;
