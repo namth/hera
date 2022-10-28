@@ -4,6 +4,8 @@ $textColor: #444444
 $lightBGBorder: #d7c8c8
 $lightBG: #ffefe0
 
+@import responsive
+
 @font-face
     font-family: 'Aphrodite'
     src: url('../fonts/aphrodite.ttf') format('truetype')
@@ -92,22 +94,31 @@ img
         img
             margin: 0 auto
 
+        .register_greeting
+            margin: 0 15%
+            text-align: center
+
+            h3
+                font-weight: bold
+                color: #b89062
+
         .social_login
             margin-top: 30px
 
             .social_btn
                 a
                     display: block
-                    text-align: left
-                    margin: 10px 15%
+                    text-align: center
+                    margin: 10px 0
                     padding: 2px 15px
                     background: white
                     border-radius: 8px
-                    box-shadow: 0px 2px 3px lightgray
+                    box-shadow: 0px 2px 5px #e3e3e3
 
                     &:hover
                         color: initial
                         background: #fbfbfb
+                        box-shadow: 0px 2px 5px #c1c1c1
 
                     img
                         display: inline-block
@@ -118,6 +129,19 @@ img
                         line-height: 36px
                         vertical-align: text-bottom
                         padding-left: 10px
+                        color: #4d4d4d
+                        font-size: 16px
+
+        .hera_register
+            display: none
+
+        .signup
+            margin-top: 25px
+            text-align: center
+
+            a
+                font-weight: bold
+                color: dodgerblue
 
 #header_bar
     display: table
@@ -1046,7 +1070,7 @@ img
             margin: 10px 2px
 
 #loginform
-    padding: 50px
+    padding: 0 50px
 
     .login-username,
     .login-password
@@ -1084,3 +1108,8 @@ img
 
 #page
     padding: 10px 25px
+
+@include Responsive(XL)
+@include Responsive(MD)
+@include Responsive(SM)
+@include Responsive(XS)

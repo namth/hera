@@ -10,11 +10,11 @@ get_header();
     </div>
     <div class="mui-dropdown main_menu">
         <button class="mui-btn" data-mui-toggle="dropdown">
-            <i class="fa fa-user"></i>
+            <i class="fa fa-users"></i>
         </button>
         <?php
         wp_nav_menu(array(
-            'menu'       => '5',
+            'menu'          => '5',
             'container'     => '',
             'menu_class'    => 'mui-dropdown__menu'
         ));

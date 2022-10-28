@@ -149,7 +149,7 @@ $vip_license    = get_field('vip_card', 'user_' . $current_user_id);
                                     <div class="info_card">
                                         <?php echo get_the_title(); ?>
                                         <div class="quantity">
-                                            <i class="fa fa-user-o" aria-hidden="true"></i>
+                                            <i class="fa fa-users" aria-hidden="true"></i>
                                             <?php echo $_customer; ?>
                                         </div>
                                     </div>

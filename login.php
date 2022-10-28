@@ -7,7 +7,6 @@ if (is_user_logged_in()) {
     wp_redirect(get_bloginfo('url'));
     exit;
 } else {
-    
     get_header();
 
 ?>
@@ -18,7 +17,7 @@ if (is_user_logged_in()) {
         background-size: cover;
     "></div>
     <div class="small_right mui-panel">
-        <img src="<?php echo get_template_directory_uri(); ?>/img/logo.png" alt="" width="80">
+        <img src="<?php echo get_template_directory_uri(); ?>/img/logo_hera.png">
         <form name="loginform" id="loginform" action="<?php echo get_bloginfo('url'); ?>/wp-login.php" method="post">
             <p class="login-username">
                 <label for="user_login">Tên đăng nhập</label>
@@ -59,7 +58,11 @@ if (is_user_logged_in()) {
                         </div>';
                 ?>
             </div>
+
         </form>
+        <div class="signup">
+            <p>Bạn chưa có tài khoản? <a href="<?php echo get_bloginfo('url'); ?>/dang-ky">Đăng ký</a></p>
+        </div>
     </div>
 </div>
 <?php

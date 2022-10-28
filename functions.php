@@ -282,12 +282,13 @@ function remove_admin_bar() {
 }
 
 # Zalo API login
-function get_access_token() {
-    $refresh_token = get_field('zalo_refresh_token', 'option');
+function get_access_token($authorization_code, $code_verifier) {
+    # get access code 
     $data = array(
-        'refresh_token' => $refresh_token,
+        'code'          => $authorization_code,
         'app_id'        => '4424878354763274341',
-        'grant_type'    => 'refresh_token',
+        'grant_type'    => 'authorization_code',
+        'code_verifier' => $code_verifier,
     );
     
     $ch = curl_init();
@@ -306,15 +307,37 @@ function get_access_token() {
     $server_output = curl_exec($ch);
     
     curl_close ($ch);
+    
+    $output = json_decode($server_output);
+
+    return $output->access_token;
+}
+
+# Zalo get infomation from access_code
+function get_zalo_user_data( $access_token ){
+    $curl = curl_init();
+
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => 'https://graph.zalo.me/v2.0/me?fields=id,name,picture',
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'GET',
+        CURLOPT_HTTPHEADER => array(
+        'access_token: ' . $access_token
+        ),
+    ));
+
+    $server_output = curl_exec($curl);
+
+    curl_close($curl);
 
     $output = json_decode($server_output);
 
-    # update refresh_token to db
-    if ($output->refresh_token) {
-        update_field('field_6354e8e2fd49e',$output->refresh_token , 'option');
-    }
-
-    return $output->access_token;
+    return $output;
 }
 
 # Zalo generate verifier code

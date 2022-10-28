@@ -100,21 +100,30 @@ img {
 #login .small_right img {
   margin: 0 auto;
 }
+#login .small_right .register_greeting {
+  margin: 0 15%;
+  text-align: center;
+}
+#login .small_right .register_greeting h3 {
+  font-weight: bold;
+  color: #b89062;
+}
 #login .small_right .social_login {
   margin-top: 30px;
 }
 #login .small_right .social_login .social_btn a {
   display: block;
-  text-align: left;
-  margin: 10px 15%;
+  text-align: center;
+  margin: 10px 0;
   padding: 2px 15px;
   background: white;
   border-radius: 8px;
-  box-shadow: 0px 2px 3px lightgray;
+  box-shadow: 0px 2px 5px #e3e3e3;
 }
 #login .small_right .social_login .social_btn a:hover {
   color: initial;
   background: #fbfbfb;
+  box-shadow: 0px 2px 5px #c1c1c1;
 }
 #login .small_right .social_login .social_btn a img {
   display: inline-block;
@@ -125,6 +134,19 @@ img {
   line-height: 36px;
   vertical-align: text-bottom;
   padding-left: 10px;
+  color: #4d4d4d;
+  font-size: 16px;
+}
+#login .small_right .hera_register {
+  display: none;
+}
+#login .small_right .signup {
+  margin-top: 25px;
+  text-align: center;
+}
+#login .small_right .signup a {
+  font-weight: bold;
+  color: dodgerblue;
 }
 
 #header_bar {
@@ -1083,7 +1105,7 @@ img {
 }
 
 #loginform {
-  padding: 50px;
+  padding: 0 50px;
 }
 #loginform .login-username label,
 #loginform .login-password label {
@@ -1123,4 +1145,15 @@ img {
 
 #page {
   padding: 10px 25px;
+}
+
+@media only screen and (max-width: 768px) {
+  #login .large_left {
+    display: block;
+    width: 100%;
+  }
+  #login .small_right {
+    display: block;
+    width: 100%;
+  }
 }/*# sourceMappingURL=inova.css.map */

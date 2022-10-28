@@ -6,59 +6,10 @@ if (isset($_GET['code'])) {
     $authorization_code = $_GET['code'];
     $code_verifier = get_field('zalo_code_verifier', 'option');
 
-    # get access code 
-    $data = array(
-        'code'          => $authorization_code,
-        'app_id'        => '4424878354763274341',
-        'grant_type'    => 'authorization_code',
-        'code_verifier' => $code_verifier,
-    );
-    
-    $ch = curl_init();
+    $access_token = get_access_token($authorization_code, $code_verifier);
 
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-        "secret_key: 1qFDWGD94kuPapqjryca",
-    ));
-    
-    curl_setopt($ch, CURLOPT_URL,"https://oauth.zaloapp.com/v4/access_token");
-    curl_setopt($ch, CURLOPT_POST, 1);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data) );
-    
-    // Receive server response ...
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    
-    $server_output = curl_exec($ch);
-    
-    curl_close ($ch);
-    
-    $output = json_decode($server_output);
-
-    # update refresh_token to db
-    update_field('field_6354e8e2fd49e',$output->refresh_token , 'option');
-
-    $access_token = $output->access_token;
-
-    $curl = curl_init();
-
-    curl_setopt_array($curl, array(
-        CURLOPT_URL => 'https://graph.zalo.me/v2.0/me?fields=id,name,picture',
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_ENCODING => '',
-        CURLOPT_MAXREDIRS => 10,
-        CURLOPT_TIMEOUT => 0,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => 'GET',
-        CURLOPT_HTTPHEADER => array(
-        'access_token: ' . $access_token
-        ),
-    ));
-
-    $server_output = curl_exec($curl);
-
-    curl_close($curl);
-
-    $output = json_decode($server_output);
+    # Lấy thông tin user từ access token
+    $output = get_zalo_user_data($access_token);
 
     # Kiểm tra trong hệ thống xem có tài khoản này hay chưa
     $userid = username_exists($output->id);
