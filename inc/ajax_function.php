@@ -572,4 +572,83 @@ function createInvoice() {
     exit;
 }
 
+/* 
+* Source: register.php
+* Đăng ký tài khoản HERA
+*/
+add_action('wp_ajax_registerhera', 'registerhera');
+add_action('wp_ajax_nopriv_registerhera', 'registerhera');
+function registerhera() {
+    $data = parse_str($_POST['data'], $output);
+    if (isset($output['register_nonce_field']) &&
+        wp_verify_nonce($output['register_nonce_field'], 'register_nonce')) {
+        
+        $user_login = sanitize_user($output["user_login"]);
+        $user_email = sanitize_email($output["user_email"]);
+        $user_pass = $output["user_pass"];
 
+        if (is_email($user_email) && !username_exists($user_login) && !email_exists($user_email)) {
+            $args = [
+                'user_login'    => $user_login,
+                'user_pass'     => $user_pass,
+                'user_email'    => $user_email,
+            ];
+
+            $user = wp_insert_user($args);
+            
+            if ($user) {
+                # Đăng nhập sau khi tạo tài khoản
+                wp_set_current_user( $user, $user_login );
+                wp_set_auth_cookie( $user, true, false );
+                do_action( 'wp_login', $user_login, $user );
+
+                # Sau đó chuyển về trang chủ
+                print_r( get_bloginfo('url') );
+                exit;
+            }
+        }
+    }
+}
+
+/* 
+* Source: register.php
+* Kiểm tra username đã tồn tại trên hệ thống chưa
+*/
+add_action('wp_ajax_checkUsernameExist', 'checkUsernameExist');
+add_action('wp_ajax_nopriv_checkUsernameExist', 'checkUsernameExist');
+function checkUsernameExist() {
+    $username = sanitize_user($_POST['user_login']);
+    $check_user = username_exists($username);
+    if (!$check_user) {
+        # Nếu chưa có tài khoản thì kiểm tra xem có hợp lệ không và thông báo
+        if ((strlen($username) >= 3) && validate_username($username)) {
+            print_r(false);
+        } else {
+            print_r("Tên đăng nhập phải có ít nhất 3 ký tự");
+        }
+    } else {
+        print_r("Tài khoản này đã tồn tại.");
+    }
+    exit;
+}
+/* 
+* Source: register.php
+* Kiểm tra email đã tồn tại trên hệ thống chưa
+*/
+add_action('wp_ajax_checkEmailExist', 'checkEmailExist');
+add_action('wp_ajax_nopriv_checkEmailExist', 'checkEmailExist');
+function checkEmailExist() {
+    $email = sanitize_user($_POST['user_email']);
+    $check_email = email_exists($email);
+    if (!$check_email) {
+        # Nếu chưa có tài khoản thì kiểm tra xem có hợp lệ không và thông báo
+        if ( is_email($email) ) {
+            print_r(false);
+        } else {
+            print_r("Email không hợp lệ.");
+        }
+    } else {
+        print_r("Email này đã được sử dụng.");
+    }
+    exit;
+}

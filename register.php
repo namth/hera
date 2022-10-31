@@ -13,21 +13,25 @@ if (is_user_logged_in()) {
 
         # get access code 
         $access_token = get_access_token($authorization_code, $code_verifier);
-        # get user data
-        $output = get_zalo_user_data($access_token);
 
-        # Kiểm tra trong hệ thống xem có tài khoản này hay chưa
-        $check_user = username_exists($output->id);
-        if (!$check_user) {
-            $user_exists = false;
-            $display_name = $output->name;
-            $user_login = $output->id;
-            $avatar     = $output->picture->data->url;
-        } else {
-            $user_exists = true;
+        if ($access_token) {
+            # get user data
+            $output = get_zalo_user_data($access_token);
+    
+            # Kiểm tra trong hệ thống xem có tài khoản này hay chưa
+            $check_user = username_exists($output->id);
+            if (!$check_user) {
+                $user_exists = false;
+                $display_name = $output->name;
+                $user_login = $output->id;
+                $avatar     = $output->picture->data->url;
+            } else {
+                $user_exists = true;
+            }
         }
     }
 
+    # Xử lý nốt khi đăng ký qua zalo.
     # Nếu có dữ liệu từ $_POST gửi tới thì xử lý
     if (
         isset($_POST['post_nonce_field']) &&
@@ -61,7 +65,7 @@ if (is_user_logged_in()) {
                         do_action( 'wp_login', $user_login, $user );
             
                         # Set avatar for user
-                        $result = Generate_Featured_Image($output->picture->data->url, $user);
+                        $result = Generate_Featured_Image($avatar, $user);
                         # Sau đó chuyển về trang chủ
                         wp_redirect( get_bloginfo('url') );
                         exit;
@@ -73,6 +77,11 @@ if (is_user_logged_in()) {
         } else {
             $notification = "Email này không hợp lệ";
         }
+    } else if (
+        isset($_POST['register_nonce_field']) &&
+        wp_verify_nonce($_POST['register_nonce_field'], 'register_nonce')
+    ) {
+
     }
     get_header();
 ?>
@@ -90,17 +99,17 @@ if (is_user_logged_in()) {
                 
         ?>
         <form name="registerZalo" action="<?php echo get_permalink(); ?>" method="post" id="loginform">
+            <?php 
+                if ($notification) {
+                    echo "<span>" . $notification . "</span>";
+                }
+            ?>
             <p class="login-username">
                 <label for="user_email">Nhập email của bạn</label>
                 <input type="text" name="user_email" class="input" placeholder="Không bắt buộc" value="<?php echo $user_email; ?>">
                 <input type="hidden" name="user_login" value="<?php echo $user_login; ?>">
                 <input type="hidden" name="display_name" value="<?php echo $display_name; ?>">
                 <input type="hidden" name="avatar" value="<?php echo $avatar; ?>">
-                <?php 
-                    if ($notification) {
-                        echo "<span>" . $notification . "</span>";
-                    }
-                ?>
             </p>
             <p class="login-submit">
                 <?php wp_nonce_field('post_nonce', 'post_nonce_field'); ?>
@@ -153,24 +162,45 @@ if (is_user_logged_in()) {
                 </div>
             </div>
             <div class="hera_register">
-                <form name="loginform" id="loginform" action="<?php echo get_bloginfo('url'); ?>/wp-login.php" method="post">
+                <form name="loginform" id="register_form" action="" method="post">
                     <p class="login-username">
                         <label for="user_login">Tên đăng nhập</label>
-                        <input type="text" name="log" id="user_login" autocomplete="username" class="input" value="" size="20">
+                        <input type="text" name="user_login" id="user_login" class="input">
+                        <span class="form_check_icon"></span>
+                        <span class="user_error_notif error"></span>
+                    </p>
+                    <p class="login-username">
+                        <label for="user_email">Email</label>
+                        <input type="text" name="user_email" id="user_email" class="input">
+                        <span class="form_check_icon"></span>
+                        <span class="email_error_notif error"></span>
                     </p>
                     <p class="login-password">
                         <label for="user_pass">Mật khẩu</label>
-                        <input type="password" name="pwd" id="user_pass" autocomplete="current-password" class="input" value="" size="20">
+                        <input type="password" name="user_pass" class="input">
+                        <span class="form_check_icon"></span>
+                        <span class="password_error_notif error"></span>
                     </p>
                     <p class="login-password">
+                        <span class="imgloading" data-loading="<?php echo get_template_directory_uri() . '/img/loader.gif'; ?>"></span>
                         <label for="user_pass">Nhập lại mật khẩu</label>
-                        <input type="password" name="pwd" id="user_pass" autocomplete="current-password" class="input" value="" size="20">
+                        <input type="password" name="confirm_pass" class="input">
+                        <?php wp_nonce_field('register_nonce', 'register_nonce_field'); ?>
+                        <input type="hidden" name="redirect_to" value="<?php echo get_bloginfo('url'); ?>">
+                        <span class="confirm_password_error_notif error"></span>
                     </p>
                     <p class="login-submit">
-                        <input type="submit" name="wp-submit" id="wp-submit" value="Đăng ký">
-                        <input type="hidden" name="redirect_to" value="<?php echo get_bloginfo('url'); ?>">
+                        <button class="mui-btn fullwidth check_data" disabled style="margin-top: 10px;">Tiếp tục</button>
                     </p>
                 </form>
+                <div class="slidercaptcha card" style="display: none;">
+                    <div class="card-header">
+                        <span>Xác thực đăng ký</span>
+                    </div>
+                    <div class="card-body">
+                        <div id="captcha"></div>
+                    </div>
+                </div>
             </div>
         </div>
         <?php 
@@ -181,11 +211,149 @@ if (is_user_logged_in()) {
         </div>
     </div>
 </div>
+<script src="<?php echo get_template_directory_uri() . '/js/slidecaptcha/longbow.slidercaptcha.min.js'?>"></script>
 <script>
     jQuery(document).ready(function ($) {
+        /* Khi bấm nút đăng ký với tài khoản Hera thì sẽ hiện form đăng ký */
         $('.email_btn').click(function (){
             $('.social_login').hide();
             $('.hera_register').show();
+        });
+
+        var check_username  = false;
+        var check_email     = false;
+        var check_password  = false;
+        var checkicon       = '<i class="fa fa-check-circle" aria-hidden="true"></i>';
+        var loading         = '<img src="<?php echo get_template_directory_uri() ?>/img/heart-preloader.gif" alt="">';
+
+        /* Dùng axjax kiểm tra user đã sử dụng chưa */
+        $('input[name="user_login"]').change(function(){
+            $.ajax({
+                type: "POST",
+                url: AJAX.ajax_url,
+                data: {
+                    action: "checkUsernameExist",
+                    user_login: $(this).val(),
+                },
+                beforeSend: function() {
+                    $('input[name="user_login"]').prop('disabled', true).parent().find('.form_check_icon').html(loading);
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(xhr.responseText);
+                    console.log(thrownError);
+                },
+                success: function (resp) {
+                    if (!resp) {
+                        $('.user_error_notif').html('');
+                        $('input[name="user_login"]').prop('disabled', false).parent().find('.form_check_icon').html(checkicon);
+                        check_username = true;
+                        if(check_password && check_email) {
+                            $('#register_form').hide();
+                            $('.slidercaptcha').show();
+                        }
+                    } else {
+                        $('.user_error_notif').html(resp);
+                        $('input[name="user_login"]').prop('disabled', false).parent().find('.form_check_icon').html('');
+                        check_username = false;
+                    }
+                },
+            });
+        });
+
+        /* Dùng axjax kiểm tra email đã sử dụng chưa */
+        $('input[name="user_email"]').change(function(){
+            $.ajax({
+                type: "POST",
+                url: AJAX.ajax_url,
+                data: {
+                    action: "checkEmailExist",
+                    user_email: $(this).val(),
+                },
+                beforeSend: function() {
+                    $('input[name="user_email"]').prop('disabled', true).parent().find('.form_check_icon').html(loading);
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(xhr.responseText);
+                    console.log(thrownError);
+                },
+                success: function (resp) {
+                    if (!resp) {
+                        $('.email_error_notif').html('');
+                        $('input[name="user_email"]').prop('disabled', false).parent().find('.form_check_icon').html(checkicon);
+                        check_email = true;
+                        if(check_password && check_username) {
+                            $('#register_form').hide();
+                            $('.slidercaptcha').show();
+                        }
+                    } else {
+                        $('.email_error_notif').html(resp);
+                        $('input[name="user_email"]').prop('disabled', false).parent().find('.form_check_icon').html('');
+                        check_email = false;
+                    }
+                },
+            });
+        });
+
+        /* Kiểm tra mật khẩu confirm có chính xác không */
+        /* Nếu confirm_pass có dữ liệu thì mới check */
+        $('input[type="password"]').change(function(){
+            var user_pass = $('input[name="user_pass"]').val();
+            var confirm_pass = $('input[name="confirm_pass"]').val();
+
+            if ((user_pass.length < 8) || (user_pass.length > 20)) {
+                $('span.password_error_notif').html('Mật khẩu phải từ 8 đến 20 ký tự');
+            } else {
+                $('input[name="user_pass"]').parent().find('.form_check_icon').html(checkicon);
+                $('span.password_error_notif').html('');
+            }
+
+            if (confirm_pass) {
+                if (user_pass != confirm_pass) {
+                    $('span.confirm_password_error_notif').html('Mật khẩu xác nhận không trùng khớp');
+                } else {
+                    $('span.confirm_password_error_notif').html('');
+                    check_password = true;
+
+                    /* chuyển sang phần nhập captcha và submit */
+                    if(check_username && check_email) {
+                        $('#register_form').hide();
+                        $('.slidercaptcha').show();
+                    }
+                }                
+            } else {
+                check_password = false;
+            }
+        });
+        
+        /* Hiển thị captcha slider */
+        var captcha = sliderCaptcha({
+            id: 'captcha',
+            onSuccess: function () {  
+                var $data = $(".hera_register form").serialize();
+                var loading = $('.imgloading').data('loading');
+                $.ajax({
+                    type: "POST",
+                    url: AJAX.ajax_url,
+                    data: {
+                        action: "registerhera",
+                        data: $data,
+                    },
+                    beforeSend: function() {
+                        $('.slidercaptcha').hide(); 
+                        $('.hera_register').append('<img src="' + loading + '" style="margin: 0 auto; width: 60px;"/>');
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        console.log(xhr.status);
+                        console.log(xhr.responseText);
+                        console.log(thrownError);
+                    },
+                    success: function (resp) {
+                        window.location.href = resp;
+                    },
+                });
+            }
         });
     });
 </script>

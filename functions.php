@@ -63,12 +63,12 @@ function inovacards_load_scripts()
         wp_enqueue_style('main-style', get_template_directory_uri() . '/style.css');
         wp_enqueue_style('mui', get_template_directory_uri() . '/css/mui.min.css');
         wp_enqueue_style('font-awesome', get_template_directory_uri() . '/css/font-awesome.css');
+        wp_enqueue_style('slidecaptcha', get_template_directory_uri() . '/js/slidecaptcha/slidercaptcha.min.css');
         wp_enqueue_style('inova', get_template_directory_uri() . '/css/inova.css');
         
         /* Js */
         wp_enqueue_script('mui', get_template_directory_uri() . '/js/mui.min.js', array('jquery'), '1.0', true);
         wp_enqueue_script('inova', get_template_directory_uri() . '/js/inova.js', array('jquery', 'mui'), '1.0', true);
-        // wp_enqueue_script('font-awesome', 'https://kit.fontawesome.com/dfe5b27416.js', array(), '4.0', true);
         wp_localize_script('inova', 'AJAX', array(
             'ajax_url' => admin_url('admin-ajax.php')
         ));
@@ -310,7 +310,11 @@ function get_access_token($authorization_code, $code_verifier) {
     
     $output = json_decode($server_output);
 
-    return $output->access_token;
+    if ($output->access_token) {
+        return $output->access_token;
+    } else {
+        return false;
+    }
 }
 
 # Zalo get infomation from access_code
@@ -384,4 +388,16 @@ function Generate_Featured_Image( $image_url, $userID  ){
     $res= update_user_meta($userID, 'hrc_user_avatar', $attach_id);
 
     return $res;
+}
+
+# Lưu lại số lần đăng nhập của user
+add_action( 'wp_login', 'track_user_logins', 10, 2 );
+function track_user_logins( $user_login, $user ){
+    if( $login_amount = get_user_meta( $user->id, 'login_amount', true ) ){
+        // They've Logged In Before, increment existing total by 1
+        update_user_meta( $user->id, 'login_amount', ++$login_amount );
+    } else {
+        // First Login, set it to 1
+        update_user_meta( $user->id, 'login_amount', 1 );
+    }
 }

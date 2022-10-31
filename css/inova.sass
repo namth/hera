@@ -110,7 +110,7 @@ img
                 a
                     display: block
                     text-align: center
-                    margin: 10px 0
+                    margin: 20px 0
                     padding: 2px 15px
                     background: white
                     border-radius: 8px
@@ -132,6 +132,32 @@ img
                         padding-left: 10px
                         color: #4d4d4d
                         font-size: 16px
+
+        .hera_register
+            text-align: left
+
+            label
+                display: block
+                margin-bottom: 5px
+
+            .input
+                width: 100%
+                line-height: 35px
+                padding: 0 12px
+                border-radius: 8px
+                border: 1px solid darkgray
+                background: #f4f4f4
+
+            #wp-submit
+                width: 100%
+                margin-top: 8px
+                line-height: 39px
+                text-transform: uppercase
+                border-radius: 8px
+                border: none
+                background: #b89062
+                color: white
+                font-size: 16px
 
         .hera_register
             display: none
@@ -1075,6 +1101,8 @@ img
 
     .login-username,
     .login-password
+        position: relative
+
         label
             display: block
             margin: 12px 0 5px
@@ -1106,6 +1134,24 @@ img
             font-size: 16px
             &:hover
                 box-shadow: 0px 3px 5px #c4c4c4
+
+#register_form
+    .login-username,
+    .login-password
+        position: relative
+
+        .form_check_icon
+            position: absolute
+            top: 32px
+            right: 5px
+            width: 24px
+            font-size: 18px
+            color: #8bc45d
+
+        .error
+            color: #ee4e00
+            margin-top: 3px
+            display: block
 
 #page
     padding: 10px 25px

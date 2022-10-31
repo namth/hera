@@ -222,7 +222,7 @@ if (have_posts()) {
                                                         ?>
                                                     </td>
                                                     <td>
-                                                        <a href="<?php echo $viewlink; ?>"><i class="fa fa-eye"></i></a>
+                                                        <a href="<?php echo $viewlink; ?>" target="_blank"><i class="fa fa-eye"></i></a>
                                                         <a href="#" class="edit_guest" data-guest="<?php echo $row_index; ?>"><i class="fa fa-pencil"></i></a>
                                                         <a href="#" data-del="<?php echo $del_data; ?>" class="del_customer"><i class="fa fa-trash"></i></a>
                                                         <span class="loader"><img src="<?php echo get_template_directory_uri() . '/img/heart-preloader.gif'; ?>" alt=""></span>

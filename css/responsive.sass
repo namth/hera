@@ -7,22 +7,63 @@ $XL: 1170px
 // media queries
 @mixin Responsive($canvas)
     @if $canvas == XS
-        @media only screen and (max-width: $XS) 
+        @media screen and (max-width: $XS)
+            #login
+                .small_right
+                    #loginform
+                        padding: 0 5%
+
+                        .social_login
+                            display: flex
+                            justify-content: space-around
+
+                            .social_btn
+                                display: inline-block
+
+                                a
+                                    margin: 0
+                                    padding: 0
+                                    box-shadow: none
+
+                                    span
+                                        display: none
+
+                                    &:hover
+                                        box-shadow: none
+
+                    .register_greeting
+                        margin: 0 7%
 
     @else if $canvas == SM
-        @media only screen and (max-width: $SM) 
+        @media screen and (max-width: $SM)
             #login
+                display: block
+
                 .large_left
-                    display: block
+                    display: none
                     width: 100%
 
                 .small_right
-                    display: block
+                    display: grid
                     width: 100%
+                    align-items: center
 
     @else if $canvas == MD
-        @media only screen and (min-width: $MD) 
+        @media screen and (max-width: $MD)
+            #login
+                .large_left
+                    display: block
+                    width: 50%
+
+                .small_right
+                    display: block
+                    width: 50%
+
+                    #loginform
+                        padding: 0 7%
 
     @else if $canvas == XL
-        @media only screen and (min-width: $XL) 
+        @media screen and (min-width: $MD)
 
+    @else if $canvas == XXL
+        @media screen and (min-width: $XL)

@@ -115,7 +115,7 @@ img {
 #login .small_right .social_login .social_btn a {
   display: block;
   text-align: center;
-  margin: 10px 0;
+  margin: 20px 0;
   padding: 2px 15px;
   background: white;
   border-radius: 8px;
@@ -136,6 +136,32 @@ img {
   vertical-align: text-bottom;
   padding-left: 10px;
   color: #4d4d4d;
+  font-size: 16px;
+}
+#login .small_right .hera_register {
+  text-align: left;
+}
+#login .small_right .hera_register label {
+  display: block;
+  margin-bottom: 5px;
+}
+#login .small_right .hera_register .input {
+  width: 100%;
+  line-height: 35px;
+  padding: 0 12px;
+  border-radius: 8px;
+  border: 1px solid darkgray;
+  background: #f4f4f4;
+}
+#login .small_right .hera_register #wp-submit {
+  width: 100%;
+  margin-top: 8px;
+  line-height: 39px;
+  text-transform: uppercase;
+  border-radius: 8px;
+  border: none;
+  background: #b89062;
+  color: white;
   font-size: 16px;
 }
 #login .small_right .hera_register {
@@ -1108,6 +1134,10 @@ img {
 #loginform {
   padding: 0 50px;
 }
+#loginform .login-username,
+#loginform .login-password {
+  position: relative;
+}
 #loginform .login-username label,
 #loginform .login-password label {
   display: block;
@@ -1144,17 +1174,80 @@ img {
   box-shadow: 0px 3px 5px #c4c4c4;
 }
 
+#register_form .login-username,
+#register_form .login-password {
+  position: relative;
+}
+#register_form .login-username .form_check_icon,
+#register_form .login-password .form_check_icon {
+  position: absolute;
+  top: 32px;
+  right: 5px;
+  width: 24px;
+  font-size: 18px;
+  color: #8bc45d;
+}
+#register_form .login-username .error,
+#register_form .login-password .error {
+  color: #ee4e00;
+  margin-top: 3px;
+  display: block;
+}
+
 #page {
   padding: 10px 25px;
 }
 
-@media only screen and (max-width: 768px) {
+@media screen and (max-width: 1024px) {
   #login .large_left {
     display: block;
-    width: 100%;
+    width: 50%;
   }
   #login .small_right {
     display: block;
+    width: 50%;
+  }
+  #login .small_right #loginform {
+    padding: 0 7%;
+  }
+}
+@media screen and (max-width: 768px) {
+  #login {
+    display: block;
+  }
+  #login .large_left {
+    display: none;
     width: 100%;
+  }
+  #login .small_right {
+    display: grid;
+    width: 100%;
+    align-items: center;
+  }
+}
+@media screen and (max-width: 480px) {
+  #login .small_right #loginform {
+    padding: 0 5%;
+  }
+  #login .small_right #loginform .social_login {
+    display: flex;
+    justify-content: space-around;
+  }
+  #login .small_right #loginform .social_login .social_btn {
+    display: inline-block;
+  }
+  #login .small_right #loginform .social_login .social_btn a {
+    margin: 0;
+    padding: 0;
+    box-shadow: none;
+  }
+  #login .small_right #loginform .social_login .social_btn a span {
+    display: none;
+  }
+  #login .small_right #loginform .social_login .social_btn a:hover {
+    box-shadow: none;
+  }
+  #login .small_right .register_greeting {
+    margin: 0 7%;
   }
 }/*# sourceMappingURL=inova.css.map */
