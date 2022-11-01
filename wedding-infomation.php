@@ -19,6 +19,8 @@ wp_verify_nonce($_POST['post_nonce_field'], 'post_nonce') ) {
     if ($bride) {
         update_field('field_62b13a4949b35', $bride, 'user_' . $current_user_id);
     }
+
+    wp_redirect(get_permalink());
 }
 
 $groom  = get_field('groom', 'user_' . $current_user_id);

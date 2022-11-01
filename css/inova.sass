@@ -250,6 +250,8 @@ img
         background: #faecd7
 
 .breadcrumb
+    display: flex
+    align-items: center
     font-size: large
     padding: 5px 0 15px
 
@@ -265,6 +267,11 @@ img
         opacity: 0
     .title
         padding: 5px 10px 5px 0
+
+    a
+        .fa
+            font-size: x-large
+
 .loading
     display: inline-block
     width: 20px
@@ -1155,6 +1162,50 @@ img
 
 #page
     padding: 10px 25px
+
+.user_infomation
+    display: flex
+    justify-content: center
+
+    .avatar
+        position: relative
+        border-radius: 100px
+        overflow: hidden
+
+        img
+            border-radius: 100px
+
+        .upload
+            display: none
+            position: absolute
+            bottom: 0
+            width: 100%
+            text-align: center
+            z-index: 99
+            color: white
+            background: #00000038
+            padding: 8px
+
+        &:hover
+            .upload
+                display: block
+
+    table
+        margin-left: 20px
+
+        tr
+            td
+                &:first-child
+                    font-weight: bold
+
+                &:not(:first-child)
+                    padding-left: 15px
+
+.update_user_button
+    margin-top: 20px
+    text-align: center
+    border-top: 1px solid #ffc847
+    padding-top: 10px
 
 @include Responsive(XL)
 @include Responsive(MD)

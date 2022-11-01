@@ -259,6 +259,8 @@ img {
 }
 
 .breadcrumb {
+  display: flex;
+  align-items: center;
   font-size: large;
   padding: 5px 0 15px;
 }
@@ -275,6 +277,9 @@ img {
 }
 .breadcrumb .title {
   padding: 5px 10px 5px 0;
+}
+.breadcrumb a .fa {
+  font-size: x-large;
 }
 
 .loading {
@@ -1196,6 +1201,49 @@ img {
 
 #page {
   padding: 10px 25px;
+}
+
+.user_infomation {
+  display: flex;
+  justify-content: center;
+}
+.user_infomation .avatar {
+  position: relative;
+  border-radius: 100px;
+  overflow: hidden;
+}
+.user_infomation .avatar img {
+  border-radius: 100px;
+}
+.user_infomation .avatar .upload {
+  display: none;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  z-index: 99;
+  color: white;
+  background: rgba(0, 0, 0, 0.2196078431);
+  padding: 8px;
+}
+.user_infomation .avatar:hover .upload {
+  display: block;
+}
+.user_infomation table {
+  margin-left: 20px;
+}
+.user_infomation table tr td:first-child {
+  font-weight: bold;
+}
+.user_infomation table tr td:not(:first-child) {
+  padding-left: 15px;
+}
+
+.update_user_button {
+  margin-top: 20px;
+  text-align: center;
+  border-top: 1px solid #ffc847;
+  padding-top: 10px;
 }
 
 @media screen and (max-width: 1024px) {

@@ -2,6 +2,8 @@
 if (is_user_logged_in()) {
     $user = wp_get_current_user();
 
+    $login_amount = get_user_meta($user->ID, 'login_amount', true);
+
     $link_avatar = get_avatar_url($user->ID);
 ?>
     <div class="mui-panel" id="header_bar">
@@ -11,15 +13,13 @@ if (is_user_logged_in()) {
             </a>
         </div>
         <div class="mui-dropdown greeting">
-            <span>Xin chào, <b><?php echo $user->data->display_name; ?></b></span>
+            <span>Xin chào, <b><?php echo $user->data->display_name . " (" . $login_amount . ")"; ?></b></span>
             <img src="<?php echo $link_avatar; ?>" alt="" data-mui-toggle="dropdown">
-            <?php 
-                wp_nav_menu(array(
-                    'menu'      => 2,
-                    'container' => '',
-                    'menu_class' => 'mui-dropdown__menu'
-                ));
-            ?>
+            <ul class="mui-dropdown__menu">
+                <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home">
+                    <i class="fa fa-id-card-o" aria-hidden="true"></i><a href="<?php echo get_author_posts_url($user->ID); ?>">Cài đặt tài khoản</a>
+                </li>
+            </ul>
         </div>
     </div>
 <?php
