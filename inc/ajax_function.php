@@ -652,3 +652,67 @@ function checkEmailExist() {
     }
     exit;
 }
+
+/* 
+* Source: author.php
+* Upload avatar
+*/
+add_action('wp_ajax_uploadAvatar', 'uploadAvatar');
+add_action('wp_ajax_nopriv_uploadAvatar', 'uploadAvatar');
+function uploadAvatar() {
+    
+
+    if( ! isset( $_FILES ) || empty( $_FILES ) || ! isset( $_FILES['files'] ) )
+        return;
+
+    if ( ! function_exists( 'wp_handle_upload' ) ) {
+        require_once( ABSPATH . 'wp-admin/includes/file.php' );
+    }
+    $upload_overrides = array( 'test_form' => false );
+
+    $files = $_FILES['files'];
+    foreach ($files['name'] as $key => $value) {
+      if ($files['name'][$key]) {
+        $uploadedfile = array(
+            'name'     => $files['name'][$key],
+            'type'     => $files['type'][$key],
+            'tmp_name' => $files['tmp_name'][$key],
+            'error'    => $files['error'][$key],
+            'size'     => $files['size'][$key]
+        );
+        $movefile = wp_handle_upload( $uploadedfile, $upload_overrides );
+
+        if ( $movefile && !isset( $movefile['error'] ) ) {
+            $filename = basename($movefile['url']);
+            $attachment = array(
+                'post_mime_type' => $movefile['type'],
+                'post_title' => sanitize_file_name($filename),
+                'post_content' => '',
+                'post_status' => 'inherit'
+            );
+            $attach_id = wp_insert_attachment( $attachment, $movefile['file'] );
+            
+            # delete current avatar and add new avatar
+            if ($attach_id) {
+                # delete
+                $userID = get_current_user_id();
+                $link_avatar = get_avatar_url($userID, array('size' => '2000'));
+                $current_attachment_id = attachment_url_to_postid($link_avatar);
+                wp_delete_attachment($current_attachment_id);
+
+                #update
+                require_once(ABSPATH . 'wp-admin/includes/image.php');
+                $attach_data = wp_generate_attachment_metadata( $attach_id, $movefile['file'] );
+                wp_update_attachment_metadata( $attach_id, $attach_data );
+                $res= update_user_meta($userID, 'hrc_user_avatar', $attach_id);
+            } 
+            
+            echo $res;
+        } else {
+            echo false;
+        }
+      }
+    }
+    
+    exit;
+}

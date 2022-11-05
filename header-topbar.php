@@ -17,7 +17,7 @@ if (is_user_logged_in()) {
             <img src="<?php echo $link_avatar; ?>" alt="" data-mui-toggle="dropdown">
             <ul class="mui-dropdown__menu">
                 <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home">
-                    <i class="fa fa-id-card-o" aria-hidden="true"></i><a href="<?php echo get_author_posts_url($user->ID); ?>">Cài đặt tài khoản</a>
+                    <a href="<?php echo get_author_posts_url($user->ID); ?>"><i class="fa fa-id-card-o" aria-hidden="true"></i> Cài đặt tài khoản</a>
                 </li>
             </ul>
         </div>

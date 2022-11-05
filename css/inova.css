@@ -205,6 +205,14 @@ img {
 #header_bar .greeting .mui-dropdown__menu {
   right: 0;
 }
+#header_bar .greeting .mui-dropdown__menu li a {
+  display: flex;
+  padding: 5px;
+  align-items: center;
+}
+#header_bar .greeting .mui-dropdown__menu li a i {
+  margin-right: 10px;
+}
 
 .main_menu {
   list-style: none;
@@ -1214,6 +1222,7 @@ img {
 }
 .user_infomation .avatar img {
   border-radius: 100px;
+  width: 100px;
 }
 .user_infomation .avatar .upload {
   display: none;
@@ -1239,11 +1248,75 @@ img {
   padding-left: 15px;
 }
 
+.royal_line {
+  position: relative;
+}
+.royal_line .line {
+  display: block;
+  width: 100%;
+  position: absolute;
+  height: 2px;
+  background: #c5ac85;
+  top: 60%;
+  z-index: 0;
+}
+.royal_line img {
+  height: 50px;
+  text-align: center;
+  margin: 30px auto 10px;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+}
+
 .update_user_button {
   margin-top: 20px;
   text-align: center;
-  border-top: 1px solid #ffc847;
-  padding-top: 10px;
+}
+
+.uploadform {
+  display: none;
+  padding: 5px;
+  background: #b89062;
+  color: wheat;
+  text-align: center;
+}
+.uploadform .box {
+  padding: 10px 20px;
+  color: wheat;
+  border: 2px dashed wheat;
+  font-size: 15px;
+  height: 100%;
+  display: grid;
+  align-items: center;
+}
+.uploadform .box .box__input .box__file {
+  display: none;
+}
+.uploadform .box .box__input figure {
+  margin: 10px;
+}
+.uploadform .box .box__input figure svg {
+  fill: wheat;
+}
+.uploadform .box .box__dragndrop,
+.uploadform .box .box__uploading,
+.uploadform .box .box__success,
+.uploadform .box .box__error {
+  display: none;
+}
+.uploadform .box.is-dragover {
+  background: #d7ad7d;
+}
+.uploadform .box.has-advanced-upload .box__dragndrop {
+  display: inline;
+}
+.uploadform .box.is-uploading .box__input {
+  visibility: none;
+}
+.uploadform .box.is-uploading .box__uploading {
+  display: block;
 }
 
 @media screen and (max-width: 1024px) {

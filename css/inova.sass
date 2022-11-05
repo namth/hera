@@ -199,6 +199,15 @@ img
         .mui-dropdown__menu
             right: 0
 
+            li
+                a
+                    display: flex
+                    padding: 5px
+                    align-items: center
+
+                    i
+                        margin-right: 10px
+
 .main_menu
     list-style: none
     margin: 0
@@ -1174,6 +1183,7 @@ img
 
         img
             border-radius: 100px
+            width: 100px
 
         .upload
             display: none
@@ -1201,11 +1211,75 @@ img
                 &:not(:first-child)
                     padding-left: 15px
 
+.royal_line
+    position: relative
+
+    .line
+        display: block
+        width: 100%
+        position: absolute
+        height: 2px
+        background: #c5ac85
+        top: 60%
+        z-index: 0
+
+    img
+        height: 50px
+        text-align: center
+        margin: 30px auto 10px
+        display: flex
+        justify-content: center
+        position: relative
+        z-index: 1
+
 .update_user_button
     margin-top: 20px
     text-align: center
-    border-top: 1px solid #ffc847
-    padding-top: 10px
+
+.uploadform
+    display: none
+    padding: 5px
+    background: #b89062
+    color: wheat
+    text-align: center
+
+    .box
+        padding: 10px 20px
+        color: wheat
+        border: 2px dashed wheat
+        font-size: 15px
+        height: 100%
+        display: grid
+        align-items: center
+
+        .box__input
+            .box__file
+                display: none
+
+            figure
+                margin: 10px
+                svg
+                    fill: wheat
+
+        .box__dragndrop,
+        .box__uploading,
+        .box__success,
+        .box__error
+            display: none
+
+        &.is-dragover
+            background: #d7ad7d
+
+        &.has-advanced-upload
+            .box__dragndrop
+                display: inline
+
+        &.is-uploading
+            .box__input
+                visibility: none
+
+            .box__uploading
+                display: block
 
 @include Responsive(XL)
 @include Responsive(MD)
