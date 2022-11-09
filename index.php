@@ -203,7 +203,12 @@ $vip_license    = get_field('vip_card', 'user_' . $current_user_id);
         <button type="submit" class="mui-btn mui-btn--danger">Tạo</button>
     </form>
 </div>
-
+<script>
+    /* Prevent resubmit form when page is reloaded */
+    if ( window.history.replaceState ) {
+        window.history.replaceState( null, null, window.location.href );
+    }
+</script>
 <?php
 get_footer();
 ?>

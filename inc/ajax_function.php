@@ -462,7 +462,8 @@ add_action('wp_ajax_addCouponCode', 'addCouponCode');
 add_action('wp_ajax_nopriv_addCouponCode', 'addCouponCode');
 function addCouponCode() {
     $data = $_POST['data'];
-    $sub_total = $_POST['sub_total'];
+    $package = $_POST['package'];
+    $sub_total = get_field('price', $package);
 
     /* Kiểm tra coupon có tồn tại không */
     $id_coupon = search_customfield('coupon', $data, 'coupon_name');
@@ -483,24 +484,30 @@ function addCouponCode() {
                 'message'=> '<div class="success_notification"><i class="fa fa-check-circle-o" aria-hidden="true"></i> Đã thêm mã coupon thành công.</div>',
             );
             if ($coupon_type == "Phần trăm") {
+                /* Tính số tiền cuối nhận được */
+                $final_total = $sub_total * (100 - $coupon_value) / 100;
+                /* Lưu vào data */
                 $data['type'] = 'percent';
                 $data['value'] = $coupon_value;
                 $data['coupon_label'] = '- ' . $coupon_value . '%';
-                $data['final_total'] = $sub_total * (100 - $coupon_value) / 100;
+                $data['final_total'] = $final_total;
                 $data['hash'] = inova_encrypt(json_encode(array(
-                    'id'        => $id_coupon,
-                    'type'      => 'percent',
-                    'value'     => $coupon_value,
+                    'id'            => $id_coupon,
+                    'final_total'   => $final_total,
+                    'package_id'    => $package,
                 )), 'e');
             } else {
+                /* Tính số tiền cuối nhận được */
+                $final_total = ($sub_total > $coupon_value)?($sub_total - $coupon_value):"0";
+                /* Lưu vào data */
                 $data['type'] = 'fix';
                 $data['value'] = $coupon_value;
                 $data['coupon_label'] = '- ' . number_format($coupon_value) . ' ₫';
-                $data['final_total'] = ($sub_total > $coupon_value)?($sub_total - $coupon_value):"0";
+                $data['final_total'] = $final_total;
                 $data['hash'] = inova_encrypt(json_encode(array(
-                    'id'        => $id_coupon,
-                    'type'      => 'fix',
-                    'value'     => $coupon_value,
+                    'id'            => $id_coupon,
+                    'final_total'   => $final_total,
+                    'package_id'    => $package,
                 )), 'e');
             }
         } else {
@@ -531,44 +538,60 @@ add_action('wp_ajax_nopriv_createInvoice', 'createInvoice');
 function createInvoice() {
     $data = parse_str($_POST['data'], $output);
     $coupon = json_decode(inova_encrypt($output["coupon"], 'd'));
+    $customer_name = $output['customer_name'];
+    $customer_phone = $output['customer_phone'];
+    $customer_email = $output['customer_email'];
+    $customer_address = $output['customer_address'];
     $current_user = wp_get_current_user();
-    $normal_price = get_field('normal_price','option');
-    $vip_price = get_field('vip_price','option');
-    $vat = '10';
+    
+    # Nếu có dữ liệu gói thì mới tạo hoá đơn
+    if ($coupon->package_id) {
+        $total = get_field('price', $coupon->package_id);
+        # Tạo hoá đơn mới
+        $order_code = incrementalHash(8);
+        
+        $args = array(
+            'post_title'    => $order_code,
+            'post_status'   => 'publish',
+            'post_type'     => 'inova_order',
+        );
+        $inserted = wp_insert_post($args);
+        
+        # Tạo mã đơn hàng mới
+        $prefix = (strlen($inserted) < 8)?incrementalHash( 8 - strlen($inserted) ):incrementalHash(1);
+        $new_order_id = strtoupper($prefix) . $inserted;
+        # Update lại order id mới
+        wp_update_post(array(
+            'ID' => $inserted,
+            'post_title' => $new_order_id, 
+        ));
+    
+        # Update dữ liệu vào hoá đơn mới tạo
+        update_field('field_62e6ae7175ee5', $current_user->ID, $inserted); # customer
+        update_field('field_62eb93b78ca79', 'Chưa thanh toán', $inserted); # status
+        update_field('field_62e6ad5875ee1', $coupon->package_id, $inserted); # package
+        update_field('field_62e6ae8f75ee6', $coupon->id, $inserted); # status
+        update_field('field_62e6aea375ee7', $total, $inserted); # total
+        update_field('field_62eb96e0f9af7', $coupon->final_total, $inserted); # final_total
+    
+        # Update thông tin mua hàng
+        $usr_args = [
+            'user_email' => $customer_email,
+            'display_name' => $customer_name,
+        ];
+        $updated = wp_update_user($usr_args);
+        update_field('field_62ee62714e989', $customer_phone, 'user_' . $current_user->ID);
+        update_field('field_62ee62714e963', $customer_address, 'user_' . $current_user->ID);
 
-    # Tính toán tổng tiền và khuyến mại
-    $total = $output['normal_card_qtt'] * $normal_price + $output['vip_card_qtt'] * $vip_price;
-    if ($coupon->type == 'percent') {
-        $sub_total = $total * (100 - $coupon->value) / 100;
-    } else if ($coupon->type == 'fix'){
-        $sub_total = ($total > $coupon->value)?($total - $coupon->value):0;
-    } else {
-        $sub_total = $total;
+        # Xử lý coupon trừ bớt số lượng của loại coupon có giới hạn
+        # Nếu số lượng là 9999 tức là unlimited, nếu khác 9999 thì -1
+        $coupon_quantity = get_field('coupon_quantity', $coupon->id);
+        if ($coupon_quantity != 9999 & $coupon_quantity > 0) {
+            update_field('field_62ec9d1e450e8', --$coupon_quantity, $coupon->id);
+        }
+        
+        echo get_permalink($inserted);
     }
-    $vat_total = $sub_total * $vat / 100;
-    $final_total = $sub_total + $vat_total;
-    $order_code = incrementalHash(8);
-
-    # Tạo hoá đơn mới
-    $args = array(
-        'post_title'    => $order_code,
-        'post_status'   => 'publish',
-        'post_type'     => 'inova_order',
-    );
-    $inserted = wp_insert_post($args);
-
-    # Update dữ liệu vào hoá đơn mới tạo
-    update_field('field_62e6ae7175ee5', $current_user->ID, $inserted); # customer
-    update_field('field_62eb93b78ca79', 'Chưa thanh toán', $inserted); # status
-    update_field('field_62e6ad5875ee1', $output["normal_card_qtt"], $inserted); # status
-    update_field('field_62ec9ad08de7a', $output["vip_card_qtt"], $inserted); # status
-    update_field('field_62e6ae8f75ee6', $coupon->id, $inserted); # status
-    update_field('field_62e6aea375ee7', $total, $inserted); # total
-    update_field('field_62e6af7675ee9', $sub_total, $inserted); # sub_total
-    update_field('field_62eb96c9f9af6', $vat_total, $inserted); # vat_total
-    update_field('field_62eb96e0f9af7', $final_total, $inserted); # final_total
-
-    echo get_permalink($inserted);
     exit;
 }
 

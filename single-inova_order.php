@@ -5,24 +5,18 @@ if (have_posts()) {
         the_post();
 
         # get data from invoice
-        $id_invoice = 'HD' . sprintf('%06d', get_the_ID());
+        $id_invoice = get_the_title();
         $customer = get_field('customer');
         $status = get_field('status');
-        $normal_cards = get_field('normal_cards');
-        $vip_cards = get_field('vip_cards');
+        
+        $package_id = get_field('package');
         $coupon_id = get_field('coupon');
         $total = get_field('total');
-        $sub_total = get_field('sub_total');
-        $vat = get_field('vat');
         $final_total = get_field('final_total');
 
         # calculate payment date
         $create_date = get_the_date('U');
         $payment_date = date_i18n('j F Y', strtotime('+7 day', $create_date));
-
-        # Theme option
-        $normal_price = get_field('normal_price','option');
-        $vip_price = get_field('vip_price','option');
 
         # coupon
         $coupon_name = get_field('coupon_name', $coupon_id);
@@ -55,8 +49,7 @@ if (have_posts()) {
             $requestType = "captureMoMoWallet";
             
             //before sign HMAC SHA256 signature
-            $rawHash = 
-                        "partnerCode=" . $partnerCode . 
+            $rawHash =  "partnerCode=" . $partnerCode . 
                         "&accessKey=" . $accessKey . 
                         "&requestId=" . $requestId . 
                         "&amount=" . $amount . 
@@ -142,37 +135,16 @@ if (have_posts()) {
                             <thead>
                                 <tr>
                                     <th>Mô tả chi tiết</th>
-                                    <th>Số lượng</th>
-                                    <th>Đơn giá</th>
                                     <th>Thành tiền</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php 
-                                    if ($normal_cards) {
-                                        echo "<tr>
-                                                <td>Thiệp thường</td>
-                                                <td>" . $normal_cards . "</td>
-                                                <td>" . number_format($normal_price) . " ₫</td>
-                                                <td>" . number_format($normal_cards * $normal_price) . " ₫</td>
-                                            </tr>";
-                                    
-                                    }
-                                    if ($vip_cards) {
-                                        echo "<tr>
-                                                <td>Thiệp VIP</td>
-                                                <td>" . $vip_cards . "</td>
-                                                <td>" . number_format($vip_price) . " ₫</td>
-                                                <td>" . number_format($vip_cards * $vip_price) . " ₫</td>
-                                            </tr>";
-                                    }
-                                ?>
-                                <tr class="total">
-                                    <td colspan="2"></td>
-                                    <td>Tổng tiền dịch vụ</td>
-                                    <td><?php echo number_format($total) . " ₫"; ?></td>
-                                </tr>
-                                <?php 
+                                    echo "<tr>
+                                            <td>" . get_the_title() . "</td>
+                                            <td>" . number_format($total) . " ₫</td>
+                                        </tr>";
+
                                     if ($coupon_id) {
                                         if ($coupon_type == "Phần trăm") {
                                             $coupon = number_format(- $coupon_value) . "%";
@@ -180,30 +152,18 @@ if (have_posts()) {
                                             $coupon = number_format(- $coupon_value) . " ₫";
                                         }
                                         echo "<tr class='coupon'>
-                                                <td colspan='2'></td>
                                                 <td>Mã giảm giá <span class='code'>" . $coupon_name . "</span></td>
                                                 <td>" . $coupon . "</td>
                                             </tr>";
                                     }
-                                    if ($sub_total && ($sub_total!=$total)) {
-                                        echo "<tr class='sub_total'>
-                                                <td colspan='2'></td>
-                                                <td style='border-top: 1px solid lightgray;'>Tổng tiền sau giảm giá</td>
-                                                <td style='border-top: 1px solid lightgray;'>" . number_format($sub_total) . " ₫</td>
+                                    if ($final_total) {
+                                        echo "<tr class='final_total'>
+                                                <td style='border-top: 1px solid lightgray;'>Thành tiền</td>
+                                                <td style='border-top: 1px solid lightgray;'>" . number_format($final_total) . " ₫</td>
                                             </tr>";
                                     
                                     }
                                 ?>
-                                <tr class="vat">
-                                    <td colspan="2"></td>
-                                    <td>Thuế VAT (10%)</td>
-                                    <td><?php echo number_format($vat) . " ₫"; ?></td>
-                                </tr>
-                                <tr class="final_total">
-                                    <td colspan="2"></td>
-                                    <td>Tổng tiền thanh toán</td>
-                                    <td><?php echo number_format($final_total) . " ₫"; ?></td>
-                                </tr>
                             </tbody>
                         </table>
                     </div>

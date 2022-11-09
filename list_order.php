@@ -22,17 +22,19 @@ $current_user_id = get_current_user_id();
                         <th>#</th>
                         <th>Ngày tháng</th>
                         <th>Mã đơn hàng</th>
-                        <th>Số thiệp thường</th>
-                        <th>Số thiệp VIP</th>
+                        <th>Sản phẩm</th>
+                        <th>Số thiệp</th>
                         <th>Tổng tiền</th>
                         <th>Trạng thái</th>
                     </tr>
                     <?php 
                         $paged = (get_query_var('paged')) ? absint(get_query_var('paged')) : 1;
+                        $post_per_page = 10;
+                        $i = ($paged - 1) * $post_per_page;
 
                         $args   = array(
                             'post_type'     => 'inova_order',
-                            'posts_per_page' => 20,
+                            'posts_per_page' => $post_per_page,
                             'paged'         => $paged,
                             'author'        => $current_user_id,
                             'post_status'   => 'publish',
@@ -44,10 +46,11 @@ $current_user_id = get_current_user_id();
                         if ($query->have_posts()) {
                             while ($query->have_posts()) {
                                 $query->the_post();
+
                                 $status = get_field('status');
-                                $normal_cards = get_field('normal_cards');
-                                $vip_cards = get_field('vip_cards');
                                 $final_total = get_field('final_total');
+                                $package_id = get_field('package');
+                                $total_card = get_field('total_card', $package_id);
                                 
                                 if ($status=="Chưa thanh toán") {
                                     $status_div = '<span class="error_notification">'. $status .'</span>';
@@ -58,11 +61,11 @@ $current_user_id = get_current_user_id();
                                 }
                                 echo "<tr data-url='" . get_permalink() . "'>
                                         <a href='#'>
-                                        <td>" . get_the_ID() . "</td>
+                                        <td>" . ++$i . "</td>
                                         <td><a href='" . get_permalink() . "'>". get_the_date('d/m/Y') ."</a></td>
                                         <td><a href='" . get_permalink() . "'>". get_the_title() ."</a></td>
-                                        <td>" . number_format($normal_cards) . "</td>
-                                        <td>" . number_format($vip_cards) . "</td>
+                                        <td><a href='" . get_permalink() . "'>" . get_the_title($package_id) . "</td>
+                                        <td>" . number_format($total_card) . "</td>
                                         <td>" . number_format($final_total) . "</td>
                                         <td>". $status_div ."</td>
                                         </a>
