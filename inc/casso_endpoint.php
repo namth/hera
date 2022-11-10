@@ -8,7 +8,7 @@ add_action('rest_api_init', function(){
 });
 
 function casso_endpoint(WP_REST_Request $request) {
-    $CASSO_TOKEN = "eogrBiWqaq";
+    $CASSO_TOKEN = "wPtyoCVkcveCu0xjaiSwiVcf";
 
     $token = $request->get_header('secure-token');
     $json_result = json_decode($request->get_body()); 
