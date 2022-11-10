@@ -212,6 +212,7 @@ img {
 }
 #header_bar .greeting .mui-dropdown__menu li a i {
   margin-right: 10px;
+  min-width: 16px;
 }
 
 .main_menu {
@@ -1154,6 +1155,9 @@ img {
   display: block;
 }
 
+#list_product {
+  padding-bottom: 50px;
+}
 #list_product .package_item {
   border: 1px solid #ddd;
   border-radius: 20px;
@@ -1162,7 +1166,9 @@ img {
   text-align: center;
 }
 #list_product .package_item .package_content img {
+  margin: 0 auto;
   height: auto;
+  border-radius: 18px;
 }
 #list_product .package_item .package_content .price .label {
   display: block;

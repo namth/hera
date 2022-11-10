@@ -19,6 +19,9 @@ if (is_user_logged_in()) {
                 <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home">
                     <a href="<?php echo get_author_posts_url($user->ID); ?>"><i class="fa fa-id-card-o" aria-hidden="true"></i> Cài đặt tài khoản</a>
                 </li>
+                <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home">
+                    <a href="<?php echo wp_logout_url(); ?>"><i class="fa fa-sign-out" aria-hidden="true"></i> Đăng xuất</a>
+                </li>
             </ul>
         </div>
     </div>
@@ -26,6 +29,5 @@ if (is_user_logged_in()) {
 } else if (!is_page('login')) {
     wp_redirect(get_permalink(5));
     exit;
-    // echo 'redirect to login';
 }
 ?>

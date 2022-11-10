@@ -9,6 +9,7 @@ function all_my_hooks(){
     # function library
     require_once( $dir . '/inc/api_function.php');
     require_once( $dir . '/inc/ajax_function.php');
+    require_once( $dir . '/inc/casso_endpoint.php');
     
     # Init SESSION
     if(!session_id()) {

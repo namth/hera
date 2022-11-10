@@ -60,7 +60,6 @@ $current_user_id = get_current_user_id();
                                     $status_div = '<span class="notification">'. $status .'</span>';
                                 }
                                 echo "<tr data-url='" . get_permalink() . "'>
-                                        <a href='#'>
                                         <td>" . ++$i . "</td>
                                         <td><a href='" . get_permalink() . "'>". get_the_date('d/m/Y') ."</a></td>
                                         <td><a href='" . get_permalink() . "'>". get_the_title() ."</a></td>
@@ -68,7 +67,6 @@ $current_user_id = get_current_user_id();
                                         <td>" . number_format($total_card) . "</td>
                                         <td>" . number_format($final_total) . "</td>
                                         <td>". $status_div ."</td>
-                                        </a>
                                     </tr>";
                             } wp_reset_postdata();
                         }

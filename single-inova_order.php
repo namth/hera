@@ -129,6 +129,15 @@ if (have_posts()) {
                     </div>
                 </div>
                 <div class="mui-row">
+                    <div class="mui-col-md-6">
+                        <h4>Nhà cung cấp dịch vụ</h4>
+                        <?php 
+                            
+                        ?>
+                    </div>
+                    <div class="mui-col-md-6"></div>
+                </div>
+                <div class="mui-row">
                     <div class="mui-col-md-12" id="invoice">
                         <h4>Invoice Items</h4>
                         <table>

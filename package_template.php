@@ -45,7 +45,7 @@ get_template_part('header', 'topbar');
                                             <div class="package_content">
                                                 <?php 
                                                     $package_id = inova_encrypt( get_the_ID(), 'e');
-                                                    the_post_thumbnail();
+                                                    the_post_thumbnail('thumbnail');
                                                     the_content(); 
                                                 ?>
                                                 <div class="price">
