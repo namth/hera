@@ -14,12 +14,13 @@ if ( isset( $_GET['p'] ) && ($_GET['p'] != "")) {
     ?>
     <div class="mui-container-fluid">
         <div class="mui-row">
-            <div class="mui-col-md-2">
+            <div class="mui-col-md-2 npl">
                 <?php
                 get_sidebar();
+
                 ?>
             </div>
-            <div class="mui-col-md-10">
+            <div class="mui-col-md-10 mt20">
                 <div class="mui-panel" id="confirm_order">
                     <h3 class="title_general mui--divider-bottom">Xác nhận đơn hàng</h3>
                     <div class="notification">
@@ -51,7 +52,7 @@ if ( isset( $_GET['p'] ) && ($_GET['p'] != "")) {
 
                     ?>
                     </div>
-                    <div class="mui-row">
+                    <div class="">
                         <div class="mui-col-md-3">
                             <h3>Gói sản phẩm đã chọn</h3>
                             <?php

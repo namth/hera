@@ -3,14 +3,12 @@
 add_action('init','all_my_hooks');
 function all_my_hooks(){
     $dir = dirname( __FILE__ );
-    require_once( $dir . '/inc/custom_post.php');
-    require_once( $dir . '/inc/custom_field.php');
+    require_once( $dir . '/inc/general/function.php');
     
     # function library
     require_once( $dir . '/inc/api_function.php');
     require_once( $dir . '/inc/ajax_function.php');
-    require_once( $dir . '/inc/casso_endpoint.php');
-    
+    require_once( $dir . '/inc/payment/casso_endpoint.php');
     # Init SESSION
     if(!session_id()) {
         session_start();
@@ -18,7 +16,6 @@ function all_my_hooks(){
 
     # Init post thumbnail 
     add_theme_support( 'post-thumbnails' ); 
-    add_theme_support( 'html5' ); 
 }
 
 # mã hoá và giải mã 

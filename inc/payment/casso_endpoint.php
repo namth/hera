@@ -1,4 +1,6 @@
 <?php 
+define('CASSO_TOKEN','wPtyoCVkcveCu0xjaiSwiVcf');
+
 add_action('rest_api_init', function(){
     # casso endpoint
     register_rest_route('hera/v1/', 'casso_endpoint', array(
@@ -8,13 +10,11 @@ add_action('rest_api_init', function(){
 });
 
 function casso_endpoint(WP_REST_Request $request) {
-    $CASSO_TOKEN = "wPtyoCVkcveCu0xjaiSwiVcf";
-
     $token = $request->get_header('secure-token');
     $json_result = json_decode($request->get_body()); 
 
     # check token casso
-    if( $token != $CASSO_TOKEN ) {
+    if( $token != CASSO_TOKEN ) {
         return [
             'error' => 401,
             'status'=> "Thiếu Secure Token hoặc secure token không khớp",
@@ -51,20 +51,23 @@ function casso_endpoint(WP_REST_Request $request) {
         $status = get_field('status', $search);
     }
 
+    # Kiểm tra xem order đã được active chưa 
+    $active = get_field('activate', $search);
+
     # Nếu tìm được order ID thì xử lý kích hoạt đơn hàng.
-    if ($search) {
+    if ($search && !$active) {
         $output["error"] = 0;
         # check xem id đã được xử lý hay chưa
         $pre_casso_id_array = explode(',', get_field('casso_id', $search));
 
         if (!$pre_casso_id_array || !in_array($data->id, $pre_casso_id_array)) {
             # kiểm tra xem đủ tiền hay thiếu tiền
-            //GIÁ TIỀN TỔNG CỘNG CỦA ĐƠN HÀNG
-            $total = get_field('total', $search);
+            // GIÁ TIỀN TỔNG CỘNG CỦA ĐƠN HÀNG
+            $total = get_field('final_total', $search);
             $pre_paid = get_field('paid', $search);
             $ORDER_MONEY = $total - $pre_paid;
     
-            //Số tiền chuyển thiếu tối đa mà hệ thống vẫn chấp nhận để xác nhận đã thanh toán
+            // Số tiền chuyển thiếu tối đa mà hệ thống vẫn chấp nhận để xác nhận đã thanh toán
             $ACCEPTABLE_DIFFERENCE = 10000;
     
             # Số tiền khách chuyển
@@ -96,7 +99,15 @@ function casso_endpoint(WP_REST_Request $request) {
             # update payment method
             $method = get_field('payment_method', $search);
             if (!$method) {
-                update_field('field_636c85b89d08e', 'Casso', $search);
+                update_field('field_636c85b89d08e', 'Chuyển khoản ngân hàng (Kích hoạt tự động)', $search);
+            }
+
+            # Kích hoạt đơn hàng 
+            $active_done = activation_package($search);
+
+            if ($active_done) {
+                # Đánh dấu đơn hàng đã được active 
+                update_field('field_636df1ce10556', true, $data->order);
             }
         } else {
             $output["status"] = "Đơn hàng đã xử lý";
@@ -161,4 +172,9 @@ function quick_search_order( $orderid ) {
     } else {
         return false;
     }
+}
+
+# Yêu cầu Casso đồng bộ ngay lập tức
+function casso_sync() {
+    echo CASSO_TOKEN;
 }

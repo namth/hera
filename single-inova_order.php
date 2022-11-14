@@ -4,15 +4,18 @@ if (have_posts()) {
     while (have_posts()) {
         the_post();
 
+        $current_user = wp_get_current_user();
         # get data from invoice
         $id_invoice = get_the_title();
-        $customer = get_field('customer');
-        $status = get_field('status');
+        $customer   = get_field('customer');
+        $status     = get_field('status');
+        $activate   = get_field('activate');
         
-        $package_id = get_field('package');
-        $coupon_id = get_field('coupon');
-        $total = get_field('total');
-        $final_total = get_field('final_total');
+        $package_id     = get_field('package');
+        $coupon_id      = get_field('coupon');
+        $total          = get_field('total');
+        $final_total    = get_field('final_total');
+        $paid           = get_field('paid');
 
         # calculate payment date
         $create_date = get_the_date('U');
@@ -87,7 +90,7 @@ if (have_posts()) {
 ?>
 <div class="mui-container-fluid">
     <div class="mui-row">
-        <div class="mui-col-md-2">
+        <div class="mui-col-md-2 npl">
             <?php
             get_sidebar();
             ?>
@@ -104,38 +107,59 @@ if (have_posts()) {
                 <h3 class="title_general mui--divider-bottom">Mã đơn hàng: <b><?php echo get_the_title(); ?></b></h3>
                 <div class="mui-row">
                     <div class="mui-col-md-6">
-                        <table>
-                            <tr>
-                                <td>Ngày tạo hóa đơn:</td>
-                                <td><?php echo date_i18n('j F Y', $create_date); ?></td>
-                            </tr>
-                            <tr>
-                                <td>Hạn thanh toán:</td>
-                                <td><?php echo $payment_date; ?></td>
-                            </tr>
-                        </table>
+                    <?php 
+                        $done_payment = false;
+                        if (in_array($status, ["Chưa thanh toán", "Thanh toán thiếu"])) {
+                            $total_label = $status == "Chưa thanh toán" ? "Thành tiền":"Cần thanh toán";
+                            $status_class = "error_notification";
+                            echo "<table>
+                                    <tr>
+                                        <td>Ngày tạo hóa đơn:</td>
+                                        <td>" . date_i18n('j F Y', $create_date) . "</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Hạn thanh toán:</td>
+                                        <td>" . $payment_date . "</td>
+                                    </tr>
+                                </table>";
+                        } else if (in_array($status, ["Đã thanh toán", "Thanh toán dư"])) {
+                            $total_label = "Tiền còn thừa";
+                            $status_class = "success_notification";
+                            $done_payment = true;
+                        } else {
+                            $status_class = "notification";
+                        }
+                    ?>
+                        
                     </div>
                     <div class="mui-col-md-6" id="status">
-                        <?php 
-                            if ($status == "Chưa thanh toán") {
-                                $status_class = "error_notification";
-                            } else if ($status == "Đã thanh toán") {
-                                $status_class = "success_notification";
-                            } else {
-                                $status_class = "notification";
-                            }
-                        ?>
                         <span class="<?php echo $status_class; ?>"><?php echo $status; ?></span>
                     </div>
                 </div>
-                <div class="mui-row">
+                <div class="mui-row mt20">
                     <div class="mui-col-md-6">
-                        <h4>Nhà cung cấp dịch vụ</h4>
+                        <h4 style="font-weight:bold;">Nhà cung cấp dịch vụ</h4>
                         <?php 
-                            
+                            $inova_info = get_field('inova_info', 'option');
+                            echo wpautop($inova_info);
                         ?>
                     </div>
-                    <div class="mui-col-md-6"></div>
+                    <div class="mui-col-md-6">
+                        <h4 style="font-weight:bold;">Thông tin khách hàng</h4>
+                        <?php 
+                            # Lấy thông tin khách hàng mua hàng
+                            $displayname = $current_user->display_name;
+                            $user_email  = $current_user->user_email;
+                            $user_phone  = get_field('phone', 'user_' . $current_user->ID);
+                            $user_address  = get_field('address', 'user_' . $current_user->ID);
+
+                            echo wpautop('<i class="fa fa-user-circle-o" aria-hidden="true"></i> ' . $displayname);
+                            echo wpautop('<i class="fa fa-envelope-o" aria-hidden="true"></i> ' . $user_email);
+                            echo wpautop('<i class="fa fa-phone" aria-hidden="true"></i> ' . $user_phone);
+                            echo wpautop('<i class="fa fa-address-book-o" aria-hidden="true"></i> ' . $user_address);
+
+                        ?>
+                    </div>
                 </div>
                 <div class="mui-row">
                     <div class="mui-col-md-12" id="invoice">
@@ -154,21 +178,33 @@ if (have_posts()) {
                                             <td>" . number_format($total) . " ₫</td>
                                         </tr>";
 
+                                    # Hiển thị mã coupon nếu có.
                                     if ($coupon_id) {
                                         if ($coupon_type == "Phần trăm") {
-                                            $coupon = number_format(- $coupon_value) . "%";
+                                            $coupon = number_format($coupon_value) . "%";
                                         } else {
-                                            $coupon = number_format(- $coupon_value) . " ₫";
+                                            $coupon = number_format($coupon_value) . " ₫";
                                         }
                                         echo "<tr class='coupon'>
                                                 <td>Mã giảm giá <span class='code'>" . $coupon_name . "</span></td>
                                                 <td>" . $coupon . "</td>
                                             </tr>";
                                     }
+
+                                    # Hiển thị số tiền đã thanh toán
+                                    if ($paid) {
+                                        echo "<tr class='sub_total'>
+                                                <td>Đã thanh toán</td>
+                                                <td>" . number_format($paid) . " ₫</td>
+                                            </tr>";
+
+                                        $final_total -= $paid; 
+                                    }
+
                                     if ($final_total) {
                                         echo "<tr class='final_total'>
-                                                <td style='border-top: 1px solid lightgray;'>Thành tiền</td>
-                                                <td style='border-top: 1px solid lightgray;'>" . number_format($final_total) . " ₫</td>
+                                                <td style='border-top: 1px solid lightgray;'>" . $total_label . "</td>
+                                                <td style='border-top: 1px solid lightgray;'>" . number_format(abs($final_total)) . " ₫</td>
                                             </tr>";
                                     
                                     }
@@ -177,7 +213,7 @@ if (have_posts()) {
                         </table>
                     </div>
                     <?php 
-                        if ($status=="Chưa thanh toán") {
+                        if (!$done_payment) {
                     ?>
                     <div class="mui-col-md-12" id="payment">
                         <ul class="mui-tabs__bar mui-tabs__bar--justified">
@@ -205,12 +241,83 @@ if (have_posts()) {
                     </div>
                     <?php 
                         }
+                    
+                        if (!$activate) {
+                    ?>
+                    <div id="check_payment" class="mui-col-md-12">
+                        <button class="mui-btn hera-btn">Kích hoạt dịch vụ ngay</button>
+                        <input type="hidden" name="order_id" value="<?php echo get_the_ID(); ?>">
+                    </div>
+                    <?php 
+                        }
                     ?>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script>
+    jQuery(document).ready(function ($) {
+        $("#check_payment").click(function(){
+            // Gọi lệnh đồng bộ tới casso
+            $.ajax({
+                type: "POST",
+                url: AJAX.ajax_url,
+                data: {
+                    action: "syncCasso",
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(xhr.responseText);
+                    console.log(thrownError);
+                },
+                success: function (resp) {
+                    // var obj = JSON.parse(resp);
+                    console.log(resp);
+                    // Chuyển sang trang cảm ơn.
+                },
+            });
+
+            // Cài đặt bộ hẹn giờ kiểm tra order 
+            setInterval(checkOrder, 2000);
+            return false;
+        });
+
+        function checkOrder(){
+            var order_id = $('input[name="order_id"]').val();
+            // Gọi ajax để kiểm tra hoá đơn cho tới khi được kích hoạt
+            $.ajax({
+                type: "POST",
+                url: AJAX.ajax_url,
+                data: {
+                    action: "checkOrder",
+                    order: order_id
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(xhr.responseText);
+                    console.log(thrownError);
+                },
+                success: function (resp) {
+                    console.log(resp);
+                    var obj = JSON.parse(resp);
+                    if (obj['done'] == true) {
+                        // Get a reference to the last interval + 1
+                        const interval_id = window.setInterval(function(){}, Number.MAX_SAFE_INTEGER);
+
+                        // Clear any timeout/interval up to that id
+                        for (let i = 1; i < interval_id; i++) {
+                            window.clearInterval(i);
+                        }
+
+                        // redirect to thank you page 
+                        window.location.replace(obj['url']);
+                    }
+                },
+            });
+        }
+    });
+</script>
 <?php
     }
 }

@@ -9,12 +9,12 @@ get_template_part('header', 'topbar');
 ?>
 <div class="mui-container-fluid">
     <div class="mui-row">
-        <div class="mui-col-md-2">
+        <div class="mui-col-md-2 npl">
             <?php
             get_sidebar();
             ?>
         </div>
-        <div class="mui-col-md-10">
+        <div class="mui-col-md-10 mt20">
             <div class="mui-panel" id="list_product">
                 <h3 class="title_general mui--divider-bottom"><?php the_title(); ?></h3>
                 <div class="package">

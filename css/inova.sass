@@ -36,6 +36,18 @@ img
 .mb20
     margin-bottom: 20px !important
 
+.mt20
+    margin-top: 20px
+
+.npl
+    padding-left: 0
+
+.npr
+    padding-right: 0
+
+.np
+    padding: 0
+
 .fullwidth
     width: 100%
 
@@ -174,6 +186,7 @@ img
     display: table
     padding: 0px 15px
     width: 100%
+    margin-bottom: 0
 
     .logo
         display: table-cell
@@ -209,6 +222,13 @@ img
                         margin-right: 10px
                         min-width: 16px
 
+#hera_sidebar
+    background: whitesmoke
+    border-right: 1px solid #d9d9d9
+    box-shadow: 1px 3px 5px lightgray
+    min-height: calc(100vh - 40px)
+    padding-top: 20px
+
 .main_menu
     list-style: none
     margin: 0
@@ -235,6 +255,7 @@ img
     padding: 8px 15px
     text-align: center
     margin: 0
+    z-index: 100
 
     .card_total
         display: inline-block
@@ -262,8 +283,8 @@ img
 .breadcrumb
     display: flex
     align-items: center
-    font-size: large
-    padding: 5px 0 15px
+    font-size: inherit
+    padding: 15px 0 10px
 
     .fa
         font-size: small
@@ -648,6 +669,13 @@ img
 .footer_section
     margin-bottom: 20px
 
+#footer
+    position: relative
+    background: #b89062
+    color: white
+    padding: 12px 20px
+    z-index: 99
+
 #list_customer
     .loader
         display: none
@@ -794,7 +822,7 @@ img
             margin: 10px 10px 10px 0
 
         .hera-btn
-            padding: 0 15px
+            padding: 0 10px
 
 /* Trang thanh toán */
 #checkout
@@ -846,6 +874,10 @@ img
                     padding: 10px 15px
                     font-weight: bold
 
+            .sub_total
+                background: cornsilk
+                color: #9b8060
+
     #payment
         .mui-tabs__bar
             li
@@ -888,6 +920,22 @@ img
 
                 button
                     background: #A50064
+
+    #check_payment
+        text-align: center
+        padding-top: 20px
+        padding-bottom: 20px
+
+#thankyou
+    display: flex
+    justify-content: center
+    align-items: center
+    text-align: center
+    min-height: 75vh
+
+    img
+        margin: 10px auto
+        width: 250px
 
 .notification
     text-align: center

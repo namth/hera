@@ -13,13 +13,15 @@ if (isset($_POST['search'])) {
 
 if (isset($_GET['g']) && ($_GET['g'] != "")) {
     $data = json_decode(inova_encrypt($_GET['g'], 'd'));
+} else {
+    $data = false;
 }
 
 ?>
 <div class="mui-container-fluid">
     <div class="mui-row">
         <div class="mui-col-md-12" id="search_box">
-            <div class="back-btn">
+            <div class="back-btn mt20">
                 <a href="<?php echo get_bloginfo('url'); ?>"><i class="fa fa-arrow-left"></i> Trang chủ </a>
             </div>
             <h1>Mẫu thiệp cưới cho mọi người</h1>
@@ -33,7 +35,7 @@ if (isset($_GET['g']) && ($_GET['g'] != "")) {
         </div>
         <div class="mui-col-md-12">
             <?php 
-                if ($data->userid == $current_user_id) {
+                if (isset($data->userid) && ($data->userid == $current_user_id)) {
                     echo '<input type="hidden" name="groupid" value="' . $data->groupid  . '">';
                 }
             ?>

@@ -36,12 +36,12 @@ $vip_license    = get_field('vip_card', 'user_' . $current_user_id);
 ?>
 <div class="mui-container-fluid">
     <div class="mui-row">
-        <div class="mui-col-md-2">
+        <div class="mui-col-md-2 npl">
             <?php
             get_sidebar();
             ?>
         </div>
-        <div class="mui-col-md-8">
+        <div class="mui-col-md-8 mt20">
             <div class="mui-panel" id="list_my_card">
                 <h3 class="title_general mui--divider-bottom">Danh sách thiệp mời của nhà trai</h3>
                 <div class="heracard_list mui-row">
@@ -64,7 +64,7 @@ $vip_license    = get_field('vip_card', 'user_' . $current_user_id);
                             $cardid = get_field('card_id');
                             $customer = get_field('guest_list');
                             $status = get_field('status');
-                            $_customer = count($customer);
+                            $_customer = is_array($customer)?count($customer):0;
                             
                             if ($image) {
                                 $card_thumbnail = $image;
@@ -127,7 +127,7 @@ $vip_license    = get_field('vip_card', 'user_' . $current_user_id);
                             $cardid = get_field('card_id');
                             $customer = get_field('guest_list');
                             $status = get_field('status');
-                            $_customer = count($customer);
+                            $_customer = is_array($customer)?count($customer):0;
                             
                             if ($image) {
                                 $card_thumbnail = $image;
