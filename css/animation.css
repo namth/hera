@@ -1,0 +1,18 @@
+.blink_me {
+  -webkit-animation: blinker 1.75s linear infinite;
+          animation: blinker 1.75s linear infinite;
+}
+
+@-webkit-keyframes blinker {
+  50% {
+    color: #f7ad00;
+    text-shadow: 0px 0px 39px #f7ad00;
+  }
+}
+
+@keyframes blinker {
+  50% {
+    color: #f7ad00;
+    text-shadow: 0px 0px 39px #f7ad00;
+  }
+}/*# sourceMappingURL=animation.css.map */

@@ -39,7 +39,7 @@ function casso_endpoint(WP_REST_Request $request) {
 
     # Nhận dạng order id
     $data = $json_result->data[0];
-    $description = trim($data->description);
+    $description = strtoupper(trim($data->description));
 
     $search = quick_search_order($description);
 
@@ -172,9 +172,4 @@ function quick_search_order( $orderid ) {
     } else {
         return false;
     }
-}
-
-# Yêu cầu Casso đồng bộ ngay lập tức
-function casso_sync() {
-    echo CASSO_TOKEN;
 }

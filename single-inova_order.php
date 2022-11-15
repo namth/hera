@@ -245,7 +245,7 @@ if (have_posts()) {
                         if (!$activate) {
                     ?>
                     <div id="check_payment" class="mui-col-md-12">
-                        <button class="mui-btn hera-btn">Kích hoạt dịch vụ ngay</button>
+                        <button class="mui-btn hera-btn active_now">Kích hoạt dịch vụ ngay</button>
                         <input type="hidden" name="order_id" value="<?php echo get_the_ID(); ?>">
                     </div>
                     <?php 
@@ -256,15 +256,25 @@ if (have_posts()) {
         </div>
     </div>
 </div>
+<div id="fullloading">
+    <div>
+        <h3 class="description">Đang đồng bộ hoá với ngân hàng <span class="blink_me">...</span></h3>
+        <img src="<?php echo get_template_directory_uri(); ?>/img/bank_loading.gif" alt="" />
+    </div>
+</div>
 <script>
     jQuery(document).ready(function ($) {
-        $("#check_payment").click(function(){
+        $("#check_payment .active_now").click(function(){
             // Gọi lệnh đồng bộ tới casso
             $.ajax({
                 type: "POST",
                 url: AJAX.ajax_url,
                 data: {
                     action: "syncCasso",
+                },
+                beforeSend: function() {
+                    $("#fullloading").css('display','flex');
+                    $("#fullloading .description").html('<span class="blink_me">Đang đồng bộ hoá với ngân hàng ...</span>');
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     console.log(xhr.status);
@@ -273,8 +283,7 @@ if (have_posts()) {
                 },
                 success: function (resp) {
                     // var obj = JSON.parse(resp);
-                    console.log(resp);
-                    // Chuyển sang trang cảm ơn.
+
                 },
             });
 
@@ -292,6 +301,9 @@ if (have_posts()) {
                 data: {
                     action: "checkOrder",
                     order: order_id
+                },
+                beforeSend: function() {
+                    $("#fullloading .description").html('<span class="blink_me">Kiểm tra giao dịch ...</span>');
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     console.log(xhr.status);

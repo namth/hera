@@ -46,9 +46,8 @@ function checkOrder(){
     $activate = get_field('activate', $order_id);
 
     if ($activate) {
-        $message = base64_encode("Thanh toán thành công. Bạn có thể quay lại trang chủ để tiếp tục.");
         $check["done"]  = true;
-        $check["url"]   = get_bloginfo("url") . "/thank-you/?m=" . $message;
+        $check["url"]   = get_bloginfo("url") . "/thank-you/";
     } else {
         $check["done"]  = false;
     }
