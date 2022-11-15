@@ -1,18 +1,50 @@
 @charset "UTF-8";
 .blink_me {
-  -webkit-animation: blinker 1.75s linear infinite;
-          animation: blinker 1.75s linear infinite;
+  -webkit-animation: blinker 3s cubic-bezier(0.77, 0, 0.18, 1) infinite;
+          animation: blinker 3s cubic-bezier(0.77, 0, 0.18, 1) infinite;
 }
 
 @-webkit-keyframes blinker {
+  0% {
+    color: #f7ad00;
+    text-shadow: 0px 0px 39px #f7ad00;
+  }
+  25% {
+    color: #ff08ad;
+    text-shadow: 0px 0px 39px #ff08ad;
+  }
   50% {
+    color: #3742f5;
+    text-shadow: 0px 0px 39px #3742f5;
+  }
+  75% {
+    color: #adc600;
+    text-shadow: 0px 0px 39px #adc600;
+  }
+  100% {
     color: #f7ad00;
     text-shadow: 0px 0px 39px #f7ad00;
   }
 }
 
 @keyframes blinker {
+  0% {
+    color: #f7ad00;
+    text-shadow: 0px 0px 39px #f7ad00;
+  }
+  25% {
+    color: #ff08ad;
+    text-shadow: 0px 0px 39px #ff08ad;
+  }
   50% {
+    color: #3742f5;
+    text-shadow: 0px 0px 39px #3742f5;
+  }
+  75% {
+    color: #adc600;
+    text-shadow: 0px 0px 39px #adc600;
+  }
+  100% {
     color: #f7ad00;
     text-shadow: 0px 0px 39px #f7ad00;
   }
@@ -1002,8 +1034,8 @@ img {
   align-items: center;
   text-align: center;
 }
-#fullloading::before {
-  content: "X";
+#fullloading .close_button {
+  cursor: pointer;
   height: 25px;
   width: 25px;
   border-radius: 15px;
@@ -1014,9 +1046,6 @@ img {
   right: 35px;
   top: 35px;
   line-height: 25px;
-}
-#fullloading .description {
-  color: mediumvioletred;
 }
 #fullloading img {
   width: 200px;
@@ -1408,6 +1437,15 @@ img {
     width: 100%;
     align-items: center;
   }
+  #hera_sidebar {
+    display: none;
+  }
+  .btxs {
+    border-top: 1px solid lightgray;
+  }
+  #checkout #payment .mui-tabs__bar li a {
+    font-size: 14px;
+  }
 }
 @media screen and (max-width: 480px) {
   #login .small_right #loginform {
@@ -1433,5 +1471,12 @@ img {
   }
   #login .small_right .register_greeting {
     margin: 0 7%;
+  }
+  #checkout #status {
+    display: flex;
+    margin-top: 15px;
+  }
+  #checkout #payment .mui-tabs__bar li a {
+    font-size: 12px;
   }
 }/*# sourceMappingURL=inova.css.map */

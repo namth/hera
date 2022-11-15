@@ -10,10 +10,20 @@ function activateModal(data) {
     // modalEl.firstElementChild[1].value = data;
     setTimeout(function() { modalEl.firstElementChild[0].focus(); }, 100);
 }
+function clearAllInterval(){
+  // Get a reference to the last interval + 1
+  const interval_id = window.setInterval(function(){}, Number.MAX_SAFE_INTEGER);
+
+  // Clear any timeout/interval up to that id
+  for (let i = 1; i < interval_id; i++) {
+      window.clearInterval(i);
+  }
+}
 
 jQuery(document).ready(function ($) {
-
-
+    
+    /* Set chiều cao cho sidebar */
+    $("#hera_sidebar").height($(".mui-container-fluid").height());
   
     /* Edit nhóm khách hàng trực tiếp khi click vào chữ trên tiêu đề */
     $(document.body).on('blur', '.breadcrumb .title', function(){

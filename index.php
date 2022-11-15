@@ -180,15 +180,11 @@ $vip_license    = get_field('vip_card', 'user_' . $current_user_id);
 
 <div class="mui-panel" id="cart_bar">
     <?php 
-    
+        $limit = get_field('total_cards', 'user_' . $current_user_id);
     ?>
-    <div class="card_total">Bạn có <b><?php echo $total_customer; ?></b> thiệp</div>
+    <div class="card_total">Bạn có <b><?php echo $total_customer . '/' . $limit; ?></b> thiệp</div>
     <div class="card_license">
-        <?php 
-            
-        ?>
-        <span>Thiệp thường: 0<?php echo $normal_license; ?></span>
-        <span>Thiệp VIP: 0<?php echo $vip_license; ?></span>
+        
     </div>
     <a href="#" class="card_link"><i class="fa fa-cart-plus" aria-hidden="true"></i> Mua thêm thiệp</a>
 </div>

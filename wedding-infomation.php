@@ -31,7 +31,7 @@ $active_bride   = get_field('active_bride', 'user_' . $current_user_id);
 ?>
 <div class="mui-container-fluid">
     <div class="mui-row">
-        <div class="mui-col-md-2">
+        <div class="mui-col-md-2 npl">
             <?php
             get_sidebar();
             ?>

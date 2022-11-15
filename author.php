@@ -14,12 +14,12 @@ wp_delete_attachment($current_attachment_id); */
 ?>
 <div class="mui-container-fluid">
     <div class="mui-row">
-        <div class="mui-col-md-2">
+        <div class="mui-col-md-2 npl">
             <?php
             get_sidebar();
             ?>
         </div>
-        <div class="mui-col-md-8">
+        <div class="mui-col-md-8 mt20">
             <!-- <div class="breadcrumb">
                 <a href="<?php echo get_bloginfo('url'); ?>"><i class="fa fa-home" aria-hidden="true"></i></a>
                 

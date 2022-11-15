@@ -1,7 +1,19 @@
 .blink_me
-    animation: blinker 1.75s linear infinite
+    animation: blinker 3s cubic-bezier(.77,0,.18,1) infinite
 
 @keyframes blinker
+    0%
+        color: #f7ad00
+        text-shadow: 0px 0px 39px #f7ad00
+    25%
+        color: #ff08ad
+        text-shadow: 0px 0px 39px #ff08ad
     50%
+        color: #3742f5
+        text-shadow: 0px 0px 39px #3742f5
+    75%
+        color: #adc600
+        text-shadow: 0px 0px 39px #adc600
+    100%
         color: #f7ad00
         text-shadow: 0px 0px 39px #f7ad00

@@ -1,6 +1,5 @@
 <?php
 $guest_list = get_field('guest_list');
-$guest_id = get_field('guest_id');
 $current_user = wp_get_current_user();
 
 # Thêm mới khách mời
@@ -16,10 +15,6 @@ if (
     $update = $_POST['update'];
 
     if (!$update){
-        # nếu guest_id chưa có thì set = 1
-        if (!$guest_id) {
-            $guest_id = 1;
-        } else $guest_id++;
     
         if (!$vai_ve) {
             $vai_ve = "Bạn";
@@ -115,7 +110,7 @@ if (have_posts()) {
 ?>
         <div class="mui-container-fluid">
             <div class="mui-row">
-                <div class="mui-col-md-2">
+                <div class="mui-col-md-2 npl">
                     <?php
                     get_sidebar();
                     ?>

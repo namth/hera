@@ -106,7 +106,7 @@ if (have_posts()) {
             <div class="mui-panel" id="checkout">
                 <h3 class="title_general mui--divider-bottom">Mã đơn hàng: <b><?php echo get_the_title(); ?></b></h3>
                 <div class="mui-row">
-                    <div class="mui-col-md-6">
+                    <div class="mui-col-md-6 mui-col-sm-7">
                     <?php 
                         $done_payment = false;
                         if (in_array($status, ["Chưa thanh toán", "Thanh toán thiếu"])) {
@@ -132,19 +132,19 @@ if (have_posts()) {
                     ?>
                         
                     </div>
-                    <div class="mui-col-md-6" id="status">
+                    <div class="mui-col-md-6 mui-col-sm-5" id="status">
                         <span class="<?php echo $status_class; ?>"><?php echo $status; ?></span>
                     </div>
                 </div>
-                <div class="mui-row mt20">
-                    <div class="mui-col-md-6">
+                <div class="mui-row">
+                    <div class="mui-col-md-6 mt20 btxs">
                         <h4 style="font-weight:bold;">Nhà cung cấp dịch vụ</h4>
                         <?php 
                             $inova_info = get_field('inova_info', 'option');
                             echo wpautop($inova_info);
                         ?>
                     </div>
-                    <div class="mui-col-md-6">
+                    <div class="mui-col-md-6 mt20 btxs">
                         <h4 style="font-weight:bold;">Thông tin khách hàng</h4>
                         <?php 
                             # Lấy thông tin khách hàng mua hàng
@@ -258,14 +258,15 @@ if (have_posts()) {
 </div>
 <div id="fullloading">
     <div>
-        <h3 class="description">Đang đồng bộ hoá với ngân hàng <span class="blink_me">...</span></h3>
+        <h3 class="description"><span class="blink_me">Đang đồng bộ hoá với ngân hàng ...</span></h3>
         <img src="<?php echo get_template_directory_uri(); ?>/img/bank_loading.gif" alt="" />
+        <span class="close_button">X</span>
     </div>
 </div>
 <script>
     jQuery(document).ready(function ($) {
+        // Gọi lệnh đồng bộ tới casso
         $("#check_payment .active_now").click(function(){
-            // Gọi lệnh đồng bộ tới casso
             $.ajax({
                 type: "POST",
                 url: AJAX.ajax_url,
@@ -314,13 +315,7 @@ if (have_posts()) {
                     console.log(resp);
                     var obj = JSON.parse(resp);
                     if (obj['done'] == true) {
-                        // Get a reference to the last interval + 1
-                        const interval_id = window.setInterval(function(){}, Number.MAX_SAFE_INTEGER);
-
-                        // Clear any timeout/interval up to that id
-                        for (let i = 1; i < interval_id; i++) {
-                            window.clearInterval(i);
-                        }
+                        clearAllInterval();
 
                         // redirect to thank you page 
                         window.location.replace(obj['url']);
@@ -328,6 +323,16 @@ if (have_posts()) {
                 },
             });
         }
+
+        // Xử lý khi bấm vào nút close trên màn hình
+        $("#fullloading .close_button").click(function(){
+            /* Ẩn loading */
+            $("#fullloading").css('display','none');
+            
+            /* Xoá check */
+            clearAllInterval();
+        });
+
     });
 </script>
 <?php

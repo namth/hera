@@ -34,6 +34,17 @@ $XL: 1170px
                     .register_greeting
                         margin: 0 7%
 
+            #checkout
+                #status
+                    display: flex
+                    margin-top: 15px
+
+                #payment
+                    .mui-tabs__bar 
+                        li 
+                            a
+                                font-size: 12px
+
     @else if $canvas == SM
         @media screen and (max-width: $SM)
             #login
@@ -47,6 +58,19 @@ $XL: 1170px
                     display: grid
                     width: 100%
                     align-items: center
+
+            #hera_sidebar
+                display: none
+
+            .btxs
+                border-top: 1px solid lightgray
+
+            #checkout
+                #payment
+                    .mui-tabs__bar 
+                        li 
+                            a
+                                font-size: 14px
 
     @else if $canvas == MD
         @media screen and (max-width: $MD)
