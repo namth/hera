@@ -84,6 +84,13 @@ if (is_user_logged_in()) {
 
     }
     get_header();
+
+    # Zalo login link
+    $code_verify = generate_verify_code();
+    update_field('field_6356c04455afc', $code_verify, 'option');
+    
+    $code_challenge = generate_code_challenge($code_verify);
+    $url = get_permalink();
 ?>
 <div id="login">
 
@@ -121,10 +128,17 @@ if (is_user_logged_in()) {
                 
             } else if( $user_exists ){
                 echo   '<div class="register_greeting">
-                            <h3>Tài khoản này đã tồn tại.</h3>
-                            <p>Hãy quay trở lại và chọn hình thức đăng nhập hoặc <a href="https://id.zalo.me/">đổi tài khoản zalo khác</a></p>';
-                echo        '<a href="' . get_bloginfo('url') . '/login" class="mui-btn hera-btn">Quay lại trang đăng nhập</a>';
-                echo   '</div>';
+                            <div class="social_login">
+                                <h3>Tài khoản này đã tồn tại.</h3>
+                                <p>Hãy quay trở lại và chọn hình thức đăng nhập hoặc <a target="_blank" href="https://id.zalo.me/" class="link">đổi tài khoản zalo khác</a></p>';
+                echo            '<a href="' . get_bloginfo('url') . '/login" class="mui-btn hera-btn">Quay lại trang đăng nhập</a>';
+                echo            '<div class="zalo_btn social_btn">
+                                    <a href="https://oauth.zaloapp.com/v4/permission?app_id=4424878354763274341&redirect_uri=' . $url . '&code_challenge=' . $code_challenge . '&state=' . $code_verify . '">
+                                        <img src="' . get_template_directory_uri() . '/img/zl.webp" alt="" /> <span>Thử lại</span>
+                                    </a>
+                                </div>';
+                echo   '    </div>
+                        </div>';
             } else {
         ?>
         <div class="register_greeting">
@@ -142,13 +156,6 @@ if (is_user_logged_in()) {
                     </a>
                 </div>
                 <?php
-                    # Zalo login link
-                    $code_verify = generate_verify_code();
-                    update_field('field_6356c04455afc', $code_verify, 'option');
-                    
-                    $code_challenge = generate_code_challenge($code_verify);
-                    $url = get_permalink();
-                    
                     echo '<div class="zalo_btn social_btn">
                             <a href="https://oauth.zaloapp.com/v4/permission?app_id=4424878354763274341&redirect_uri=' . $url . '&code_challenge=' . $code_challenge . '&state=' . $code_verify . '">
                                 <img src="' . get_template_directory_uri() . '/img/zl.webp" alt="" /> <span>Đăng ký bằng Zalo</span>

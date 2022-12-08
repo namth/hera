@@ -175,6 +175,12 @@ img {
   font-weight: bold;
   color: #b89062;
 }
+#login .small_right .register_greeting .link {
+  color: #bd4a41;
+}
+#login .small_right .register_greeting .link:hover {
+  text-decoration: underline;
+}
 #login .small_right .social_login {
   margin-top: 30px;
 }
