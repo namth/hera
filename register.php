@@ -122,7 +122,7 @@ if (is_user_logged_in()) {
             } else if( $user_exists ){
                 echo   '<div class="register_greeting">
                             <h3>Tài khoản này đã tồn tại.</h3>
-                            <p>Hãy quay trở lại và chọn hình thức đăng nhập</p>';
+                            <p>Hãy quay trở lại và chọn hình thức đăng nhập hoặc <a href="https://id.zalo.me/">đổi tài khoản zalo khác</a></p>';
                 echo        '<a href="' . get_bloginfo('url') . '/login" class="mui-btn hera-btn">Quay lại trang đăng nhập</a>';
                 echo   '</div>';
             } else {

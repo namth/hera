@@ -47,12 +47,12 @@ if (isset($_POST['post_upload_field']) && wp_verify_nonce($_POST['post_upload_fi
                     $groupID = 0;
                     $ownName = "";
                 }
-                $name       = $new_customer[0];
-                $attach     = $new_customer[1];
-                $vocative1  = $new_customer[2];
-                $vocative2  = $new_customer[3];
-                $xung_ho    = implode('/', array($vocative1, $vocative2));
-                $phone      = $new_customer[4];
+                $name       = trim($new_customer[0]);
+                $attach     = trim($new_customer[1]);
+                $vocative1  = trim($new_customer[2]);
+                $vocative2  = trim($new_customer[3]);
+                $xung_ho    = ($vocative1 && $vocative2)?implode('/', array($vocative1, $vocative2)):"";
+                $phone      = trim($new_customer[4]);
                 if (!$ownName) {
                     if (in_array(strtoupper($new_customer[5]),["NHÀ TRAI", "NHÀ GÁI"])) {
                         $ownName    = ucfirst($new_customer[5]);
@@ -88,18 +88,21 @@ if (isset($_POST['post_upload_field']) && wp_verify_nonce($_POST['post_upload_fi
                             update_sub_field(array('field_61066efde7dbc', $row, 'xung_ho'), $xung_ho, $groupID);
                             update_sub_field(array('field_61066efde7dbc', $row, 'phone'), $phone, $groupID);
                         } else {
-                            $row_update = array(
-                                'name'          => $name,
-                                'guest_attach'  => $attach,
-                                'xung_ho'       => $xung_ho,
-                                'phone'         => $phone,
-                                'sent'          => false,
-                                'joined'        => false,
-                            );
-                            add_row('field_61066efde7dbc', $row_update, $groupID);
+                            # Nếu có trường $name thì mới thêm mới
+                            if ($name) {
+                                $row_update = array(
+                                    'name'          => $name,
+                                    'guest_attach'  => $attach,
+                                    'xung_ho'       => $xung_ho,
+                                    'phone'         => $phone,
+                                    'sent'          => false,
+                                    'joined'        => false,
+                                );
+                                add_row('field_61066efde7dbc', $row_update, $groupID);
+                            }
                         }
                     } else {
-                        # Nếu search không thấy thì tạo group mới 
+                        # Nếu search không thấy và thì tạo group mới 
                         $args = array(
                             'post_title'    => $groupName,
                             'post_status'   => 'publish',
@@ -110,21 +113,24 @@ if (isset($_POST['post_upload_field']) && wp_verify_nonce($_POST['post_upload_fi
                         wp_set_object_terms($groupID, $ownName, 'category');
                         
                         # Thêm mới dữ liệu
-                        $row_update = array(
-                            'name'          => $name,
-                            'guest_attach'  => $attach,
-                            'xung_ho'       => $xung_ho,
-                            'phone'         => $phone,
-                            'sent'          => false,
-                            'joined'        => false,
-                        );
-                        add_row('field_61066efde7dbc', $row_update, $groupID);
+                        # Nếu có trường $name thì mới thêm mới
+                        if ($name) {
+                            $row_update = array(
+                                'name'          => $name,
+                                'guest_attach'  => $attach,
+                                'xung_ho'       => $xung_ho,
+                                'phone'         => $phone,
+                                'sent'          => false,
+                                'joined'        => false,
+                            );
+                            add_row('field_61066efde7dbc', $row_update, $groupID);
+                        }
                     }
                 }
             }
         }
 
-        wp_redirect(get_permalink($groupID));
+        // wp_redirect(get_permalink($groupID));
     } else {
         $thongbao = "Không có dữ liệu";
     }

@@ -174,7 +174,7 @@ if (have_posts()) {
                             <tbody>
                                 <?php 
                                     echo "<tr>
-                                            <td>" . get_the_title() . "</td>
+                                            <td>" . get_the_title($package_id) . "</td>
                                             <td>" . number_format($total) . " ₫</td>
                                         </tr>";
 
@@ -201,13 +201,10 @@ if (have_posts()) {
                                         $final_total -= $paid; 
                                     }
 
-                                    if ($final_total) {
-                                        echo "<tr class='final_total'>
-                                                <td style='border-top: 1px solid lightgray;'>" . $total_label . "</td>
-                                                <td style='border-top: 1px solid lightgray;'>" . number_format(abs($final_total)) . " ₫</td>
-                                            </tr>";
-                                    
-                                    }
+                                    echo "<tr class='final_total'>
+                                            <td style='border-top: 1px solid lightgray;'>" . $total_label . "</td>
+                                            <td style='border-top: 1px solid lightgray;'>" . number_format(abs($final_total)) . " ₫</td>
+                                        </tr>";
                                 ?>
                             </tbody>
                         </table>

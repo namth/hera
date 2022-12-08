@@ -1,0 +1,20 @@
+{
+    "name": "namtran/hera",
+    "description": "Lan dau su dung composer",
+    "autoload": {
+        "psr-4": {
+            "Namtran\\Hera\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "namth",
+            "email": "namth.pass@gmail.com"
+        }
+    ],
+    "minimum-stability": "beta",
+    "require" : {
+        "ext-zip": "*",
+        "phpoffice/phpspreadsheet": "^1.25"
+    }
+}
