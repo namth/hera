@@ -42,6 +42,9 @@ if (isset($_GET['code'])) {
         $user = wp_insert_user($args);
         
         if ($user) {
+            # add checking login number to user account 
+            track_user_logins(get_user_by('ID', $user));
+
             # Đăng nhập sau khi tạo tài khoản
             wp_set_current_user( $user, $user_login );
             wp_set_auth_cookie( $user, true, false );
