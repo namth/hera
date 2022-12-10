@@ -16,6 +16,7 @@ if (have_posts()) {
         $total          = get_field('total');
         $final_total    = get_field('final_total');
         $paid           = get_field('paid');
+        $uuid           = get_field('uuid');
 
         # calculate payment date
         $create_date = get_the_date('U');
@@ -33,8 +34,8 @@ if (have_posts()) {
             $array = json_decode($config, true);
             
             
-            $endpoint = "https://test-payment.momo.vn/gw_payment/transactionProcessor";
-            // $endpoint = "https://test-payment.momo.vn/v2/gateway/api/create";
+            // $endpoint = "https://test-payment.momo.vn/gw_payment/transactionProcessor";
+            $endpoint = "https://test-payment.momo.vn/v2/gateway/api/create";
             
             // print_r($array);
             $partnerCode = $array["partnerCode"];
@@ -42,45 +43,68 @@ if (have_posts()) {
             $secretKey = $array["secretKey"];
             $orderInfo = "Thanh toán qua MoMo";
             $amount = $final_total;
-            $orderId = time() . "";
-            $returnUrl = get_permalink();
-            $notifyurl = $returnUrl;
-            // Lưu ý: link notifyUrl không phải là dạng localhost
+            $orderId = incrementalHash(10);
+            $redirectUrl = get_permalink();
+            $ipnUrl = get_permalink();
             $extraData = "";
 
-            $requestId = time() . "";
-            $requestType = "captureMoMoWallet";
+
+            $requestId = gen_uuid();
+            $requestType = "captureWallet";
             
             //before sign HMAC SHA256 signature
-            $rawHash =  "partnerCode=" . $partnerCode . 
-                        "&accessKey=" . $accessKey . 
-                        "&requestId=" . $requestId . 
-                        "&amount=" . $amount . 
-                        "&orderId=" . $orderId . 
-                        "&orderInfo=" . $orderInfo . 
-                        "&returnUrl=" . $returnUrl . 
-                        "&notifyUrl=" . $notifyurl . 
-                        "&extraData=" . $extraData;
+            $rawHash =  
+                "accessKey=" . $accessKey . 
+                "&amount=" . $amount . 
+                "&extraData=" . $extraData .
+                "&ipnUrl=" . $ipnUrl .
+                "&orderId=" . $orderId .
+                "&orderInfo=" . $orderInfo .
+                "&partnerCode=" . $partnerCode .
+                "&redirectUrl=" . $redirectUrl .
+                "&requestId=" . $requestId .
+                "&requestType=" . $requestType;
+
             $signature = hash_hmac("sha256", $rawHash, $secretKey);
-            echo "Signature: ";
-            print_r($signature);
-            $data = array('partnerCode' => $partnerCode,
-                'accessKey' => $accessKey,
-                'requestId' => $requestId,
-                'requestType' => $requestType,
-                'amount' => $amount,
-                'orderId' => $orderId,
-                'orderInfo' => $orderInfo,
-                'returnUrl' => $returnUrl,
-                'notifyUrl' => $notifyurl,
-                'extraData' => $extraData,
-                'signature' => $signature);
-            $result = wp_remote_post($endpoint, $data);
+            // echo "Signature: ";
+            // print_r($signature);
+            $data = array(
+                'partnerCode'   => $partnerCode,
+                'partnerName'   => 'INOVA',
+                'storeId'       => 'Hera',
+                'requestType'   => $requestType,
+                'ipnUrl'        => $ipnUrl,
+                'redirectUrl'   => $redirectUrl,
+                'orderId'       => $orderId,
+                'amount'        => $amount,
+                "lang"          => "vi",
+                'orderInfo'     => $orderInfo,
+                'requestId'     => $requestId,
+                'extraData'     => $extraData,
+                'signature'     => $signature,
+                'item'          => [
+                    'id'        => get_the_ID(),
+                    'name'      => get_the_title($package_id),
+                    'description' => '',
+                    'price'     => $amount,
+                    'quantity'  => 1,
+                    'unit'      => 'Gói',
+                    'totalPrice'=> $amount,
+                    'taxAmount' => ''
+                ],
+            );
+            $result = wp_remote_post($endpoint, array(
+                'headers'     => array('Content-Type' => 'application/json; charset=utf-8'),
+                'body'        => json_encode($data),
+                'method'      => 'POST',
+                'data_format' => 'body',
+            ));
             $jsonResult = json_decode(wp_remote_retrieve_body($result));
             
-            echo "Ket qua goi API: ";
-            print_r($jsonResult);
-            // header('Location: ' . $jsonResult['payUrl']);
+            if ($jsonResult->payUrl) {
+                wp_redirect($jsonResult->payUrl);
+                exit;
+            }
         }
 
         get_header();
@@ -227,6 +251,16 @@ if (have_posts()) {
                                 </ul>
 
                                 <p>Nếu quý khách chuyển khoản khác ngân hàng có thể dùng hình thức chuyển khoản nhanh để được kích hoạt ngay.</p>
+                                <?php 
+                                    if (!$activate) {
+                                ?>
+                                <div id="check_payment" class="mui-col-md-12">
+                                    <button class="mui-btn hera-btn active_now">Kích hoạt dịch vụ ngay</button>
+                                    <input type="hidden" name="order_id" value="<?php echo get_the_ID(); ?>">
+                                </div>
+                                <?php 
+                                    }
+                                ?>
                             </div>
                         </div>
                         <div class="mui-tabs__pane" id="pay_momo">
@@ -237,16 +271,7 @@ if (have_posts()) {
                         </div>
                     </div>
                     <?php 
-                        }
-                    
-                        if (!$activate) {
-                    ?>
-                    <div id="check_payment" class="mui-col-md-12">
-                        <button class="mui-btn hera-btn active_now">Kích hoạt dịch vụ ngay</button>
-                        <input type="hidden" name="order_id" value="<?php echo get_the_ID(); ?>">
-                    </div>
-                    <?php 
-                        }
+                        }                    
                     ?>
                 </div>
             </div>

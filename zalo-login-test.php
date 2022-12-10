@@ -32,9 +32,9 @@ if (isset($_GET['code'])) {
         $email      = incrementalHash(8) . '@hra.vn';
 
         $args = [
-            'user_login'    => $output->id,
-            'user_pass'     => incrementalHash(10),
-            'user_email'    => incrementalHash(8) . '@hra.vn',
+            'user_login'    => $user_login,
+            'user_pass'     => $user_pass,
+            'user_email'    => $email,
             'display_name'  => $output->name,
             'user_nicename' => $output->name,
         ];
