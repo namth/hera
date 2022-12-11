@@ -30,12 +30,31 @@ function syncCasso(){
 
     $response = curl_exec($curl);
     $err = curl_error($curl);
-
-    curl_close($curl);
-
-    # Gọi thêm số tài khoản của ngân hàng khác
-    # ...
     
+    # Gọi thêm số tài khoản của ngân hàng khác
+    $data = array(
+        'bank_acc_id' => '19038145926015',
+    );
+    $postdata = json_encode($data);
+
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => "https://oauth.casso.vn/v2/sync",
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => "POST",
+        CURLOPT_POSTFIELDS => $postdata,
+        CURLOPT_HTTPHEADER => array(
+            "Authorization: Apikey " . CASSO_APIKEY,
+            "Content-Type: application/json"
+        ),
+    ));
+
+    $response = curl_exec($curl);
+    $err = curl_error($curl);
+
+    
+    curl_close($curl);
     exit;
 }
 
