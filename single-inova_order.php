@@ -27,17 +27,15 @@ if (have_posts()) {
         $coupon_type = get_field('coupon_type', $coupon_id);
         $coupon_value = get_field('coupon_value', $coupon_id);
 
+        # Xử lý khi bấm vào nút thanh toán momo
         if ( isset($_POST['momo_field']) &&
         wp_verify_nonce($_POST['momo_field'], 'momo') ) {
             
             $config = file_get_contents(get_template_directory_uri() . '/inc/config.json');
             $array = json_decode($config, true);
             
-            
-            // $endpoint = "https://test-payment.momo.vn/gw_payment/transactionProcessor";
             $endpoint = "https://test-payment.momo.vn/v2/gateway/api/create";
             
-            // print_r($array);
             $partnerCode = $array["partnerCode"];
             $accessKey = $array["accessKey"];
             $secretKey = $array["secretKey"];
@@ -45,8 +43,8 @@ if (have_posts()) {
             $amount = $final_total;
             $orderId = incrementalHash(10);
             $redirectUrl = get_permalink();
-            $ipnUrl = get_permalink();
-            $extraData = "";
+            $ipnUrl = get_bloginfo('url') . '/wp-json/hera/v1/momo_endpoint';
+            $extraData = base64_encode('{"inova_orderid" : ' . get_the_ID() . '}');
 
 
             $requestId = gen_uuid();
@@ -66,6 +64,7 @@ if (have_posts()) {
                 "&requestType=" . $requestType;
 
             $signature = hash_hmac("sha256", $rawHash, $secretKey);
+
             // echo "Signature: ";
             // print_r($signature);
             $data = array(
@@ -93,6 +92,7 @@ if (have_posts()) {
                     'taxAmount' => ''
                 ],
             );
+
             $result = wp_remote_post($endpoint, array(
                 'headers'     => array('Content-Type' => 'application/json; charset=utf-8'),
                 'body'        => json_encode($data),
@@ -102,8 +102,22 @@ if (have_posts()) {
             $jsonResult = json_decode(wp_remote_retrieve_body($result));
             
             if ($jsonResult->payUrl) {
+                # Lưu lại pay URL của momo để xác minh giao dịch sau này.
+                update_field('field_636c856e9d08d', $jsonResult->payUrl);
                 wp_redirect($jsonResult->payUrl);
                 exit;
+            }
+        }
+
+        # Xử lý nếu có response trả về
+        if (isset($_GET['partnerCode'])) {
+            $momopay = momo_check_order($_GET);
+            if ($momopay) {
+                # Nếu thanh toán thành công thì chuyển sang trang cảm ơn
+                wp_redirect(get_bloginfo("url") . "/thank-you/");
+                exit;
+            } else {
+                # Nếu không thì thông báo lỗi để người dùng thanh toán lại 
             }
         }
 
@@ -132,7 +146,7 @@ if (have_posts()) {
                 <div class="mui-row">
                     <div class="mui-col-md-6 mui-col-sm-7">
                     <?php 
-                        $done_payment = false;
+                        $close_payment = false;
                         if (in_array($status, ["Chưa thanh toán", "Thanh toán thiếu"])) {
                             $total_label = $status == "Chưa thanh toán" ? "Thành tiền":"Cần thanh toán";
                             $status_class = "error_notification";
@@ -149,9 +163,10 @@ if (have_posts()) {
                         } else if (in_array($status, ["Đã thanh toán", "Thanh toán dư"])) {
                             $total_label = "Tiền còn thừa";
                             $status_class = "success_notification";
-                            $done_payment = true;
+                            $close_payment = true;
                         } else {
                             $status_class = "notification";
+                            $close_payment = true;
                         }
                     ?>
                         
@@ -234,7 +249,7 @@ if (have_posts()) {
                         </table>
                     </div>
                     <?php 
-                        if (!$done_payment) {
+                        if (!$close_payment) {
                     ?>
                     <div class="mui-col-md-12" id="payment">
                         <ul class="mui-tabs__bar mui-tabs__bar--justified">
@@ -251,10 +266,24 @@ if (have_posts()) {
                                 </ul>
 
                                 <p>Nếu quý khách chuyển khoản khác ngân hàng có thể dùng hình thức chuyển khoản nhanh để được kích hoạt ngay.</p>
+                                <p>Quý khách có thể chuyển vào một trong số các tài khoản dưới đây:</p>
+                                <div class="bank_info">
+                                    <ul>
+                                        <li>TPBank</li>
+                                        <li>Số tài khoản: 14719869999</li>
+                                        <li>Tên tài khoản: TRAN HAI NAM</li>
+                                    </ul>
+                                    <ul>
+                                        <li>Techcombank</li>
+                                        <li>Số tài khoản: 19038145926015</li>
+                                        <li>Tên tài khoản: Công ty TNHH Công Nghệ INOVA</li>
+                                    </ul>
+                                </div>
                                 <?php 
                                     if (!$activate) {
                                 ?>
                                 <div id="check_payment" class="mui-col-md-12">
+                                    <p><i class="fa fa-exclamation-circle" aria-hidden="true"></i> Sau khi chuyển khoản xong, quý khách có thể bấm vào nút bên dưới để hệ thống tự động kiểm tra tài khoản và kích hoạt dịch vụ.</p>
                                     <button class="mui-btn hera-btn active_now">Kích hoạt dịch vụ ngay</button>
                                     <input type="hidden" name="order_id" value="<?php echo get_the_ID(); ?>">
                                 </div>
@@ -266,7 +295,7 @@ if (have_posts()) {
                         <div class="mui-tabs__pane" id="pay_momo">
                             <form action="#" method="POST" enctype="multipart/form-data">
                                 <?php wp_nonce_field('momo', 'momo_field'); ?>
-                                <button class="mui-btn hera-btn">QR CODE</button>
+                                <button class="mui-btn hera-btn">Chuyển tới trang thanh toán</button>
                             </form>
                         </div>
                     </div>
