@@ -30,15 +30,9 @@ if (have_posts()) {
         # Xử lý khi bấm vào nút thanh toán momo
         if ( isset($_POST['momo_field']) &&
         wp_verify_nonce($_POST['momo_field'], 'momo') ) {
-            
-            $config = file_get_contents(get_template_directory_uri() . '/inc/config.json');
-            $array = json_decode($config, true);
-            
+                        
             $endpoint = "https://test-payment.momo.vn/v2/gateway/api/create";
             
-            $partnerCode = $array["partnerCode"];
-            $accessKey = $array["accessKey"];
-            $secretKey = $array["secretKey"];
             $orderInfo = "Thanh toán qua MoMo";
             $amount = $final_total;
             $orderId = incrementalHash(10);
@@ -52,23 +46,23 @@ if (have_posts()) {
             
             //before sign HMAC SHA256 signature
             $rawHash =  
-                "accessKey=" . $accessKey . 
+                "accessKey=" . MOMO_ACCESS_KEY . 
                 "&amount=" . $amount . 
                 "&extraData=" . $extraData .
                 "&ipnUrl=" . $ipnUrl .
                 "&orderId=" . $orderId .
                 "&orderInfo=" . $orderInfo .
-                "&partnerCode=" . $partnerCode .
+                "&partnerCode=" . MOMO_PARTNER_CODE .
                 "&redirectUrl=" . $redirectUrl .
                 "&requestId=" . $requestId .
                 "&requestType=" . $requestType;
 
-            $signature = hash_hmac("sha256", $rawHash, $secretKey);
+            $signature = hash_hmac("sha256", $rawHash, MOMO_SECRET_KEY);
 
             // echo "Signature: ";
             // print_r($signature);
             $data = array(
-                'partnerCode'   => $partnerCode,
+                'partnerCode'   => MOMO_PARTNER_CODE,
                 'partnerName'   => 'INOVA',
                 'storeId'       => 'Hera',
                 'requestType'   => $requestType,

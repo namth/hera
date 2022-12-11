@@ -1,4 +1,8 @@
 <?php
+define("MOMO_PARTNER_CODE", "MOMOV3HW20220505");
+define("MOMO_ACCESS_KEY", "txVNke0VWgm6n0PA");
+define("MOMO_SECRET_KEY", "UfpX5MxovPaY11JQ8nar5FbmcX9eMQgf");
+
 function activation_package($order_id){
     $user_id    = get_field('customer', $order_id);
     $package_id = get_field('package', $order_id);

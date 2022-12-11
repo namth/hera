@@ -18,9 +18,6 @@ function momo_endpoint(WP_REST_Request $request) {
 }
 
 function momo_check_order($data = []) {
-    $config = file_get_contents(get_template_directory_uri() . '/inc/config.json');
-    $array = json_decode($config, true);
-
     $resultCode     = $data['resultCode'];
     $signature      = $data['signature'];
     $extraData      = json_decode(base64_decode($data['extraData']));
@@ -28,7 +25,7 @@ function momo_check_order($data = []) {
 
     //before sign HMAC SHA256 signature
     $rawHash =  
-        "accessKey=" . $array["accessKey"] . 
+        "accessKey=" . MOMO_ACCESS_KEY . 
         "&amount=" . $data['amount'] . 
         "&extraData=" . $data['extraData'] .
         "&message=" . $data['message'] .
@@ -42,7 +39,7 @@ function momo_check_order($data = []) {
         "&resultCode=" . $data['resultCode'] .
         "&transId=" . $data['transId'];
 
-    $check_signature = hash_hmac("sha256", $rawHash, $array["secretKey"]);
+    $check_signature = hash_hmac("sha256", $rawHash, MOMO_SECRET_KEY);
 
     # Nếu không có lỗi gì và xác nhận được chữ ký hợp lệ thì kích hoạt gói.
     if ( ($resultCode == 0) && ($signature == $check_signature)) {
