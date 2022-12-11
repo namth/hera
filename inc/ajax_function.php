@@ -78,7 +78,8 @@ function listCardFromAPI() {
         $token = refresh_token();
     } else {
         $token = get_field('token', 'option');
-        if (!$token) {
+        # Kiểm tra nếu token vẫn hoạt động thì thôi, nếu không thì phải lấy lại token mới.
+        if (!check_token($token)) {
             $token = refresh_token();
         }
     }

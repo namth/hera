@@ -32,6 +32,17 @@ function refresh_token()
     }
 };
 
+function check_token($token) {
+    $api_url  = get_field('api_base_url', 'option') . '/wp-json/inova/v1/checktoken';
+    $check = inova_api($api_url, $token, 'POST', '');
+
+    if ($check->code == 'success') {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 # call any api with authentication token
 function inova_api($api, $token, $method, $body) {
     $args = array(
