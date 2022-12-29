@@ -101,14 +101,45 @@ $active_bride   = get_field('active_bride', 'user_' . $current_user_id);
                                     $_groom_party_moontime  = DateTime::createFromFormat('d/m/Y H:i', $groom_party_moontime);
 
                                     if ($groom_father) {
-                                        echo '<div><i class="fa fa-male"></i> <span class="diveditable" contenteditable=true data-field="field_62b128ec93a7f">' . $groom_father . '</span></div>';
+                                        echo '<div><i class="fa fa-male"></i> <span class="diveditable" contenteditable=true oncut="return false" onpaste="return false" data-field="field_62b128ec93a7f">' . $groom_father . '</span></div>';
                                     }
                                     if ($groom_mother) {
-                                        echo '<div><i class="fa fa-female"></i> <span class="diveditable" contenteditable=true data-field="field_62b129b693a80">' . $groom_mother . '</span></div>';
+                                        echo '<div><i class="fa fa-female"></i> <span class="diveditable" contenteditable=true oncut="return false" onpaste="return false" data-field="field_62b129b693a80">' . $groom_mother . '</span></div>';
                                     }
+                                    if (!$groom_father && !$groom_mother){
+                                        ?>
+                                        <div class="group_data">
+                                            <div class="no_data">
+                                                <a class="section_name" href="#" data-form='#groom_parents_form'>
+                                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                                    <span>Thêm tên bố mẹ chú rể...</span>
+                                                </a>
+                                            </div>
+                                            <div id="groom_parents_form" class="hide_form">
+                                                <form class="mui-form" method="POST">
+                                                    <div class="mui-textfield">
+                                                        <input type="text" name="field_62b128ec93a7f" value="<?php echo $groom_father; ?>">
+                                                        <label for="">Bố chú rể</label>
+                                                    </div>
+                                                    <div class="mui-textfield">
+                                                        <input type="text" name="field_62b129b693a80" value="<?php echo $groom_mother; ?>">
+                                                        <label for="">Mẹ chú rể</label>
+                                                    </div>
+                                                    <?php
+                                                    wp_nonce_field('wedding', 'wedding_field');
+                                                    ?>
+                                                    <div class="submit_div">
+                                                        <button type="submit" class="mui-btn mui-btn--danger">Cập nhật</button>
+                                                    </div>
+                                                </form>
+                                                <span class="close_button">X</span>
+                                            </div>
+                                        </div>
+                                        <?php
+                                    }
+                                    echo '<h4>Địa điểm, thời gian tổ chức hôn lễ</h4>';
                                     if ($groom_wedding_adress) {
-                                        echo '<h4>Địa điểm, thời gian tổ chức hôn lễ</h4>';
-                                        echo '<div><i class="fa fa-building"></i> <span class="diveditable" contenteditable=true data-field="field_62b12acd93a81">' . $groom_wedding_adress . '</span></div>';
+                                        echo '<div><i class="fa fa-building"></i> <span class="diveditable" contenteditable=true oncut="return false" onpaste="return false" data-field="field_62b12acd93a81">' . $groom_wedding_adress . '</span></div>';
                                         echo '<div class="date_editable">
                                                 <div class="date_data">
                                                     <i class="fa fa-calendar"></i> <span class="diveditable">' . $_groom_wedding_time->format('d/m/Y g:i a') . '</span>
@@ -124,10 +155,44 @@ $active_bride   = get_field('active_bride', 'user_' . $current_user_id);
                                                 </div>
                                             </div>';
                                         echo '<div class="lunar_date"><i class="fa fa-calendar-o"></i> (âm lịch)<span class="diveditable">' . $_groom_wedding_moontime->format('d/m/Y g:i a') . '</span></div>';
+                                    } else {
+                                        ?>
+                                        <div class="group_data">
+                                            <div class="no_data">
+                                                <a class="section_name" href="#" data-form='#groom_wedding_form'>
+                                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                                    <span>Địa điểm tổ chức hôn lễ tại nhà trai</span>
+                                                </a>
+                                            </div>
+                                            <div id="groom_wedding_form" class="hide_form">
+                                                <form class="mui-form" method="POST">
+                                                    <div class="mui-textfield">
+                                                        <input type="text" name="field_62b12acd93a81" value="<?php if ($groom_wedding_adress) echo $groom_wedding_adress; ?>">
+                                                        <label for="">Địa điểm</label>
+                                                    </div>
+                                                    <div class="mui-textfield">
+                                                        <input type="datetime-local" name="field_62b12b8f93a83" value="<?php if ($_groom_wedding_time) echo $_groom_wedding_time->format('Y-m-d\TH:i:s'); ?>">
+                                                        <label for="">Thời gian (dương lịch)</label>
+                                                    </div>
+                                                    <div class="mui-textfield">
+                                                        <input type="datetime-local" name="field_62b135cb93a85" value="<?php if ($_groom_wedding_moontime) echo $_groom_wedding_moontime->format('Y-m-d\TH:i:s'); ?>">
+                                                        <label for="">Thời gian (âm lịch)</label>
+                                                    </div>
+                                                    <?php
+                                                    wp_nonce_field('wedding', 'wedding_field');
+                                                    ?>
+                                                    <div class="submit_div">
+                                                        <button type="submit" class="mui-btn mui-btn--danger">Cập nhật</button>
+                                                    </div>
+                                                </form>
+                                                <span class="close_button">X</span>
+                                            </div>
+                                        </div>
+                                        <?php
                                     }
+                                    echo '<h4>Địa điểm, thời gian tổ chức tiệc cưới</h4>';
                                     if ($groom_party_address) {
-                                        echo '<h4>Địa điểm, thời gian tổ chức tiệc cưới</h4>';
-                                        echo '<div><i class="fa fa-building"></i> <span class="diveditable" contenteditable=true data-field="field_62b12b4593a82">' . $groom_party_address . '</span></div>';
+                                        echo '<div><i class="fa fa-building"></i> <span class="diveditable" contenteditable=true oncut="return false" onpaste="return false" data-field="field_62b12b4593a82">' . $groom_party_address . '</span></div>';
                                         echo '<div class="date_editable">
                                                 <div class="date_data">
                                                     <i class="fa fa-calendar"></i> <span class="diveditable">' . $_groom_party_time->format('d/m/Y g:i a') . '</span>
@@ -143,6 +208,40 @@ $active_bride   = get_field('active_bride', 'user_' . $current_user_id);
                                                 </div>
                                             </div>';
                                         echo '<div class="lunar_date"><i class="fa fa-calendar-o"></i> (âm lịch)<span class="diveditable">' . $_groom_party_moontime->format('d/m/Y g:i a') . '</span></div>';
+                                    } else {
+                                        ?>
+                                        <div class="group_data">
+                                            <div class="no_data">
+                                                <a class="section_name" href="#" data-form='#groom_party_form'>
+                                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                                    <span>Địa điểm dự tiệc của nhà trai</span>
+                                                </a>
+                                            </div>
+                                            <div id="groom_party_form" class="hide_form">
+                                                <form class="mui-form" method="POST">
+                                                    <div class="mui-textfield">
+                                                        <input type="text" name="field_62b12b4593a82" value="<?php if ($groom_party_address) echo $groom_party_address; ?>">
+                                                        <label for="">Địa điểm</label>
+                                                    </div>
+                                                    <div class="mui-textfield">
+                                                        <input type="datetime-local" name="field_62b12bb293a84" value="<?php if ($_groom_party_time) echo $_groom_party_time->format('Y-m-d\TH:i:s'); ?>">
+                                                        <label for="">Thời gian (dương lịch)</label>
+                                                    </div>
+                                                    <div class="mui-textfield">
+                                                        <input type="datetime-local" name="field_62b13605bfa89" value="<?php if ($_groom_party_moontime) echo $_groom_party_moontime->format('Y-m-d\TH:i:s'); ?>">
+                                                        <label for="">Thời gian (âm lịch)</label>
+                                                    </div>
+                                                    <?php
+                                                    wp_nonce_field('wedding', 'wedding_field');
+                                                    ?>
+                                                    <div class="submit_div">
+                                                        <button type="submit" class="mui-btn mui-btn--danger">Cập nhật</button>
+                                                    </div>
+                                                </form>
+                                                <span class="close_button">X</span>
+                                            </div>
+                                        </div>
+                                        <?php
                                     }
                                 ?>
                             </div>
@@ -166,14 +265,45 @@ $active_bride   = get_field('active_bride', 'user_' . $current_user_id);
                                     $_bride_party_moontime  = DateTime::createFromFormat('d/m/Y H:i', $bride_party_moontime);
 
                                     if ($bride_father) {
-                                        echo '<div><i class="fa fa-male"></i> <span class="diveditable" contenteditable=true data-field="field_62b1363fb0691">' . $bride_father . '</span></div>';
+                                        echo '<div><i class="fa fa-male"></i> <span class="diveditable" contenteditable=true oncut="return false" onpaste="return false" data-field="field_62b1363fb0691">' . $bride_father . '</span></div>';
                                     }
                                     if ($bride_mother) {
-                                        echo '<div><i class="fa fa-female"></i> <span class="diveditable" contenteditable=true data-field="field_62b1363fb069e">' . $bride_mother . '</span></div>';
+                                        echo '<div><i class="fa fa-female"></i> <span class="diveditable" contenteditable=true oncut="return false" onpaste="return false" data-field="field_62b1363fb069e">' . $bride_mother . '</span></div>';
                                     }
+                                    if (!$bride_father && !$bride_mother){
+                                        ?>
+                                        <div class="group_data">
+                                            <div class="no_data">
+                                                <a class="section_name" href="#" data-form='#bride_parents_form'>
+                                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                                    <span>Thêm tên bố mẹ cô dâu...</span>
+                                                </a>
+                                            </div>
+                                            <div id="bride_parents_form" class="hide_form">
+                                                <form class="mui-form" method="POST">
+                                                    <div class="mui-textfield">
+                                                        <input type="text" name="field_62b1363fb0691" value="<?php echo $bride_father; ?>">
+                                                        <label for="">Bố cô dâu</label>
+                                                    </div>
+                                                    <div class="mui-textfield">
+                                                        <input type="text" name="field_62b1363fb069e" value="<?php echo $bride_mother; ?>">
+                                                        <label for="">Mẹ cô dâu</label>
+                                                    </div>
+                                                    <?php
+                                                    wp_nonce_field('wedding', 'wedding_field');
+                                                    ?>
+                                                    <div class="submit_div">
+                                                        <button type="submit" class="mui-btn mui-btn--danger">Cập nhật</button>
+                                                    </div>
+                                                </form>
+                                                <span class="close_button">X</span>
+                                            </div>
+                                        </div>
+                                        <?php
+                                    }
+                                    echo '<h4>Địa điểm, thời gian tổ chức lễ vu quy</h4>';
                                     if ($bride_wedding_adress) {
-                                        echo '<h4>Địa điểm, thời gian tổ chức lễ vu quy</h4>';
-                                        echo '<div><i class="fa fa-building"></i> <span class="diveditable" contenteditable=true data-field="field_62b1363fb06a6">' . $bride_wedding_adress . '</span></div>';
+                                        echo '<div><i class="fa fa-building"></i> <span class="diveditable" contenteditable=true oncut="return false" onpaste="return false" data-field="field_62b1363fb06a6">' . $bride_wedding_adress . '</span></div>';
                                         echo '<div class="date_editable">
                                                 <div class="date_data">
                                                     <i class="fa fa-calendar"></i> <span class="diveditable">' . $_bride_wedding_time->format('d/m/Y g:i a') . '</span>
@@ -189,10 +319,44 @@ $active_bride   = get_field('active_bride', 'user_' . $current_user_id);
                                                 </div>
                                             </div>';
                                         echo '<div class="lunar_date"><i class="fa fa-calendar-o"></i> (âm lịch)<span class="diveditable">' . $_bride_wedding_moontime->format('d/m/Y g:i a') . '</span></div>';
+                                    } else {
+                                        ?>
+                                        <div class="group_data">
+                                            <div class="no_data">
+                                                <a class="section_name" href="#" data-form='#bride_wedding_form'>
+                                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                                    <span>Thêm địa điểm tổ chức lễ vu quy tại nhà gái...</span>
+                                                </a>
+                                            </div>
+                                            <div id="bride_wedding_form" class="hide_form">
+                                                <form class="mui-form" method="POST">
+                                                    <div class="mui-textfield">
+                                                        <input type="text" name="field_62b1363fb06a6" value="<?php if ($bride_wedding_adress) echo $bride_wedding_adress; ?>">
+                                                        <label for="">Địa điểm</label>
+                                                    </div>
+                                                    <div class="mui-textfield">
+                                                        <input type="datetime-local" name="field_62b1363fb06af" value="<?php if ($_bride_wedding_time) echo $_bride_wedding_time->format('Y-m-d\TH:i:s'); ?>">
+                                                        <label for="">Thời gian (dương lịch)</label>
+                                                    </div>
+                                                    <div class="mui-textfield">
+                                                        <input type="datetime-local" name="field_62b1363fb06b7" value="<?php if ($_bride_wedding_moontime) echo $_bride_wedding_moontime->format('Y-m-d\TH:i:s'); ?>">
+                                                        <label for="">Thời gian (âm lịch)</label>
+                                                    </div>
+                                                    <?php
+                                                    wp_nonce_field('wedding', 'wedding_field');
+                                                    ?>
+                                                    <div class="submit_div">
+                                                        <button type="submit" class="mui-btn mui-btn--danger">Cập nhật</button>
+                                                    </div>
+                                                </form>
+                                                <span class="close_button">X</span>
+                                            </div>
+                                        </div>
+                                        <?php
                                     }
+                                    echo '<h4>Địa điểm, thời gian tổ chức tiệc cưới</h4>';
                                     if ($bride_party_address) {
-                                        echo '<h4>Địa điểm, thời gian tổ chức tiệc cưới</h4>';
-                                        echo '<div><i class="fa fa-building"></i> <span class="diveditable" contenteditable=true data-field="field_62b1363fb06bf">' . $bride_party_address . '</span></div>';
+                                        echo '<div><i class="fa fa-building"></i> <span class="diveditable" contenteditable=true oncut="return false" onpaste="return false" data-field="field_62b1363fb06bf">' . $bride_party_address . '</span></div>';
                                         echo '<div class="date_editable">
                                                 <div class="date_data">
                                                     <i class="fa fa-calendar"></i> <span class="diveditable">' . $_bride_party_time->format('d/m/Y g:i a') . '</span>
@@ -208,169 +372,45 @@ $active_bride   = get_field('active_bride', 'user_' . $current_user_id);
                                                 </div>    
                                             </div>';
                                         echo '<div class="lunar_date"><i class="fa fa-calendar-o"></i> (âm lịch)<span class="diveditable">' . $_bride_party_moontime->format('d/m/Y g:i a') . '</span></div>';
+                                    } else {
+                                        ?>
+                                        <div class="group_data">
+                                            <div class="no_data">
+                                                <a class="section_name" href="#" data-form='#bride_party_form'>
+                                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                                    <span>Địa điểm dự tiệc của nhà gái</span>
+                                                </a>
+                                            </div>
+                                            <div id="bride_party_form" class="hide_form">
+                                                <form class="mui-form" method="POST">
+                                                    <div class="mui-textfield">
+                                                        <input type="text" name="field_62b1363fb06bf" value="<?php if ($bride_party_address) echo $bride_party_address; ?>">
+                                                        <label for="">Địa điểm</label>
+                                                    </div>
+                                                    <div class="mui-textfield">
+                                                        <input type="datetime-local" name="field_62b1363fb06c7" value="<?php if ($_bride_party_time) echo $_bride_party_time->format('Y-m-d\TH:i:s'); ?>">
+                                                        <label for="">Thời gian (dương lịch)</label>
+                                                    </div>
+                                                    <div class="mui-textfield">
+                                                        <input type="datetime-local" name="field_62b1363fb06cf" value="<?php if ($_bride_party_moontime) echo $_bride_party_moontime->format('Y-m-d\TH:i:s'); ?>">
+                                                        <label for="">Thời gian (âm lịch)</label>
+                                                    </div>
+                                                    <?php
+                                                    wp_nonce_field('wedding', 'wedding_field');
+                                                    ?>
+                                                    <div class="submit_div">
+                                                        <button type="submit" class="mui-btn mui-btn--danger">Cập nhật</button>
+                                                    </div>
+                                                </form>
+                                                <span class="close_button">X</span>
+                                            </div>
+                                        </div>
+                                        <?php
                                     }
 
-                                    // $day = '26/07/2022 12:56';
-                                    // $today = DateTime::createFromFormat('d/m/Y H:i', $bride_party_time);
-
-                                    // print_r($today->format('Y-m-d\TH:i:s'));
-                                    // echo "br";
-                                    // print_r($lunar . substr($day, 10));
-                                    // update_field('field_62b1363fb06c7', strtotime($day), 'user_' . $current_user_id);
-                                    // update_field('field_62b1363fb06cf', strtotime($lunar . substr($day, 10)), 'user_' . $current_user_id);
                                 ?>
                             </div>
                         </div>
-                    </div>
-                    <div id="add_more_form">
-                        <h3>Thông tin cần cập nhật</h3>
-                        <div id="parents_form" class="hide_form">
-                            <form class="mui-form" method="POST">
-                                <h4>Họ nhà trai</h4>
-                                <div class="mui-textfield">
-                                    <input type="text" name="field_62b128ec93a7f" value="<?php echo $groom_father; ?>">
-                                    <label for="">Bố chú rể</label>
-                                </div>
-                                <div class="mui-textfield">
-                                    <input type="text" name="field_62b129b693a80" value="<?php echo $groom_mother; ?>">
-                                    <label for="">Mẹ chú rể</label>
-                                </div>
-                                <h4>Họ nhà gái</h4>
-                                <div class="mui-textfield">
-                                    <input type="text" name="field_62b1363fb0691" value="<?php echo $bride_father; ?>">
-                                    <label for="">Bố cô dâu</label>
-                                </div>
-                                <div class="mui-textfield">
-                                    <input type="text" name="field_62b1363fb069e" value="<?php echo $bride_mother; ?>">
-                                    <label for="">Mẹ cô dâu</label>
-                                </div>
-                                <?php
-                                wp_nonce_field('wedding', 'wedding_field');
-                                ?>
-                                <div class="submit_div">
-                                    <button type="submit" class="mui-btn mui-btn--danger">Cập nhật</button>
-                                </div>
-                            </form>
-                            <span class="close_button">X</span>
-                        </div>
-                        <div id="groom_wedding_form" class="hide_form">
-                            <form class="mui-form" method="POST">
-                                <h4>Địa điểm tổ chức hôn lễ tại nhà trai</h4>
-                                <div class="mui-textfield">
-                                    <input type="text" name="field_62b12acd93a81" value="<?php if ($groom_wedding_adress) echo $groom_wedding_adress; ?>">
-                                    <label for="">Địa điểm</label>
-                                </div>
-                                <div class="mui-textfield">
-                                    <input type="datetime-local" name="field_62b12b8f93a83" value="<?php if ($_groom_wedding_time) echo $_groom_wedding_time->format('Y-m-d\TH:i:s'); ?>">
-                                    <label for="">Thời gian (dương lịch)</label>
-                                </div>
-                                <div class="mui-textfield">
-                                    <input type="datetime-local" name="field_62b135cb93a85" value="<?php if ($_groom_wedding_moontime) echo $_groom_wedding_moontime->format('Y-m-d\TH:i:s'); ?>">
-                                    <label for="">Thời gian (âm lịch)</label>
-                                </div>
-                                <?php
-                                wp_nonce_field('wedding', 'wedding_field');
-                                ?>
-                                <div class="submit_div">
-                                    <button type="submit" class="mui-btn mui-btn--danger">Cập nhật</button>
-                                </div>
-                            </form>
-                            <span class="close_button">X</span>
-                        </div>
-                        <div id="groom_party_form" class="hide_form">
-                            <form class="mui-form" method="POST">
-                                <h4>Địa điểm dự tiệc của nhà trai</h4>
-                                <div class="mui-textfield">
-                                    <input type="text" name="field_62b12b4593a82" value="<?php if ($groom_party_address) echo $groom_party_address; ?>">
-                                    <label for="">Địa điểm</label>
-                                </div>
-                                <div class="mui-textfield">
-                                    <input type="datetime-local" name="field_62b12bb293a84" value="<?php if ($_groom_party_time) echo $_groom_party_time->format('Y-m-d\TH:i:s'); ?>">
-                                    <label for="">Thời gian (dương lịch)</label>
-                                </div>
-                                <div class="mui-textfield">
-                                    <input type="datetime-local" name="field_62b13605bfa89" value="<?php if ($_groom_party_moontime) echo $_groom_party_moontime->format('Y-m-d\TH:i:s'); ?>">
-                                    <label for="">Thời gian (âm lịch)</label>
-                                </div>
-                                <?php
-                                wp_nonce_field('wedding', 'wedding_field');
-                                ?>
-                                <div class="submit_div">
-                                    <button type="submit" class="mui-btn mui-btn--danger">Cập nhật</button>
-                                </div>
-                            </form>
-                            <span class="close_button">X</span>
-                        </div>
-                        <div id="bride_wedding_form" class="hide_form">
-                            <form class="mui-form" method="POST">
-                                <h4>Địa điểm tổ chức lễ vu quy tại nhà gái</h4>
-                                <div class="mui-textfield">
-                                    <input type="text" name="field_62b1363fb06a6" value="<?php if ($bride_wedding_adress) echo $bride_wedding_adress; ?>">
-                                    <label for="">Địa điểm</label>
-                                </div>
-                                <div class="mui-textfield">
-                                    <input type="datetime-local" name="field_62b1363fb06af" value="<?php if ($_bride_wedding_time) echo $_bride_wedding_time->format('Y-m-d\TH:i:s'); ?>">
-                                    <label for="">Thời gian (dương lịch)</label>
-                                </div>
-                                <div class="mui-textfield">
-                                    <input type="datetime-local" name="field_62b1363fb06b7" value="<?php if ($_bride_wedding_moontime) echo $_bride_wedding_moontime->format('Y-m-d\TH:i:s'); ?>">
-                                    <label for="">Thời gian (âm lịch)</label>
-                                </div>
-                                <?php
-                                wp_nonce_field('wedding', 'wedding_field');
-                                ?>
-                                <div class="submit_div">
-                                    <button type="submit" class="mui-btn mui-btn--danger">Cập nhật</button>
-                                </div>
-                            </form>
-                            <span class="close_button">X</span>
-                        </div>
-                        <div id="bride_party_form" class="hide_form">
-                            <form class="mui-form" method="POST">
-                                <h4>Địa điểm dự tiệc của nhà gái</h4>
-                                <div class="mui-textfield">
-                                    <input type="text" name="field_62b1363fb06bf" value="<?php if ($bride_party_address) echo $bride_party_address; ?>">
-                                    <label for="">Địa điểm</label>
-                                </div>
-                                <div class="mui-textfield">
-                                    <input type="datetime-local" name="field_62b1363fb06c7" value="<?php if ($_bride_party_time) echo $_bride_party_time->format('Y-m-d\TH:i:s'); ?>">
-                                    <label for="">Thời gian (dương lịch)</label>
-                                </div>
-                                <div class="mui-textfield">
-                                    <input type="datetime-local" name="field_62b1363fb06cf" value="<?php if ($_bride_party_moontime) echo $_bride_party_moontime->format('Y-m-d\TH:i:s'); ?>">
-                                    <label for="">Thời gian (âm lịch)</label>
-                                </div>
-                                <?php
-                                wp_nonce_field('wedding', 'wedding_field');
-                                ?>
-                                <div class="submit_div">
-                                    <button type="submit" class="mui-btn mui-btn--danger">Cập nhật</button>
-                                </div>
-                            </form>
-                            <span class="close_button">X</span>
-                        </div>
-                    </div>
-                    <div id="add_section">
-                        <a class="section_name" href="#" data-form='#parents_form'>
-                            <i class="fa fa-users" aria-hidden="true"></i>
-                            <span>Bố mẹ hai bên</span>
-                        </a>
-                        <a class="section_name" href="#" data-form='#groom_wedding_form'>
-                            <i class="fa fa-building" aria-hidden="true"></i>
-                            <span>Địa điểm tổ chức hôn lễ tại nhà trai</span>
-                        </a>
-                        <a class="section_name" href="#" data-form='#bride_wedding_form'>
-                            <i class="fa fa-building" aria-hidden="true"></i>
-                            <span>Địa điểm tổ chức lễ vu quy tại nhà gái</span>
-                        </a>
-                        <a class="section_name" href="#" data-form='#groom_party_form'>
-                            <i class="fa fa-building" aria-hidden="true"></i>
-                            <span>Địa điểm dự tiệc của nhà trai</span>
-                        </a>
-                        <a class="section_name" href="#" data-form='#bride_party_form'>
-                            <i class="fa fa-building" aria-hidden="true"></i>
-                            <span>Địa điểm dự tiệc của nhà gái</span>
-                        </a>
                     </div>
                     <?php
                 }
@@ -383,10 +423,10 @@ $active_bride   = get_field('active_bride', 'user_' . $current_user_id);
 <script>
     jQuery(document).ready(function ($) {
         /* Bấm vào mỗi section thì sẽ hiện form tương ứng và ẩn các form khác đi */
-        $('#add_section .section_name').click(function(){
+        $('.section_name').click(function(){
             var form = $(this).data('form');
             $('.hide_form').hide(200);
-            $('#add_section .section_name').show(200);
+            $('.section_name').show(200);
             $(this).hide();
             $(form).show(200);
             return false;
@@ -395,7 +435,7 @@ $active_bride   = get_field('active_bride', 'user_' . $current_user_id);
         $('.close_button').click(function(){
             var action_id = $(this).parent().attr('id');
             $(this).parent().hide(200);
-            $('#add_section .section_name[data-form="#' + action_id + '"]').show(200);
+            $('.section_name[data-form="#' + action_id + '"]').show(200);
         });
 
         /* Khi bấm submit một form thì gọi ajax để xử lý form đó, thêm dữ liệu vào  */
@@ -429,12 +469,12 @@ $active_bride   = get_field('active_bride', 'user_' . $current_user_id);
         });
 
         /* Xử lý ajax khi sửa trực tiếp nội dung trên div */
-        $('.content_info span').blur(function(){
-            var field = $(this).data('field');
-            var content = $(this).text();
-            var parent = $(this).parent();
-            console.log(parent);
-
+        function edit_wedding_info(span_select){
+            var field = span_select.data('field');
+            var content = span_select.text();
+            var parent = span_select.parent();
+            // console.log(parent);
+    
             $.ajax({
                 type: "POST",
                 url: AJAX.ajax_url,
@@ -457,7 +497,19 @@ $active_bride   = get_field('active_bride', 'user_' . $current_user_id);
                     parent.find('i').show();
                 },
             });
+        }
+        $('.content_info span').blur(function(){
+            edit_wedding_info($(this));
             return false;
+        });
+
+        $(document.body).on('keypress keyup paste input', '.content_info span', function(e){
+            var keyCode = e.keyCode || e.which;
+            if (keyCode === 13) { 
+                e.preventDefault();
+                $(this).blur();
+                return false;
+            }
         });
 
         /* Khi click vào sửa ngày tháng thì sẽ hiện form sửa ngày dương lịch, sau đó tự động update vào ngày âm lịch */

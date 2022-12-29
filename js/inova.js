@@ -24,9 +24,9 @@ jQuery(document).ready(function ($) {
     
     /* Set chiều cao cho sidebar */
     $("#hera_sidebar").height($(".mui-container-fluid").height());
-  
-    /* Edit nhóm khách hàng trực tiếp khi click vào chữ trên tiêu đề */
-    $(document.body).on('blur', '.breadcrumb .title', function(){
+
+    /* Hàm gọi ajax để update title */
+    function update_title() {
       var content = $('.breadcrumb .title').text();
       var guestid = $('.breadcrumb .title').data('guestid');
       
@@ -50,6 +50,20 @@ jQuery(document).ready(function ($) {
           $('.breadcrumb .loader').css('opacity', 0);
         },
       });
+    }
+  
+    /* Edit nhóm khách hàng trực tiếp khi click vào chữ trên tiêu đề */
+    $(document.body).on('blur', '.breadcrumb .title', function(){
+      update_title();
+    });
+
+    $(document.body).on('keypress keyup paste input', '.breadcrumb .title', function(e){
+      var keyCode = e.keyCode || e.which;
+      if (keyCode === 13) { 
+        e.preventDefault();
+        $(".breadcrumb .title").blur();
+        return false;
+      }
     });
 
     /* 

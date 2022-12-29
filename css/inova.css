@@ -781,19 +781,22 @@ img {
 }
 #wedding_infomation form .mui-textfield {
   display: inline-block;
-  width: calc(50% - 25px);
+  width: 100%;
   padding: 25px 10px 0;
 }
 #wedding_infomation form .mui-textfield input {
   padding: 10px 20px;
   color: rgb(30, 37, 50);
   transition: color 0.1s ease 0s;
-  background-color: rgb(239, 242, 249);
+  background-color: rgb(227, 215, 202);
   height: 45px;
   border-radius: 6px;
 }
+#wedding_infomation form .mui-textfield input:focus {
+  border-color: #BB7D3B;
+}
 #wedding_infomation form .mui-textfield label {
-  color: #369bf4;
+  color: #ae780f;
   font-size: 13px;
 }
 #wedding_infomation form .heart_icon {
@@ -806,6 +809,10 @@ img {
 }
 #wedding_infomation form .submit_div {
   padding: 0 10px;
+}
+#wedding_infomation form .submit_div .mui-btn--danger {
+  color: #AC803C;
+  background-color: #FFECB1;
 }
 
 #main-info .mui-textfield {
@@ -828,38 +835,6 @@ img {
   vertical-align: middle;
 }
 
-#add_section .section_name {
-  display: inline-block;
-  box-sizing: border-box;
-  padding: 10px 20px;
-  background: #f4f4f4;
-  margin: 5px 3px;
-  border-radius: 5px;
-}
-
-#add_more_form {
-  position: relative;
-}
-#add_more_form form {
-  background: #f9f7f5;
-  padding: 20px 10px;
-}
-#add_more_form form h4 {
-  padding-left: 10px;
-}
-#add_more_form .hide_form {
-  display: none;
-}
-#add_more_form .close_button {
-  position: absolute;
-  top: 43px;
-  right: 6px;
-  border-radius: 20px;
-  padding: 3px 8px;
-  background: lightgray;
-  cursor: pointer;
-}
-
 #addition_info .content_info {
   margin-bottom: 20px;
 }
@@ -875,8 +850,11 @@ img {
   border: 1px solid #ebebeb;
 }
 #addition_info .content_info > div:hover {
-  background: #e5f5ff;
-  border: 1px solid #87adde;
+  background: #fff1e4;
+  border: 1px solid #decc87;
+}
+#addition_info .content_info > div:hover a {
+  color: #ae780f;
 }
 #addition_info .content_info > div span {
   display: inline-block;
@@ -904,6 +882,33 @@ img {
   background: white;
   padding: 0 9px;
   border: 1px solid #ddd;
+}
+#addition_info .content_info .group_data {
+  padding: 0px;
+}
+#addition_info .content_info .group_data .no_data .section_name {
+  border: 1px dashed #b99835;
+  padding: 8px 20px;
+  width: 100%;
+  display: block;
+}
+#addition_info .content_info .group_data .hide_form {
+  position: relative;
+  display: none;
+  background: #fff1e4;
+}
+#addition_info .content_info .group_data .hide_form .close_button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border-radius: 20px;
+  padding: 3px 8px !important;
+  background: #bda58a;
+  cursor: pointer;
+  color: white;
+}
+#addition_info .content_info .group_data .hide_form form {
+  padding: 30px 10px 20px;
 }
 
 .coupon {

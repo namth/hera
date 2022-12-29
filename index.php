@@ -5,10 +5,12 @@ get_template_part('header', 'topbar');
 if (isset($_POST['group_name'])) {
     $group_name = strip_tags($_POST['group_name']);
     $category = strip_tags($_POST['category']);
+    $permalink = gen_uuid();
     $args = array(
         'post_title'    => $group_name,
         'post_status'   => 'publish',
         'post_type'     => 'thiep_moi',
+        'post_name'     => $permalink,
     );
 
     $inserted = wp_insert_post($args, $error);

@@ -119,7 +119,7 @@ if (have_posts()) {
                     <div class="breadcrumb">
                         <a href="<?php echo get_bloginfo('url'); ?>"><i class="fa fa-home" aria-hidden="true"></i></a>
                         <i class="fa fa-chevron-right"></i>
-                        <span contenteditable="true" class="title" data-guestid="<?php echo get_the_ID(); ?>"> <?php the_title(); ?></span>
+                        <span contenteditable="true" oncut="return false" onpaste="return false" class="title" data-guestid="<?php echo get_the_ID(); ?>"> <?php the_title(); ?></span>
                         <span class="loader"><img src="<?php echo get_template_directory_uri() . '/img/heart-preloader.gif'; ?>" alt=""></span>
                     </div>
                     <div class="mui-panel">

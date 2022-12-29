@@ -94,7 +94,10 @@ if (have_posts()) {
                 'data_format' => 'body',
             ));
             $jsonResult = json_decode(wp_remote_retrieve_body($result));
-            
+
+            print_r($data);
+            echo "<br>";
+            print_r($jsonResult);
             if ($jsonResult->payUrl) {
                 # Lưu lại pay URL của momo để xác minh giao dịch sau này.
                 update_field('field_636c856e9d08d', $jsonResult->payUrl);
@@ -112,6 +115,7 @@ if (have_posts()) {
                 exit;
             } else {
                 # Nếu không thì thông báo lỗi để người dùng thanh toán lại 
+                print_r($_GET);
             }
         }
 
