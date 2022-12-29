@@ -4,6 +4,7 @@ if (have_posts()) {
     while (have_posts()) {
         the_post();
 
+        $popup = false;
         $current_user = wp_get_current_user();
         # get data from invoice
         $id_invoice = get_the_title();
