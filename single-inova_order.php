@@ -307,6 +307,7 @@ if (have_posts()) {
                         <div class="mui-tabs__pane" id="pay_momo">
                             <form action="#" method="POST" enctype="multipart/form-data">
                                 <?php wp_nonce_field('momo', 'momo_field'); ?>
+                                <img src="<?php echo get_template_directory_uri() ?>/img/logomomo.png" alt="" width="100px">
                                 <button class="mui-btn hera-btn">Chuyển tới trang thanh toán</button>
                             </form>
                         </div>

@@ -1029,6 +1029,9 @@ img {
 #checkout #payment #pay_momo form {
   text-align: center;
 }
+#checkout #payment #pay_momo form img {
+  margin: 20px auto;
+}
 #checkout #payment #pay_momo form button {
   background: #A50064;
 }
@@ -1460,7 +1463,8 @@ img {
   border-radius: 10px;
 }
 .popup_momo div img {
-  margin: 0 auto 10px;
+  margin: 20px auto 30px;
+  width: 100px;
 }
 .popup_momo div span {
   font-size: 24px;
@@ -1472,6 +1476,7 @@ img {
   background: lightgray;
   padding: 0px 12px 3px;
   border-radius: 20px;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 1024px) {
