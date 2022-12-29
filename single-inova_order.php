@@ -95,9 +95,7 @@ if (have_posts()) {
             ));
             $jsonResult = json_decode(wp_remote_retrieve_body($result));
 
-            print_r($data);
-            echo "<br>";
-            print_r($jsonResult);
+            // print_r($jsonResult);
             if ($jsonResult->payUrl) {
                 # Lưu lại pay URL của momo để xác minh giao dịch sau này.
                 update_field('field_636c856e9d08d', $jsonResult->payUrl);
@@ -115,15 +113,30 @@ if (have_posts()) {
                 exit;
             } else {
                 # Nếu không thì thông báo lỗi để người dùng thanh toán lại 
-                print_r($_GET);
+                if ($_GET['message'] != ""){
+                    $popup = true;
+                    $message = $_GET['message'];
+                }
+
             }
         }
 
         get_header();
         get_template_part('header', 'topbar');
 
-
+        if ($popup) {
+            echo '<div class="popup_momo">
+                    <div>
+                        <img src="' . get_template_directory_uri() . '/img/payment-fail.png" alt="">
+                        <span>' . $message . '</span>
+                        <p>Bạn có thể bấm vào tab "THANH TOÁN QUA MOMO" để thanh toán lại.</p>
+                        <span class="close_popup">x</span>
+                    </div>
+                </div>';
+        }
+        
 ?>
+
 <div class="mui-container-fluid">
     <div class="mui-row">
         <div class="mui-col-md-2 npl">
@@ -380,6 +393,18 @@ if (have_posts()) {
             
             /* Xoá check */
             clearAllInterval();
+        });
+
+
+        /* Close momo popup */
+        $(".popup_momo").on('click', function(e){
+            if (e.target !== this)
+                return;
+
+            $(this).remove();
+        });
+        $(".close_popup").on('click', function(e){
+            $(".popup_momo").remove();
         });
 
     });

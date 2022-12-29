@@ -1441,6 +1441,39 @@ img {
   font-weight: normal;
 }
 
+.popup_momo {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.6);
+}
+.popup_momo div {
+  position: relative;
+  background: white;
+  padding: 50px;
+  border-radius: 10px;
+}
+.popup_momo div img {
+  margin: 0 auto 10px;
+}
+.popup_momo div span {
+  font-size: 24px;
+}
+.popup_momo div .close_popup {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: lightgray;
+  padding: 0px 12px 3px;
+  border-radius: 20px;
+}
+
 @media screen and (max-width: 1024px) {
   #login .large_left {
     display: block;

@@ -1359,6 +1359,38 @@ img
                 font-size: 28px
                 font-weight: normal
 
+.popup_momo
+    position: fixed
+    width: 100vw
+    height: 100vh
+    display: flex
+    align-items: center
+    justify-content: center
+    text-align: center
+    top: 0
+    left: 0
+    background: #0009
+
+    div
+        position: relative
+        background: white
+        padding: 50px
+        border-radius: 10px
+
+        img
+            margin: 0 auto 10px
+
+        span
+            font-size: 24px
+
+        .close_popup
+            position: absolute
+            top: 5px
+            right: 5px
+            background: lightgray
+            padding: 0px 12px 3px
+            border-radius: 20px
+
 @include Responsive(XL)
 @include Responsive(MD)
 @include Responsive(SM)
