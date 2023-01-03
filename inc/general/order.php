@@ -1,7 +1,8 @@
 <?php
 define("MOMO_PARTNER_CODE", "MOMOV3HW20220505");
-define("MOMO_ACCESS_KEY", "txVNke0VWgm6n0PA");
-define("MOMO_SECRET_KEY", "UfpX5MxovPaY11JQ8nar5FbmcX9eMQgf");
+define("MOMO_ACCESS_KEY", "QymLYnfiBN9hyoo3");
+define("MOMO_SECRET_KEY", "m2qjTh8zoKGfhG3UIM4ccbSHhJog4CVO");
+define("MOMO_ENDPOINT", "https://payment.momo.vn/v2/gateway/api/create");
 
 function activation_package($order_id){
     $user_id    = get_field('customer', $order_id);

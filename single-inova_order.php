@@ -32,8 +32,6 @@ if (have_posts()) {
         if ( isset($_POST['momo_field']) &&
         wp_verify_nonce($_POST['momo_field'], 'momo') ) {
                         
-            $endpoint = "https://test-payment.momo.vn/v2/gateway/api/create";
-            
             $orderInfo = "Thanh toán qua MoMo";
             $amount = $final_total;
             $orderId = incrementalHash(10);
@@ -88,7 +86,7 @@ if (have_posts()) {
                 ],
             );
 
-            $result = wp_remote_post($endpoint, array(
+            $result = wp_remote_post(MOMO_ENDPOINT, array(
                 'headers'     => array('Content-Type' => 'application/json; charset=utf-8'),
                 'body'        => json_encode($data),
                 'method'      => 'POST',
