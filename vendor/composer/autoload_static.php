@@ -15,6 +15,7 @@ class ComposerStaticInit3fded4eb5d2708780e2b84c88c8f1c38
         'Z' => 
         array (
             'ZipStream\\' => 10,
+            'Zalo\\' => 5,
         ),
         'S' => 
         array (
@@ -47,6 +48,10 @@ class ComposerStaticInit3fded4eb5d2708780e2b84c88c8f1c38
         array (
             0 => __DIR__ . '/..' . '/maennchen/zipstream-php/src',
         ),
+        'Zalo\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/zaloplatform/zalo-php-sdk/src',
+        ),
         'Symfony\\Polyfill\\Mbstring\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-mbstring',
@@ -57,8 +62,8 @@ class ComposerStaticInit3fded4eb5d2708780e2b84c88c8f1c38
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-message/src',
-            1 => __DIR__ . '/..' . '/psr/http-factory/src',
+            0 => __DIR__ . '/..' . '/psr/http-factory/src',
+            1 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (

@@ -2,6 +2,11 @@
 /* 
 * Template Name: Upload khách hàng qua file excel
 */
+require_once get_template_directory() . '/vendor/autoload.php';
+
+$reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+
+$thongbao = '';
 if (isset($_GET['g']) && ($_GET['g'] != "" )) {
     $group_data = json_decode(inova_encrypt($_GET['g'], 'd'));
     $group_check = true;
@@ -23,9 +28,6 @@ if (isset($_POST['post_upload_field']) && wp_verify_nonce($_POST['post_upload_fi
     $current_number = get_field('register_number', 'option');
     $file_excel = $_FILES['fileupload'];
 
-    require_once get_template_directory() . '/lib/PHPExcel.php';
-    require_once get_template_directory() . '/lib/PHPExcel/Writer/Excel2007.php';
-
     if (!$userID) {
         $userID = get_current_user_id();
     }
@@ -35,24 +37,26 @@ if (isset($_POST['post_upload_field']) && wp_verify_nonce($_POST['post_upload_fi
         $rowData = wp_reading_excel($file_excel['tmp_name']);
     }
 
-    //In dữ liệu ra file excel
+    // In dữ liệu ra file excel
     if ($rowData) {
         # remove the first item, that's the header.
         $excel_header = array_shift($rowData);
 
         foreach ($rowData as $new_customer) {
-            if ($new_customer[0]) {
+            if ($new_customer['A']) {
                 # 
                 if (!$fromCard) {
                     $groupID = 0;
                     $ownName = "";
                 }
-                $name       = trim($new_customer[0]);
-                $attach     = trim($new_customer[1]);
-                $vocative1  = trim($new_customer[2]);
-                $vocative2  = trim($new_customer[3]);
+
+                $name       = trim($new_customer['A']);
+                $attach     = trim($new_customer['B']);
+                $vocative1  = trim($new_customer['C']);
+                $vocative2  = trim($new_customer['D']);
                 $xung_ho    = ($vocative1 && $vocative2)?implode('/', array($vocative1, $vocative2)):"";
-                $phone      = trim($new_customer[4]);
+                $phone      = substr(preg_replace("/[^0-9]/", "", $new_customer['E']), 0, 10);
+
                 if (!$ownName) {
                     if (in_array(strtoupper($new_customer[5]),["NHÀ TRAI", "NHÀ GÁI"])) {
                         $ownName    = ucfirst($new_customer[5]);
@@ -130,9 +134,9 @@ if (isset($_POST['post_upload_field']) && wp_verify_nonce($_POST['post_upload_fi
             }
         }
 
-        // wp_redirect(get_permalink($groupID));
+        wp_redirect(get_permalink($groupID));
     } else {
-        $thongbao = "Không có dữ liệu";
+        $thongbao = "File không đúng định dạng hoặc không có dữ liệu hợp lệ. Hãy chỉnh sửa file hoặc download mẫu bên dưới.";
     }
 
 }
@@ -141,10 +145,9 @@ get_template_part('header', 'topbar');
 ?>
 <div class="mui-container-fluid">
     <div class="mui-row">
-        <div class="mui-col-md-2">
+        <div class="mui-col-md-2 npl">
             <?php
             get_sidebar();
-            echo $thongbao;
             ?>
         </div>
         <div class="mui-col-md-10">
@@ -158,6 +161,7 @@ get_template_part('header', 'topbar');
                     
                     <div class="mui-col-md-4"></div>
                     <div class="mui-col-md-4 mui-col-sm-12">
+                        <p><?php if ($thongbao){ echo $thongbao; } ?></p>
                         <div class="mui-textfield">
                             <input name="fileupload" type="file">
                         </div>

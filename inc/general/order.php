@@ -56,3 +56,28 @@ function gen_uuid() {
 }
 
 add_filter( 'http_request_timeout', function( $timeout ) { return 60; });
+
+# Get lastest success order by current user ID
+function get_lastest_payment($userID){
+    $args   = array(
+        'post_type'     => 'inova_order',
+        'posts_per_page' => 1,
+        'author'        => $userID,
+        'post_status'   => 'publish',
+        'orderby' => 'ID',
+        'order' => 'DESC',
+        'meta_query'    => array(
+            array(
+                'key'       => 'status',
+                'value'     => 'Đã thanh toán',
+                'compare'   => '=',
+            ),
+        ),
+    );
+
+    $query = new WP_Query($args);
+
+    if ($query->have_posts()) {
+        get_field();
+    }
+}

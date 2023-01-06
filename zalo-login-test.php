@@ -2,6 +2,10 @@
 /* 
 * Template name: Zalo login api test
 */
+require_once get_template_directory() . '/vendor/autoload.php';
+
+use Zalo\Zalo;
+
 if (isset($_GET['code'])) {
     $authorization_code = $_GET['code'];
     $code_verifier = get_field('zalo_code_verifier', 'option');

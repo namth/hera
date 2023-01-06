@@ -40,6 +40,7 @@ function momo_endpoint(WP_REST_Request $request) {
         # chuyển trạng thái đơn hàng
         update_field('field_62eb93b78ca79', "Đã thanh toán", $inova_orderid);
         update_field('field_636c85b89d08e', 'Thanh toán qua ví MOMO', $inova_orderid); #phương thức thanh toán
+        update_field('field_636c40bbd3e8c', $json_result->amount, $inova_orderid); # update số tiền khách thanh toán
         # kích hoạt gói
         $active_done = activation_package($inova_orderid);
 
@@ -83,6 +84,7 @@ function momo_check_order($data = []) {
             # chuyển trạng thái đơn hàng
             update_field('field_62eb93b78ca79', "Đã thanh toán", $inova_orderid);
             update_field('field_636c85b89d08e', 'Thanh toán qua ví MOMO', $inova_orderid); #phương thức thanh toán
+            update_field('field_636c40bbd3e8c', $data['amount'], $inova_orderid); # update số tiền khách thanh toán
             # kích hoạt gói
             $active_done = activation_package($inova_orderid);
     

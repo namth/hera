@@ -227,32 +227,19 @@ function check_payment_status(){
 # reading excel PHPExcel
 function wp_reading_excel($tmp_name)
 {
+    require_once get_template_directory() . '/vendor/autoload.php';
+
     try {
-        $inputFileType = PHPExcel_IOFactory::identify($tmp_name);
-        $objReader = PHPExcel_IOFactory::createReader($inputFileType);
-        $objPHPExcel = $objReader->load($tmp_name);
+        $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+        $reader->setReadDataOnly(true);
+        $spreadsheet = $reader->load($tmp_name);
+        $sheetData = $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
+        
+        return $sheetData;
     } catch (Exception $e) {
-        die('Lỗi không thể đọc file "' . pathinfo($tmp_name, PATHINFO_BASENAME) . '": ' . $e->getMessage());
+        // die('Lỗi không thể đọc file "' . pathinfo($tmp_name, PATHINFO_BASENAME) . '": ' . $e->getMessage());
+        return false;
     }
-
-    // Lấy sheet hiện tại
-    $sheet = $objPHPExcel->getSheet(0);
-
-    // Lấy tổng số dòng của file
-    $highestRow = $sheet->getHighestRow();
-    // Lấy tổng số cột của file
-    $highestColumn = $sheet->getHighestColumn();
-
-    //  Thực hiện việc lặp qua từng dòng của file, để lấy thông tin
-    for ($row = 1; $row <= $highestRow; $row++) {
-        // Lấy dữ liệu từng dòng và đưa vào mảng $rowData
-        $data = $sheet->rangeToArray('A' . $row . ':' . $highestColumn . $row, NULL, TRUE, FALSE);
-        if ($data[0][0]) {
-            $rowData[] = $data[0];
-        }
-    }
-
-    return $rowData;
 }
 
 # Search groupID theo tên và userID

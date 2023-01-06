@@ -11,7 +11,10 @@ if ( isset( $_GET['p'] ) && ($_GET['p'] != "")) {
     get_header();
     get_template_part('header', 'topbar');
     $current_user_id = get_current_user_id();
+    #Lấy thông tin gói đang có dựa trên hoá đơn thành công cuối cùng
     
+    $current_package_id = get_field('package_id', 'user_' . $current_user_id);
+
     ?>
     <div class="mui-container-fluid">
         <div class="mui-row">

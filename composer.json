@@ -15,6 +15,7 @@
     "minimum-stability": "beta",
     "require" : {
         "ext-zip": "*",
-        "phpoffice/phpspreadsheet": "^1.25"
+        "phpoffice/phpspreadsheet": "^1.25",
+        "zaloplatform/zalo-php-sdk": "^2.0"
     }
 }

@@ -6,6 +6,10 @@
 get_header();
 get_template_part('header', 'topbar');
 
+# lấy thông tin người dùng về số lượng thiệp đang có và gói đang sử dụng
+$current_user_id = get_current_user_id();
+$current_package_id = get_field('package_id', 'user_' . $current_user_id);
+$current_max_card = get_field('total_cards', 'user_' . $current_user_id);
 ?>
 <div class="mui-container-fluid">
     <div class="mui-row">
@@ -56,7 +60,16 @@ get_template_part('header', 'topbar');
                                                     <li><i class="fa fa-check" aria-hidden="true"></i> Số lượng thiệp: <b><?php echo number_format($total_card); ?></b></li>
                                                     <li><i class="fa fa-check" aria-hidden="true"></i> Được truy cập thư viện thiệp cơ bản</li>
                                                 </ul>
-                                                <a class="mui-btn hera-btn" href="<?php echo get_bloginfo('url') . '/xac-nhan-thanh-toan/?p=' . $package_id; ?>">Đăng ký</a>
+                                                <?php 
+                                                    if (get_the_ID() == $current_package_id) {
+                                                        echo '<span class="package_locked">Bạn đang sử dụng gói này</span>';
+                                                    } else if ($total_card < $current_max_card) {
+                                                        echo '<span class="package_locked">Liên hệ để đổi gói</span>';
+                                                    } else {
+                                                        echo '<a class="mui-btn hera-btn" href="' . get_bloginfo('url') . '/xac-nhan-thanh-toan/?p=' . $package_id . '">Đăng ký</a>';
+                                                    }
+                                                ?>
+                                                
                                             </div>
                                         </div>
                                     </div>
