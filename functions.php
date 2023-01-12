@@ -122,7 +122,6 @@ function replace_content($arr_replace, $content)
         foreach ($arr_replace as $key => $value) {
             $content = str_replace($key, $value, $content);
         }
-
         return $content;
     }
 }
@@ -390,5 +389,22 @@ function track_user_logins( $user ){
     } else {
         // First Login, set it to 1
         update_user_meta( $user->id, 'login_amount', 1 );
+    }
+}
+
+# Kiểm tra và format lại số điện thoại, số nào không hợp lệ thì trả về false, số hợp lệ thì được định dạng lại
+function validate_phonenumber($phonenumber){
+    # Xoá ký tự thừa không phải là số trong chuỗi.
+    $phonenumber = preg_replace("/[^0-9]/", "", $phonenumber);
+    # Chỉnh những số có đầu là 84 (nếu có 11 ký tự) về số 0
+    if (preg_match('/^[0-9]{11}$/', $phonenumber)) {
+        $phonenumber = preg_replace("/^(84)/", "0", trim($phonenumber));
+    }
+
+    # Nếu số điện thoại sau khi chỉnh có số 0 (hoặc không có) ở đầu và 9 số đằng sau (không bắt đầu bằng 0) thì trả về số điện thoại đúng
+    if (preg_match('/^(0|)[1-9][0-9]{8}$/', $phonenumber)) {
+        return str_pad($phonenumber, 10, '0', STR_PAD_LEFT);
+    } else {
+        return false;
     }
 }

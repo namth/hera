@@ -182,13 +182,12 @@ $vip_license    = get_field('vip_card', 'user_' . $current_user_id);
 
 <div class="mui-panel" id="cart_bar">
     <?php 
+        # Cập nhật số lượng thiệp đã dùng.
+        update_field('field_63b853e50f9a8', $total_customer, 'user_' . $current_user_id);
         $limit = get_field('total_cards', 'user_' . $current_user_id);
     ?>
     <div class="card_total">Bạn có <b><?php echo $total_customer . '/' . $limit; ?></b> thiệp</div>
-    <div class="card_license">
-        
-    </div>
-    <a href="#" class="card_link"><i class="fa fa-cart-plus" aria-hidden="true"></i> Mua thêm thiệp</a>
+    <a href="<?php echo get_bloginfo('url') . "/danh-sach-goi-san-pham/"; ?>" class="card_link"><i class="fa fa-cart-plus" aria-hidden="true"></i> Mua thêm thiệp</a>
 </div>
 
 <div class="mui-col-md-4 mui-col-sm-12" id="create_card_form">

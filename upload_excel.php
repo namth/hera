@@ -7,6 +7,8 @@ require_once get_template_directory() . '/vendor/autoload.php';
 $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
 
 $thongbao = '';
+$group_check = false;
+
 if (isset($_GET['g']) && ($_GET['g'] != "" )) {
     $group_data = json_decode(inova_encrypt($_GET['g'], 'd'));
     $group_check = true;
@@ -14,6 +16,7 @@ if (isset($_GET['g']) && ($_GET['g'] != "" )) {
     /* Đọc dữ liệu groupID và userID */
     $groupID = $group_data->groupid;
     $userID = $group_data->userid;
+    $groupName = get_the_title($groupID);
 
     /* Xác định groupID thuộc nhà trai hay nhà gái */
     $terms = get_the_terms($groupID, 'category');
@@ -28,9 +31,17 @@ if (isset($_POST['post_upload_field']) && wp_verify_nonce($_POST['post_upload_fi
     $current_number = get_field('register_number', 'option');
     $file_excel = $_FILES['fileupload'];
 
+    # get some variable
     if (!$userID) {
         $userID = get_current_user_id();
     }
+    $package_id = get_field('package_id', 'user_' . $userID);
+    $total_cards = get_field('total_cards', 'user_' . $userID);
+    $used_cards = get_field('used_cards', 'user_' . $userID);
+    $cache = '';
+    $new_customer_amount = 0;
+    $update_customer_amount = 0;
+    $full_cards = ($total_cards <= $used_cards) && $package_id;
 
     if ($file_excel) {
         # Reading Excel
@@ -43,8 +54,11 @@ if (isset($_POST['post_upload_field']) && wp_verify_nonce($_POST['post_upload_fi
         $excel_header = array_shift($rowData);
 
         foreach ($rowData as $new_customer) {
-            if ($new_customer['A']) {
-                # 
+            # Nếu đã đạt đến giới hạn thiệp thì dừng lại.
+            if (($total_cards <= $used_cards) && $package_id) {
+                $full_cards = true;
+                break;
+            } else if ($new_customer['A']) {
                 if (!$fromCard) {
                     $groupID = 0;
                     $ownName = "";
@@ -55,13 +69,13 @@ if (isset($_POST['post_upload_field']) && wp_verify_nonce($_POST['post_upload_fi
                 $vocative1  = trim($new_customer['C']);
                 $vocative2  = trim($new_customer['D']);
                 $xung_ho    = ($vocative1 && $vocative2)?implode('/', array($vocative1, $vocative2)):"";
-                $phone      = substr(preg_replace("/[^0-9]/", "", $new_customer['E']), 0, 10);
+                $phone      = validate_phonenumber($new_customer['E']);
 
                 if (!$ownName) {
-                    if (in_array(strtoupper($new_customer[5]),["NHÀ TRAI", "NHÀ GÁI"])) {
-                        $ownName    = ucfirst($new_customer[5]);
+                    if (in_array(strtoupper($new_customer['F']),["NHÀ TRAI", "NHÀ GÁI"])) {
+                        $ownName    = ucfirst($new_customer['G']);
                     }
-                    $groupName  = $new_customer[6];
+                    $groupName  = $new_customer['G'];
                 }
 
                 if ($ownName) {
@@ -87,11 +101,14 @@ if (isset($_POST['post_upload_field']) && wp_verify_nonce($_POST['post_upload_fi
         
                         # Nếu có thì update, không có thì thêm row mới
                         if ($row) {
+                            $update_customer_amount++;
                             update_sub_field(array('field_61066efde7dbc', $row, 'name'), $name, $groupID);
                             update_sub_field(array('field_61066efde7dbc', $row, 'guest_attach'), $attach, $groupID);
                             update_sub_field(array('field_61066efde7dbc', $row, 'xung_ho'), $xung_ho, $groupID);
                             update_sub_field(array('field_61066efde7dbc', $row, 'phone'), $phone, $groupID);
                         } else {
+                            $new_customer_amount++;
+                            $used_cards++;
                             # Nếu có trường $name thì mới thêm mới
                             if ($name) {
                                 $row_update = array(
@@ -106,35 +123,51 @@ if (isset($_POST['post_upload_field']) && wp_verify_nonce($_POST['post_upload_fi
                             }
                         }
                     } else {
-                        # Nếu search không thấy và thì tạo group mới 
-                        $args = array(
-                            'post_title'    => $groupName,
-                            'post_status'   => 'publish',
-                            'post_type'     => 'thiep_moi',
-                        );
-                        $groupID = wp_insert_post($args);
-
-                        wp_set_object_terms($groupID, $ownName, 'category');
-                        
-                        # Thêm mới dữ liệu
-                        # Nếu có trường $name thì mới thêm mới
-                        if ($name) {
-                            $row_update = array(
-                                'name'          => $name,
-                                'guest_attach'  => $attach,
-                                'xung_ho'       => $xung_ho,
-                                'phone'         => $phone,
-                                'sent'          => false,
-                                'joined'        => false,
+                        if ($groupName) {
+                            # Nếu search không thấy và thì tạo group mới 
+                            $args = array(
+                                'post_title'    => $groupName,
+                                'post_status'   => 'publish',
+                                'post_type'     => 'thiep_moi',
                             );
-                            add_row('field_61066efde7dbc', $row_update, $groupID);
+                            $groupID = wp_insert_post($args);
+    
+                            wp_set_object_terms($groupID, $ownName, 'category');
+                            
+                            # Thêm mới dữ liệu
+                            # Nếu có trường $name thì mới thêm mới
+                            if ($name) {
+                                $row_update = array(
+                                    'name'          => $name,
+                                    'guest_attach'  => $attach,
+                                    'xung_ho'       => $xung_ho,
+                                    'phone'         => $phone,
+                                    'sent'          => false,
+                                    'joined'        => false,
+                                );
+                                add_row('field_61066efde7dbc', $row_update, $groupID);
+                            }
                         }
                     }
                 }
             }
         }
 
-        wp_redirect(get_permalink($groupID));
+        # Cập nhật số lượng thiệp đã sử dụng
+        update_field('field_63b853e50f9a8', $used_cards, 'user_' . $userID);
+
+        if ($new_customer_amount) {
+            $thongbao = "<p>Đã thêm " . $new_customer_amount . " khách vào nhóm.</p>";
+        }
+        if ($update_customer_amount) {
+            $thongbao .= "<p>Đã cập nhật " . $update_customer_amount . " khách trong nhóm</p>";
+        }
+        if ($full_cards) {
+            $customer_not_added = count($rowData) - $new_customer_amount;
+            $thongbao .= "<p>Đã đạt đến giới hạn thiệp. Có " . $customer_not_added . " người chưa được thêm vào nhóm.</p>";
+            $thongbao .= "<a class='card_link' href='" . get_bloginfo('url') . "/danh-sach-goi-san-pham/'>Mua thêm thiệp</a>";
+        }
+        // wp_redirect(get_permalink($groupID));
     } else {
         $thongbao = "File không đúng định dạng hoặc không có dữ liệu hợp lệ. Hãy chỉnh sửa file hoặc download mẫu bên dưới.";
     }
@@ -157,23 +190,25 @@ get_template_part('header', 'topbar');
                 <span><?php echo get_the_title(); ?></span>
             </div>
             <div class="mui-panel" id="upload">
+                <?php
+                if ($groupID) {
+                ?>
+                    <div class="back-btn mb20">
+                        <a href="<?php echo get_permalink($groupID); ?>"><i class="fa fa-arrow-left"></i> Quay lại nhóm <?php echo strtolower(get_the_title($groupID)); ?></a>
+                    </div>
+                <?php
+                }
+                ?>
                 <form action="" method="post" enctype="multipart/form-data" class="mui-form mui-row">
                     
-                    <div class="mui-col-md-4"></div>
-                    <div class="mui-col-md-4 mui-col-sm-12">
+                    <div class="mui-col-md-12 mui-col-sm-12">
                         <p><?php if ($thongbao){ echo $thongbao; } ?></p>
-                        <div class="mui-textfield">
-                            <input name="fileupload" type="file">
-                        </div>
-                    </div>
-                    <div class="mui-col-md-4 mui-col-sm-12"></div>
-
-                    <div class="mui-col-md-5 mui-col-sm-12">
-                        <?php
+                        
+                        <input name="fileupload" type="file">
+                        
+                    <?php
                         wp_nonce_field('post_upload', 'post_upload_field');
-                        ?>
-                    </div>
-                    <div class="mui-col-md-2 mui-col-sm-12">
+                    ?>
                         <input type="submit" value="Import" class="mui-btn mui-btn--danger">
                     </div>
                     <div class="mui-col-md-5 mui-col-sm-12"></div>

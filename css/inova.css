@@ -768,6 +768,21 @@ img {
   display: none;
   width: 20px;
 }
+#list_customer .success_copied {
+  background: #d1ff9a;
+  color: green;
+  padding: 3px 13px 3px 6px;
+  border-radius: 30px;
+  font-size: small;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-style: italic;
+}
+#list_customer .success_copied i {
+  color: green;
+  font-size: small;
+}
 #list_customer .delete td a {
   display: none;
 }

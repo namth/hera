@@ -28,7 +28,7 @@ add_action('wp_ajax_nopriv_updateWeddingInfo', 'updateWeddingInfo');
 function updateWeddingInfo() {
     $current_user_id = get_current_user_id();
     if($_POST['content']!=""){
-        update_field($_POST['field'], $_POST['content'], 'user_' . $current_user_id);
+        update_field($_POST['field'], trim($_POST['content']), 'user_' . $current_user_id);
     }
     exit;
 }

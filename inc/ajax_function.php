@@ -157,11 +157,14 @@ add_action('wp_ajax_deleteCustomer', 'deleteCustomer');
 add_action('wp_ajax_nopriv_deleteCustomer', 'deleteCustomer');
 function deleteCustomer() {
     $data = json_decode(inova_encrypt($_POST['content'], 'd'));
+    $used_cards = get_field('used_cards', 'user_' . $data->userid);
 
     /* Kiểm tra tính xác thực */
     if (wp_verify_nonce($data->nonce, 'delcustomer_' . $data->row_index)) {
         /* Delete customer from group post by id */
         delete_row('field_61066efde7dbc', $data->row_index, $data->groupid);
+        /* Update used cards */
+        update_field('field_63b853e50f9a8', --$used_cards, 'user_' . $data->userid);
         echo true;
     } else echo false;
     exit;
@@ -423,5 +426,38 @@ function uploadAvatar() {
       }
     }
     
+    exit;
+}
+
+/* 
+* Source: single-thiep_moi.php
+* Cho phép sửa nhanh nội dung trên giao diện hiển thị thông tin đám cưới */
+add_action('wp_ajax_updateSentFriend', 'updateSentFriend');
+add_action('wp_ajax_nopriv_updateSentFriend', 'updateSentFriend');
+function updateSentFriend() {
+    $field      = $_POST['field'];
+    $row        = $_POST['row'];
+    $ischecked  = $_POST['ischecked'];
+    $groupid    = $_POST['groupid'];
+
+    # nếu đồng ý tham gia thì tìm người có mã số là $invitee trong nhóm $group để update 
+    if (have_rows('guest_list', $groupid)) {
+        while (have_rows('guest_list', $groupid)) {
+            the_row();
+    
+            $row_index = get_row_index();
+            if ($row_index != $row) {
+                continue;
+            } else {
+                # nếu tìm thấy khách thì update thông tin rồi break ra khỏi vòng lặp
+                update_sub_field($field, $ischecked);
+                $found_customer = true;
+                break;
+            }
+            $found_customer= false;
+        }
+    } else $found_customer= false;
+
+    echo $found_customer;
     exit;
 }
