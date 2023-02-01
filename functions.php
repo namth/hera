@@ -89,12 +89,20 @@ function ps_redirect_after_logout()
 
 // Add custom Theme Functions here
 if (function_exists('acf_add_options_page')) {
-    acf_add_options_page(array(
-        'page_title'    => 'Theme options', // Title hiển thị khi truy cập vào Options page
+    $parent = acf_add_options_page(array(
+        'page_title'    => 'Tùy biến chung', // Title hiển thị khi truy cập vào Options page
         'menu_title'    => 'Tùy biến chung', // Tên menu hiển thị ở khu vực admin
         'menu_slug'     => 'theme-settings', // Url hiển thị trên đường dẫn của options page
         'capability'    => 'edit_posts',
         'redirect'      => false
+    ));
+
+    // Add sub page.
+    $child = acf_add_options_sub_page(array(
+        'page_title'    => __('Data mẫu'),
+        'menu_title'    => __('Data mẫu'),
+        'menu_slug'     => 'data-sample',
+        'parent_slug'   => $parent['menu_slug'],
     ));
 }
 
@@ -407,4 +415,14 @@ function validate_phonenumber($phonenumber){
     } else {
         return false;
     }
+}
+
+# Chuyển đổi dạng echo sang dạng string thay cho việc echo như trước
+function echo_to_string( $function )
+{
+    ob_start();
+    call_user_func( $function );
+    $html = ob_get_contents();
+    ob_end_clean();
+    return $html;
 }

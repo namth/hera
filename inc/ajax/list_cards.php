@@ -42,18 +42,6 @@ function viewDetailCard(){
                     <input type="hidden" name="cardid" value="<?php echo $cardid; ?>">
                     <input type="hidden" name="thumbnail" value="<?php echo $mycard->thumbnail; ?>">
                     <?php 
-                    $icon = array(
-                        'fa-user',
-                        'fa-universal-access',
-                        'fa-users',
-                        'fa-user-o',
-                        'fa-user-circle-o',
-                        'fa-vcard-o',
-                        'fa-odnoklassniki',
-                        'fa-male',
-                        'fa-female',
-                        'fa-child',
-                    );
                     $args   = array(
                         'post_type'     => 'thiep_moi',
                         'posts_per_page' => -1,
@@ -85,7 +73,7 @@ function viewDetailCard(){
                         <input type="checkbox" name="customer_group[]" id="<?php echo "group_" . $groupid; ?>" value="<?php echo $groupid; ?>" <?php echo $checked; ?>>
                         <label for="<?php echo "group_" . $groupid; ?>">
                             <div class="img_icon">
-                                <i class="fa <?php echo $icon[array_rand($icon)]; ?>"></i>
+                                <i class="fa fa-user-o"></i>
                             </div>
                             <div class="customer_name">
                                 <?php the_title(); ?>
@@ -147,6 +135,28 @@ function addCardToCustomerGroup(){
                     # nếu nhóm khách mời mà có trong danh sách lựa chọn thì set lại
                     update_field('field_610ead267af54', $output['cardid']); # setup cardid
                     update_field('field_610ead167af53', $output['thumbnail']); # setup thumbnail
+
+                    # gọi API để lấy html của thiệp để đưa vào lưu tại thiệp
+                    $token = get_field('token', 'option');
+                    if (!check_token($token)) {
+                        # Kiểm tra nếu token vẫn hoạt động thì thôi, nếu không thì phải lấy lại token mới.
+                        $token = refresh_token();
+                    }
+                    $api_base_url = get_field('api_base_url', 'option');
+                    $api_url = $api_base_url . '/wp-json/inova/v1/html/' . $output['cardid'];
+                    $mycard = inova_api($api_url, $token, 'GET', '');
+                    if (!is_wp_error($mycard)) {
+                        update_field('field_62a7d154c86cd', $mycard->html);
+
+                        $content_1 = $mycard->content1 ? $mycard->content1 : get_field('content_1', 'option');
+                        $content_2 = $mycard->content2 ? $mycard->content2 : get_field('content_2', 'option');
+                        $content_3 = $mycard->content3 ? $mycard->content3 : get_field('content_3', 'option');
+
+                        update_field('field_63ceb66556861', $content_1);
+                        update_field('field_63ceb69856862', $content_2);
+                        update_field('field_63ceb6e956863', $content_3);
+                    }
+
                     $updated = true;
                 } else {
                     # nếu không thì kiểm tra xem trường cardid nếu có dữ liệu thì xoá đi
@@ -182,7 +192,27 @@ function addCardToSelectedGroup(){
     if ($author_id == $current_user_id) {
         update_field('field_610ead267af54', $cardid, $groupid); # setup cardid
         update_field('field_610ead167af53', $thumbnail, $groupid); # setup thumbnail
-        $updated = true;
+        
+        # gọi API để lấy html của thiệp để đưa vào lưu tại thiệp
+        $token = get_field('token', 'option');
+        if (!check_token($token)) {
+            # Kiểm tra nếu token vẫn hoạt động thì thôi, nếu không thì phải lấy lại token mới.
+            $token = refresh_token();
+        }
+        $api_base_url = get_field('api_base_url', 'option');
+        $api_url = $api_base_url . '/wp-json/inova/v1/html/' . $cardid;
+        $mycard = inova_api($api_url, $token, 'GET', '');
+        if (!is_wp_error($mycard)) {
+            update_field('field_62a7d154c86cd', $mycard->html, $groupid);
+
+            $content_1 = $mycard->content1 ? $mycard->content1 : get_field('content_1', 'option');
+            $content_2 = $mycard->content2 ? $mycard->content2 : get_field('content_2', 'option');
+            $content_3 = $mycard->content3 ? $mycard->content3 : get_field('content_3', 'option');
+
+            update_field('field_63ceb66556861', $content_1, $groupid);
+            update_field('field_63ceb69856862', $content_2, $groupid);
+            update_field('field_63ceb6e956863', $content_3, $groupid);
+        }
     }
     echo get_permalink($groupid);
     exit;

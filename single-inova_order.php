@@ -156,7 +156,7 @@ if (have_posts()) {
                 <div class="mui-row">
                     <div class="mui-col-md-6 mui-col-sm-7">
                     <?php 
-                        $close_payment = false;
+                        $close_payment = ($final_total == 0);
                         if (in_array($status, ["Chưa thanh toán", "Thanh toán thiếu"])) {
                             $total_label = $status == "Chưa thanh toán" ? "Thành tiền":"Cần thanh toán";
                             $status_class = "error_notification";
@@ -311,7 +311,16 @@ if (have_posts()) {
                         </div>
                     </div>
                     <?php 
-                        }                    
+                        } else {
+                            $active_data = inova_encrypt(json_encode([
+                                'package_id'    => $package_id,
+                                'order_id'      => get_the_ID()
+                            ]), 'e');
+                            # Nếu đã đóng payment mà chưa được kích hoạt thì chuyển đến trang kích hoạt ngay.
+                            if (!$activate) {
+                                echo '<a href="' . $active_data . '" class="mui-btn hera-btn active_now" style="margin: 5px auto;display: table;">Kích hoạt ngay</a>';
+                            }
+                        }                  
                     ?>
                 </div>
             </div>
@@ -325,90 +334,7 @@ if (have_posts()) {
         <span class="close_button">X</span>
     </div>
 </div>
-<script>
-    jQuery(document).ready(function ($) {
-        // Gọi lệnh đồng bộ tới casso
-        $("#check_payment .active_now").click(function(){
-            $.ajax({
-                type: "POST",
-                url: AJAX.ajax_url,
-                data: {
-                    action: "syncCasso",
-                },
-                beforeSend: function() {
-                    $("#fullloading").css('display','flex');
-                    $("#fullloading .description").html('<span class="blink_me">Đang đồng bộ hoá với ngân hàng ...</span>');
-                },
-                error: function (xhr, ajaxOptions, thrownError) {
-                    console.log(xhr.status);
-                    console.log(xhr.responseText);
-                    console.log(thrownError);
-                },
-                success: function (resp) {
-                    // var obj = JSON.parse(resp);
-
-                },
-            });
-
-            // Cài đặt bộ hẹn giờ kiểm tra order 
-            setInterval(checkOrder, 2000);
-            return false;
-        });
-
-        function checkOrder(){
-            var order_id = $('input[name="order_id"]').val();
-            // Gọi ajax để kiểm tra hoá đơn cho tới khi được kích hoạt
-            $.ajax({
-                type: "POST",
-                url: AJAX.ajax_url,
-                data: {
-                    action: "checkOrder",
-                    order: order_id
-                },
-                beforeSend: function() {
-                    $("#fullloading .description").html('<span class="blink_me">Kiểm tra giao dịch ...</span>');
-                },
-                error: function (xhr, ajaxOptions, thrownError) {
-                    console.log(xhr.status);
-                    console.log(xhr.responseText);
-                    console.log(thrownError);
-                },
-                success: function (resp) {
-                    console.log(resp);
-                    var obj = JSON.parse(resp);
-                    if (obj['done'] == true) {
-                        clearAllInterval();
-
-                        // redirect to thank you page 
-                        window.location.replace(obj['url']);
-                    }
-                },
-            });
-        }
-
-        // Xử lý khi bấm vào nút close trên màn hình
-        $("#fullloading .close_button").click(function(){
-            /* Ẩn loading */
-            $("#fullloading").css('display','none');
-            
-            /* Xoá check */
-            clearAllInterval();
-        });
-
-
-        /* Close momo popup */
-        $(".popup_momo").on('click', function(e){
-            if (e.target !== this)
-                return;
-
-            $(this).remove();
-        });
-        $(".close_popup").on('click', function(e){
-            $(".popup_momo").remove();
-        });
-
-    });
-</script>
+<script src="<?php echo get_template_directory_uri(); ?>/js/single-inova_order.js"></script>
 <?php
     }
 }

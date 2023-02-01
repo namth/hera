@@ -1,4 +1,6 @@
 @charset "UTF-8";
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Itim&display=swap");
 .blink_me {
   -webkit-animation: blinker 4s cubic-bezier(0.77, 0, 0.18, 1) infinite;
           animation: blinker 4s cubic-bezier(0.77, 0, 0.18, 1) infinite;
@@ -849,6 +851,9 @@ img {
   text-align: center;
   font-family: "Aphrodite";
 }
+#main-info .mui-textfield span {
+  min-width: 80%;
+}
 #main-info .heart_icon {
   display: inline-table;
   width: 40px;
@@ -899,6 +904,7 @@ img {
   display: inline-block;
   padding: 9px 9px 9px 9px;
   max-width: calc(100% - 24px);
+  min-width: 70%;
   vertical-align: middle;
 }
 #addition_info .content_info .group_data .data_item .date_input {
@@ -1527,6 +1533,32 @@ img {
   padding: 0px 12px 3px;
   border-radius: 20px;
   cursor: pointer;
+}
+
+.wedding_content {
+  background: #fff4f8;
+  padding: 20px;
+  text-align: center;
+  font-size: large;
+  box-shadow: inset 0px 0px 7px pink;
+  font-family: "Itim", cursive;
+}
+.wedding_content .content_editable {
+  display: grid;
+  padding: 8px 15px;
+  font-size: 20px;
+}
+.wedding_content .content_editable:hover {
+  cursor: text;
+  background: #ffebf5;
+}
+.wedding_content .none_edit {
+  cursor: default;
+  display: block;
+  font-size: 2rem;
+  padding: 10px;
+  color: #f7a2b1;
+  font-family: "Aphrodite", cursive;
 }
 
 @media screen and (max-width: 1024px) {

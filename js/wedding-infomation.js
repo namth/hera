@@ -39,6 +39,7 @@ jQuery(document).ready(function ($) {
     /* Khi bấm submit một form thì gọi ajax để xử lý form đó, thêm dữ liệu vào  */
     $('.hide_form button[type="submit"]').click(function () {
         var $data = $(this).parents().eq(1).serialize();
+        // console.log($data);
         $.ajax({
             type: "POST",
             url: AJAX.ajax_url,
@@ -56,11 +57,11 @@ jQuery(document).ready(function ($) {
                 $('.hide_form').hide();
                 $('#add_more_form').prepend('<span class="success_notification">Đã update thành công.</span>');
                 location.reload();
-                setTimeout(function(){
+                /* setTimeout(function(){
                     if ($('.success_notification').length > 0) {
                         $('.success_notification').remove(200);
                     }
-                }, 4000)
+                }, 4000) */
             },
         });
         return false;
@@ -69,6 +70,7 @@ jQuery(document).ready(function ($) {
     /* Xử lý ajax khi sửa trực tiếp nội dung trên div */
     function edit_wedding_info(span_select){
         var field = span_select.data('field');
+        var where = span_select.data('where');
         var content = span_select.text();
         var parent = span_select.parent();
         var heart_img = $('.heart_icon img').attr('src');
@@ -81,10 +83,13 @@ jQuery(document).ready(function ($) {
                 action: "updateWeddingInfo",
                 field: field,
                 content: content,
+                where: where,
             },
             beforeSend: function() {
-                parent.find('i').hide();
-                parent.prepend('<b class="loading"><img src="' + heart_img + '" alt=""></b>').show();
+                if (parent.find('i').length != 0) {
+                    parent.find('i').hide();
+                    parent.prepend('<b class="loading"><img src="' + heart_img + '" alt=""></b>').show();
+                }
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 console.log(xhr.status);
@@ -92,22 +97,39 @@ jQuery(document).ready(function ($) {
                 console.log(thrownError);
             },
             success: function (resp) {
-                parent.find('.loading').remove();
-                parent.find('i').show();
+                // console.log(resp);
+                if (parent.find('i').length != 0) {
+                    parent.find('.loading').remove();
+                    parent.find('i').show();
+                }
+                span_select.data('update', false);
             },
         });
     }
     $('.diveditable').blur(function(){
-        edit_wedding_info($(this));
+        var update = $(this).data('update');
+        console.log(update);
+        if (update) {
+            edit_wedding_info($(this));
+        }
         return false;
     });
 
     $(document.body).on('keypress keyup paste input', '.diveditable', function(e){
+        var update = $(this).data('update');
         var keyCode = e.keyCode || e.which;
         if (keyCode === 13) { 
             e.preventDefault();
+            $(this).data('update', true);
             $(this).blur();
             return false;
+        }
+        if (keyCode === 27) {
+            $(this).data('update', false);
+            $(this).blur();
+            return false;
+        } else if (!update) {
+            $(this).data('update', true);
         }
     });
 
@@ -159,5 +181,12 @@ jQuery(document).ready(function ($) {
             },
         });
         return false;
+    });
+
+    /* Xử lý khi thay đổi input solar date và chuyển vào trường input ẩn */
+    $('.date_calculate .solar').change(function(){
+        var data_input = $(this).val();
+
+        $(this).parent().find('.lunar').val(data_input);
     });
 });

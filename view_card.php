@@ -9,7 +9,12 @@ $_invitee = get_query_var('invitee');
 $group = inova_encrypt($_group, 'd');
 $customer = inova_encrypt($_invitee, 'd');
 
-$cardid = get_field('card_id', $group);
+$cardid         = get_field('card_id', $group);
+$html           = get_field('html', $group);
+$noi_dung_1     = get_field('content_1', $group)?get_field('content_1', $group):get_field('content_1', 'option');
+$noi_dung_2     = get_field('content_2', $group)?get_field('content_2', $group):get_field('content_2', 'option');
+$noi_dung_3     = get_field('content_3', $group)?get_field('content_3', $group):get_field('content_3', 'option');
+$loi_moi        = wpautop(get_field('custom_invite', $group));
 $found_customer = false;
 
 $groom = get_field('groom', 'user_' . $user->ID);
@@ -62,88 +67,45 @@ if ($joined =="Y") {
     $function_div .= '<div class="notification deny">Xác nhận không tham dự được.</div>';
 }
 
+# setup wp_head & wp_footer
+$wp_head    = echo_to_string('wp_head');
+
+# data to get response from guests
+$data_input =  '<input type="hidden" name="group" value="' . $_group . '">
+                <input type="hidden" name="invitee" value="' . $_invitee . '">';
+$wp_footer  = $data_input . echo_to_string('wp_footer');
+/* $loi_moi = replace_content([
+    '{2}'           => strtolower($xung_ho[0]),
+    '{1}'           => strtolower($xung_ho[1]),
+], $loi_moi);
+
+$noi_dung_2 = replace_content([
+    '{2}'           => strtolower($xung_ho[0]),
+    '{1}'           => strtolower($xung_ho[1]),
+], $noi_dung_2);
+ */
 $data_replace = array(
+    '{noi_dung_1}'  => $noi_dung_1,
+    '{noi_dung_2}'  => $noi_dung_2,
+    '{noi_dung_3}'  => $noi_dung_3,
     '{khach_moi}'   => $guests,
     '{chu_re}'      => $groom,
     '{co_dau}'      => $bride,
     '{ngay_gio_cuoi_hoi}' => $wedding_time,
     '{dia_diem_to_chuc}'  => $wedding_adress,
+    '{loi_moi}'     => $loi_moi,
+    '{function_button}'   => $function_div,
+    '{wp_header}'   => $wp_head,
+    '{wp_footer}'   => $wp_footer,
     '{2}'           => strtolower($xung_ho[0]),
     '{1}'           => strtolower($xung_ho[1]),
-    '{function_button}'   => $function_div,
 );
 
 if ($cardid) {
-    $token = refresh_token();
-    $api_base_url = get_field('api_base_url', 'option');
-    $api_url = $api_base_url . '/wp-json/inova/v1/html/' . $cardid;
-    $mycard = inova_api($api_url, $token, 'GET', '');
-    ?>
-    <!doctype html>
-    <html lang="en">
+    
+    $html = replace_content($data_replace, $html);
+    print_r($html);
 
-    <head>
-        <meta charset="utf-8">
-        <title><?php bloginfo('name'); ?> &raquo; <?php is_front_page() ? bloginfo('description') : wp_title(''); ?></title>
-        <meta content="Thiệp cưới online cao cấp HERA" name="description">
-
-        <link rel="icon" href="<?php echo get_template_directory_uri(); ?>/img/favicon.png" type="image/x-icon"/>
-        <link rel="shortcut icon" href="<?php echo get_template_directory_uri(); ?>/img/favicon.png" type="image/x-icon"/>
-        <?php echo $mycard->css; ?>
-
-        <?php 
-            if ($mycard->type != 'HTML') {
-        ?>
-        <style>
-            #function_action a {
-                display: inline-block;
-                text-decoration: none;
-                border-radius: 5px;
-                padding: 12px 20px;
-                background: darkslategray;
-                color: #ffffe9;
-                font-family: arial;
-                margin: 0px 5px;
-            }
-            .notification{
-                margin: 21px 0;
-                padding: 12px;
-                font-family: arial;
-                font-style: italic;
-                border-radius: 9px;
-                display: inline-block;
-                min-width: 69%;
-            }
-            .accept{
-                background: #acffa0;
-                color: #029520;
-            }
-            .deny{
-                background: #ffd5d5;
-                color: #950202;
-            }
-        </style>
-        <?php 
-            }
-            wp_head() 
-        ?>
-    </head>
-        <body>
-        <?php
-            $html = replace_content($data_replace, $mycard->html);
-            print_r($html);
-
-            # data to read js
-            echo '<input type="hidden" name="group" value="' . $_group . '">';
-            echo '<input type="hidden" name="invitee" value="' . $_invitee . '">';
-        ?>
-        </body>
-        <?php 
-            echo $mycard->js;
-            wp_footer(); 
-        ?>
-    </html>
-    <?php
 } else {
     echo "Lỗi trang 404.";
 }

@@ -3,6 +3,7 @@ $guest_list = get_field('guest_list');
 $current_user = wp_get_current_user();
 $used_cards = get_field('used_cards', 'user_' . $current_user->ID);
 $package_id = get_field('package_id', 'user_' . $current_user->ID);
+
 /* 
 Kiểm tra xem có sử dụng package nào không
 Nếu không thì sẽ hạn chế các trường "copy link", check đã mời, nút xem thiệp
@@ -100,10 +101,11 @@ if (have_posts()) {
     while (have_posts()) {
         the_post();
 
-        $groupid = get_the_ID();
-        $image = get_field('thumbnail');
-        $status = get_field('status');
-        $card_id = get_field('card_id');
+        $groupid        = get_the_ID();
+        $image          = get_field('thumbnail');
+        $status         = get_field('status');
+        $card_id        = get_field('card_id');
+        $groupid_encode = inova_encrypt(get_the_ID(), 'e');
 
         if ($image) {
             $card_thumbnail = $image;
@@ -116,8 +118,10 @@ if (have_posts()) {
             'userid'    => $current_user->ID,
         )), 'e');
 
+        $link_view_demo = get_bloginfo('url') . '/view-demo/?group=' . $groupid_encode;
         $link_select_card = get_bloginfo('url') . '/danh-sach-mau/?g=' . $data_token;
         $link_upload = get_bloginfo('url') . '/tai-khach-hang-qua-file-excel/?g=' . $data_token;
+        $link_edit_content = get_bloginfo('url') . '/edit-content/?g=' . $data_token;
 ?>
         <div class="mui-container-fluid">
             <div class="mui-row">
@@ -145,13 +149,14 @@ if (have_posts()) {
                             </div>
                             <div class="mui-col-md-9">
                                 <a href="<?php echo $link_select_card; ?>" class="mui-btn hera-btn">Chọn thiệp</a><br>
-                                <a href="#" class="mui-btn hera-btn">Xem mẫu</a>
+                                <a href="<?php echo $link_view_demo; ?>" target="_blank" class="mui-btn hera-btn">Xem mẫu</a><br>
+                                <a href="<?php echo $link_edit_content; ?>" class="mui-btn hera-btn">Sửa nội dung thiệp</a>
                             </div>
                         </div>
 
                         <div class="mui-divider"></div>
 
-                        <h3 class="mb0">Lời mời</h3>
+                        <!-- <h3 class="mb0">Lời mời</h3>
                         <p>Lời mời riêng dành cho nhóm (nếu có). Thêm {1} và {2} vào vị trí bạn muốn thay đổi. <a href="#" class="mui--text-danger">Xem hướng dẫn chi tiết.</a></p>
                         <form id="loi_moi" class="mui-form" method="POST">
                             <div class="mui-textfield">
@@ -161,7 +166,7 @@ if (have_posts()) {
                             <button type="submit" class="mui-btn hera-btn">Cập nhật</button>
                         </form>
 
-                        <div class="mui-divider"></div>
+                        <div class="mui-divider"></div> -->
 
                         <h3 class="mb10">Danh sách khách</h3>
                         <div class="mui-row">
@@ -170,8 +175,7 @@ if (have_posts()) {
                                 <button class="mui-btn hera-btn" onclick="activateModal()">
                                     <i class="fa fa-user-plus"></i> Thêm mới
                                 </button>
-                                <!-- <a id="download_sample" href="<?php echo get_bloginfo('url'); ?>/download-sample" class="mui-btn hera-btn"><i class="fa fa-cloud-download"></i> Tải file mẫu</a> -->
-                                <a id="upload_data" href="<?php echo $link_upload; ?>" class="mui-btn hera-btn"><i class="fa fa-cloud-upload"></i> Upload danh sách</a>
+                                <a id="upload_data" href="<?php echo $link_upload; ?>" class="mui-btn"><i class="fa fa-cloud-upload"></i> Upload danh sách</a>
                             </div>
                             <div class="mui-col-md-12">
                                 <table class="mui-table" id="list_customer">
@@ -206,7 +210,6 @@ if (have_posts()) {
                                                 $name = get_sub_field('name');
                                                 $guest_attach = get_sub_field('guest_attach');
                                                 $row_index = get_row_index();
-                                                $groupid_encode = inova_encrypt(get_the_ID(), 'e');
                                                 
                                                 # Xoá khách mời
                                                 $del_data = inova_encrypt(json_encode(array(
