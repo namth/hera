@@ -120,7 +120,7 @@ function listCardFromAPI() {
             <div class="heracard">
                 <div class="images" style="<?php 
                     echo 'background: url('. $card_thumbnail .') no-repeat 50% 50%;';
-                    echo 'background-size: contain;';
+                    echo 'background-size: cover;';
                 ?>">
                     
                 </div>

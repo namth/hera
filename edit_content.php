@@ -9,7 +9,6 @@ if (isset($_GET['g']) && ($_GET['g'] != "" )) {
     /* Đọc dữ liệu groupID và userID */
     $postid = $group_data->groupid;
     $userID = $group_data->userid;
-    $groupName  = get_the_title($groupID);
     $noi_dung_1 = get_field('content_1', $postid);
     $noi_dung_2 = get_field('content_2', $postid);
     $noi_dung_3 = get_field('content_3', $postid);
