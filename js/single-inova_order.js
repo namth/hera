@@ -80,7 +80,7 @@ jQuery(document).ready(function ($) {
     });
 
     /* Xử lý khi bấm vào nút kích hoạt ngay */
-    $(".active_now").click(function(e){
+    $(".active_free").click(function(e){
         e.preventDefault();
         var active_data = $(this).attr('href');
         console.log(active_data);
@@ -101,7 +101,7 @@ jQuery(document).ready(function ($) {
                 console.log(thrownError);
             },
             success: function (resp) {
-                
+                window.location.replace(resp);
             },
         });
     });

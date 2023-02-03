@@ -145,15 +145,18 @@ add_action('wp_ajax_nopriv_activeOrder', 'activeOrder');
 function activeOrder(){
     $active_data = json_decode(inova_encrypt($_POST['active_data'], 'd'));
     $inova_orderid = $active_data->order_id;
-     # chuyển trạng thái đơn hàng
-     update_field('field_62eb93b78ca79', "Đã thanh toán", $inova_orderid);
-     update_field('field_636c85b89d08e', 'Kích hoạt ngay', $inova_orderid); #phương thức thanh toán
-     update_field('field_636c40bbd3e8c', 0, $inova_orderid); # update số tiền khách thanh toán
-     # kích hoạt gói
-     $active_done = activation_package($inova_orderid);
+    # chuyển trạng thái đơn hàng
+    update_field('field_62eb93b78ca79', "Đã thanh toán", $inova_orderid);
+    update_field('field_636c85b89d08e', 'Kích hoạt ngay', $inova_orderid); #phương thức thanh toán
+    update_field('field_636c40bbd3e8c', 0, $inova_orderid); # update số tiền khách thanh toán
+    # kích hoạt gói
+    $active_done = activation_package($inova_orderid);
 
-     if ($active_done) {
-         # Đánh dấu đơn hàng đã được active 
-         update_field('field_636df1ce10556', true, $inova_orderid);
-     }
+    if ($active_done) {
+        # Đánh dấu đơn hàng đã được active 
+        update_field('field_636df1ce10556', true, $inova_orderid);
+    }
+
+    echo get_bloginfo("url") . "/thank-you/";
+    exit;
 }

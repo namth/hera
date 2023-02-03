@@ -53,7 +53,7 @@ jQuery(document).ready(function ($) {
                 console.log(thrownError);
             },
             success: function (resp) {
-                console.log(resp);
+                // console.log(resp);
                 $('.hide_form').hide();
                 $('#add_more_form').prepend('<span class="success_notification">Đã update thành công.</span>');
                 location.reload();

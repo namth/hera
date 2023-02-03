@@ -30,6 +30,8 @@ $bride  = get_field('bride', $where_update);
 $active_groom   = get_field('active_groom', $where_update);
 $active_bride   = get_field('active_bride', $where_update);
 
+
+
 ?>
 <div class="mui-container-fluid">
     <div class="mui-row">
@@ -94,9 +96,11 @@ $active_bride   = get_field('active_bride', $where_update);
                                     $groom_father           = get_field('groom_father', $where_update);
                                     $groom_mother           = get_field('groom_mother', $where_update);
                                     $groom_wedding_adress   = get_field('groom_wedding_adress', $where_update);
+                                    $groom_wedding_maps     = get_field('groom_wedding_maps', $where_update);
                                     $groom_wedding_time     = get_field('groom_wedding_time', $where_update);
                                     $groom_wedding_moontime = get_field('groom_wedding_moontime', $where_update);
                                     $groom_party_address    = get_field('groom_party_address', $where_update);
+                                    $groom_party_maps       = get_field('groom_party_maps', $where_update);
                                     $groom_party_time       = get_field('groom_party_time', $where_update);
                                     $groom_party_moontime   = get_field('groom_party_moontime', $where_update);
 
@@ -225,6 +229,10 @@ $active_bride   = get_field('active_bride', $where_update);
                                                     <input class="lunar" type="hidden" name="field_62b135cb93a85" value="<?php if ($_groom_wedding_moontime) echo $_groom_wedding_moontime->format('Y-m-d\TH:i:s'); ?>">
                                                     <label for="">Thời gian (dương lịch)</label>
                                                 </div>
+                                                <div class="mui-textfield">
+                                                    <textarea name="field_63dbd489cc720"><?php if ($groom_wedding_maps) echo $groom_wedding_maps; ?></textarea>
+                                                    <label for="">Link google maps</label>
+                                                </div>
                                                 <?php
                                                 wp_nonce_field('wedding', 'wedding_field');
                                                 ?>
@@ -290,6 +298,10 @@ $active_bride   = get_field('active_bride', $where_update);
                                                     <input class="lunar" type="hidden" name="field_62b13605bfa89" value="<?php if ($_groom_party_moontime) echo $_groom_party_moontime->format('Y-m-d\TH:i:s'); ?>">
                                                     <label for="">Thời gian (dương lịch)</label>
                                                 </div>
+                                                <div class="mui-textfield">
+                                                    <textarea name="field_63dbd4bfcc721"><?php if ($groom_party_maps) echo $groom_party_maps; ?></textarea>
+                                                    <label for="">Link google maps</label>
+                                                </div>
                                                 <?php
                                                 wp_nonce_field('wedding', 'wedding_field');
                                                 ?>
@@ -309,9 +321,11 @@ $active_bride   = get_field('active_bride', $where_update);
                                     $bride_father           = get_field('bride_father', $where_update);
                                     $bride_mother           = get_field('bride_mother', $where_update);
                                     $bride_wedding_adress   = get_field('bride_wedding_adress', $where_update);
+                                    $bride_wedding_maps     = get_field('bride_wedding_maps', $where_update);
                                     $bride_wedding_time     = get_field('bride_wedding_time', $where_update);
                                     $bride_wedding_moontime = get_field('bride_wedding_moontime', $where_update);
                                     $bride_party_address    = get_field('bride_party_address', $where_update);
+                                    $bride_party_maps       = get_field('bride_party_maps', $where_update);
                                     $bride_party_time       = get_field('bride_party_time', $where_update);
                                     $bride_party_moontime   = get_field('bride_party_moontime', $where_update);
 
@@ -442,6 +456,10 @@ $active_bride   = get_field('active_bride', $where_update);
                                                         <input class="lunar" type="hidden" name="field_62b1363fb06b7" value="<?php if ($_bride_wedding_moontime) echo $_bride_wedding_moontime->format('Y-m-d\TH:i:s'); ?>">
                                                         <label for="">Thời gian (dương lịch)</label>
                                                     </div>
+                                                    <div class="mui-textfield">
+                                                        <textarea name="field_63dbd5791d673"><?php if ($bride_wedding_maps) echo $bride_wedding_maps; ?></textarea>
+                                                        <label for="">Link google maps</label>
+                                                    </div>
                                                     <?php
                                                     wp_nonce_field('wedding', 'wedding_field');
                                                     ?>
@@ -506,6 +524,10 @@ $active_bride   = get_field('active_bride', $where_update);
                                                     <input class="solar" type="datetime-local" name="field_62b1363fb06c7" value="<?php if ($_bride_party_time) echo $_bride_party_time->format('Y-m-d\TH:i:s'); ?>">
                                                     <input class="lunar" type="hidden" name="field_62b1363fb06cf" value="<?php if ($_bride_party_moontime) echo $_bride_party_moontime->format('Y-m-d\TH:i:s'); ?>">
                                                     <label for="">Thời gian (dương lịch)</label>
+                                                </div>
+                                                <div class="mui-textfield">
+                                                    <textarea name="field_63dbd5ab1d674"><?php if ($bride_party_maps) echo $bride_party_maps; ?></textarea>
+                                                    <label for="">Link google maps</label>
                                                 </div>
                                                 <?php
                                                     wp_nonce_field('wedding', 'wedding_field');
