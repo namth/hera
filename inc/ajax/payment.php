@@ -5,7 +5,6 @@
 add_action('wp_ajax_syncCasso', 'syncCasso');
 add_action('wp_ajax_nopriv_syncCasso', 'syncCasso');
 function syncCasso(){
-    define('CASSO_APIKEY', 'AK_CS.ecab342063ca11edb41ba114fdd37350.BOzUgiV389ClrLgbzVyzIA9gB1v0tXV9WkKdtwDPHDTsmRI0Va0iCL6Adc9cUecq2OqBvIIu');
     # Gọi yêu cầu đồng bộ từ casso
     $curl = curl_init();
 

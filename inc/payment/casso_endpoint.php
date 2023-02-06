@@ -1,6 +1,4 @@
 <?php 
-define('CASSO_TOKEN','wPtyoCVkcveCu0xjaiSwiVcf');
-
 add_action('rest_api_init', function(){
     # casso endpoint
     register_rest_route('hera/v1/', 'casso_endpoint', array(

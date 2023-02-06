@@ -4,12 +4,10 @@
 function refresh_token()
 {
     $api_url  = get_field('api_base_url', 'option') . '/wp-json/inova/v1/gettoken';
-    $username = "inovacard";
-    $password = "matkhaumoi2@@";
 
     $user = array(
-        'username' => $username,
-        'password' => $password,
+        'username' => INOVAUSER,
+        'password' => INOVAPASS,
     );
 
     # authenticate to get token

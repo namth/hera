@@ -1,9 +1,4 @@
 <?php
-define("MOMO_PARTNER_CODE", "MOMOV3HW20220505");
-define("MOMO_ACCESS_KEY", "QymLYnfiBN9hyoo3");
-define("MOMO_SECRET_KEY", "m2qjTh8zoKGfhG3UIM4ccbSHhJog4CVO");
-define("MOMO_ENDPOINT", "https://payment.momo.vn/v2/gateway/api/create");
-
 function activation_package($order_id){
     $user_id    = get_field('customer', $order_id);
     $package_id = get_field('package', $order_id);
@@ -59,7 +54,7 @@ add_filter( 'http_request_timeout', function( $timeout ) { return 60; });
 
 # Get lastest success order by current user ID
 function get_lastest_payment($userID){
-    $args   = array(
+    /* $args   = array(
         'post_type'     => 'inova_order',
         'posts_per_page' => 1,
         'author'        => $userID,
@@ -79,5 +74,5 @@ function get_lastest_payment($userID){
 
     if ($query->have_posts()) {
         get_field();
-    }
+    } */
 }

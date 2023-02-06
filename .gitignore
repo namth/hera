@@ -1,2 +1,4 @@
-inc/config.json
+inc/secret.json
+inc/general/secret.php
+
 
