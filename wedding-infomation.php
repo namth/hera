@@ -176,7 +176,7 @@ $active_bride   = get_field('active_bride', $where_update);
                                 <section class="content_box">
                                     <span class="content_title">
                                         <h4>Địa điểm, thời gian tổ chức hôn lễ</h4>
-                                        <span class="edit_section" data-form='#groom_wedding_form'>
+                                        <span class="edit_section" data-form='#groom_wedding_form' data-mapid="gw_googlemaps" data-latlng='gw_latlng'>
                                         <?php 
                                             if ($groom_wedding_adress) {
                                                 echo '<i class="fa fa-pencil" aria-hidden="true"></i>';
@@ -230,9 +230,11 @@ $active_bride   = get_field('active_bride', $where_update);
                                                     <label for="">Thời gian (dương lịch)</label>
                                                 </div>
                                                 <div class="mui-textfield">
-                                                    <textarea name="field_63dbd489cc720"><?php if ($groom_wedding_maps) echo $groom_wedding_maps; ?></textarea>
                                                     <label for="">Link google maps</label>
+                                                    <input type="text" id="pac-input" class="controls">
+                                                    <div id="gw_googlemaps" class="google_maps"></div>
                                                 </div>
+                                                <input id="gw_latlng" type="hidden" name="field_63dbd489cc720" value="<?php if ($groom_wedding_maps) echo $groom_wedding_maps; ?>">
                                                 <?php
                                                 wp_nonce_field('wedding', 'wedding_field');
                                                 ?>
@@ -247,7 +249,7 @@ $active_bride   = get_field('active_bride', $where_update);
                                 <section class="content_box">
                                     <span class="content_title">
                                         <h4>Địa điểm, thời gian tổ chức tiệc cưới</h4>
-                                        <span class="edit_section" data-form='#groom_party_form'>
+                                        <span class="edit_section" data-form='#groom_party_form' data-mapid='gp_googlemaps' data-latlng='gp_latlng'>
                                         <?php 
                                         if ($groom_party_address) {
                                             echo '<i class="fa fa-pencil" aria-hidden="true"></i>';
@@ -299,9 +301,11 @@ $active_bride   = get_field('active_bride', $where_update);
                                                     <label for="">Thời gian (dương lịch)</label>
                                                 </div>
                                                 <div class="mui-textfield">
-                                                    <textarea name="field_63dbd4bfcc721"><?php if ($groom_party_maps) echo $groom_party_maps; ?></textarea>
                                                     <label for="">Link google maps</label>
+                                                    <!-- <input type="text" class="controls"> -->
+                                                    <div id="gp_googlemaps" class="google_maps"></div>
                                                 </div>
+                                                <input id="gp_latlng" type="hidden" name="field_63dbd4bfcc721" value="<?php if ($groom_party_maps) echo $groom_party_maps; ?>">
                                                 <?php
                                                 wp_nonce_field('wedding', 'wedding_field');
                                                 ?>
@@ -399,7 +403,7 @@ $active_bride   = get_field('active_bride', $where_update);
                                 <section class="content_box">
                                     <span class="content_title">
                                         <h4>Địa điểm, thời gian tổ chức lễ vu quy</h4>
-                                        <span class="edit_section" data-form='#bride_wedding_form'>
+                                        <span class="edit_section" data-form='#bride_wedding_form' data-mapid='bw_googlemaps' data-latlng='bw_latlng'>
                                         <?php 
                                         if ($bride_wedding_adress) {
                                             echo '<i class="fa fa-pencil" aria-hidden="true"></i>';
@@ -457,9 +461,11 @@ $active_bride   = get_field('active_bride', $where_update);
                                                         <label for="">Thời gian (dương lịch)</label>
                                                     </div>
                                                     <div class="mui-textfield">
-                                                        <textarea name="field_63dbd5791d673"><?php if ($bride_wedding_maps) echo $bride_wedding_maps; ?></textarea>
+                                                        <!-- <textarea name="field_63dbd5791d673"><?php if ($bride_wedding_maps) echo $bride_wedding_maps; ?></textarea> -->
                                                         <label for="">Link google maps</label>
+                                                        <div id="bw_googlemaps" class="google_maps"></div>
                                                     </div>
+                                                    <input id="bw_latlng" type="hidden" name="field_63dbd5791d673" value="<?php if ($bride_wedding_maps) echo $bride_wedding_maps; ?>">
                                                     <?php
                                                     wp_nonce_field('wedding', 'wedding_field');
                                                     ?>
@@ -474,7 +480,7 @@ $active_bride   = get_field('active_bride', $where_update);
                                 <section class="content_box">
                                     <span class="content_title">
                                         <h4>Địa điểm, thời gian tổ chức tiệc cưới</h4>
-                                        <span class="edit_section" data-form='#bride_party_form'>
+                                        <span class="edit_section" data-form='#bride_party_form' data-mapid='bp_googlemaps' data-latlng='bp_latlng'>
                                         <?php 
                                         if ($groom_party_address) {
                                             echo '<i class="fa fa-pencil" aria-hidden="true"></i>';
@@ -526,9 +532,11 @@ $active_bride   = get_field('active_bride', $where_update);
                                                     <label for="">Thời gian (dương lịch)</label>
                                                 </div>
                                                 <div class="mui-textfield">
-                                                    <textarea name="field_63dbd5ab1d674"><?php if ($bride_party_maps) echo $bride_party_maps; ?></textarea>
+                                                    <!-- <textarea name="field_63dbd5ab1d674"><?php if ($bride_party_maps) echo $bride_party_maps; ?></textarea> -->
                                                     <label for="">Link google maps</label>
+                                                    <div id="bp_googlemaps" class="google_maps"></div>
                                                 </div>
+                                                <input id="bp_latlng" type="hidden" name="field_63dbd5ab1d674" value="<?php if ($bride_party_maps) echo $bride_party_maps; ?>">
                                                 <?php
                                                     wp_nonce_field('wedding', 'wedding_field');
                                                 ?>
@@ -551,6 +559,8 @@ $active_bride   = get_field('active_bride', $where_update);
         <div class="mui-col-md-2"></div>
     </div>
 </div>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBBOYfuTeNksEfdwSjr8eVKS5tkdkRjmZk&callback=initMap&libraries=places" type="text/javascript"></script>
+<script src="<?php echo get_template_directory_uri(); ?>/js/googlemaps.js"></script>
 <script src="<?php echo get_template_directory_uri(); ?>/js/wedding-infomation.js"></script>
 <?php
 get_footer();

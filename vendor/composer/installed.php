@@ -3,7 +3,7 @@
         'name' => 'namtran/hera',
         'pretty_version' => 'dev-develop',
         'version' => 'dev-develop',
-        'reference' => 'a69e42030ec984784fb9d0948a6881cb6f926ad3',
+        'reference' => '660a5d56c1f4f1529de3f0e32fe2664c4dcea705',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -58,7 +58,7 @@
         'namtran/hera' => array(
             'pretty_version' => 'dev-develop',
             'version' => 'dev-develop',
-            'reference' => 'a69e42030ec984784fb9d0948a6881cb6f926ad3',
+            'reference' => '660a5d56c1f4f1529de3f0e32fe2664c4dcea705',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

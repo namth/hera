@@ -1,8 +1,78 @@
+// var geocoder;
+// var map;
+
+// function initialize(element, address, input) {
+//     geocoder = new google.maps.Geocoder();
+//     var latlng = new google.maps.LatLng(48.291876, 16.339551);
+//     var mapOptions = {
+//         zoom: 16,
+//         center: latlng,
+//         mapTypeId: google.maps.MapTypeId.ROADMAP
+//     }
+//     map = new google.maps.Map(element, mapOptions);
+//     codeAddress(address);
+//     map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+//     var autocomplete = new google.maps.places.Autocomplete(input);
+//     autocomplete.bindTo("bounds", map);
+
+
+// }
+
+// function codeAddress(address) {
+//     var image = 'http://ratemycondo.ca/wp-content/uploads/icons/map-icon-orange-bldg.png';
+//     var infowindow = new google.maps.InfoWindow(); // create new infoWindow
+//     geocoder.geocode({
+//         'address': address
+//     }, function(results, status) {
+//     if (status == google.maps.GeocoderStatus.OK) {
+
+//         map.setCenter(results[0].geometry.location);
+//         var marker = new google.maps.Marker({
+//             map: map,
+//             icon: image,
+//             position: results[0].geometry.location
+//         });
+
+//         var url = map.getCenter().toUrlValue()
+//         console.log(url);
+//         infowindow.setContent(
+//             "<div>" +
+//                 "<b>Đám cưới:</b> " + results[0].formatted_address +
+//             "</div>"
+//         );
+//         infowindow.open(map, marker);
+//     } else {
+//         alert('Geocode was not successful for the following reason: ' + status);
+//     }
+//     });
+// }
+
+var latlngStr;
+
+function showLocation(position){
+    latlngStr = [
+        position.coords.latitude,
+        position.coords.longitude
+    ].join(',');
+}
+
 jQuery(document).ready(function ($) {
+    if(navigator.geolocation){
+        navigator.geolocation.getCurrentPosition(showLocation);
+    }else{ 
+        $('#location').html('Định vị không hỗ trợ cho trình duyệt này.');
+    }
+
     /* Bấm vào mỗi section thì sẽ hiện form tương ứng và ẩn các form khác đi */
     $('.edit_section').click(function(){
         var form = $(this).data('form');
+        var mapid = $(this).data('mapid');
+        var latlng = $(this).data('latlng');
         var parent = $(this).parents().eq(1);
+        var element = document.getElementById(mapid);
+        var address = "Ngõ 42 Phố Sài Đồng, Sài Đồng, Long Biên, Hà Nội";
+        var input = document.getElementById('pac-input');
+        var output = document.getElementById(latlng);
         // Ẩn tất cả các form hiện thời
         $('.has_data').show(200);
         $('.hide_form').hide(200);
@@ -15,11 +85,15 @@ jQuery(document).ready(function ($) {
         } else {
             // Nếu ấn vào nút chỉnh sửa
             // Ẩn dữ liệu cũ đi
-            $(this).parents().eq(1).find('.group_data .has_data').hide();
+            parent.find('.group_data .has_data').hide();
         }
         
+        if ($('#' + latlng).val()) {
+            latlngStr = $('#' + latlng).val();
+        }
         // Hiện form chỉnh sửa hoặc thêm mới.
         $(form).show(200);
+        initMap(element, address, input, output, latlngStr);
         return false;
     });
 
