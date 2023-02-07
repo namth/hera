@@ -18,7 +18,7 @@ if (is_user_logged_in()) {
     "></div>
     <div class="small_right mui-panel">
         <img src="<?php echo get_template_directory_uri(); ?>/img/logo_hera.png">
-        <form name="loginform" id="loginform" action="<?php echo get_bloginfo('url'); ?>/wp-login.php" method="post">
+        <form name="loginform" id="loginform" action="<?php echo get_bloginfo('url'); ?>/herasecurelogin" method="post">
             <p class="login-username">
                 <label for="user_login">Tên đăng nhập</label>
                 <input type="text" name="log" id="user_login" autocomplete="username" class="input" value="" size="20">
