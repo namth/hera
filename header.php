@@ -1,5 +1,5 @@
 <?php 
-header('Access-Control-Allow-Origin: https://design.hra.vn');
+header('Access-Control-Allow-Origin: *');
 ?>
 <!doctype html>
 <html lang="en">

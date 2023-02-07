@@ -2,6 +2,8 @@
 /* 
 * Template Name: View Card 
 */
+header('Access-Control-Allow-Origin: *');
+
 $user_login = get_query_var('myacc');
 $user = get_user_by('login', $user_login);
 $_group = get_query_var('group');
