@@ -7,6 +7,57 @@ if (is_user_logged_in()) {
     wp_redirect(get_bloginfo('url'));
     exit;
 } else {
+    // check form
+    if ($_SERVER['REQUEST_METHOD'] == 'POST' && 
+        isset( $_POST['post_nonce_field'] ) && 
+        wp_verify_nonce( $_POST['post_nonce_field'], 'post_nonce' ) ) {
+        
+        if (isset($_POST)) {
+            $error = false;
+            
+            if ( isset($_POST['username']) && ($_POST['username'] != "") ) {
+                $username = $_POST['username'];
+            } else {
+                $error = true;
+                $error_user = __('Mời bạn nhập User ID / Email.', 'qlcv');
+            }
+
+            if ( isset($_POST['password']) && ($_POST['password'] != "") ) {
+                $password = $_POST['password'];
+            } else {
+                $error = true;
+                $error_password = __('Mời bạn nhập mật khẩu.', 'qlcv');
+            }
+
+            if ( isset($_POST['remember']) && ($_POST['remember'] == "on") ) {
+                $remember = true;
+            } else {
+                $remember = false;
+            }
+
+        } else $error = true;
+        
+        if (!$error) {
+            // dùng wp_signon() để đăng nhập
+            $user = wp_signon( array(
+                'user_login'    => $_POST['username'],
+                'user_password' => $_POST['password'],
+                'remember'      => $remember,
+            ), false );
+
+            // print_r($user);
+
+            $userID = $user->ID;
+
+            wp_set_current_user( $userID, $username );
+            wp_set_auth_cookie( $userID, true, false );
+            do_action( 'wp_login', $username );
+            
+            // redirect sang trang chủ
+            wp_redirect( get_bloginfo('url') );
+            exit;
+        }
+    }
     get_header();
 
 ?>
@@ -18,16 +69,20 @@ if (is_user_logged_in()) {
     "></div>
     <div class="small_right mui-panel">
         <img src="<?php echo get_template_directory_uri(); ?>/img/logo_hera.png">
-        <form name="loginform" id="loginform" action="<?php echo get_bloginfo('url'); ?>/herasecurelogin" method="post">
+        <form name="loginform" id="loginform" action="" method="post">
             <p class="login-username">
                 <label for="user_login">Tên đăng nhập</label>
-                <input type="text" name="log" id="user_login" autocomplete="username" class="input" value="" size="20">
+                <input type="text" name="username" id="user_login" autocomplete="username" class="input" value="" size="20">
             </p>
             <p class="login-password">
                 <label for="user_pass">Mật khẩu</label>
-                <input type="password" name="pwd" id="user_pass" autocomplete="current-password" class="input" value="" size="20">
+                <input type="password" name="password" id="user_pass" autocomplete="current-password" class="input" value="" size="20">
             </p>
-            <p class="login-remember"><label><input name="rememberme" type="checkbox" id="rememberme" value="forever"> Tự động đăng nhập</label></p><p class="login-submit">
+            <?php 
+                wp_nonce_field( 'post_nonce', 'post_nonce_field' );
+            ?>
+            <p class="login-remember"><label>
+                <input name="remember" type="checkbox" id="rememberme" value="forever"> Tự động đăng nhập</label></p><p class="login-submit">
                 <input type="submit" name="wp-submit" id="wp-submit" class="button button-primary" value="Đăng nhập">
                 <input type="hidden" name="redirect_to" value="<?php echo get_bloginfo('url'); ?>">
             </p>
