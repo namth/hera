@@ -11,6 +11,7 @@ function activation_package($order_id){
         $payment_date = $activation_date->format('Ymd');
 
         # Cập nhật thông tin gói sản phẩm cho user
+        update_field('field_63731ae11ebcb', $package_id, 'user_' . $user_id);
         update_field('field_636e14f7cd13f', $total_card, 'user_' . $user_id);
         update_field('field_636e1565cd142', $category, 'user_' . $user_id);
         update_field('field_636e150bcd140', $activation_date->format('Ymd'), 'user_' . $user_id);
