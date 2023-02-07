@@ -2,6 +2,9 @@
 /* 
 * Template Name: View Card Demo
 */
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
+
 $_group         = get_query_var('group');
 $group          = inova_encrypt($_group, 'd');
 

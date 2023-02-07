@@ -3,6 +3,7 @@
 * Template Name: View Card 
 */
 header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
 
 $user_login = get_query_var('myacc');
 $user = get_user_by('login', $user_login);
