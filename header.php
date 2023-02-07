@@ -1,3 +1,6 @@
+<?php 
+header('Access-Control-Allow-Origin: https://design.hra.vn');
+?>
 <!doctype html>
 <html lang="en">
 

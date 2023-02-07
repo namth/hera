@@ -17,17 +17,17 @@ if (is_user_logged_in()) {
             
             if ( isset($_POST['username']) && ($_POST['username'] != "") ) {
                 $username = $_POST['username'];
-            } else {
-                $error = true;
-                $error_user = __('Mời bạn nhập User ID / Email.', 'qlcv');
-            }
 
-            if ( isset($_POST['password']) && ($_POST['password'] != "") ) {
-                $password = $_POST['password'];
+                if ( isset($_POST['password']) && ($_POST['password'] != "") ) {
+                    $password = $_POST['password'];
+                } else {
+                    $error = true;
+                    $error_message = __('Mời bạn nhập mật khẩu.', 'hera');
+                }
             } else {
                 $error = true;
-                $error_password = __('Mời bạn nhập mật khẩu.', 'qlcv');
-            }
+                $error_message = __('Mời bạn nhập User ID / Email.', 'hera');
+            }    
 
             if ( isset($_POST['remember']) && ($_POST['remember'] == "on") ) {
                 $remember = true;
@@ -70,6 +70,9 @@ if (is_user_logged_in()) {
     <div class="small_right mui-panel">
         <img src="<?php echo get_template_directory_uri(); ?>/img/logo_hera.png">
         <form name="loginform" id="loginform" action="" method="post">
+            <p class="error_message"><?php if ($error_message) {
+                echo $error_message;
+            } ?></p>
             <p class="login-username">
                 <label for="user_login">Tên đăng nhập</label>
                 <input type="text" name="username" id="user_login" autocomplete="username" class="input" value="" size="20">
