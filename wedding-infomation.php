@@ -29,8 +29,7 @@ $groom  = get_field('groom', $where_update);
 $bride  = get_field('bride', $where_update);
 $active_groom   = get_field('active_groom', $where_update);
 $active_bride   = get_field('active_bride', $where_update);
-
-
+$google_api     = get_field('google_maps_api_key', 'option');
 
 ?>
 <div class="mui-container-fluid">
@@ -559,7 +558,7 @@ $active_bride   = get_field('active_bride', $where_update);
         <div class="mui-col-md-2"></div>
     </div>
 </div>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBBOYfuTeNksEfdwSjr8eVKS5tkdkRjmZk&callback=initMap&libraries=places" type="text/javascript"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google_api; ?>&callback=initMap&libraries=places" type="text/javascript"></script>
 <script src="<?php echo get_template_directory_uri(); ?>/js/googlemaps.js"></script>
 <script src="<?php echo get_template_directory_uri(); ?>/js/wedding-infomation.js"></script>
 <?php

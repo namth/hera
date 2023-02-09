@@ -1949,6 +1949,23 @@ if( function_exists('acf_add_local_field_group') ):
                 'append' => '',
                 'maxlength' => '',
             ),
+            array(
+                'key' => 'field_63e5190bb1fba',
+                'label' => 'Google Maps API Key',
+                'name' => 'google_maps_api_key',
+                'type' => 'password',
+                'instructions' => '',
+                'required' => 0,
+                'conditional_logic' => 0,
+                'wrapper' => array(
+                    'width' => '',
+                    'class' => '',
+                    'id' => '',
+                ),
+                'placeholder' => '',
+                'prepend' => '',
+                'append' => '',
+            ),
         ),
         'location' => array(
             array(

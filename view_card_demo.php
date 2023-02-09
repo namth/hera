@@ -10,7 +10,7 @@ $html           = get_field('html', $group);
 $noi_dung_1     = get_field('content_1', $group)?get_field('content_1', $group):get_field('content_1', 'option');
 $noi_dung_2     = get_field('content_2', $group)?get_field('content_2', $group):get_field('content_2', 'option');
 $noi_dung_3     = get_field('content_3', $group)?get_field('content_3', $group):get_field('content_3', 'option');
-$loi_moi        = wpautop(get_field('wedding_invitation', 'option'));
+$loi_moi        = get_field('custom_invite', $group)?get_field('custom_invite', $group):get_field('wedding_invitation', 'option');
 
 $groom          = get_field('groom', 'option');
 $bride          = get_field('bride', 'option');
@@ -50,7 +50,7 @@ $data_replace = array(
     '{co_dau}'      => $bride,
     '{ngay_gio_cuoi_hoi}' => $wedding_time,
     '{dia_diem_to_chuc}'  => $wedding_adress,
-    '{loi_moi}'     => $loi_moi,
+    '{loi_moi}'     => wpautop($loi_moi),
     '{function_button}'   => $function_div,
     '{wp_header}'   => $wp_head,
     '{wp_footer}'   => $wp_footer,
