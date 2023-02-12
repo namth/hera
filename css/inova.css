@@ -2,35 +2,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Itim&display=swap");
 .blink_me {
-  -webkit-animation: blinker 4s cubic-bezier(0.77, 0, 0.18, 1) infinite;
-          animation: blinker 4s cubic-bezier(0.77, 0, 0.18, 1) infinite;
-}
-
-@-webkit-keyframes blinker {
-  0% {
-    color: #f7ad00;
-    text-shadow: 0px 0px 39px #f7ad00;
-  }
-  21% {
-    color: #ff08ad;
-    text-shadow: 0px 0px 39px #ff08ad;
-  }
-  42% {
-    color: #3742f5;
-    text-shadow: 0px 0px 39px #3742f5;
-  }
-  63% {
-    color: #adc600;
-    text-shadow: 0px 0px 39px #adc600;
-  }
-  84% {
-    color: #f7ad00;
-    text-shadow: 0px 0px 39px #f7ad00;
-  }
-  100% {
-    color: #f7ad00;
-    text-shadow: 0px 0px 39px #f7ad00;
-  }
+  animation: blinker 4s cubic-bezier(0.77, 0, 0.18, 1) infinite;
 }
 
 @keyframes blinker {
@@ -512,7 +484,7 @@ img {
 }
 .heracard_list .heracard .images {
   width: 100%;
-  padding-bottom: 75%;
+  padding-bottom: 65%;
 }
 .heracard_list .heracard .info_card {
   position: relative;
@@ -541,7 +513,6 @@ img {
 }
 .heracard_list .heracard .user_action a span {
   position: absolute;
-  width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
   right: 33px;

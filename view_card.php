@@ -24,13 +24,32 @@ $bride = get_field('bride', 'user_' . $user->ID);
 $category = get_the_category($group);
 $category_name = $category[0]->name;
 
-if ($category_name = "Nhà gái") {
+if ($category_name == "Nhà gái") {
     $wedding_adress = get_field('bride_wedding_adress', 'user_' . $user->ID);
-    $wedding_time = get_field('bride_wedding_time', 'user_' . $user->ID);
+    $wedding_time = explode(' ',get_field('bride_wedding_time', 'user_' . $user->ID));
+    $party_adress = get_field('bride_party_address', 'user_' . $user->ID);
+    $party_time = explode(' ',get_field('bride_party_time', 'user_' . $user->ID));
+    $google_maps_dam_cuoi = get_field('bride_wedding_maps', 'user_' . $user->ID);
+    $google_maps_an_co = get_field('bride_party_maps', 'user_' . $user->ID);
 } else {
     $wedding_adress = get_field('groom_wedding_adress', 'user_' . $user->ID);
-    $wedding_time = get_field('groom_wedding_time', 'user_' . $user->ID);
+    $wedding_time = explode(' ',get_field('groom_wedding_time', 'user_' . $user->ID));
+    $party_adress = get_field('groom_party_address', 'user_' . $user->ID);
+    $party_time = explode(' ',get_field('groom_party_time', 'user_' . $user->ID));
+    $google_maps_dam_cuoi = get_field('groom_wedding_maps', 'user_' . $user->ID);
+    $google_maps_an_co = get_field('groom_party_maps', 'user_' . $user->ID);
 }
+
+if ($google_maps_dam_cuoi) {
+    $button_maps_dam_cuoi = '<a href="https://www.google.com/maps/dir/?api=1&destination=' . $google_maps_dam_cuoi . '" class="googlemaps keychainify-checked" target="_blank">Chỉ đường</a>
+                            <a href="https://maps.google.com/?q=' . $google_maps_dam_cuoi . '" class="googlemaps" id="googlemaps" target="_blank">Xem đường đi</a>';
+}
+
+if ($google_maps_an_co) {
+    $button_maps_an_co = '<a href="https://www.google.com/maps/dir/?api=1&destination=' . $google_maps_an_co . '" class="googlemaps keychainify-checked" target="_blank">Chỉ đường</a>
+                            <a href="https://maps.google.com/?q=' . $google_maps_an_co . '" class="googlemaps" id="googlemaps" target="_blank">Xem đường đi</a>';
+}
+
 # Lấy các thông tin cần thiết để replace vào thiệp
 if (have_rows('guest_list', $group)) {
     while (have_rows('guest_list', $group)) {
@@ -88,19 +107,25 @@ $data_replace = array(
     '{noi_dung_1}'  => $noi_dung_1,
     '{noi_dung_2}'  => $noi_dung_2,
     '{noi_dung_3}'  => $noi_dung_3,
+    '{loi_moi}'     => wpautop($loi_moi),
     '{khach_moi}'   => $guests,
     '{chu_re}'      => $groom,
     '{co_dau}'      => $bride,
-    '{ngay_gio_cuoi_hoi}' => $wedding_time,
-    '{dia_diem_to_chuc}'  => $wedding_adress,
-    '{loi_moi}'     => wpautop($loi_moi),
-    '{function_button}'   => $function_div,
+    '{ngay_duong_lich_dam_cuoi}' => $wedding_time[0],
+    '{gio_dam_cuoi}' => $wedding_time[1],
+    '{dia_diem_dam_cuoi}'       => $wedding_adress,
+    '{google_maps_dam_cuoi}'    => $button_maps_dam_cuoi,
+    '{ngay_duong_lich_an_co}'   => $party_time[0],
+    '{gio_an_co}'   => $party_time[1],
+    '{dia_diem_an_co}'          => $party_adress,
+    '{google_maps_an_co}'       => $button_maps_an_co,
+    '{function_button}'         => $function_div,
     '{wp_header}'   => $wp_head,
     '{wp_footer}'   => $wp_footer,
     '{2}'           => strtolower($xung_ho[0]),
     '{1}'           => strtolower($xung_ho[1]),
+    '{ten}'         => $name,
 );
-
 if ($cardid) {
     
     $html = replace_content($data_replace, $html);

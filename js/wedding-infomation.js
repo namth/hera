@@ -57,20 +57,17 @@ function showLocation(position){
 }
 
 jQuery(document).ready(function ($) {
-    if(navigator.geolocation){
-        navigator.geolocation.getCurrentPosition(showLocation);
-    }else{ 
-        $('#location').html('Định vị không hỗ trợ cho trình duyệt này.');
-    }
-
     /* Bấm vào mỗi section thì sẽ hiện form tương ứng và ẩn các form khác đi */
     $('.edit_section').click(function(){
+        if(navigator.geolocation){
+            navigator.geolocation.getCurrentPosition(showLocation);
+        }
+    
         var form = $(this).data('form');
         var mapid = $(this).data('mapid');
         var latlng = $(this).data('latlng');
         var parent = $(this).parents().eq(1);
         var element = document.getElementById(mapid);
-        var address = "Ngõ 42 Phố Sài Đồng, Sài Đồng, Long Biên, Hà Nội";
         var input = document.getElementById('pac-input');
         var output = document.getElementById(latlng);
         // Ẩn tất cả các form hiện thời
@@ -93,7 +90,7 @@ jQuery(document).ready(function ($) {
         }
         // Hiện form chỉnh sửa hoặc thêm mới.
         $(form).show(200);
-        initMap(element, address, input, output, latlngStr);
+        initMap(element, input, output, latlngStr);
         return false;
     });
 

@@ -103,7 +103,7 @@ if( function_exists('acf_add_local_field_group') ):
             array(
                 'key' => 'field_63ca41f95285a',
                 'label' => 'Mẹ cô dâu',
-                'name' => 'bride_father',
+                'name' => 'bride_mother',
                 'type' => 'text',
                 'instructions' => '',
                 'required' => 0,
