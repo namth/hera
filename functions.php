@@ -391,12 +391,12 @@ function Generate_Featured_Image( $image_url, $userID  ){
 # Lưu lại số lần đăng nhập của user
 add_action( 'wp_login', 'track_user_logins', 10, 2 );
 function track_user_logins( $user ){
-    if( $login_amount = get_user_meta( $user->id, 'login_amount', true ) ){
+    if( $login_amount = get_user_meta( get_current_user_id(), 'login_amount', true ) ){
         // They've Logged In Before, increment existing total by 1
-        update_user_meta( $user->id, 'login_amount', ++$login_amount );
+        update_user_meta( get_current_user_id(), 'login_amount', ++$login_amount );
     } else {
         // First Login, set it to 1
-        update_user_meta( $user->id, 'login_amount', 1 );
+        update_user_meta( get_current_user_id(), 'login_amount', 1 );
     }
 }
 

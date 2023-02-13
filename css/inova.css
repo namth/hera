@@ -289,10 +289,13 @@ img {
   display: block;
 }
 .main_menu li.current-menu-item {
-  background: #e6e6e6;
+  background: #f2eae2;
+}
+.main_menu li.current-menu-item a {
+  color: #916d45;
 }
 .main_menu li:hover {
-  background: #f2eae2;
+  background: #f9f5f1;
 }
 
 #cart_bar {
