@@ -2,35 +2,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Itim&display=swap");
 .blink_me {
-  -webkit-animation: blinker 4s cubic-bezier(0.77, 0, 0.18, 1) infinite;
-          animation: blinker 4s cubic-bezier(0.77, 0, 0.18, 1) infinite;
-}
-
-@-webkit-keyframes blinker {
-  0% {
-    color: #f7ad00;
-    text-shadow: 0px 0px 39px #f7ad00;
-  }
-  21% {
-    color: #ff08ad;
-    text-shadow: 0px 0px 39px #ff08ad;
-  }
-  42% {
-    color: #3742f5;
-    text-shadow: 0px 0px 39px #3742f5;
-  }
-  63% {
-    color: #adc600;
-    text-shadow: 0px 0px 39px #adc600;
-  }
-  84% {
-    color: #f7ad00;
-    text-shadow: 0px 0px 39px #f7ad00;
-  }
-  100% {
-    color: #f7ad00;
-    text-shadow: 0px 0px 39px #f7ad00;
-  }
+  animation: blinker 4s cubic-bezier(0.77, 0, 0.18, 1) infinite;
 }
 
 @keyframes blinker {
@@ -71,7 +43,7 @@ a {
   color: #444444;
 }
 a:hover {
-  color: #f55a4e;
+  color: #916d45;
   text-decoration: none;
 }
 
@@ -120,12 +92,12 @@ img {
 .hera-btn {
   border-radius: 8px;
   box-shadow: 0 3px 2px lightgray;
-  background: #f55a4e;
+  background: #ce2323;
   color: white;
 }
 .hera-btn:hover {
   color: white;
-  background: #f55a4e;
+  background: #ff1212;
   opacity: 0.8;
 }
 
@@ -263,6 +235,7 @@ img {
   padding: 0px 15px;
   width: 100%;
   margin-bottom: 0;
+  border-bottom: 1px solid #f9f3ee;
 }
 #header_bar .logo {
   display: table-cell;
@@ -299,10 +272,9 @@ img {
 }
 
 #hera_sidebar {
-  background: whitesmoke;
+  background: white;
   border-right: 1px solid #bfbfbf;
   min-height: calc(100vh - 40px);
-  padding-top: 20px;
 }
 
 .main_menu {
@@ -317,10 +289,13 @@ img {
   display: block;
 }
 .main_menu li.current-menu-item {
-  background: #e6e6e6;
+  background: #f2eae2;
+}
+.main_menu li.current-menu-item a {
+  color: #916d45;
 }
 .main_menu li:hover {
-  background: #fff7de;
+  background: #f9f5f1;
 }
 
 #cart_bar {
@@ -366,7 +341,7 @@ img {
 }
 .breadcrumb .fa {
   font-size: small;
-  color: #f55a4e;
+  color: #916d45;
   padding: 10px;
 }
 .breadcrumb .loader {
@@ -419,11 +394,11 @@ img {
   border-bottom: 1px solid lightgray;
 }
 .mui-table tbody tr td a {
-  color: #f55a4e;
+  color: #916d45;
 }
 .mui-table tbody tr td .fa {
   font-size: large;
-  color: #f55a4e;
+  color: #916d45;
   padding: 3px 5px;
 }
 
@@ -512,7 +487,7 @@ img {
 }
 .heracard_list .heracard .images {
   width: 100%;
-  padding-bottom: 75%;
+  padding-bottom: 65%;
 }
 .heracard_list .heracard .info_card {
   position: relative;
@@ -541,7 +516,6 @@ img {
 }
 .heracard_list .heracard .user_action a span {
   position: absolute;
-  width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
   right: 33px;

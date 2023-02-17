@@ -2,7 +2,7 @@ var map, marker, infowindow;
 var markers = [];
 var address_infos = {};
 
-function initMap(element, address, input, output, latlng) {
+function initMap(element, input, output, latlng) {
     if (latlng) {
         var pos = latlng.split(',');
         console.log(pos);

@@ -1,33 +1,5 @@
 .blink_me {
-  -webkit-animation: blinker 4s cubic-bezier(0.77, 0, 0.18, 1) infinite;
-          animation: blinker 4s cubic-bezier(0.77, 0, 0.18, 1) infinite;
-}
-
-@-webkit-keyframes blinker {
-  0% {
-    color: #f7ad00;
-    text-shadow: 0px 0px 39px #f7ad00;
-  }
-  21% {
-    color: #ff08ad;
-    text-shadow: 0px 0px 39px #ff08ad;
-  }
-  42% {
-    color: #3742f5;
-    text-shadow: 0px 0px 39px #3742f5;
-  }
-  63% {
-    color: #adc600;
-    text-shadow: 0px 0px 39px #adc600;
-  }
-  84% {
-    color: #f7ad00;
-    text-shadow: 0px 0px 39px #f7ad00;
-  }
-  100% {
-    color: #f7ad00;
-    text-shadow: 0px 0px 39px #f7ad00;
-  }
+  animation: blinker 4s cubic-bezier(0.77, 0, 0.18, 1) infinite;
 }
 
 @keyframes blinker {

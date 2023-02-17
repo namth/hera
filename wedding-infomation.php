@@ -531,7 +531,6 @@ $google_api     = get_field('google_maps_api_key', 'option');
                                                     <label for="">Thời gian (dương lịch)</label>
                                                 </div>
                                                 <div class="mui-textfield">
-                                                    <!-- <textarea name="field_63dbd5ab1d674"><?php if ($bride_party_maps) echo $bride_party_maps; ?></textarea> -->
                                                     <label for="">Link google maps</label>
                                                     <div id="bp_googlemaps" class="google_maps"></div>
                                                 </div>
