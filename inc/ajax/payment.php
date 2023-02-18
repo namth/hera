@@ -85,6 +85,7 @@ function createInvoice() {
     $customer_phone = $output['customer_phone'];
     $customer_email = $output['customer_email'];
     $customer_address = $output['customer_address'];
+    $partner = $output['partner'];
     $current_user = wp_get_current_user();
     
     # Nếu có dữ liệu gói thì mới tạo hoá đơn
@@ -110,6 +111,9 @@ function createInvoice() {
         ));
     
         # Update dữ liệu vào hoá đơn mới tạo
+        if ($partner) {
+            update_field('field_63eb529586f37', $partner, $inserted);
+        }
         update_field('field_62e6ae7175ee5', $current_user->ID, $inserted); # customer
         update_field('field_62eb93b78ca79', 'Chưa thanh toán', $inserted); # status
         update_field('field_62e6ad5875ee1', $coupon->package_id, $inserted); # package

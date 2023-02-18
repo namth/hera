@@ -60,10 +60,11 @@ if ( isset( $_GET['p'] ) && ($_GET['p'] != "")) {
                         <div class="mui-col-md-3">
                             <h3>Gói sản phẩm đã chọn</h3>
                             <?php
+                                $partner = $_COOKIE['partner'];
                                 $price = get_field('price', $package_id);
 
                                 $thumbnail_url = get_the_post_thumbnail_url($package_id, 'thumbnail');
-                                
+
                                 # setup hash
                                 $hash = inova_encrypt(json_encode(array(
                                     'id'            => 0,
@@ -126,6 +127,7 @@ if ( isset( $_GET['p'] ) && ($_GET['p'] != "")) {
                                     wp_nonce_field('post_nonce', 'post_nonce_field');
                                 ?>
                                 <input type="hidden" name="coupon" value="<?php echo $hash; ?>">
+                                <input type="hidden" name="partner" value="<?php echo $partner; ?>">
                                 <button type="submit" class="mui-btn hera-btn fullwidth">Tiếp tục thanh toán</button>
                             </form>
                         </div>

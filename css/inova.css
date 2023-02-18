@@ -169,7 +169,7 @@ img {
 #login .small_right .social_login .social_btn a {
   display: block;
   text-align: center;
-  margin: 20px 0;
+  margin: 12px 0;
   padding: 2px 15px;
   background: white;
   border-radius: 8px;
@@ -582,18 +582,15 @@ img {
 
 #detail_card {
   position: absolute;
-  top: 20px;
   width: calc(100% - 200px);
-  min-height: calc(100vh - 40px);
   max-height: calc(100vh - 20px);
   overflow: scroll;
 }
 #detail_card #detail_card_popup .card_thumbnail {
-  padding: 20px;
+  padding: 0px;
   background: whitesmoke;
-  min-height: calc(100vh - 40px);
   display: flex;
-  align-items: center;
+  align-items: start;
   justify-content: center;
   height: 100%;
 }
@@ -1303,7 +1300,7 @@ img {
   z-index: 0;
 }
 .royal_line img {
-  height: 50px;
+  height: 33px;
   text-align: center;
   margin: 30px auto 10px;
   display: flex;
@@ -1584,6 +1581,9 @@ img {
   }
   #checkout #payment .mui-tabs__bar li a {
     font-size: 14px;
+  }
+  #detail_card {
+    width: 100%;
   }
 }
 @media screen and (max-width: 480px) {
