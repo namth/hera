@@ -73,6 +73,7 @@ if (
                         break;
                     }
                 }
+                reset_rows();
             }
         }
     }
@@ -155,18 +156,6 @@ if (have_posts()) {
                         </div>
 
                         <div class="mui-divider"></div>
-
-                        <!-- <h3 class="mb0">Lời mời</h3>
-                        <p>Lời mời riêng dành cho nhóm (nếu có). Thêm {1} và {2} vào vị trí bạn muốn thay đổi. <a href="#" class="mui--text-danger">Xem hướng dẫn chi tiết.</a></p>
-                        <form id="loi_moi" class="mui-form" method="POST">
-                            <div class="mui-textfield">
-                                <textarea placeholder="Ghi lời mời tại đây ... " name="loi_moi"></textarea>
-                            </div>
-
-                            <button type="submit" class="mui-btn hera-btn">Cập nhật</button>
-                        </form>
-
-                        <div class="mui-divider"></div> -->
 
                         <h3 class="mb10">Danh sách khách</h3>
                         <div class="mui-row">

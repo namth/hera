@@ -93,16 +93,8 @@ $wp_head    = echo_to_string('wp_head');
 $data_input =  '<input type="hidden" name="group" value="' . $_group . '">
                 <input type="hidden" name="invitee" value="' . $_invitee . '">';
 $wp_footer  = $data_input . echo_to_string('wp_footer');
-/* $loi_moi = replace_content([
-    '{2}'           => strtolower($xung_ho[0]),
-    '{1}'           => strtolower($xung_ho[1]),
-], $loi_moi);
 
-$noi_dung_2 = replace_content([
-    '{2}'           => strtolower($xung_ho[0]),
-    '{1}'           => strtolower($xung_ho[1]),
-], $noi_dung_2);
- */
+# dữ liệu tuỳ chỉnh
 $data_replace = array(
     '{noi_dung_1}'  => $noi_dung_1,
     '{noi_dung_2}'  => $noi_dung_2,
