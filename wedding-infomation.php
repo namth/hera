@@ -208,7 +208,7 @@ $google_api     = get_field('google_maps_api_key', 'option');
                                             echo '</div>';
                                         } else {
                                         ?>
-                                            <div class="no_data edit_section data_item" data-form='#groom_wedding_form'>
+                                            <div class="no_data edit_section data_item" data-form='#groom_wedding_form' data-mapid="gw_googlemaps" data-latlng='gw_latlng'>
                                                 <a class="section_name" href="#">
                                                     <i class="fa fa-plus" aria-hidden="true"></i>
                                                     <span>Địa điểm tổ chức hôn lễ tại nhà trai</span>
@@ -279,7 +279,7 @@ $google_api     = get_field('google_maps_api_key', 'option');
                                             echo '</div>';
                                         } else {
                                         ?>
-                                            <div class="no_data edit_section data_item" data-form='#groom_party_form'>
+                                            <div class="no_data edit_section data_item" data-form='#groom_party_form' data-mapid='gp_googlemaps' data-latlng='gp_latlng'>
                                                 <a class="section_name" href="#">
                                                     <i class="fa fa-plus" aria-hidden="true"></i>
                                                     <span>Địa điểm dự tiệc của nhà trai</span>
@@ -439,7 +439,7 @@ $google_api     = get_field('google_maps_api_key', 'option');
                                             echo '</div>';
                                         } else {
                                         ?>
-                                            <div class="no_data edit_section data_item" data-form='#bride_wedding_form'>
+                                            <div class="no_data edit_section data_item" data-form='#bride_wedding_form' data-mapid='bw_googlemaps' data-latlng='bw_latlng'>
                                                 <a class="section_name" href="#">
                                                     <i class="fa fa-plus" aria-hidden="true"></i>
                                                     <span>Thêm địa điểm tổ chức lễ vu quy tại nhà gái...</span>
@@ -510,7 +510,7 @@ $google_api     = get_field('google_maps_api_key', 'option');
                                             echo '</div>';
                                         } else {
                                         ?>
-                                            <div class="no_data edit_section data_item" data-form='#bride_party_form'>
+                                            <div class="no_data edit_section data_item" data-form='#bride_party_form' data-mapid='bp_googlemaps' data-latlng='bp_latlng'>
                                                 <a class="section_name" href="#">
                                                     <i class="fa fa-plus" aria-hidden="true"></i>
                                                     <span>Địa điểm dự tiệc của nhà gái</span>
@@ -557,7 +557,21 @@ $google_api     = get_field('google_maps_api_key', 'option');
         <div class="mui-col-md-2"></div>
     </div>
 </div>
-<script src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google_api; ?>&callback=initMap&libraries=places" type="text/javascript"></script>
+<script>
+    let latlngStr;
+
+    function initGeocode() {
+        navigator.geolocation.getCurrentPosition(showLocation);
+    }
+
+    function showLocation(position){
+        latlngStr = [
+            position.coords.latitude,
+            position.coords.longitude
+        ].join(',');
+    }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google_api; ?>&callback=initGeocode&libraries=places" type="text/javascript"></script>
 <script src="<?php echo get_template_directory_uri(); ?>/js/googlemaps.js"></script>
 <script src="<?php echo get_template_directory_uri(); ?>/js/wedding-infomation.js"></script>
 <?php

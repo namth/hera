@@ -47,21 +47,12 @@
 //     });
 // }
 
-var latlngStr;
-
-function showLocation(position){
-    latlngStr = [
-        position.coords.latitude,
-        position.coords.longitude
-    ].join(',');
-}
-
 jQuery(document).ready(function ($) {
     /* Bấm vào mỗi section thì sẽ hiện form tương ứng và ẩn các form khác đi */
     $('.edit_section').click(function(){
-        if(navigator.geolocation){
+        /* if(navigator.geolocation){
             navigator.geolocation.getCurrentPosition(showLocation);
-        }
+        } */
     
         var form = $(this).data('form');
         var mapid = $(this).data('mapid');
