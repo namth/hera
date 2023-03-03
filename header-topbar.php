@@ -2,7 +2,7 @@
 if (is_user_logged_in()) {
     $user = wp_get_current_user();
 
-    $login_amount = get_user_meta($user->ID, 'login_amount', true);
+    // $login_amount = get_user_meta($user->ID, 'login_amount', true);
 
     $link_avatar = get_avatar_url($user->ID);
 ?>
@@ -13,7 +13,7 @@ if (is_user_logged_in()) {
             </a>
         </div>
         <div class="mui-dropdown greeting">
-            <span>Xin chào, <b><?php echo $user->data->display_name . " (" . $login_amount . ")"; ?></b></span>
+            <span>Xin chào, <b><?php echo $user->data->display_name; ?></b></span>
             <img src="<?php echo $link_avatar; ?>" alt="" data-mui-toggle="dropdown">
             <ul class="mui-dropdown__menu">
                 <?php 
