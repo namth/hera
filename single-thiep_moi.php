@@ -4,6 +4,14 @@ $current_user = wp_get_current_user();
 $used_cards = get_field('used_cards', 'user_' . $current_user->ID);
 $package_id = get_field('package_id', 'user_' . $current_user->ID);
 
+# Kiểm tra xem user hiện tại có đủ thẩm quyền để xem trang này hay không
+$author_id = get_post_field( 'post_author' );
+if (($current_user->ID != $author_id) && !current_user_can( 'manage_options' )) {
+    # Nếu user hiện tại không phải tác giả và cũng không phải là admin thì sẽ chuyển về trang chủ 
+    wp_redirect( get_bloginfo('url') );
+    exit;
+}
+
 /* 
 Kiểm tra xem có sử dụng package nào không
 Nếu không thì sẽ hạn chế các trường "copy link", check đã mời, nút xem thiệp
@@ -58,13 +66,18 @@ if (
                     $sent       = get_sub_field('sent');
                     $joined     = get_sub_field('joined');
                     $row        = get_row_index();
+                    if ($vai_ve && $xung_ho) {
+                        $xungho = $vai_ve . "/" . $xung_ho;
+                    } else {
+                        $xungho = $xung_ho?$xung_ho:$vai_ve;
+                    }
                     
                     if ($row == $guestid) {
                         $row_update = array(
                             'name'          => $guest_name,
                             'guest_attach'  => $guest_attach,
-                            'xung_ho'       => $vai_ve . "/" . $xung_ho,
-                            'phone'         => $sdt,
+                            'xung_ho'       => $xungho,
+                            'phone'         => validate_phonenumber($sdt),
                             'sent'          => $sent,
                             'joined'        => $joined,
                         );

@@ -151,10 +151,12 @@ function addCardToCustomerGroup(){
                         $content_1 = $mycard->content1 ? $mycard->content1 : get_field('content_1', 'option');
                         $content_2 = $mycard->content2 ? $mycard->content2 : get_field('content_2', 'option');
                         $content_3 = $mycard->content3 ? $mycard->content3 : get_field('content_3', 'option');
+                        $loi_moi   = $mycard->content4 ? $mycard->content4 : get_field('wedding_invitation', 'option');
 
                         update_field('field_63ceb66556861', $content_1);
                         update_field('field_63ceb69856862', $content_2);
                         update_field('field_63ceb6e956863', $content_3);
+                        update_field('field_63ca81d252862', $loi_moi);
                     }
 
                     $updated = true;
@@ -208,10 +210,12 @@ function addCardToSelectedGroup(){
             $content_1 = $mycard->content1 ? $mycard->content1 : get_field('content_1', 'option');
             $content_2 = $mycard->content2 ? $mycard->content2 : get_field('content_2', 'option');
             $content_3 = $mycard->content3 ? $mycard->content3 : get_field('content_3', 'option');
+            $loi_moi   = $mycard->content4 ? $mycard->content4 : get_field('wedding_invitation', 'option');
 
             update_field('field_63ceb66556861', $content_1, $groupid);
             update_field('field_63ceb69856862', $content_2, $groupid);
             update_field('field_63ceb6e956863', $content_3, $groupid);
+            update_field('field_63ca81d252862', $loi_moi, $groupid);
         }
     }
     echo get_permalink($groupid);

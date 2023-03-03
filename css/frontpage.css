@@ -1,0 +1,101 @@
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap");
+@font-face {
+  font-family: "Aphrodite";
+  src: url("../fonts/aphrodite.ttf") format("truetype");
+}
+#header_topbar {
+  background: #b89062;
+}
+#header_topbar ul {
+  display: flex;
+  list-style: none;
+  justify-content: right;
+  padding: 0;
+  margin: 0;
+}
+#header_topbar ul li a {
+  display: block;
+  padding: 10px;
+  color: #ffecd6;
+  font-size: 0.9em;
+}
+
+#header {
+  background: #fef8f4;
+  margin: 0;
+}
+#header #center_logo {
+  display: flex;
+  justify-content: center;
+}
+#header #center_logo a img {
+  width: 105px;
+}
+#header #header_bottom ul {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  margin-bottom: 0;
+}
+#header #header_bottom ul li {
+  list-style: none;
+}
+#header #header_bottom ul li a {
+  padding: 10px 20px;
+  text-transform: uppercase;
+  color: #9e7c55;
+}
+
+#content {
+  background: #fef8f4;
+  color: #8f7250;
+  font-size: 16px;
+}
+#content h1 {
+  font-family: "Dancing Script";
+  font-size: 48px;
+  line-height: 48px;
+  color: #1a5675;
+}
+#content h2 {
+  font-family: "Dancing Script";
+  font-size: 36px;
+  line-height: 36px;
+  color: #1a5675;
+}
+#content #section1 {
+  display: flex;
+  padding: 20px 0;
+}
+#content #section1 .left_content {
+  padding-left: 5%;
+  width: 42%;
+}
+#content #section2 {
+  padding: 20px;
+}
+#content #section2 .center_title {
+  display: block;
+  text-align: center;
+}
+#content #section2 .listbox {
+  display: flex;
+}
+#content #section2 .listbox .iconbox {
+  text-align: center;
+  padding: 20px;
+  width: 25%;
+}
+#content #section2 .listbox .iconbox .icon img {
+  margin: 0 auto;
+  height: 70px;
+}
+#content #section3 .center_title {
+  display: block;
+  text-align: center;
+  margin-bottom: 60px;
+}
+#content #section3 .center_title img {
+  margin: 0 auto;
+}/*# sourceMappingURL=frontpage.css.map */

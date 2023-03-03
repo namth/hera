@@ -97,7 +97,9 @@ if (isset($_POST['post_upload_field']) && wp_verify_nonce($_POST['post_upload_fi
                         }
                         
                         # Tìm kiếm phone của khách xem đã có hay chưa
-                        $row = array_search($phone, $guest_array);
+                        if ($phone) {
+                            $row = array_search($phone, $guest_array);
+                        } else $row = 0;
         
                         # Nếu có thì update, không có thì thêm row mới
                         if ($row) {
