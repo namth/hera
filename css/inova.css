@@ -89,6 +89,7 @@
   font-family: "Dancing Script";
   font-size: 48px;
   line-height: 48px;
+  color: #1a5675;
 }
 #content h2 {
   font-family: "Dancing Script";
@@ -98,8 +99,6 @@
 }
 #content #section1 {
   display: flex;
-  justify-content: left;
-  align-items: center;
   padding: 20px 0;
 }
 #content #section1 .left_content {
@@ -468,6 +467,14 @@ img {
 
 .title_general {
   margin: 15px 0 20px;
+}
+
+.statistic h4 {
+  margin-top: 0;
+  font-weight: bold;
+}
+.statistic span {
+  display: block;
 }
 
 #loi_moi .mui-textfield {
@@ -1651,19 +1658,6 @@ img {
 }
 
 @media screen and (max-width: 1024px) {
-  #login .large_left {
-    display: block;
-    width: 50%;
-  }
-  #login .small_right {
-    display: block;
-    width: 50%;
-  }
-  #login .small_right #loginform {
-    padding: 0 7%;
-  }
-}
-@media screen and (max-width: 768px) {
   #login {
     display: block;
   }
@@ -1676,6 +1670,8 @@ img {
     width: 100%;
     align-items: center;
   }
+}
+@media screen and (max-width: 768px) {
   #hera_sidebar {
     display: none;
   }

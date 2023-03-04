@@ -136,6 +136,27 @@ if (have_posts()) {
         $link_select_card = get_bloginfo('url') . '/danh-sach-mau/?g=' . $data_token;
         $link_upload = get_bloginfo('url') . '/tai-khach-hang-qua-file-excel/?g=' . $data_token;
         $link_edit_content = get_bloginfo('url') . '/edit-content/?g=' . $data_token;
+
+        $guest_data = [];
+        if (have_rows('guest_list')) {
+            while (have_rows('guest_list')) {
+                the_row();
+
+                $guest_data['total']++;
+                $guest_data['sent'] += get_sub_field('sent')?1:0;
+                $joined = get_sub_field('joined');
+                $name = get_sub_field('name');
+                $guest_attach = get_sub_field('guest_attach');
+                $row_index = get_row_index();
+
+                if ($joined=="Y") {
+                    $guest_data['joined']++;
+                } else if ($joined == "N") $guest_data['decline']++; 
+                else $guest_data['notanswer']++;
+            }
+            reset_rows();
+        }
+        // print_r($guest_data);
 ?>
         <div class="mui-container-fluid">
             <div class="mui-row">
@@ -161,10 +182,17 @@ if (have_posts()) {
                                     </div>
                                 </div>
                             </div>
-                            <div class="mui-col-md-9">
+                            <div class="mui-col-md-4">
                                 <a href="<?php echo $link_select_card; ?>" class="mui-btn hera-btn">Chọn thiệp</a><br>
                                 <a href="<?php echo $link_view_demo; ?>" target="_blank" class="mui-btn hera-btn">Xem mẫu</a><br>
                                 <a href="<?php echo $link_edit_content; ?>" class="mui-btn hera-btn">Sửa nội dung thiệp</a>
+                            </div>
+                            <div class="mui-col-md-5 statistic">
+                                <h4>Thống kê</h4>
+                                <p>Tổng số người trong nhóm này: <b><?php echo $guest_data['total']; ?></b></p>
+                                <span><b><?php echo $guest_data['joined']; ?></b> người tham dự được</span>
+                                <span><b><?php echo $guest_data['decline']; ?></b> người không tham dự được</span>
+                                <span><b><?php echo $guest_data['notanswer']; ?></b> người chưa trả lời</span>
                             </div>
                         </div>
 
