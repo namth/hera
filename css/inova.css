@@ -112,13 +112,9 @@
   display: block;
   text-align: center;
 }
-#content #section2 .listbox {
-  display: flex;
-}
 #content #section2 .listbox .iconbox {
   text-align: center;
   padding: 20px;
-  width: 25%;
 }
 #content #section2 .listbox .iconbox .icon img {
   margin: 0 auto;
@@ -230,9 +226,6 @@ img {
 #login {
   max-width: 100%;
   background-color: #eeeeee;
-  align-items: center;
-  justify-content: center;
-  display: flex;
 }
 #login .large_left {
   width: 66%;
@@ -1658,6 +1651,19 @@ img {
 }
 
 @media screen and (max-width: 1024px) {
+  #login .large_left {
+    display: block;
+    width: 50%;
+  }
+  #login .small_right {
+    display: block;
+    width: 50%;
+  }
+  #login .small_right #loginform {
+    padding: 0 7%;
+  }
+}
+@media screen and (max-width: 768px) and (orientation: portrait) {
   #login {
     display: block;
   }
@@ -1670,8 +1676,6 @@ img {
     width: 100%;
     align-items: center;
   }
-}
-@media screen and (max-width: 768px) {
   #hera_sidebar {
     display: none;
   }

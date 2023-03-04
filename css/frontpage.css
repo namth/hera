@@ -79,13 +79,9 @@
   display: block;
   text-align: center;
 }
-#content #section2 .listbox {
-  display: flex;
-}
 #content #section2 .listbox .iconbox {
   text-align: center;
   padding: 20px;
-  width: 25%;
 }
 #content #section2 .listbox .iconbox .icon img {
   margin: 0 auto;

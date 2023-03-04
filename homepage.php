@@ -48,7 +48,7 @@ if (have_posts()) {
         </div>
         <div id="section3" class="mui-col-md-10 mui-col-md-offset-1">
             <div class="center_title">
-                <img src="https://alis.vamtam.com/wp-content/uploads/2017/11/Rose-logo.svg" alt="">
+                <img src="<?php echo get_template_directory_uri(); ?>/img/Rose-logo.svg" alt="">
                 <h2>Thay đổi hoàn toàn phương thức mời cưới cũ</h2>
                 <p>Loại bỏ những bất cập hiện có từ phương thức mời cưới cũ</p>
             </div>
@@ -68,34 +68,35 @@ if (have_posts()) {
         </div>
         <div id="section2" class="mui-col-md-10 mui-col-md-offset-1">
             <div class="center_title">
-                <h2>Thay đổi hoàn toàn phương thức mời cưới cũ</h2>
-                <p>Loại bỏ những bất cập hiện có từ phương thức mời cưới cũ</p>
+                <h2>Giải pháp công nghệ áp dụng vào thiệp cưới thông minh</h2>
+                <p>Thay thế phương thức mời cưới cũ, giải quyết hoàn hảo những vấn đề của việc gửi thiệp cứng, 
+                    <br>trải nghiệm những lợi ích bất ngờ từ việc ứng dụng công nghệ vào thiệp cưới</p>
             </div>
-            <div class="listbox">
-                <div class="iconbox">
+            <div class="listbox mui-row">
+                <div class="iconbox mui-col-md-6 mui-col-lg-3">
                     <div class="icon">
-                        <img src="https://alis.vamtam.com/wp-content/uploads/2017/11/flower.svg" alt="">
+                        <img src="<?php echo get_template_directory_uri(); ?>/img/flower.svg" alt="">
                     </div>
-                    <h3>Khách mời không tìm được đường đi</h3>
+                    <h3>Tích hợp google maps vào thiệp cưới</h3>
                     <p>Chắc bạn cũng đã từng loay hoay tìm đường đến địa điểm đám cưới? Nếu vị trí ở xa trung tâm thì việc tìm kiếm cũng khó khăn.</p>
                 </div>
-                <div class="iconbox">
+                <div class="iconbox mui-col-md-6 mui-col-lg-3">
                     <div class="icon">
-                        <img src="https://alis.vamtam.com/wp-content/uploads/2017/11/Rose-logo-2.svg" alt="">
+                        <img src="<?php echo get_template_directory_uri(); ?>/img/Rose-logo-2.svg" alt="">
                     </div>
-                    <h3>Không biết bạn có đi được hay không</h3>
+                    <h3>Biết được bạn có thể tham gia được hay không</h3>
                     <p>Khi bạn mời khách, bạn không biết được họ có tham dự được hay không, dẫn tới việc khó khăn trong việc chuẩn bị cỗ</p>
                 </div>
-                <div class="iconbox">
+                <div class="iconbox mui-col-md-6 mui-col-lg-3">
                     <div class="icon">
-                        <img src="https://alis.vamtam.com/wp-content/uploads/2017/11/flower-4.svg" alt="">
+                        <img src="<?php echo get_template_directory_uri(); ?>/img/flower-4.svg" alt="">
                     </div>
-                    <h3>Chỉ có thể làm 1 mẫu thiệp duy nhất</h3>
+                    <h3>Sử dụng không giới hạn mẫu thiệp</h3>
                     <p>Bạn phải dùng chung một mẫu thiệp để mời toàn bộ khách mời của bố mẹ bạn và của bạn, thậm chí nhà trai và nhà gái phải thống nhất in chung thiệp</p>
                 </div>
-                <div class="iconbox">
+                <div class="iconbox mui-col-md-6 mui-col-lg-3">
                     <div class="icon">
-                        <img src="https://alis.vamtam.com/wp-content/uploads/2017/11/Rose-logo.svg" alt="">
+                        <img src="<?php echo get_template_directory_uri(); ?>/img/Rose-logo.svg" alt="">
                     </div>
                     <h3>Khó khăn trong việc gửi tiền mừng</h3>
                     <p>Nếu khách mời không tham dự được, sẽ muốn hỏi bạn tài khoản ngân hàng để mừng. Không gửi thì khách không thể mừng cưới bạn, nhưng nếu gửi thì vừa ngại vừa mất thời gian</p>

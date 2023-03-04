@@ -46,7 +46,19 @@ $XL: 1170px
                                 font-size: 12px
 
     @else if $canvas == SM
-        @media screen and (max-width: $SM)
+        @media screen and (max-width: $SM) and (orientation: portrait)
+            #login
+                display: block
+
+                .large_left
+                    display: none
+                    width: 100%
+
+                .small_right
+                    display: grid
+                    width: 100%
+                    align-items: center
+
             #hera_sidebar
                 display: none
 
@@ -66,16 +78,16 @@ $XL: 1170px
     @else if $canvas == MD
         @media screen and (max-width: $MD)
             #login
-                display: block
-
                 .large_left
-                    display: none
-                    width: 100%
+                    display: block
+                    width: 50%
 
                 .small_right
-                    display: grid
-                    width: 100%
-                    align-items: center
+                    display: block
+                    width: 50%
+
+                    #loginform
+                        padding: 0 7%
 
     @else if $canvas == XL
         @media screen and (min-width: $MD)
