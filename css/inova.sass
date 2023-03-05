@@ -91,6 +91,9 @@ img
 #login
     max-width: 100%
     background-color: $lightsmokeColor
+    align-items: center
+    justify-content: center
+    display: flex
 
     .large_left
         width: 66%
@@ -142,6 +145,125 @@ img
 
                     img
                         display: inline-block
+                        width: 27px
+
+                    span
+                        display: inline-block
+                        line-height: 36px
+                        vertical-align: text-bottom
+                        padding-left: 10px
+                        color: #4d4d4d
+                        font-size: 16px
+
+        .hera_register
+            text-align: left
+
+            label
+                display: block
+                margin-bottom: 5px
+
+            .input
+                width: 100%
+                line-height: 35px
+                padding: 0 12px
+                border-radius: 8px
+                border: 1px solid darkgray
+                background: #f4f4f4
+
+            #wp-submit
+                width: 100%
+                margin-top: 8px
+                line-height: 39px
+                text-transform: uppercase
+                border-radius: 8px
+                border: none
+                background: #b89062
+                color: white
+                font-size: 16px
+
+        .hera_register
+            display: none
+
+        .signup
+            margin-top: 25px
+            text-align: center
+
+            a
+                font-weight: bold
+                color: dodgerblue
+
+#newlogin
+    background: url(https://source.unsplash.com/1920x2400?hdr,sunset,ocean)
+    background-size: cover
+    background-repeat: no-repeat
+    height: 100vh
+
+    img
+        margin: 0 auto
+        width: 150px
+
+    form
+        width: 400px
+        height: auto
+        max-height: 100vh
+        background-color: rgba(255, 255, 255, 0.03)
+        position: absolute
+        transform: translate(-50%, -50%)
+        top: 50%
+        left: 50%
+        border-radius: 10px
+        backdrop-filter: blur(15px)
+        border: 2px solid rgba(255, 255, 255, 0.1)
+        box-shadow: 0 0 40px rgba(8, 7, 16, 0.6)
+        padding: 50px 35px
+
+        *
+            font-family: "Poppins", sans-serif
+            color: #ffffff
+            outline: none
+            border: none
+
+        h3
+            font-size: 40px
+            font-weight: 700
+            line-height: 42px
+            text-align: center
+
+        .register_greeting
+            margin: 0 15%
+            text-align: center
+
+            h3
+                font-weight: bold
+                color: #b89062
+
+            .link
+                color: #bd4a41
+                &:hover
+                    text-decoration: underline
+
+        .social_login
+            margin-top: 30px
+
+            .social_btn
+                a
+                    display: flex
+                    justify-content: center
+                    margin: 12px 0
+                    padding: 2px 15px
+                    background: white
+                    border-radius: 8px
+                    box-shadow: 0px 2px 5px #e3e3e3
+                    align-items: center
+
+                    &:hover
+                        color: initial
+                        background: #fbfbfb
+                        box-shadow: 0px 2px 5px #c1c1c1
+
+                    img
+                        display: inline-block
+                        margin: initial
                         width: 27px
 
                     span

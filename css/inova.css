@@ -226,6 +226,9 @@ img {
 #login {
   max-width: 100%;
   background-color: #eeeeee;
+  align-items: center;
+  justify-content: center;
+  display: flex;
 }
 #login .large_left {
   width: 66%;
@@ -321,6 +324,127 @@ img {
   text-align: center;
 }
 #login .small_right .signup a {
+  font-weight: bold;
+  color: dodgerblue;
+}
+
+#newlogin {
+  background: url(https://source.unsplash.com/1920x2400?hdr,sunset,ocean);
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100vh;
+}
+#newlogin img {
+  margin: 0 auto;
+  width: 150px;
+}
+#newlogin form {
+  width: 400px;
+  height: auto;
+  max-height: 100vh;
+  background-color: rgba(255, 255, 255, 0.03);
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  border-radius: 10px;
+  -webkit-backdrop-filter: blur(15px);
+          backdrop-filter: blur(15px);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
+  padding: 50px 35px;
+}
+#newlogin form * {
+  font-family: "Poppins", sans-serif;
+  color: #ffffff;
+  outline: none;
+  border: none;
+}
+#newlogin form h3 {
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 42px;
+  text-align: center;
+}
+#newlogin form .register_greeting {
+  margin: 0 15%;
+  text-align: center;
+}
+#newlogin form .register_greeting h3 {
+  font-weight: bold;
+  color: #b89062;
+}
+#newlogin form .register_greeting .link {
+  color: #bd4a41;
+}
+#newlogin form .register_greeting .link:hover {
+  text-decoration: underline;
+}
+#newlogin form .social_login {
+  margin-top: 30px;
+}
+#newlogin form .social_login .social_btn a {
+  display: flex;
+  justify-content: center;
+  margin: 12px 0;
+  padding: 2px 15px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0px 2px 5px #e3e3e3;
+  align-items: center;
+}
+#newlogin form .social_login .social_btn a:hover {
+  color: initial;
+  background: #fbfbfb;
+  box-shadow: 0px 2px 5px #c1c1c1;
+}
+#newlogin form .social_login .social_btn a img {
+  display: inline-block;
+  margin: initial;
+  width: 27px;
+}
+#newlogin form .social_login .social_btn a span {
+  display: inline-block;
+  line-height: 36px;
+  vertical-align: text-bottom;
+  padding-left: 10px;
+  color: #4d4d4d;
+  font-size: 16px;
+}
+#newlogin form .hera_register {
+  text-align: left;
+}
+#newlogin form .hera_register label {
+  display: block;
+  margin-bottom: 5px;
+}
+#newlogin form .hera_register .input {
+  width: 100%;
+  line-height: 35px;
+  padding: 0 12px;
+  border-radius: 8px;
+  border: 1px solid darkgray;
+  background: #f4f4f4;
+}
+#newlogin form .hera_register #wp-submit {
+  width: 100%;
+  margin-top: 8px;
+  line-height: 39px;
+  text-transform: uppercase;
+  border-radius: 8px;
+  border: none;
+  background: #b89062;
+  color: white;
+  font-size: 16px;
+}
+#newlogin form .hera_register {
+  display: none;
+}
+#newlogin form .signup {
+  margin-top: 25px;
+  text-align: center;
+}
+#newlogin form .signup a {
   font-weight: bold;
   color: dodgerblue;
 }
