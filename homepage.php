@@ -60,7 +60,7 @@ if (have_posts()) {
                     <p class="description">Bạn bận rộn, mời cưới bạn qua điện thoại và chụp ảnh thiệp cứng và gửi qua zalo cho bạn</p>
                     <ul>
                         <li>
-                            <a href=""></a>
+                            
                         </li>
                     </ul>
                 </div>
