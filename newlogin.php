@@ -2,11 +2,11 @@
 /* 
     Template Name: New Login
 */
-/* if (is_user_logged_in()) {
+if (is_user_logged_in()) {
     // redirect sang trang chủ
     wp_redirect(get_bloginfo('url'));
     exit;
-} else { */
+} else {
     // check form
     if ($_SERVER['REQUEST_METHOD'] == 'POST' && 
         isset( $_POST['post_nonce_field'] ) && 
@@ -124,4 +124,4 @@
 
 </html>
 <?php
-// }
+}

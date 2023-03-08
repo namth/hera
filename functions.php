@@ -64,8 +64,8 @@ function inovacards_load_scripts()
         ));
     } else {
         /* Css */
+        // wp_enqueue_style('boostrap', 'https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css');
         wp_enqueue_style('mui', get_template_directory_uri() . '/css/mui.min.css');
-        wp_enqueue_style('boostrap', 'https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css');
         wp_enqueue_style('main-style', get_template_directory_uri() . '/style.css');
         wp_enqueue_style('font-awesome', get_template_directory_uri() . '/css/font-awesome.css');
         wp_enqueue_style('slidecaptcha', get_template_directory_uri() . '/js/slidecaptcha/slidercaptcha.min.css');
