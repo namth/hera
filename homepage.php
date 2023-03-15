@@ -2,6 +2,10 @@
 /* 
 * Template Name: Home
 */
+
+/* count user */
+$number_of_user = count_users();
+
 get_header();
 if (have_posts()) {
     while (have_posts()) {
@@ -33,8 +37,8 @@ if (have_posts()) {
 </div>
 <div id="content" class="mui-row">
     <div class="mui-col-md-12">
-        <div id="section1">
-            <div class="left_content">
+        <div id="section1" class="mui-col-md-10 mui-col-md-offset-1">
+            <div class="mui-col-md-5">
                 <div>
                     <h1>Thiệp cưới online thông minh</h1>
                     <h2>Giải pháp mới cho một đám cưới hiện đại.</h2>
@@ -42,64 +46,75 @@ if (have_posts()) {
                     <a href="" class="mui-btn hera-btn">Xem chi tiết</a>
                 </div>
             </div>
-            <div class="right_content">
+            <div class="mui-col-md-7">
                 <img src="<?php echo get_template_directory_uri() . '/img/wedding_cards.png'; ?>" alt="">
             </div>
         </div>
         <div id="section3" class="mui-col-md-10 mui-col-md-offset-1">
             <div class="center_title">
-                <img src="<?php echo get_template_directory_uri(); ?>/img/Rose-logo.svg" alt="">
-                <h2>Thay đổi hoàn toàn phương thức mời cưới cũ</h2>
-                <p>Loại bỏ những bất cập hiện có từ phương thức mời cưới cũ</p>
+                <img class="m_auto" src="<?php echo get_template_directory_uri(); ?>/img/Rose-logo.svg" alt="">
+                <h2>Lập kế hoạch mời cưới thông minh hơn</h2>
+                <p>Với nhiều lợi ích vượt trội hơn hẳn so với cách mời cưới hiện tại</p>
             </div>
-            <div class="mui-row right_detail">
-                <div class="mui-col-md-6">
-                    <img src="<?php echo get_template_directory_uri(); ?>/img/02.png" alt="">
-                </div>
-                <div class="mui-col-md-6">
-                    <p class="description">Bạn bận rộn, mời cưới bạn qua điện thoại và chụp ảnh thiệp cứng và gửi qua zalo cho bạn</p>
-                    <ul>
-                        <li>
-                            
-                        </li>
-                    </ul>
+            <div class="right_detail">
+                <div class="mui-row">
+                    <div class="mui-col-md-4">
+                        <img class="m_auto" src="<?php echo get_template_directory_uri(); ?>/img/02.png" alt="">
+                    </div>
+                    <div class="mui-col-md-4">
+                        <div class="iconbox">
+                            <img class="m_auto" src="<?php echo get_template_directory_uri(); ?>/img/card.png" alt="">
+                            <h3>Cá nhân hoá cho từng khách mời</h3>
+                            <p>Mỗi người sẽ có một thiệp riêng, thể hiện sự tôn trọng của bạn với khách mời. Nhiều vị khách khó tính sẽ không thích mình chụp thiệp gửi cho họ.</p>
+                        </div>
+                    </div>
+                    <div class="mui-col-md-4">
+                        <div class="iconbox">
+                            <img class="m_auto" src="<?php echo get_template_directory_uri(); ?>/img/guest_accept.png" alt="">
+                            <h3>Kiểm soát số lượng khách mời</h3>
+                            <p>Khách mời có thể bấm vào nút xác nhận tham gia hoặc từ chối ngay trên thiệp, nhờ đó bạn có thể chuẩn bị cỗ mời khách hợp lý hơn</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div id="section2" class="mui-col-md-10 mui-col-md-offset-1">
-            <div class="center_title">
-                <h2>Giải pháp công nghệ áp dụng vào thiệp cưới thông minh</h2>
-                <p>Thay thế phương thức mời cưới cũ, giải quyết hoàn hảo những vấn đề của việc gửi thiệp cứng, 
-                    <br>trải nghiệm những lợi ích bất ngờ từ việc ứng dụng công nghệ vào thiệp cưới</p>
+        <div id="section2" class="mui-col-md-12">
+            <div class="center_title mt20">
+                <img class="m_auto" src="<?php echo get_template_directory_uri(); ?>/img/flower.svg" alt="">
+                <h2>Tính năng chỉ đường qua Google Maps</h2>
+                <p>Không cần vẽ sơ đồ, thiệp mời có tích hợp Google Maps, giúp khách của bạn tìm đến địa điểm chính xác nhất.</p>
             </div>
-            <div class="listbox mui-row">
-                <div class="iconbox mui-col-md-6 mui-col-lg-3">
-                    <div class="icon">
-                        <img src="<?php echo get_template_directory_uri(); ?>/img/flower.svg" alt="">
-                    </div>
-                    <h3>Tích hợp google maps vào thiệp cưới</h3>
-                    <p>Chắc bạn cũng đã từng loay hoay tìm đường đến địa điểm đám cưới? Nếu vị trí ở xa trung tâm thì việc tìm kiếm cũng khó khăn.</p>
+            <div class="mui-row">
+                <div class="mui-col-md-12">
+                    <img class="m_auto" src="<?php echo get_template_directory_uri(); ?>/img/hra_maps.png" alt="">
                 </div>
-                <div class="iconbox mui-col-md-6 mui-col-lg-3">
-                    <div class="icon">
-                        <img src="<?php echo get_template_directory_uri(); ?>/img/Rose-logo-2.svg" alt="">
+            </div>
+        </div>
+        <div id="section4" class="mui-col-md-12">
+            <div class="center_title mt20">
+                <img class="m_auto" src="<?php echo get_template_directory_uri(); ?>/img/Rose-logo-2.svg" alt="">
+                <h2>Những con số đáng tự hào</h2> 
+            </div>
+            <div class="mui-container">
+                <div class="mui-row">
+                    <div class="mui-col-md-4">
+                        <div class="numberbox">
+                            <div class="number">200+</div>
+                            <div class="text">Mẫu thiệp cưới</div>
+                        </div>
                     </div>
-                    <h3>Biết được bạn có thể tham gia được hay không</h3>
-                    <p>Khi bạn mời khách, bạn không biết được họ có tham dự được hay không, dẫn tới việc khó khăn trong việc chuẩn bị cỗ</p>
-                </div>
-                <div class="iconbox mui-col-md-6 mui-col-lg-3">
-                    <div class="icon">
-                        <img src="<?php echo get_template_directory_uri(); ?>/img/flower-4.svg" alt="">
+                    <div class="mui-col-md-4">
+                        <div class="numberbox">
+                            <div class="number"><?php echo $number_of_user['total_users']; ?>+</div>
+                            <div class="text">Người sử dụng</div>
+                        </div>
                     </div>
-                    <h3>Sử dụng không giới hạn mẫu thiệp</h3>
-                    <p>Bạn phải dùng chung một mẫu thiệp để mời toàn bộ khách mời của bố mẹ bạn và của bạn, thậm chí nhà trai và nhà gái phải thống nhất in chung thiệp</p>
-                </div>
-                <div class="iconbox mui-col-md-6 mui-col-lg-3">
-                    <div class="icon">
-                        <img src="<?php echo get_template_directory_uri(); ?>/img/Rose-logo.svg" alt="">
+                    <div class="mui-col-md-4">
+                        <div class="numberbox">
+                            <div class="number"><?php echo $number_of_user['avail_roles']['contributor']; ?>+</div>
+                            <div class="text">Đối tác</div>
+                        </div>
                     </div>
-                    <h3>Khó khăn trong việc gửi tiền mừng</h3>
-                    <p>Nếu khách mời không tham dự được, sẽ muốn hỏi bạn tài khoản ngân hàng để mừng. Không gửi thì khách không thể mừng cưới bạn, nhưng nếu gửi thì vừa ngại vừa mất thời gian</p>
                 </div>
             </div>
         </div>

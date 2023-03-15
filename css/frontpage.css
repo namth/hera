@@ -48,25 +48,27 @@
 }
 
 #content {
-  background: #fef8f4;
-  color: #8f7250;
+  background: #fef8f4 url("../img/asset_bg.png") no-repeat top left;
+  color: #535353;
   font-size: 16px;
 }
 #content h1 {
   font-family: "Dancing Script";
-  font-size: 48px;
+  font-size: 45px;
   line-height: 48px;
   color: #1a5675;
 }
 #content h2 {
   font-family: "Dancing Script";
-  font-size: 36px;
+  font-size: 31px;
   line-height: 36px;
   color: #1a5675;
+  margin: 25px 0px;
 }
 #content #section1 {
   display: flex;
   padding: 20px 0;
+  border-top: 1px solid #eee2d8;
 }
 #content #section1 .left_content {
   padding-left: 5%;
@@ -79,19 +81,39 @@
   display: block;
   text-align: center;
 }
-#content #section2 .listbox .iconbox {
-  text-align: center;
-  padding: 20px;
-}
-#content #section2 .listbox .iconbox .icon img {
-  margin: 0 auto;
-  height: 70px;
-}
 #content #section3 .center_title {
   display: block;
   text-align: center;
   margin-bottom: 60px;
 }
-#content #section3 .center_title img {
-  margin: 0 auto;
+#content #section3 .right_detail .iconbox {
+  background: white;
+  padding: 20px 30px;
+  box-shadow: 0px 2px 6px #f3f3f3;
+  border-radius: 8px;
+  text-align: center;
+}
+#content #section3 .right_detail .iconbox:hover {
+  box-shadow: 0px 2px 6px #e8ddd5;
+}
+#content #section3 .right_detail .iconbox img {
+  height: 91px;
+}
+#content #section4 {
+  background: white;
+  box-shadow: 0px 1px 4px #b89062;
+  padding: 25px 0 50px;
+  margin: 20px 0;
+}
+#content #section4 .center_title {
+  display: block;
+  text-align: center;
+  margin-bottom: 30px;
+}
+#content #section4 .numberbox {
+  text-align: center;
+}
+#content #section4 .numberbox .number {
+  font-size: 60px;
+  font-weight: bold;
 }/*# sourceMappingURL=frontpage.css.map */
