@@ -43,7 +43,7 @@ if (have_posts()) {
                     <h1>Thiệp cưới online thông minh</h1>
                     <h2>Giải pháp mới cho một đám cưới hiện đại.</h2>
                     <p>Chúng tôi còn gọi đó là thiệp cưới thông minh HERA. Bạn có thể lập kế hoạch mời cưới, chia nhóm khách mời, tạo thiệp cưới cho từng khách hàng chỉ bằng vài nút bấm chuột, có khả năng nhận được thông tin phản hồi của khách để có thể điều chỉnh cỗ cưới hợp lý hơn.</p>
-                    <a href="" class="mui-btn hera-btn">Xem chi tiết</a>
+                    <a href="<?php echo get_bloginfo('url') . "/login/"; ?>" class="mui-btn hera-btn">Thử ngay</a>
                 </div>
             </div>
             <div class="mui-col-md-7">
@@ -59,7 +59,7 @@ if (have_posts()) {
             <div class="right_detail">
                 <div class="mui-row">
                     <div class="mui-col-md-4">
-                        <img class="m_auto" src="<?php echo get_template_directory_uri(); ?>/img/02.png" alt="">
+                        <img class="m_auto" src="<?php echo get_template_directory_uri(); ?>/img/wedding_card.png" alt="">
                     </div>
                     <div class="mui-col-md-4">
                         <div class="iconbox">
@@ -92,7 +92,7 @@ if (have_posts()) {
         </div>
         <div id="section4" class="mui-col-md-12">
             <div class="center_title mt20">
-                <img class="m_auto" src="<?php echo get_template_directory_uri(); ?>/img/Rose-logo-2.svg" alt="">
+                <!-- <img class="m_auto" src="<?php echo get_template_directory_uri(); ?>/img/Rose-logo-2.svg" alt=""> -->
                 <h2>Những con số đáng tự hào</h2> 
             </div>
             <div class="mui-container">
@@ -118,6 +118,23 @@ if (have_posts()) {
                 </div>
             </div>
         </div>
+        <div id="section5" class="mui-col-md-12">
+            <div class="center_title mt20">
+                <img class="m_auto" src="<?php echo get_template_directory_uri(); ?>/img/Rose-logo-2.svg" alt="">
+                <h2>Liên hệ</h2> 
+            </div>
+            <div class="mui-container">
+                <div class="mui-row">
+                    <div class="mui-col-md-6">
+
+                    </div>
+                    <div class="mui-col-md-6">
+                        <img class="m_auto" src="<?php echo get_template_directory_uri(); ?>/img/02.png" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+        
     </div>
 </div>
 

@@ -53,6 +53,7 @@
     background: #fef8f4 url('../img/asset_bg.png') no-repeat top left
     color: #535353
     font-size: 16px
+    border-top: 1px solid #eee2d8
 
     h1
         font-family: 'Dancing Script'
@@ -70,7 +71,6 @@
     #section1
         display: flex
         padding: 20px 0
-        border-top: 1px solid #eee2d8
 
         .left_content
             padding-left: 5%
@@ -90,23 +90,27 @@
             margin-bottom: 60px
 
         .right_detail
+            .mui-row
+                display: flex
+                justify-content: center
+                align-items: center
 
-            .iconbox
-                background: white
-                padding: 20px 30px
-                box-shadow: 0px 2px 6px #f3f3f3
-                border-radius: 8px
-                text-align: center
+                .iconbox
+                    background: white
+                    padding: 20px 30px
+                    box-shadow: 0px 2px 6px #f3f3f3
+                    border-radius: 8px
+                    text-align: center
 
-                &:hover
-                    box-shadow: 0px 2px 6px #e8ddd5
+                    &:hover
+                        box-shadow: 0px 2px 6px #e8ddd5
 
-                img
-                    height: 91px
+                    img
+                        height: 91px
 
     #section4
         background: white
-        box-shadow: 0px 1px 4px #b89062
+        box-shadow: 0px 0px 6px #f1e1d0
         padding: 25px 0 50px
         margin: 20px 0
 
@@ -117,10 +121,11 @@
 
         .numberbox
             text-align: center
-            
+
             .number
                 font-size: 60px
                 font-weight: bold
+                letter-spacing: -5px
 
             .text
 
