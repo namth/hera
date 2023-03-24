@@ -37,12 +37,14 @@ $current_max_card = get_field('total_cards', 'user_' . $current_user_id);
                                 
                                 $total_card = get_field('total_card');
                                 $price      = get_field('price');
+                                $promotion_price    = get_field('promotion_price');
                                 $category   = get_field('category');
-
+                                $percent    = round($promotion_price/$price*100 - 100);
 
                                 ?>
                                     <div class="mui-col-md-4">
-                                        <div class="package_item">
+                                        <div class="package_item box">
+                                            <div class="ribbon ribbon-top-right"><span><?php echo $percent . '%'; ?></span></div>
                                             <div class="package_header">
                                                 <h3><?php the_title(); ?></h3>
                                             </div>
@@ -54,7 +56,8 @@ $current_max_card = get_field('total_cards', 'user_' . $current_user_id);
                                                 ?>
                                                 <div class="price">
                                                     <span class="label">Đơn giá</span>
-                                                    <span class="value"><?php echo number_format($price) . ' đ'; ?></span>
+                                                    <span class="listed_price"><?php echo number_format($price) . ' đ'; ?></span>
+                                                    <span class="value"><?php echo number_format($promotion_price) . ' đ'; ?></span>
                                                 </div>
                                                 <ul>
                                                     <li><i class="fa fa-check" aria-hidden="true"></i> Số lượng thiệp: <b><?php echo number_format($total_card); ?></b></li>

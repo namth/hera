@@ -137,7 +137,13 @@ if (have_posts()) {
         $link_upload = get_bloginfo('url') . '/tai-khach-hang-qua-file-excel/?g=' . $data_token;
         $link_edit_content = get_bloginfo('url') . '/edit-content/?g=' . $data_token;
 
-        $guest_data = [];
+        $guest_data = [
+            'total' => 0,
+            'sent'  => 0,
+            'joined'    => 0,
+            'decline'   => 0,
+            'notanswer' => 0
+        ];
         if (have_rows('guest_list')) {
             while (have_rows('guest_list')) {
                 the_row();
@@ -190,9 +196,23 @@ if (have_posts()) {
                             <div class="mui-col-md-5 statistic">
                                 <h4>Thống kê</h4>
                                 <p>Tổng số người trong nhóm này: <b><?php echo $guest_data['total']; ?></b></p>
+                                <?php 
+                                    if ($guest_data['joined']) {
+                                ?>
                                 <span><b><?php echo $guest_data['joined']; ?></b> người tham dự được</span>
+                                <?php 
+                                    }
+                                    if ($guest_data['decline']) {
+                                ?>
                                 <span><b><?php echo $guest_data['decline']; ?></b> người không tham dự được</span>
+                                <?php 
+                                    }
+                                    if ($guest_data['notanswer']) {
+                                ?>
                                 <span><b><?php echo $guest_data['notanswer']; ?></b> người chưa trả lời</span>
+                                <?php 
+                                    }
+                                ?>
                             </div>
                         </div>
 

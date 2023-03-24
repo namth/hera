@@ -1,7 +1,7 @@
 @charset "UTF-8";
 @import url("https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Itim&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap");
 .blink_me {
   animation: blinker 4s cubic-bezier(0.77, 0, 0.18, 1) infinite;
 }
@@ -1625,6 +1625,54 @@ img {
   padding: 0 20px 20px;
   box-shadow: 0px 1px 5px lightgray;
   text-align: center;
+  position: relative;
+}
+#list_product .package_item .ribbon {
+  width: 110px;
+  height: 110px;
+  overflow: hidden;
+  position: absolute;
+}
+#list_product .package_item .ribbon:before, #list_product .package_item .ribbon:after {
+  position: absolute;
+  z-index: -1;
+  content: "";
+  display: block;
+  border: 3px solid #d30e0e;
+}
+#list_product .package_item .ribbon span {
+  position: absolute;
+  display: block;
+  width: 165px;
+  padding: 5px 0;
+  background-color: #d30e0e;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+#list_product .package_item .ribbon-top-right {
+  top: -3px;
+  right: -3px;
+}
+#list_product .package_item .ribbon-top-right:before, #list_product .package_item .ribbon-top-right:after {
+  border-top-color: transparent;
+  border-right-color: transparent;
+}
+#list_product .package_item .ribbon-top-right:before {
+  top: 0;
+  left: 0;
+}
+#list_product .package_item .ribbon-top-right:after {
+  bottom: 0;
+  right: 0;
+}
+#list_product .package_item .ribbon-top-right span {
+  left: -14px;
+  top: 24px;
+  transform: rotate(45deg);
+  text-transform: uppercase;
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+  font-family: "Quicksand";
 }
 #list_product .package_item .package_content img {
   margin: 0 auto;
@@ -1642,6 +1690,13 @@ img {
   display: block;
   font-size: 35px;
   margin-bottom: 15px;
+  font-family: "Quicksand";
+}
+#list_product .package_item .package_content .price .listed_price {
+  font-size: 20px;
+  text-decoration: line-through;
+  color: #383838;
+  font-family: "Quicksand";
 }
 #list_product .package_item .package_content .package_locked {
   background: #dbdbdb;
@@ -1785,7 +1840,6 @@ img {
   text-align: center;
   font-size: large;
   box-shadow: inset 0px 0px 7px pink;
-  font-family: "Itim", cursive;
 }
 .wedding_content .content_editable {
   display: grid;
@@ -1802,7 +1856,7 @@ img {
   font-size: 2rem;
   padding: 10px;
   color: #f7a2b1;
-  font-family: "Aphrodite", cursive;
+  font-family: "Dancing Script", cursive;
 }
 
 @media screen and (max-width: 1024px) {
