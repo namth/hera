@@ -53,6 +53,30 @@ function gen_uuid() {
 
 add_filter( 'http_request_timeout', function( $timeout ) { return 60; });
 
+# Verify Coupon 
+function get_value_after_coupon( $coupon_id, $package_id ){
+    $sub_total = get_field('price', $package_id);
+    if ($coupon_id) {
+        $expired = get_field('expired', $coupon_id);
+        $coupon_type = get_field('coupon_type', $coupon_id);
+        $coupon_value = get_field('coupon_value', $coupon_id);
+        $coupon_quantity = get_field('coupon_quantity', $coupon_id);
+
+        /* validate data */
+        $today = new DateTime();
+        if (($coupon_quantity > 0) && ($expired >= $today->format('Ymd'))) {
+            if ($coupon_type == "Phần trăm") {
+                /* Tính số tiền cuối nhận được */
+                $final_total = $sub_total * (100 - $coupon_value) / 100;
+            } else {
+                /* Tính số tiền cuối nhận được */
+                $final_total = ($sub_total > $coupon_value)?($sub_total - $coupon_value):"0";
+            }
+            return $final_total;
+        } else return false;
+    } else return false;
+}
+
 # Get lastest success order by current user ID
 function get_lastest_payment($userID){
     /* $args   = array(

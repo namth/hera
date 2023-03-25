@@ -62,6 +62,10 @@ if ( isset( $_GET['p'] ) && ($_GET['p'] != "")) {
                             <?php
                                 $partner = $_COOKIE['partner'];
                                 $price = get_field('price', $package_id);
+                                $coupon = get_field('coupon', $package_id);
+                                if ($coupon) {
+                                    $promotion_price = get_value_after_coupon( $coupon, $package_id);
+                                }
 
                                 $thumbnail_url = get_the_post_thumbnail_url($package_id, 'thumbnail');
 
@@ -78,11 +82,13 @@ if ( isset( $_GET['p'] ) && ($_GET['p'] != "")) {
                                 $customer_email = $current_user->user_email;
                                 $customer_phone = get_field('phone', 'user_' . $current_user->ID);
                                 $customer_address = get_field('address', 'user_' . $current_user->ID);
+
+                                $class_coupon = $coupon?'has_coupon':'';
                             ?>
                             <div class="package_box">
                                 <img src="<?php echo $thumbnail_url; ?>" alt="">
                                 <h4><?php echo get_the_title($package_id); ?></h4>
-                                <span class="price">
+                                <span class="price <?php echo $class_coupon; ?>">
                                     <?php echo number_format($price) . " ₫"; ?>
                                 </span>
                                 <div class="view_coupon">
@@ -90,8 +96,10 @@ if ( isset( $_GET['p'] ) && ($_GET['p'] != "")) {
                                         Mã <span class="value"></span> 
                                         <span class="coupon_name"></span>
                                     </div>
-                                    <span class="final_price"></span>
                                 </div>
+                                <span class="final_price">
+                                    <?php if ($promotion_price) echo number_format($promotion_price) . " ₫"; ?>
+                                </span>
                             </div>
                             <div class="coupon">
                                 <a href="#" class="coupon_link">Bạn có mã giảm giá?</a>
@@ -134,12 +142,10 @@ if ( isset( $_GET['p'] ) && ($_GET['p'] != "")) {
                         <div class="mui-col-md-3">
                             <h3>Hỗ trợ thanh toán</h3>
                             <p>Hãy điền đầy đủ thông tin để chúng tôi dễ dàng hỗ trợ bạn khi cần thiết.</p>
-                            <a href="" class="mui-btn hera-btn">Đổi gói</a>
+                            <a href="<?php echo get_bloginfo('url') . "/danh-sach-goi-san-pham/"; ?>" class="mui-btn hera-btn">Đổi gói</a>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="mui-col-md-2">
             </div>
         </div>
     </div>

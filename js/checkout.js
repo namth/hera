@@ -47,7 +47,7 @@ jQuery(document).ready(function ($) {
         return false;
     });
 
-    /* Khi bấm submit một form thì gọi ajax để xử lý form đó, thêm dữ liệu vào  */
+    /* Khi bấm submit một form thì gọi ajax để xử lý form add coupon, thêm dữ liệu vào  */
     $('.coupon_form button').click(function () {
         // alert('alo');
         var data = $('input[name="coupon_code"]').val();
@@ -97,7 +97,7 @@ jQuery(document).ready(function ($) {
                         style: 'currency',
                         currency: 'VND',
                     });
-                    $('.view_coupon .final_price').html(formatter.format(obj['final_total'])).show();
+                    $('.package_box .final_price').html(formatter.format(obj['final_total'])).show();
                 }
             },
         });

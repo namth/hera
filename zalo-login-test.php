@@ -40,7 +40,7 @@ if (isset($_GET['code'])) {
             'user_pass'     => $user_pass,
             'user_email'    => $email,
             'display_name'  => $output->name,
-            'user_nicename' => $output->name,
+            'nickname'      => $output->name,
         ];
 
         $user = wp_insert_user($args);

@@ -1626,6 +1626,7 @@ img {
   box-shadow: 0px 1px 5px lightgray;
   text-align: center;
   position: relative;
+  margin: 20px 0;
 }
 #list_product .package_item .ribbon {
   width: 110px;
@@ -1692,6 +1693,9 @@ img {
   margin-bottom: 15px;
   font-family: "Quicksand";
 }
+#list_product .package_item .package_content .price .no_promote {
+  margin: 27px 0 33px !important;
+}
 #list_product .package_item .package_content .price .listed_price {
   font-size: 20px;
   text-decoration: line-through;
@@ -1710,7 +1714,11 @@ img {
   list-style: none;
   padding: 0;
 }
+#list_product .package_item .package_content ul li {
+  margin: 10px 20px;
+}
 #list_product .package_item .package_content ul li i {
+  margin-right: 6px;
   font-size: 18px;
   color: coral;
 }
@@ -1760,13 +1768,15 @@ img {
 }
 #confirm_order .package_box .price {
   font-size: 28px;
+  font-family: "Quicksand";
 }
 #confirm_order .package_box .price.has_coupon {
   text-decoration: line-through;
+  font-size: large;
 }
 #confirm_order .package_box .view_coupon {
   display: none;
-  margin-top: 15px;
+  margin: 15px 0;
   text-transform: uppercase;
   font-weight: bold;
   font-size: small;
@@ -1789,14 +1799,15 @@ img {
   border-radius: 6px;
 }
 #confirm_order .package_box .view_coupon .name .coupon_name {
+  font-family: "Quicksand";
   font-size: medium;
 }
-#confirm_order .package_box .view_coupon .final_price {
-  margin-top: 15px;
+#confirm_order .package_box .final_price {
   display: block;
   color: #444;
   font-size: 28px;
   font-weight: normal;
+  font-family: "Quicksand";
 }
 
 .popup_momo {

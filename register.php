@@ -147,12 +147,12 @@ if (is_user_logged_in()) {
                 <h3>Bạn chưa có tài khoản?</h3>
                 <p>Xin hãy chọn một số lựa chọn bên dưới.</p>
                 <div class="google_btn social_btn">
-                    <a href="<?php echo get_bloginfo('url'); ?>/wp-login.php?loginSocial=google" data-plugin="nsl" data-action="connect" data-redirect="current" data-provider="google" data-popupwidth="600" data-popupheight="600">
+                    <a href="<?php echo get_bloginfo('url'); ?>/herasecurelogin?loginSocial=google" data-plugin="nsl" data-action="connect" data-redirect="current" data-provider="google" data-popupwidth="600" data-popupheight="600">
                         <img src="<?php echo get_template_directory_uri(); ?>/img/gg.svg" alt="" /> <span>Đăng ký bằng Google</span>
                     </a>
                 </div>
                 <div class="facebook_btn social_btn">
-                    <a href="<?php echo get_bloginfo('url'); ?>/wp-login.php?loginSocial=facebook" data-plugin="nsl" data-action="connect" data-redirect="current" data-provider="facebook" data-popupwidth="600" data-popupheight="679">
+                    <a href="<?php echo get_bloginfo('url'); ?>/herasecurelogin?loginSocial=facebook" data-plugin="nsl" data-action="connect" data-redirect="current" data-provider="facebook" data-popupwidth="600" data-popupheight="679">
                         <img src="<?php echo get_template_directory_uri(); ?>/img/fb.png" alt="" /> <span>Đăng ký bằng Facebook</span>
                     </a>
                 </div>
