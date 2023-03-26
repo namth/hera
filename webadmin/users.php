@@ -14,6 +14,8 @@ $args   = array(
     'number'    => $users_per_page,
     'paged'     => $paged,
     'offset'    => $offset,
+    'orderby'   => 'user_registered',
+    'order'     => 'DESC'
 );
 $query = new WP_User_Query($args);
 $users = $query->get_results();
