@@ -1,18 +1,13 @@
 <h3 class="title_general mui--divider-bottom">Danh sách user</h3>
 <?php 
 $paged = (get_query_var('paged')) ? absint(get_query_var('paged')) : 1;
-// count the number of users found in the query
-$total_users = $user_count ? count($user_count) : 1;
 
 // how many users to show per page
 // $role = 'subscriber';
 $users_per_page = 20;
 
 // calculate the total number of pages.
-$total_pages = 1;
 $offset = $users_per_page * ($paged - 1);
-$total_pages = ceil($total_users / $users_per_page);
-
 
 $args   = array(
     'role'      => $role, /*partner, member, subscriber, contributor, author*/
@@ -50,6 +45,9 @@ $users = $query->get_results();
 </table>
 <div class="pagination justify-content-center">
     <?php
+    $total_user = $query->total_users; 
+    $total_pages = ceil($total_user / $users_per_page);
+    
     $big = 999999999; // need an unlikely integer
 
     echo paginate_links(array(
