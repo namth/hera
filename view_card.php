@@ -53,32 +53,40 @@ if ($category_name == "Nhà gái") {
 }
 
 # sun-day wedding time
-$time_object        = DateTime::createFromFormat('d/m/Y', $wedding_time[0]);
-$wedding_dayname    = DayName($time_object->format('w'));
-$wedding_day        = $time_object->format('d');
-$wedding_month      = $time_object->format('m');
-$wedding_year       = $time_object->format('Y');
+if ($wedding_time[0]) {
+    $time_object        = DateTime::createFromFormat('d/m/Y', $wedding_time[0]);
+    $wedding_dayname    = DayName($time_object->format('w'));
+    $wedding_day        = $time_object->format('d');
+    $wedding_month      = $time_object->format('m');
+    $wedding_year       = $time_object->format('Y');
+}
 # moon-day wedding time
-$time_object            = DateTime::createFromFormat('d/m/Y', $wedding_moontime[0]);
-$wedding_moon_date      = ShowLunarDate($time_object, 'ngày dd tháng mm năm MYMY');
-$wedding_moon_day       = $time_object->format('d');
-$wedding_moon_month     = $time_object->format('m');
-$wedding_moon_year      = $time_object->format('Y');
-$wedding_moonyear_text  = ConvertMoonYear($party_moon_year);
+if ($wedding_moontime[0]) {
+    $time_object            = DateTime::createFromFormat('d/m/Y', $wedding_moontime[0]);
+    $wedding_moon_date      = ShowLunarDate($time_object, 'ngày dd tháng mm năm MYMY');
+    $wedding_moon_day       = $time_object->format('d');
+    $wedding_moon_month     = $time_object->format('m');
+    $wedding_moon_year      = $time_object->format('Y');
+    $wedding_moonyear_text  = ConvertMoonYear($party_moon_year);
+}
 
 # sun-day party time
-$time_object        = DateTime::createFromFormat('d/m/Y', $party_time[0]);
-$party_dayname      = DayName($time_object->format('w'));
-$party_day          = $time_object->format('d');
-$party_month        = $time_object->format('m');
-$party_year         = $time_object->format('Y');
+if ($party_time[0]) {
+    $time_object        = DateTime::createFromFormat('d/m/Y', $party_time[0]);
+    $party_dayname      = DayName($time_object->format('w'));
+    $party_day          = $time_object->format('d');
+    $party_month        = $time_object->format('m');
+    $party_year         = $time_object->format('Y');
+}
 # moon-day party time
-$time_object        = DateTime::createFromFormat('d/m/Y', $party_moontime[0]);
-$party_moon_date    = ShowLunarDate($time_object, 'ngày dd tháng mm năm MYMY');
-$party_moon_day     = $time_object->format('d');
-$party_moon_month   = $time_object->format('m');
-$party_moon_year    = $time_object->format('Y');
-$party_moonyear_text  = ConvertMoonYear($party_moon_year);
+if ($party_moontime[0]) {
+    $time_object        = DateTime::createFromFormat('d/m/Y', $party_moontime[0]);
+    $party_moon_date    = ShowLunarDate($time_object, 'ngày dd tháng mm năm MYMY');
+    $party_moon_day     = $time_object->format('d');
+    $party_moon_month   = $time_object->format('m');
+    $party_moon_year    = $time_object->format('Y');
+    $party_moonyear_text  = ConvertMoonYear($party_moon_year);
+}
 
 if ($google_maps_dam_cuoi) {
     $button_maps_dam_cuoi = '<a href="https://www.google.com/maps/dir/?api=1&destination=' . $google_maps_dam_cuoi . '" class="googlemaps keychainify-checked" target="_blank">Chỉ đường</a>
@@ -128,7 +136,9 @@ if ($joined =="Y") {
 
 # setup wp_head & wp_footer
 $wp_head    = "<title>Đám cưới " . $groom . " và " . $bride . "</title>";
-$wp_head   .= "<meta property='og:image' content='" . $wedding_photo . "'/>";
+if ($wedding_photo) {
+    $wp_head   .= "<meta property='og:image' content='" . $wedding_photo . "'/>";
+}
 $wp_head   .= echo_to_string('wp_head');
 
 # data to get response from guests
