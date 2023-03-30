@@ -49,11 +49,7 @@
 
 jQuery(document).ready(function ($) {
     /* Bấm vào mỗi section thì sẽ hiện form tương ứng và ẩn các form khác đi */
-    $('.edit_section').click(function(){
-        /* if(navigator.geolocation){
-            navigator.geolocation.getCurrentPosition(showLocation);
-        } */
-    
+    $('.edit_section').click(function(){    
         var form = $(this).data('form');
         var mapid = $(this).data('mapid');
         var latlng = $(this).data('latlng');

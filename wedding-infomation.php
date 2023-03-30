@@ -74,7 +74,7 @@ $google_api     = get_field('google_maps_api_key', 'option');
                     ?>
                     <div id="main-info">
                         <div class="mui-textfield groom">
-                            <span class="diveditable" contenteditable=true oncut="return false" onpaste="return false" data-field="field_62b13a3d49b34">
+                            <span class="diveditable" contenteditable=true oncut="return false" onpaste="return false" data-field="field_62b13a3d49b34" data-where="<?php echo $where_update; ?>">
                                 <?php echo $groom; ?>
                             </span>
                         </div>
@@ -82,7 +82,7 @@ $google_api     = get_field('google_maps_api_key', 'option');
                             <img src="<?php echo get_template_directory_uri() . '/img/heart-preloader.gif'; ?>" alt="">
                         </div>
                         <div class="mui-textfield bride">
-                            <span class="diveditable" contenteditable=true oncut="return false" onpaste="return false" data-field="field_62b13a4949b35">
+                            <span class="diveditable" contenteditable=true oncut="return false" onpaste="return false" data-field="field_62b13a4949b35" data-where="<?php echo $where_update; ?>">
                                 <?php echo $bride; ?>
                             </span>
                         </div>

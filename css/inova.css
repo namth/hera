@@ -481,6 +481,7 @@ img {
 }
 
 #header_bar {
+  position: relative;
   display: table;
   padding: 0px 15px;
   width: 100%;
@@ -540,6 +541,7 @@ img {
 }
 .main_menu li.current-menu-item {
   background: #f2eae2;
+  box-shadow: inset 0px 1px 3px #d9c2a7;
 }
 .main_menu li.current-menu-item a {
   color: #916d45;

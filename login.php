@@ -62,9 +62,9 @@ if (is_user_logged_in()) {
 
 ?>
 <div id="login">
-
+    <!-- https://margoandbees.com/thumbs/887/templates/template_7/8/images/products/407/002GNBo/wedding-invitations-gold-rose-gold-silver-glitter-002-gn-z.jpg -->
     <div class="large_left" style="
-        background-image: url('https://margoandbees.com/thumbs/887/templates/template_7/8/images/products/407/002GNBo/wedding-invitations-gold-rose-gold-silver-glitter-002-gn-z.jpg');
+        background-image: url('https://source.unsplash.com/1920x1024?hdr,wedding,flower');
         background-size: cover;
     "></div>
     <div class="small_right mui-panel">

@@ -17,28 +17,68 @@ $noi_dung_3     = get_field('content_3', $group)?get_field('content_3', $group):
 $loi_moi        = get_field('custom_invite', $group)?get_field('custom_invite', $group):get_field('wedding_invitation', 'option');
 $found_customer = false;
 
+# co dau chu re
 $groom = get_field('groom', 'user_' . $user->ID);
 $bride = get_field('bride', 'user_' . $user->ID);
+# anh cuoi
+$wedding_photo = get_field('wedding_photo', 'user_' . $user->ID);
+# bo me co dau chu re
+$groom_father   = get_field('groom_father', 'user_' . $user->ID);
+$groom_mother   = get_field('groom_mother', 'user_' . $user->ID);
+$bride_father   = get_field('bride_father', 'user_' . $user->ID);
+$bride_mother   = get_field('bride_mother', 'user_' . $user->ID);
 
 # Đọc category xem thiệp thuộc nhà trai hay nhà gái. 
 $category = get_the_category($group);
 $category_name = $category[0]->name;
 
 if ($category_name == "Nhà gái") {
-    $wedding_adress = get_field('bride_wedding_adress', 'user_' . $user->ID);
-    $wedding_time = explode(' ',get_field('bride_wedding_time', 'user_' . $user->ID));
-    $party_adress = get_field('bride_party_address', 'user_' . $user->ID);
-    $party_time = explode(' ',get_field('bride_party_time', 'user_' . $user->ID));
+    $wedding_adress     = get_field('bride_wedding_adress', 'user_' . $user->ID);
+    $wedding_time       = explode(' ',get_field('bride_wedding_time', 'user_' . $user->ID));
+    $wedding_moontime   = explode(' ',get_field('bride_wedding_moontime', 'user_' . $user->ID));
+    $party_adress       = get_field('bride_party_address', 'user_' . $user->ID);
+    $party_time         = explode(' ',get_field('bride_party_time', 'user_' . $user->ID));
+    $party_moontime     = explode(' ',get_field('bride_party_moontime', 'user_' . $user->ID));
     $google_maps_dam_cuoi = get_field('bride_wedding_maps', 'user_' . $user->ID);
-    $google_maps_an_co = get_field('bride_party_maps', 'user_' . $user->ID);
+    $google_maps_an_co  = get_field('bride_party_maps', 'user_' . $user->ID);
 } else {
-    $wedding_adress = get_field('groom_wedding_adress', 'user_' . $user->ID);
-    $wedding_time = explode(' ',get_field('groom_wedding_time', 'user_' . $user->ID));
-    $party_adress = get_field('groom_party_address', 'user_' . $user->ID);
-    $party_time = explode(' ',get_field('groom_party_time', 'user_' . $user->ID));
+    $wedding_adress     = get_field('groom_wedding_adress', 'user_' . $user->ID);
+    $wedding_time       = explode(' ',get_field('groom_wedding_time', 'user_' . $user->ID));
+    $wedding_moontime   = explode(' ',get_field('groom_wedding_moontime', 'user_' . $user->ID));
+    $party_adress       = get_field('groom_party_address', 'user_' . $user->ID);
+    $party_time         = explode(' ',get_field('groom_party_time', 'user_' . $user->ID));
+    $party_moontime     = explode(' ',get_field('groom_party_moontime', 'user_' . $user->ID));
     $google_maps_dam_cuoi = get_field('groom_wedding_maps', 'user_' . $user->ID);
-    $google_maps_an_co = get_field('groom_party_maps', 'user_' . $user->ID);
+    $google_maps_an_co  = get_field('groom_party_maps', 'user_' . $user->ID);
 }
+
+# sun-day wedding time
+$time_object        = DateTime::createFromFormat('d/m/Y', $wedding_time[0]);
+$wedding_dayname    = DayName($time_object->format('w'));
+$wedding_day        = $time_object->format('d');
+$wedding_month      = $time_object->format('m');
+$wedding_year       = $time_object->format('Y');
+# moon-day wedding time
+$time_object            = DateTime::createFromFormat('d/m/Y', $wedding_moontime[0]);
+$wedding_moon_date      = ShowLunarDate($time_object, 'ngày dd tháng mm năm MYMY');
+$wedding_moon_day       = $time_object->format('d');
+$wedding_moon_month     = $time_object->format('m');
+$wedding_moon_year      = $time_object->format('Y');
+$wedding_moonyear_text  = ConvertMoonYear($party_moon_year);
+
+# sun-day party time
+$time_object        = DateTime::createFromFormat('d/m/Y', $party_time[0]);
+$party_dayname      = DayName($time_object->format('w'));
+$party_day          = $time_object->format('d');
+$party_month        = $time_object->format('m');
+$party_year         = $time_object->format('Y');
+# moon-day party time
+$time_object        = DateTime::createFromFormat('d/m/Y', $party_moontime[0]);
+$party_moon_date    = ShowLunarDate($time_object, 'ngày dd tháng mm năm MYMY');
+$party_moon_day     = $time_object->format('d');
+$party_moon_month   = $time_object->format('m');
+$party_moon_year    = $time_object->format('Y');
+$party_moonyear_text  = ConvertMoonYear($party_moon_year);
 
 if ($google_maps_dam_cuoi) {
     $button_maps_dam_cuoi = '<a href="https://www.google.com/maps/dir/?api=1&destination=' . $google_maps_dam_cuoi . '" class="googlemaps keychainify-checked" target="_blank">Chỉ đường</a>
@@ -87,7 +127,9 @@ if ($joined =="Y") {
 }
 
 # setup wp_head & wp_footer
-$wp_head    = echo_to_string('wp_head');
+$wp_head    = "<title>Đám cưới " . $groom . " và " . $bride . "</title>";
+$wp_head   .= "<meta property='og:image' content='" . $wedding_photo . "'/>";
+$wp_head   .= echo_to_string('wp_head');
 
 # data to get response from guests
 $data_input =  '<input type="hidden" name="group" value="' . $_group . '">
@@ -104,10 +146,12 @@ $data_replace = array(
     '{chu_re}'      => $groom,
     '{co_dau}'      => $bride,
     '{ngay_duong_lich_dam_cuoi}' => $wedding_time[0],
+    '{ngay_am_lich_dam_cuoi}'    => $wedding_moon_date,
     '{gio_dam_cuoi}' => $wedding_time[1],
     '{dia_diem_dam_cuoi}'       => $wedding_adress,
     '{google_maps_dam_cuoi}'    => $button_maps_dam_cuoi,
     '{ngay_duong_lich_an_co}'   => $party_time[0],
+    '{ngay_am_lich_an_co}'      => $party_moon_date,
     '{gio_an_co}'   => $party_time[1],
     '{dia_diem_an_co}'          => $party_adress,
     '{google_maps_an_co}'       => $button_maps_an_co,
@@ -117,6 +161,26 @@ $data_replace = array(
     '{2}'           => strtolower($xung_ho[0]),
     '{1}'           => strtolower($xung_ho[1]),
     '{ten}'         => $name,
+    '{wedding_dayname}'     => $wedding_dayname,
+    '{wedding_day}'         => $wedding_day,
+    '{wedding_month}'       => $wedding_month,
+    '{wedding_year}'        => $wedding_year,
+    '{wedding_moon_day}'        => $wedding_moon_day,
+    '{wedding_moon_month}'      => $wedding_moon_month,
+    '{wedding_moon_year}'       => $wedding_moon_year,
+    '{wedding_moon_year_text}'  => $wedding_moonyear_text,
+    '{party_dayname}'     => $party_dayname,
+    '{party_day}'         => $party_day,
+    '{party_month}'       => $party_month,
+    '{party_year}'        => $party_year,
+    '{party_moon_day}'        => $party_moon_day,
+    '{party_moon_month}'      => $party_moon_month,
+    '{party_moon_year}'       => $party_moon_year,
+    '{party_moon_year_text}'  => $party_moonyear_text,
+    '{bo_co_dau}'   => $bride_father,
+    '{me_co_dau}'   => $bride_mother,
+    '{bo_chu_re}'   => $groom_father,
+    '{me_chu_re}'   => $groom_mother,
 );
 if ($cardid) {
     
