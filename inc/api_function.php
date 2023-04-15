@@ -1,4 +1,9 @@
 <?php
+$api_dir = dirname( __FILE__ );
+require_once( $api_dir . '/payment/casso_endpoint.php');
+require_once( $api_dir . '/payment/momo_endpoint.php');
+require_once( $api_dir . '/payment/tpbank_api.php');
+
 # get authentication code
 # refresh token everyday
 function refresh_token()
@@ -77,6 +82,72 @@ function getHTML($cardid){
     return $mycard->html;
 }
 
+# CRONJOB
 # tạo hook cronjob để refresh_token hàng ngày.
 add_action( 'daily_refresh_token', 'refresh_token' );
-add_action( 'daily_check_payment_status', 'check_payment_status' );
+# check những đơn hết hạn thanh toán hàng ngày
+add_action( 'daily_check_payment_status', 'check_payment_status' ); 
+
+# tạo hook cronjob để check lịch sử thanh toán chuyển khoản tp bank.
+add_action( 'check_bank_transaction_history', 'check_bank_transaction_history' );
+function check_bank_transaction_history() {
+    # lấy ngày hôm nay 
+    $now = new DateTime();
+
+    # kiểm tra xem có đơn chờ thanh toán hôm nay không?
+    $status = 'Chưa thanh toán';
+    /* query tat ca nhung don hang chua thanh toan */
+    $args   = array(
+        'post_type'     => 'inova_order',
+        'posts_per_page' => -1,
+        'post_status'   => 'publish',
+        'meta_query'    => array(
+            array(
+                'key'       => 'status',
+                'value'     => $status,
+                'compare'   => '=',
+            ),
+        ),
+        'date_query'    => array(
+            array(
+                'after' => '-24 hours',
+            ),
+        ),
+    );
+
+    $query = new WP_Query($args);
+
+    # nếu có thì mới check lịch sử giao dịch
+    if ($query->post_count) {
+        // echo "Check thong tin tai khoan...";
+        $tpb = get_tpb_token('00225624', 'Tumotdensau2@@');
+        $transactionHistory = get_tpb_history($tpb, '14719869999', $now->format('Ymd'), $now->format('Ymd'));
+        $history = json_decode($transactionHistory);
+    
+        // print_r($history->transactionInfos);
+        if ($history->transactionInfos) {
+            # kiểm tra từng đơn
+            foreach ($history->transactionInfos as $transaction) {
+                $search = quick_search_order(strtoupper($transaction->description));
+    
+                # Nếu tìm nhanh được order thì trả kết quả luôn, nếu không thấy thì tìm nâng cao
+                if (!$search) {
+                    $search = advance_search_order(strtoupper($transaction->description));
+                } else {
+                    $status = get_field('status', $search);
+                }
+
+                # Kiểm tra xem order đã được active chưa 
+                $active = get_field('activate', $search);
+    
+                if (!$active) {
+                    $output = process_transferbank($search, $transaction->id, $transaction->amount);
+                } else {
+                    $output["error"] = 404;
+                    $output["status"] = "Không phải đơn thanh toán";
+                }
+            }
+        }
+    }
+    return $output;
+}

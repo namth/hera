@@ -233,8 +233,11 @@ if (have_posts()) {
                                         } else {
                                             $coupon = number_format($coupon_value) . " ₫";
                                         }
+                                        if ($coupon_name) {
+                                            $coupon_label = "<span class='code'>" . $coupon_name . "</span>";
+                                        }
                                         echo "<tr class='coupon'>
-                                                <td>Mã giảm giá <span class='code'>" . $coupon_name . "</span></td>
+                                                <td>Mã giảm giá " . $coupon_label . "</td>
                                                 <td>" . $coupon . "</td>
                                             </tr>";
                                     }
@@ -330,6 +333,7 @@ if (have_posts()) {
     <div>
         <h3 class="description"><span class="blink_me">Đang đồng bộ hoá với ngân hàng ...</span></h3>
         <img src="<?php echo get_template_directory_uri(); ?>/img/bank_loading.gif" alt="" />
+        <p>Việc xác nhận chuyển khoản có thể mất khoảng 10 phút<br> bạn có thể quay lại trang chủ và chờ đợi thiệp được kích hoạt.</p>
         <span class="close_button">X</span>
     </div>
 </div>

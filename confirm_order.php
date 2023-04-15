@@ -64,15 +64,17 @@ if ( isset( $_GET['p'] ) && ($_GET['p'] != "")) {
                                 $price = get_field('price', $package_id);
                                 $coupon = get_field('coupon', $package_id);
                                 if ($coupon) {
-                                    $promotion_price = get_value_after_coupon( $coupon, $package_id);
+                                    $final_price = get_value_after_coupon( $coupon, $package_id);
+                                } else {
+                                    $final_price = $price;
                                 }
 
                                 $thumbnail_url = get_the_post_thumbnail_url($package_id, 'thumbnail');
 
                                 # setup hash
                                 $hash = inova_encrypt(json_encode(array(
-                                    'id'            => 0,
-                                    'final_total'   => $price,
+                                    'id'            => $coupon,
+                                    'final_total'   => $final_price,
                                     'package_id'    => $package_id,
                                 )), 'e');
 
@@ -98,7 +100,7 @@ if ( isset( $_GET['p'] ) && ($_GET['p'] != "")) {
                                     </div>
                                 </div>
                                 <span class="final_price">
-                                    <?php if ($promotion_price) echo number_format($promotion_price) . " ₫"; ?>
+                                    <?php if ($final_price != $price) echo number_format($final_price) . " ₫"; ?>
                                 </span>
                             </div>
                             <div class="coupon">

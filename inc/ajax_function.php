@@ -210,81 +210,6 @@ function acceptInvite() {
 }
 
 /* 
-* Source: checkout.php | js/checkout.js
-* Cho phép sửa nhanh nội dung trên giao diện hiển thị thông tin đám cưới */
-add_action('wp_ajax_addCouponCode', 'addCouponCode');
-add_action('wp_ajax_nopriv_addCouponCode', 'addCouponCode');
-function addCouponCode() {
-    $data = $_POST['data'];
-    $package = $_POST['package'];
-    $sub_total = get_field('price', $package);
-
-    /* Kiểm tra coupon có tồn tại không */
-    $id_coupon = search_customfield('coupon', $data, 'coupon_name');
-
-    /* Nếu có thì validate coupon xem đã hết hạn hoặc hết mã chưa */
-    if ($id_coupon) {
-        $expired = get_field('expired', $id_coupon);
-        $coupon_type = get_field('coupon_type', $id_coupon);
-        $coupon_value = get_field('coupon_value', $id_coupon);
-        $coupon_quantity = get_field('coupon_quantity', $id_coupon);
-        
-        /* validate data */
-        $today = new DateTime();
-        if (($coupon_quantity > 0) && ($expired >= $today->format('Ymd'))) {
-            $data = array(
-                'status' => true,
-                'coupon' => $data,
-                'message'=> '<div class="success_notification"><i class="fa fa-check-circle-o" aria-hidden="true"></i> Đã thêm mã coupon thành công.</div>',
-            );
-            if ($coupon_type == "Phần trăm") {
-                /* Tính số tiền cuối nhận được */
-                $final_total = $sub_total * (100 - $coupon_value) / 100;
-                /* Lưu vào data */
-                $data['type'] = 'percent';
-                $data['value'] = $coupon_value;
-                $data['coupon_label'] = '- ' . $coupon_value . '%';
-                $data['final_total'] = $final_total;
-                $data['hash'] = inova_encrypt(json_encode(array(
-                    'id'            => $id_coupon,
-                    'final_total'   => $final_total,
-                    'package_id'    => $package,
-                )), 'e');
-            } else {
-                /* Tính số tiền cuối nhận được */
-                $final_total = ($sub_total > $coupon_value)?($sub_total - $coupon_value):"0";
-                /* Lưu vào data */
-                $data['type'] = 'fix';
-                $data['value'] = $coupon_value;
-                $data['coupon_label'] = '- ' . number_format($coupon_value) . ' ₫';
-                $data['final_total'] = $final_total;
-                $data['hash'] = inova_encrypt(json_encode(array(
-                    'id'            => $id_coupon,
-                    'final_total'   => $final_total,
-                    'package_id'    => $package,
-                )), 'e');
-            }
-        } else {
-            $check_fail = true;
-            $message = "Mã khuyến mại đã hết hạn hoặc hết số lượng.";
-        }
-
-    } else {
-        $check_fail = true;
-        $message = "Không tìm thấy mã khuyến mại.";
-    }
-    
-    if ($check_fail) {
-        $data = array(
-            'status' => false,
-            'message'=> '<div class="error_notification"><i class="fa fa-time-circle-o" aria-hidden="true"></i> ' . $message . '</div>',
-        );
-    }
-    echo json_encode($data);
-    exit;
-}
-
-/* 
 * Source: register.php
 * Đăng ký tài khoản HERA
 */
@@ -372,8 +297,6 @@ function checkEmailExist() {
 add_action('wp_ajax_uploadAvatar', 'uploadAvatar');
 add_action('wp_ajax_nopriv_uploadAvatar', 'uploadAvatar');
 function uploadAvatar() {
-    
-
     if( ! isset( $_FILES ) || empty( $_FILES ) || ! isset( $_FILES['files'] ) )
         return;
 

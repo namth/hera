@@ -35,6 +35,7 @@ $total_customer = 0;
 $normal_license = get_field('normal_card', 'user_' . $current_user_id);
 $vip_license    = get_field('vip_card', 'user_' . $current_user_id);
 
+check_bank_transaction_history();
 ?>
 <div class="mui-container-fluid">
     <div class="mui-row">
@@ -46,7 +47,8 @@ $vip_license    = get_field('vip_card', 'user_' . $current_user_id);
         <div class="mui-col-md-8 mt20">
             <div class="mui-panel" id="list_my_card">
                 <h3 class="title_general mui--divider-bottom">Danh sách thiệp mời của nhà trai</h3>
-                <div class="heracard_list mui-row">
+                <div class="heracard_list">
+                    <div class="mui-row">
                     <?php
                     $args   = array(
                         'post_type'     => 'thiep_moi',
@@ -57,11 +59,13 @@ $vip_license    = get_field('vip_card', 'user_' . $current_user_id);
                     );
 
                     $query = new WP_Query($args);
-
+                    
+                    $i = 0;
                     if ($query->have_posts()) {
                         while ($query->have_posts()) {
                             $query->the_post();
 
+                            $i++;
                             $image = get_field('thumbnail');
                             $cardid = get_field('card_id');
                             $customer = get_field('guest_list');
@@ -96,15 +100,19 @@ $vip_license    = get_field('vip_card', 'user_' . $current_user_id);
                                 </a>
                             </div>
                     <?php
+                            if ($i%4 == 0) {
+                                echo '</div><div class="mui-row">';
+                            }
                         }
                         wp_reset_postdata();
                     }
 
                     ?>
-                    <div class="mui-col-md-3">
-                        <button class="addnew_card" onclick="activateModal('groom')">
-                            <i class="fa fa-plus"></i>
-                        </button>
+                        <div class="mui-col-md-3">
+                            <button class="addnew_card" onclick="activateModal('groom')">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
                 <h3 class="title_general mui--divider-bottom">Danh sách thiệp mời của nhà gái</h3>

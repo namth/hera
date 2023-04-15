@@ -251,6 +251,16 @@ jQuery(document).ready(function ($) {
     });
 
     /* 
+    * Khi bấm mobile menu show menu
+    */
+    $(document).on('click', ".mobile_menu_icon", function(){
+      $('.mobile_menu .menu').show();
+    });
+    $(document).on('click', ".mobile_menu .overlay", function(){
+      $('.mobile_menu .menu').hide();
+    });
+
+    /* 
     * Khi bấm like cho card, ... 
     */
     $(document).on('click', "#like", function(){

@@ -12,6 +12,22 @@ if (is_user_logged_in()) {
                 <img src="<?php echo get_template_directory_uri(); ?>/img/logo.png" alt="">
             </a>
         </div>
+        <div class="mobile_menu">
+            <a href="#" class="mobile_menu_icon">
+                <i class="fa fa-bars" aria-hidden="true"></i>
+            </a>
+            <div class="menu">
+                <img src="<?php echo get_template_directory_uri(); ?>/img/top.png" alt="">
+                <?php 
+                    wp_nav_menu(array(
+                        'menu'      => 2,
+                        'container' => '',
+                        'menu_class' => 'main_menu mb20'
+                    ));
+                ?>
+                <div class="overlay"></div>
+            </div>
+        </div>
         <div class="mui-dropdown greeting">
             <span>Xin chào, <b><?php echo $user->data->display_name; ?></b></span>
             <img src="<?php echo $link_avatar; ?>" alt="" data-mui-toggle="dropdown">

@@ -87,6 +87,41 @@ $google_api     = get_field('google_maps_api_key', 'option');
                             </span>
                         </div>
                     </div>
+                    <h3>Ảnh cưới</h3>
+                    <p>Lựa chọn một ảnh đẹp nhất của hai bạn để làm hình ảnh đại diện cho đám cưới</p>
+                    <div>
+                        <div class="wedding_photo">
+                        <?php 
+                            $wedding_photo = get_field('wedding_photo', $where_update);
+                            if ($wedding_photo) {
+                                echo "<button class='mui-btn hera-btn uploadbtn'>Đổi ảnh khác</button>";
+                                echo '<img src="' . wp_get_attachment_url($wedding_photo) . '" alt="" width="300">';
+                            } else {
+                                echo "<button class='mui-btn hera-btn uploadbtn'>Tải ảnh lên</button>";
+                            }
+                        ?>
+                        </div>
+                        <div class="uploadform" id="uploadform">
+                            <span class='close_btn'>x</span>
+                            <form class="box" method="post" action="" enctype="multipart/form-data">
+                                <div class="box__input">
+                                    <input class="box__file" type="file" name="files[]" id="file" data-multiple-caption="{count} files selected" multiple />
+                                    <label for="file" style="display: block;">
+                                        <figure>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="34" viewBox="0 0 20 17">
+                                                <path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/>
+                                            </svg>
+                                        </figure> 
+                                        <strong>Tải tệp lên</strong><br>
+                                        <span class="box__dragndrop">hoặc kéo ảnh vào đây</span>.
+                                    </label>
+                                </div>
+                                <div class="box__uploading">Uploading…</div>
+                                <div class="box__success">Done!</div>
+                                <div class="box__error">Error! <span></span></div>
+                            </form>
+                        </div>
+                    </div>
                     <h3>Thông tin chi tiết</h3>
                     <div id="addition_info" class="mui-row">
                         <div class="mui-col-md-6">
@@ -203,7 +238,7 @@ $google_api     = get_field('google_maps_api_key', 'option');
                                                     </div>
                                                 </div>';
                                             if ($groom_wedding_moontime) {
-                                                echo '<div class="lunar_date data_item"><i class="fa fa-calendar-o"></i> (âm lịch)<span class="diveditable">' . $_groom_wedding_moontime->format('d/m/Y g:i a') . '</span></div>'; 
+                                                echo '<div class="lunar_date data_item"><i class="fa fa-calendar-o"></i> (âm lịch)<span class="diveditable">' . formatLunarDate($_groom_wedding_moontime, 'Ngày dd tháng mm năm MYMY') . '</span></div>'; 
                                             }
                                             echo '</div>';
                                         } else {
@@ -275,7 +310,7 @@ $google_api     = get_field('google_maps_api_key', 'option');
                                                         </form>
                                                     </div>
                                                 </div>';
-                                            echo '<div class="lunar_date data_item"><i class="fa fa-calendar-o"></i> (âm lịch)<span class="diveditable">' . $_groom_party_moontime->format('d/m/Y g:i a') . '</span></div>';
+                                            echo '<div class="lunar_date data_item"><i class="fa fa-calendar-o"></i> (âm lịch)<span class="diveditable">' . formatLunarDate($_groom_party_moontime, 'Ngày dd tháng mm năm MYMY') . '</span></div>';
                                             echo '</div>';
                                         } else {
                                         ?>
@@ -433,7 +468,7 @@ $google_api     = get_field('google_maps_api_key', 'option');
                                                     </div>';
                                                 
                                                 if ($bride_wedding_moontime) {
-                                                    echo '<div class="lunar_date data_item"><i class="fa fa-calendar-o"></i> (âm lịch)<span class="diveditable">' . $_bride_wedding_moontime->format('d/m/Y g:i a') . '</span></div>';
+                                                    echo '<div class="lunar_date data_item"><i class="fa fa-calendar-o"></i> (âm lịch)<span class="diveditable">' . formatLunarDate($_bride_wedding_moontime, 'Ngày dd tháng mm năm MYMY') . '</span></div>';
                                                 }
                                             }
                                             echo '</div>';
@@ -506,7 +541,7 @@ $google_api     = get_field('google_maps_api_key', 'option');
                                                         </form>
                                                     </div>    
                                                 </div>';
-                                            echo '<div class="lunar_date data_item"><i class="fa fa-calendar-o"></i> (âm lịch)<span class="diveditable">' . $_bride_party_moontime->format('d/m/Y g:i a') . '</span></div>';
+                                            echo '<div class="lunar_date data_item"><i class="fa fa-calendar-o"></i> (âm lịch)<span class="diveditable">' . formatLunarDate($_bride_party_moontime, 'Ngày dd tháng mm năm MYMY') . '</span></div>';
                                             echo '</div>';
                                         } else {
                                         ?>

@@ -4,6 +4,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap");
 .blink_me {
   animation: blinker 4s cubic-bezier(0.77, 0, 0.18, 1) infinite;
+  animation-direction: normal;
 }
 
 @keyframes blinker {
@@ -11,21 +12,17 @@
     color: #f7ad00;
     text-shadow: 0px 0px 39px #f7ad00;
   }
-  21% {
+  25% {
     color: #ff08ad;
     text-shadow: 0px 0px 39px #ff08ad;
   }
-  42% {
+  50% {
     color: #3742f5;
     text-shadow: 0px 0px 39px #3742f5;
   }
-  63% {
+  75% {
     color: #adc600;
     text-shadow: 0px 0px 39px #adc600;
-  }
-  84% {
-    color: #f7ad00;
-    text-shadow: 0px 0px 39px #f7ad00;
   }
   100% {
     color: #f7ad00;
@@ -495,6 +492,45 @@ img {
   height: 54px;
   width: 54px;
 }
+#header_bar .mobile_menu {
+  display: none;
+  position: absolute;
+  z-index: 9;
+  top: 0;
+  left: 0;
+}
+#header_bar .mobile_menu .mobile_menu_icon {
+  position: absolute;
+  top: 12px;
+  left: 90px;
+  font-size: 25px;
+  color: #b89062;
+  cursor: pointer;
+}
+#header_bar .mobile_menu .menu {
+  display: none;
+  background: white;
+  width: 300px;
+  position: absolute;
+  height: 100vh;
+}
+#header_bar .mobile_menu .menu #menu-main-menu {
+  padding: 0 20px;
+  margin-top: -21px;
+}
+#header_bar .mobile_menu .menu #menu-main-menu li {
+  border-radius: 12px;
+}
+#header_bar .mobile_menu .menu .overlay {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  background: rgba(0, 0, 0, 0.3019607843);
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
 #header_bar .greeting {
   display: table-cell;
   text-align: right;
@@ -579,6 +615,7 @@ img {
   background: #e5fad7;
   border: 1px solid;
   border-radius: 5px;
+  display: inline-block;
 }
 .card_link:hover {
   color: #b78613;
@@ -751,8 +788,7 @@ img {
 }
 .heracard_list .heracard .info_card {
   position: relative;
-  padding: 5px 10px;
-  line-height: 33px;
+  padding: 5px 50px 5px 0;
 }
 .heracard_list .heracard .info_card .quantity {
   position: absolute;
@@ -1354,14 +1390,22 @@ img {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(230, 230, 230, 0.82);
+  background: rgba(0, 0, 0, 0.6392156863);
   z-index: 9999;
   display: none;
   justify-content: center;
   align-items: center;
   text-align: center;
 }
-#fullloading .close_button {
+#fullloading div {
+  padding: 50px;
+  background: white;
+  position: relative;
+}
+#fullloading div h3 {
+  text-transform: uppercase;
+}
+#fullloading div .close_button {
   cursor: pointer;
   height: 25px;
   width: 25px;
@@ -1370,11 +1414,16 @@ img {
   color: #353535;
   text-align: center;
   position: absolute;
-  right: 35px;
-  top: 35px;
+  right: 22px;
+  top: 20px;
   line-height: 25px;
 }
-#fullloading img {
+#fullloading div p {
+  color: #967119;
+  font-size: large;
+  margin-top: 20px;
+}
+#fullloading div img {
   width: 200px;
   margin: 0 auto;
 }
@@ -1547,6 +1596,21 @@ img {
   padding-left: 15px;
 }
 
+#upload form {
+  border: 1px dashed black;
+  margin: 12px 12px 42px;
+  padding: 15px;
+}
+#upload form input[type=file] {
+  border: 1px dotted;
+  line-height: 33px;
+  border-radius: 6px;
+  padding: 3px 9px;
+}
+#upload form .mui-btn {
+  margin: 0 0 2px;
+}
+
 .royal_line {
   position: relative;
 }
@@ -1580,6 +1644,17 @@ img {
   background: #b89062;
   color: wheat;
   text-align: center;
+  position: relative;
+}
+.uploadform .close_btn {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  background: wheat;
+  padding: 0px 8px 2px;
+  border-radius: 12px;
+  color: #b89062;
+  cursor: pointer;
 }
 .uploadform .box {
   padding: 10px 20px;
@@ -1884,6 +1959,12 @@ img {
   #login .small_right #loginform {
     padding: 0 7%;
   }
+  #hera_sidebar {
+    display: none;
+  }
+  #header_bar .mobile_menu {
+    display: block;
+  }
 }
 @media screen and (max-width: 768px) and (orientation: portrait) {
   #login {
@@ -1897,9 +1978,6 @@ img {
     display: grid;
     width: 100%;
     align-items: center;
-  }
-  #hera_sidebar {
-    display: none;
   }
   .btxs {
     border-top: 1px solid lightgray;
