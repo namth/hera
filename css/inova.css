@@ -1352,6 +1352,9 @@ img {
   margin: 9px 18px;
   border: 1px solid darkblue;
 }
+#checkout #payment #bank_transfer .bank_info ul img {
+  margin-bottom: 12px;
+}
 #checkout #payment #pay_momo {
   border: 1px solid #A50064;
   padding: 8px 15px;

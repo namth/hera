@@ -94,17 +94,22 @@ function check_bank_transaction_history() {
     # lấy ngày hôm nay 
     $now = new DateTime();
 
-    # kiểm tra xem có đơn chờ thanh toán hôm nay không?
-    $status = 'Chưa thanh toán';
-    /* query tat ca nhung don hang chua thanh toan */
+    # kiểm tra xem có đơn chờ thanh toán (hoặc thanh toán thiếu) hôm nay không?
+    /* query tat ca nhung don hang chua thanh toan hoac thanh toan thieu*/
     $args   = array(
         'post_type'     => 'inova_order',
         'posts_per_page' => -1,
         'post_status'   => 'publish',
         'meta_query'    => array(
+            'relation'      => 'OR',
             array(
                 'key'       => 'status',
-                'value'     => $status,
+                'value'     => 'Chưa thanh toán',
+                'compare'   => '=',
+            ),
+            array(
+                'key'       => 'status',
+                'value'     => 'Thanh toán thiếu',
                 'compare'   => '=',
             ),
         ),

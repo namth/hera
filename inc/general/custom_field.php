@@ -1035,6 +1035,26 @@ if( function_exists('acf_add_local_field_group') ):
                 'append' => '',
                 'maxlength' => '',
             ),
+            array(
+                'key' => 'field_643beddb5737a',
+                'label' => 'Cộng tác viên',
+                'name' => 'partner',
+                'type' => 'user',
+                'instructions' => '',
+                'required' => 0,
+                'conditional_logic' => 0,
+                'wrapper' => array(
+                    'width' => '',
+                    'class' => '',
+                    'id' => '',
+                ),
+                'role' => array(
+                    0 => 'contributor',
+                ),
+                'allow_null' => 0,
+                'multiple' => 0,
+                'return_format' => 'id',
+            ),
         ),
         'location' => array(
             array(

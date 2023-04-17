@@ -144,12 +144,18 @@ function process_transferbank ( $orderid, $payment_id, $amount ) {
                 # chuyển trạng thái đơn hàng sang  Thanh toán thiếu 
                 $output["status"] = 'Thanh toán thiếu';
     
-            } else if ($paid <= $ORDER_MONEY + $ACCEPTABLE_DIFFERENCE){
-                # chuyển trạng thái đơn hàng sang đã thanh toán 
-                $output["status"] = 'Đã thanh toán';
             } else {
-                # chuyển trạng thái đơn hàng sang Thanh toán dư 
-                $output["status"] = 'Thanh toán dư';
+                if ($paid <= $ORDER_MONEY + $ACCEPTABLE_DIFFERENCE){
+                    # chuyển trạng thái đơn hàng sang đã thanh toán 
+                    $output["status"] = 'Đã thanh toán';
+                } else {
+                    # chuyển trạng thái đơn hàng sang Thanh toán dư 
+                    $output["status"] = 'Thanh toán dư';
+                }
+
+                # Kích hoạt đơn hàng 
+                $active_done = activation_package($orderid);
+
             }
             
             # update status
@@ -167,13 +173,6 @@ function process_transferbank ( $orderid, $payment_id, $amount ) {
                 update_field('field_636c85b89d08e', 'Chuyển khoản ngân hàng (Kích hoạt tự động)', $orderid);
             }
 
-            # Kích hoạt đơn hàng 
-            $active_done = activation_package($orderid);
-
-            /* if ($active_done) {
-                # Đánh dấu đơn hàng đã được active 
-                update_field('field_636df1ce10556', true, $orderid);
-            } */
         } else {
             $output["status"] = "Đơn hàng đã xử lý";
         }
@@ -189,10 +188,16 @@ function advance_search_order( $orderid ) {
     $args = array(
         'post_type' => 'inova_order',
         'meta_query' => array(
+            'relation'      => 'OR',
             array(
-                'key'     => 'status',
-                'value'   => "Chưa thanh toán",
-                'compare' => '='
+                'key'       => 'status',
+                'value'     => 'Chưa thanh toán',
+                'compare'   => '=',
+            ),
+            array(
+                'key'       => 'status',
+                'value'     => 'Thanh toán thiếu',
+                'compare'   => '=',
             ),
         )
     );
@@ -217,10 +222,16 @@ function quick_search_order( $orderid ) {
         'post_type' => 'inova_order',
         's'         => $orderid,
         'meta_query' => array(
+            'relation'      => 'OR',
             array(
-                'key'     => 'status',
-                'value'   => "Chưa thanh toán",
-                'compare' => '='
+                'key'       => 'status',
+                'value'     => 'Chưa thanh toán',
+                'compare'   => '=',
+            ),
+            array(
+                'key'       => 'status',
+                'value'     => 'Thanh toán thiếu',
+                'compare'   => '=',
             ),
         )
     );

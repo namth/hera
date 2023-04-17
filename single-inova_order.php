@@ -281,14 +281,16 @@ if (have_posts()) {
                                 <p>Quý khách có thể chuyển vào một trong số các tài khoản dưới đây:</p>
                                 <div class="bank_info">
                                     <ul>
-                                        <li>TPBank</li>
-                                        <li>Số tài khoản: 14719869999</li>
-                                        <li>Tên tài khoản: TRAN HAI NAM</li>
+                                        <li><img src="<?php echo get_template_directory_uri(); ?>/img/tpbank.webp" alt="TPBank" width="250"></li>
+                                        <!-- <li><b>TPBank</b></li> -->
+                                        <li>Số tài khoản: <b>14719869999</b></li>
+                                        <li>Tên tài khoản: <b>TRAN HAI NAM</b></li>
                                     </ul>
                                     <ul>
-                                        <li>Techcombank</li>
-                                        <li>Số tài khoản: 19038145926015</li>
-                                        <li>Tên tài khoản: Công ty TNHH Công Nghệ INOVA</li>
+                                        <li><img src="<?php echo get_template_directory_uri(); ?>/img/techcombank.svg" alt="Techcombank" width="333"></li>
+                                        <!-- <li><b>Techcombank</b></li> -->
+                                        <li>Số tài khoản: <b>19038145926015</b></li>
+                                        <li>Tên tài khoản: <b>Công ty TNHH Công Nghệ INOVA</b></li>
                                     </ul>
                                 </div>
                                 <?php 
