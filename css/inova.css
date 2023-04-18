@@ -1950,6 +1950,73 @@ img {
   font-family: "Dancing Script", cursive;
 }
 
+#affiliate_info .info_box .mui-panel {
+  display: block;
+  text-align: center;
+  border-radius: 9px;
+}
+#affiliate_info .info_box .mui-panel .stat {
+  font-size: 48px;
+  display: block;
+  font-family: "Quicksand";
+}
+
+#affiliate_detail .aff_link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #b89062;
+  background: linear-gradient(60deg, rgb(196, 158, 113) 0%, rgb(154, 117, 74) 95%);
+  color: white;
+  padding: 20px;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+#affiliate_detail .aff_link .aff_label {
+  font-size: large;
+}
+#affiliate_detail .aff_link .aff_input {
+  width: 55%;
+  line-height: 33px;
+  padding: 3px 12px;
+  font-size: large;
+  margin: 5px 15px;
+  background: #f0f0f0;
+  border: 1px solid lightgray;
+}
+
+#commission .mui-panel {
+  background: linear-gradient(210deg, rgb(196, 158, 113) 0%, rgb(154, 117, 74) 95%);
+  color: white;
+  border-radius: 9px;
+}
+#commission .mui-panel .panel-body .summary-total .price .price-amount {
+  display: block;
+  font-size: 36px;
+  font-family: "Quicksand";
+}
+#commission .mui-panel .panel-body .summary-content {
+  border-top: 1px solid #caa982;
+  margin-top: 20px;
+  padding: 15px 0;
+}
+#commission .mui-panel .panel-body .summary-content .summary-list {
+  padding: 0;
+  list-style: none;
+}
+#commission .mui-panel .panel-body .summary-content .summary-list .list-item {
+  display: flex;
+  margin-bottom: 10px;
+}
+#commission .mui-panel .panel-body .summary-content .summary-list .list-item .item-name {
+  width: 50%;
+  display: block;
+}
+#commission .mui-panel .panel-body .summary-content .summary-list .list-item .item-value {
+  width: 50%;
+  text-align: right;
+}
+
 @media screen and (max-width: 1024px) {
   #login .large_left {
     display: block;
@@ -1967,6 +2034,11 @@ img {
   }
   #header_bar .mobile_menu {
     display: block;
+  }
+  .mui-col-md-10,
+  .mui-col-md-2 {
+    display: block;
+    width: 100%;
   }
 }
 @media screen and (max-width: 768px) and (orientation: portrait) {

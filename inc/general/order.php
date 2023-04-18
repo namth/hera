@@ -5,6 +5,7 @@ function activation_package($order_id){
     $activate   = get_field('activate', $order_id);
     # Lấy thông tin gói sản phẩm
     if ($package_id && $user_id && !$activate) {
+        $current_cards = get_field('total_cards', 'user_' . $user_id);
         $total_card = get_field('total_card', $package_id); # Số lượng thiệp
         $category   = get_field('category', $package_id); # Danh mục thiệp
         $activation_date = new DateTime(); # Ngày kích hoạt là ngày hôm nay.
@@ -12,7 +13,7 @@ function activation_package($order_id){
 
         # Cập nhật thông tin gói sản phẩm cho user
         update_field('field_63731ae11ebcb', $package_id, 'user_' . $user_id);
-        update_field('field_636e14f7cd13f', $total_card, 'user_' . $user_id);
+        update_field('field_636e14f7cd13f', $total_card + $current_cards, 'user_' . $user_id);
         update_field('field_636e1565cd142', $category, 'user_' . $user_id);
         update_field('field_636e150bcd140', $activation_date->format('Ymd'), 'user_' . $user_id);
         update_field('field_636e1537cd141', $activation_date->modify( "+1 month" )->format('Ymd'), 'user_' . $user_id);

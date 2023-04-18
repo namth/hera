@@ -63,6 +63,10 @@ if ( isset( $_GET['p'] ) && ($_GET['p'] != "")) {
                                 $partner = $_COOKIE['partner'];
                                 $price = get_field('price', $package_id);
                                 $coupon = get_field('coupon', $package_id);
+                                # check coupon xem có được sử dụng chưa, nếu limit thì set coupon về 0
+                                if (!check_coupon_limit($coupon, $current_user->ID)) {
+                                    $coupon = 0;
+                                }
                                 if ($coupon) {
                                     $final_price = get_value_after_coupon( $coupon, $package_id);
                                 } else {

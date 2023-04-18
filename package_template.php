@@ -22,6 +22,7 @@ $current_max_card = get_field('total_cards', 'user_' . $current_user_id);
             <div class="mui-panel" id="list_product">
                 <h3 class="title_general mui--divider-bottom"><?php the_title(); ?></h3>
                 <div class="package">
+                    <div class="mui-row">
                     <?php 
                         $args   = array(
                             'post_type'     => 'package',
@@ -31,10 +32,12 @@ $current_max_card = get_field('total_cards', 'user_' . $current_user_id);
 
                         $query = new WP_Query($args);
 
+                        $i = 0;
                         if ($query->have_posts()) {
                             while ($query->have_posts()) {
                                 $query->the_post();
                                 
+                                $i++;
                                 $total_card = get_field('total_card');
                                 $price      = get_field('price');
                                 $category   = get_field('category');
@@ -73,23 +76,27 @@ $current_max_card = get_field('total_cards', 'user_' . $current_user_id);
                                                 <?php 
                                                     the_content(); 
 
-                                                    if (get_the_ID() == $current_package_id) {
+                                                    /* if (get_the_ID() == $current_package_id) {
                                                         echo '<span class="package_locked">Bạn đang sử dụng gói này</span>';
                                                     } else if ($total_card < $current_max_card) {
                                                         echo '<span class="package_locked">Liên hệ để đổi gói</span>';
                                                     } else {
                                                         echo '<a class="mui-btn hera-btn" href="' . get_bloginfo('url') . '/xac-nhan-thanh-toan/?p=' . $package_id . '">Đăng ký</a>';
-                                                    }
+                                                    } */
+                                                    echo '<a class="mui-btn hera-btn" href="' . get_bloginfo('url') . '/xac-nhan-thanh-toan/?p=' . $package_id . '">Đăng ký</a>';
                                                 ?>
                                                 
                                             </div>
                                         </div>
                                     </div>
                                 <?php
+                                if ($i%3 == 0) {
+                                    echo '</div><div class="mui-row">';
+                                }
                             } wp_reset_postdata();
                         }
                     ?>
-
+                    </div>
                 </div>
             </div>
         </div>

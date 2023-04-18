@@ -425,3 +425,51 @@ function echo_to_string( $function )
     ob_end_clean();
     return $html;
 }
+
+
+# check coupon xem có được sử dụng chưa 
+function check_coupon_limit($coupon_id, $user_id){
+    $limit = get_field('limit', $coupon_id);
+
+    # nếu limit bằng 0 thì trả về true (mã hợp lệ)
+    if (!$limit) {
+        return true;
+    }
+    
+    $args   = array(
+        'post_type'     => 'inova_order',
+        'posts_per_page' => 999,
+        'author'        => $user_id,
+        'post_status'   => 'publish',
+        'orderby' => 'ID',
+        'order' => 'DESC',
+        'meta_query'    => array(
+            array(
+                'key'       => 'status',
+                'value'     => array('Đã thanh toán', 'Thanh toán dư'),
+                'compare'   => 'IN',
+            ),
+        ),
+    );
+
+    $query = new WP_Query($args);
+    if ($query->have_posts()) {
+        while ($query->have_posts()) {
+            $query->the_post();
+
+            $coupon  = get_field('coupon');
+            # nếu có mã giảm giá được sử dụng thành công thì trừ giới hạn đi 1
+            if ($coupon == $coupon_id) {
+                $limit--;
+            }
+
+            # nếu limit về 0 thì trả về false 
+            if (!$limit) {
+                return $limit;
+            }
+        }
+    }
+
+    # nếu check hết mà limit vẫn dương thì trả về limit
+    return $limit;
+}

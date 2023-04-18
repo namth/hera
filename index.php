@@ -35,7 +35,6 @@ $total_customer = 0;
 $normal_license = get_field('normal_card', 'user_' . $current_user_id);
 $vip_license    = get_field('vip_card', 'user_' . $current_user_id);
 
-check_bank_transaction_history();
 ?>
 <div class="mui-container-fluid">
     <div class="mui-row">
