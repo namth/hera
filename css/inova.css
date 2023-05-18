@@ -57,6 +57,7 @@
 #header #center_logo {
   display: flex;
   justify-content: center;
+  margin-bottom: 10px;
 }
 #header #center_logo a img {
   width: 105px;
@@ -77,82 +78,6 @@
   color: #9e7c55;
 }
 
-#content {
-  background: #fef8f4 url("../img/asset_bg.png") no-repeat top left;
-  color: #535353;
-  font-size: 16px;
-  border-top: 1px solid #eee2d8;
-}
-#content h1 {
-  font-family: "Dancing Script";
-  font-size: 45px;
-  line-height: 48px;
-  color: #1a5675;
-}
-#content h2 {
-  font-family: "Dancing Script";
-  font-size: 31px;
-  line-height: 36px;
-  color: #1a5675;
-  margin: 25px 0px;
-}
-#content #section1 {
-  display: flex;
-  padding: 20px 0;
-}
-#content #section1 .left_content {
-  padding-left: 5%;
-  width: 42%;
-}
-#content #section2 {
-  padding: 20px;
-}
-#content #section2 .center_title {
-  display: block;
-  text-align: center;
-}
-#content #section3 .center_title {
-  display: block;
-  text-align: center;
-  margin-bottom: 60px;
-}
-#content #section3 .right_detail .mui-row {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-#content #section3 .right_detail .mui-row .iconbox {
-  background: white;
-  padding: 20px 30px;
-  box-shadow: 0px 2px 6px #f3f3f3;
-  border-radius: 8px;
-  text-align: center;
-}
-#content #section3 .right_detail .mui-row .iconbox:hover {
-  box-shadow: 0px 2px 6px #e8ddd5;
-}
-#content #section3 .right_detail .mui-row .iconbox img {
-  height: 91px;
-}
-#content #section4 {
-  background: white;
-  box-shadow: 0px 0px 6px #f1e1d0;
-  padding: 25px 0 50px;
-  margin: 20px 0;
-}
-#content #section4 .center_title {
-  display: block;
-  text-align: center;
-  margin-bottom: 30px;
-}
-#content #section4 .numberbox {
-  text-align: center;
-}
-#content #section4 .numberbox .number {
-  font-size: 60px;
-  font-weight: bold;
-  letter-spacing: -5px;
-}
 @font-face {
   font-family: "Aphrodite";
   src: url("../fonts/aphrodite.ttf") format("truetype");
@@ -2007,14 +1932,96 @@ img {
 #commission .mui-panel .panel-body .summary-content .summary-list .list-item {
   display: flex;
   margin-bottom: 10px;
+  align-items: center;
 }
 #commission .mui-panel .panel-body .summary-content .summary-list .list-item .item-name {
-  width: 50%;
+  width: 63%;
   display: block;
 }
 #commission .mui-panel .panel-body .summary-content .summary-list .list-item .item-value {
-  width: 50%;
+  width: 37%;
   text-align: right;
+}
+#commission .mui-panel .panel-footer {
+  text-align: center;
+}
+#commission .mui-panel .panel-footer .hera-btn {
+  background: antiquewhite;
+  color: #684d2c;
+  box-shadow: 0 3px 2px #7d6666;
+  padding: 0 20px;
+}
+#commission .mui-panel .panel-footer .hera-btn i.fa {
+  padding-right: 5px;
+}
+
+#withdraw h3 {
+  margin-top: 10px;
+}
+#withdraw #withdraw_form {
+  border-radius: 9px;
+}
+#withdraw #withdraw_form .commission {
+  font-size: 24px;
+  margin-bottom: 24px;
+  display: block;
+  color: #27af01;
+}
+#withdraw #withdraw_form .commission_request {
+  margin-bottom: 10px;
+}
+#withdraw #withdraw_form .commission_request input {
+  margin-top: 10px;
+  background: #f5efe8;
+  color: #906f47;
+  padding: 3px 9px;
+  border-radius: 6px;
+  font-size: 16px;
+  height: 36px;
+}
+#withdraw #withdraw_form .commission_request input:focus {
+  border-bottom-color: #906f47;
+}
+#withdraw #withdraw_form .confirm_request {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+#withdraw #withdraw_form .confirm_request .amount {
+  font-size: 24px;
+  color: #b89062;
+}
+#withdraw #withdraw_info .title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+#withdraw #withdraw_info .title a {
+  color: antiquewhite;
+  font-size: 18px;
+  padding: 2px 6px;
+  border-radius: 20px;
+}
+#withdraw #withdraw_info .title a:hover {
+  color: #bb9568;
+  background: antiquewhite;
+}
+#withdraw #withdraw_info .bank_info span {
+  display: block;
+  color: antiquewhite;
+  line-height: 28px;
+}
+#withdraw #withdraw_info .bank_info .bank_number {
+  font-weight: bold;
+}
+#withdraw #withdraw_info .bank_info .add_new {
+  color: wheat;
+  text-align: center;
+  padding: 15px;
+  display: block;
+  border: 2px dashed;
+  font-size: 16px;
+  background: #bb9261;
 }
 
 @media screen and (max-width: 1024px) {

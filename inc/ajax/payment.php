@@ -113,6 +113,12 @@ function createInvoice() {
         # Update dữ liệu vào hoá đơn mới tạo
         if ($partner) {
             update_field('field_63eb529586f37', $partner, $inserted);
+        } else {
+            # nếu ko có dữ liệu partner từ đối tác thì lấy dữ liệu người giới thiệu từ user 
+            $partner = get_field('inviter', 'user_' . $current_user->ID);
+            if ($partner) {
+                update_field('field_63eb529586f37', $partner, $inserted);
+            }
         }
         update_field('field_62e6ae7175ee5', $current_user->ID, $inserted); # customer
         update_field('field_62eb93b78ca79', 'Chưa thanh toán', $inserted); # status

@@ -8,6 +8,7 @@ function all_my_hooks(){
     # function library
     require_once( $dir . '/inc/api_function.php');
     require_once( $dir . '/inc/ajax_function.php');
+    require_once( $dir . '/inc/cronjob.php');
     # Init SESSION
     if(!session_id()) {
         session_start();
@@ -188,46 +189,6 @@ function incrementalHash($len = 6){
     $rand = '';
     foreach (array_rand($seed, $len) as $k) $rand .= $seed[$k];
     return $rand;
-}
-
-/* 
-* Check xem thanh toán nào quá hạn 7 ngày thì chuyển sang trạng thái huỷ thanh toán
-*/
-function check_payment_status(){
-    $status = 'Chưa thanh toán';
-    $now = current_time('timestamp', 7);
-
-    /* query tat ca nhung don hang chua thanh toan */
-    $args   = array(
-        'post_type'     => 'inova_order',
-        'posts_per_page' => -1,
-        'post_status'   => 'publish',
-        'meta_query'    => array(
-            array(
-                'key'       => 'status',
-                'value'     => $status,
-                'compare'   => '=',
-            ),
-        ),
-    );
-
-    $query = new WP_Query($args);
-
-    if ($query->have_posts()) {
-        while ($query->have_posts()) {
-            $query->the_post();
-
-            /* Kiểm tra ngày hiện tại và ngày tạo đơn có quá 7 ngày không */
-            $start_date = strtotime(get_the_date('d-m-Y'));
-            $end_date = strtotime("+7 day", $start_date);
-
-            # miss deadline
-            if ($now > $end_date) {
-                # cập nhật trạng thái huỷ
-                update_field('field_62eb93b78ca79', 'Huỷ'); # status
-            }
-        }
-    }
 }
 
 # reading excel PHPExcel

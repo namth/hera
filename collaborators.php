@@ -38,8 +38,14 @@ if ( is_user_logged_in() && (current_user_can('contributor') || current_user_can
                             <a href="<?php echo get_permalink() . '?direct=main'; ?>">Home</a>
                         </li>
                         <!-- <li>
-                            <a href="<?php echo get_permalink() . '?direct=users'; ?>">Danh sách user</a>
+                            <a href="<?php echo get_permalink() . '?direct=withdraw'; ?>">Yêu cầu rút tiền</a>
                         </li> -->
+                        <li>
+                            <a href="<?php echo get_permalink() . '?direct=history'; ?>">Lịch sử rút tiền</a>
+                        </li>
+                        <li>
+                            <a href="<?php echo get_permalink() . '?direct=bank'; ?>">Sửa đổi thông tin tài khoản</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -51,14 +57,24 @@ if ( is_user_logged_in() && (current_user_can('contributor') || current_user_can
                         $page = $_GET['direct'];
 
                         switch ($page) {
-                            case 'users':
-                                /* require_once( $dir . '/colaborator/users.php');
-                                break; */
+                            case 'withdraw':
+                                require_once( $dir . '/colaborator/withdraw_request.php');
+                                break;
+                            
+                            case 'history':
+                                require_once( $dir . '/colaborator/history.php');
+                                break;
+                            
+                            case 'bank':
+                                require_once( $dir . '/colaborator/update_bank.php');
+                                break;
                             
                             default:
                                 require_once( $dir . '/colaborator/main.php');
                                 break;
                         }
+                    } else {
+                        require_once( $dir . '/colaborator/main.php');
                     }
                 ?>
             </div>

@@ -5,6 +5,13 @@ if (is_user_logged_in()) {
     $login_amount = get_user_meta($user->ID, 'login_amount', true);
 
     $link_avatar = get_avatar_url($user->ID);
+
+    if (($login_amount == '1') && $_COOKIE['partner']) {
+        $inviter = get_field('inviter', 'user_' . $user->ID);
+        if ($inviter) {
+            update_field('field_64480251d623a', $_COOKIE['partner'], 'user_' . $user->ID);
+        }
+    }
 ?>
     <div class="mui-panel" id="header_bar">
         <div class="logo">

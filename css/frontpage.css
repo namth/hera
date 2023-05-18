@@ -27,6 +27,7 @@
 #header #center_logo {
   display: flex;
   justify-content: center;
+  margin-bottom: 10px;
 }
 #header #center_logo a img {
   width: 105px;
@@ -45,81 +46,4 @@
   padding: 10px 20px;
   text-transform: uppercase;
   color: #9e7c55;
-}
-
-#content {
-  background: #fef8f4 url("../img/asset_bg.png") no-repeat top left;
-  color: #535353;
-  font-size: 16px;
-  border-top: 1px solid #eee2d8;
-}
-#content h1 {
-  font-family: "Dancing Script";
-  font-size: 45px;
-  line-height: 48px;
-  color: #1a5675;
-}
-#content h2 {
-  font-family: "Dancing Script";
-  font-size: 31px;
-  line-height: 36px;
-  color: #1a5675;
-  margin: 25px 0px;
-}
-#content #section1 {
-  display: flex;
-  padding: 20px 0;
-}
-#content #section1 .left_content {
-  padding-left: 5%;
-  width: 42%;
-}
-#content #section2 {
-  padding: 20px;
-}
-#content #section2 .center_title {
-  display: block;
-  text-align: center;
-}
-#content #section3 .center_title {
-  display: block;
-  text-align: center;
-  margin-bottom: 60px;
-}
-#content #section3 .right_detail .mui-row {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-#content #section3 .right_detail .mui-row .iconbox {
-  background: white;
-  padding: 20px 30px;
-  box-shadow: 0px 2px 6px #f3f3f3;
-  border-radius: 8px;
-  text-align: center;
-}
-#content #section3 .right_detail .mui-row .iconbox:hover {
-  box-shadow: 0px 2px 6px #e8ddd5;
-}
-#content #section3 .right_detail .mui-row .iconbox img {
-  height: 91px;
-}
-#content #section4 {
-  background: white;
-  box-shadow: 0px 0px 6px #f1e1d0;
-  padding: 25px 0 50px;
-  margin: 20px 0;
-}
-#content #section4 .center_title {
-  display: block;
-  text-align: center;
-  margin-bottom: 30px;
-}
-#content #section4 .numberbox {
-  text-align: center;
-}
-#content #section4 .numberbox .number {
-  font-size: 60px;
-  font-weight: bold;
-  letter-spacing: -5px;
 }/*# sourceMappingURL=frontpage.css.map */

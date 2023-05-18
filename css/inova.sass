@@ -1830,16 +1830,102 @@ img
                     .list-item
                         display: flex
                         margin-bottom: 10px
-                        
+                        align-items: center
+
                         .item-name
-                            width: 50%
+                            width: 63%
                             display: block
 
                         .item-value
-                            width: 50%
+                            width: 37%
                             text-align: right
 
-                    
+        .panel-footer
+            text-align: center
+
+            .hera-btn
+                background: antiquewhite
+                color: #684d2c
+                box-shadow: 0 3px 2px #7d6666
+                padding: 0 20px
+
+                i.fa
+                    padding-right: 5px
+
+#withdraw
+    h3
+        margin-top: 10px
+
+    #withdraw_form
+        border-radius: 9px
+        
+        .commission
+            font-size: 24px
+            margin-bottom: 24px
+            display: block
+            color: #27af01
+
+        .commission_request
+            margin-bottom: 10px
+
+            input
+                margin-top: 10px
+                background: #f5efe8
+                color: #906f47
+                padding: 3px 9px
+                border-radius: 6px
+                font-size: 16px
+                height: 36px
+
+                &:focus
+                    border-bottom-color: #906f47
+
+        .confirm_request
+            display: flex
+            align-items: center
+            justify-content: space-between
+
+            .amount
+                font-size: 24px
+                color: #b89062
+
+    #withdraw_info
+        .title
+            display: flex
+            align-items: center
+            justify-content: space-between
+
+            a
+                color: antiquewhite
+                font-size: 18px
+                padding: 2px 6px
+                border-radius: 20px
+
+                &:hover
+                    color: #bb9568
+                    background: antiquewhite
+
+        .bank_info
+            span
+                display: block
+                color: antiquewhite
+                line-height: 28px
+
+            .bank
+
+            .name
+
+            .bank_number
+                font-weight: bold
+
+            .add_new
+                color: wheat
+                text-align: center
+                padding: 15px
+                display: block
+                border: 2px dashed
+                font-size: 16px
+                background: #bb9261
 
 @include Responsive(XL)
 @include Responsive(MD)

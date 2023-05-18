@@ -85,10 +85,13 @@ wp_delete_attachment($current_attachment_id); */
                     <div class="line"></div>
                     <img src="<?php echo get_template_directory_uri() . '/img/royal_line_1.png'; ?>" alt="">
                 </div>
-                <div class="update_user_button">
+                <?php 
+                    echo do_shortcode('[nextend_social_login login="1" link="1" unlink="1" align="center"]');
+                ?>
+                <!-- <div class="update_user_button">
                     <a href="http://" class="mui-btn hera-btn">Sửa thông tin tài khoản</a>
                     <a href="http://" class="mui-btn hera-btn">Đổi mật khẩu</a>
-                </div>
+                </div> -->
             </div>
         </div>
         <div class="mui-col-md-2">
