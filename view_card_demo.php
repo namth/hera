@@ -3,14 +3,32 @@
 * Template Name: View Card Demo
 */
 $_group         = get_query_var('group');
-$group          = inova_encrypt($_group, 'd');
+if ($_group) {
+    $group          = inova_encrypt($_group, 'd');
+    
+    $cardid         = get_field('card_id', $group);
+    $html           = get_field('html', $group);
+    $noi_dung_1     = get_field('content_1', $group)?get_field('content_1', $group):get_field('content_1', 'option');
+    $noi_dung_2     = get_field('content_2', $group)?get_field('content_2', $group):get_field('content_2', 'option');
+    $noi_dung_3     = get_field('content_3', $group)?get_field('content_3', $group):get_field('content_3', 'option');
+    $loi_moi        = get_field('custom_invite', $group)?get_field('custom_invite', $group):get_field('wedding_invitation', 'option');
+} else {
+    $cardid         = $_GET['cardid'];
+    $token = get_field('token', 'option');
+    if (!check_token($token)) {
+        # Kiểm tra nếu token vẫn hoạt động thì thôi, nếu không thì phải lấy lại token mới.
+        $token = refresh_token();
+    }
+    $api_base_url = get_field('api_base_url', 'option');
+    $api_url = $api_base_url . '/wp-json/inova/v1/html/' . $cardid . '?status=private';
+    $mycard = inova_api($api_url, $token, 'GET', '');
 
-$cardid         = get_field('card_id', $group);
-$html           = get_field('html', $group);
-$noi_dung_1     = get_field('content_1', $group)?get_field('content_1', $group):get_field('content_1', 'option');
-$noi_dung_2     = get_field('content_2', $group)?get_field('content_2', $group):get_field('content_2', 'option');
-$noi_dung_3     = get_field('content_3', $group)?get_field('content_3', $group):get_field('content_3', 'option');
-$loi_moi        = get_field('custom_invite', $group)?get_field('custom_invite', $group):get_field('wedding_invitation', 'option');
+    $html           = $mycard->html;
+    $noi_dung_1     = $mycard->content1 ? $mycard->content1 : get_field('content_1', 'option');
+    $noi_dung_2     = $mycard->content2 ? $mycard->content2 : get_field('content_2', 'option');
+    $noi_dung_3     = $mycard->content3 ? $mycard->content3 : get_field('content_3', 'option');
+    $loi_moi        = $mycard->content4 ? $mycard->content4 : get_field('wedding_invitation', 'option');
+}
 
 # co dau chu re
 $groom          = get_field('groom', 'option');
@@ -76,7 +94,7 @@ $data_replace = array(
     '{google_maps_dam_cuoi}'    => $button_maps_dam_cuoi,
     '{ngay_duong_lich_an_co}'   => $wedding_time[0],
     '{ngay_am_lich_an_co}'      => $wedding_moon_date,
-    '{gio_an_co}'   => $wedding_time[1],
+    '{gio_an_co}'   => convert_time($wedding_time[1]),
     '{dia_diem_an_co}'          => $wedding_adress,
     '{google_maps_an_co}'       => $button_maps_an_co,
     '{function_button}'         => $function_div,
@@ -84,7 +102,7 @@ $data_replace = array(
     '{wp_footer}'   => $wp_footer,
     '{2}'           => strtolower($vai_ve),
     '{1}'           => strtolower($xung_ho),
-    // '{ten}'         => $name,
+    '{ten}'         => $name,
     '{wedding_dayname}'     => $wedding_dayname,
     '{wedding_day}'         => $wedding_day,
     '{wedding_month}'       => $wedding_month,

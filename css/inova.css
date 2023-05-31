@@ -713,7 +713,7 @@ img {
 }
 .heracard_list .heracard .info_card {
   position: relative;
-  padding: 5px 50px 5px 0;
+  padding: 12px 50px 8px 0;
 }
 .heracard_list .heracard .info_card .quantity {
   position: absolute;

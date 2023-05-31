@@ -38,6 +38,9 @@ if ( is_user_logged_in() && current_user_can('administrator') ) {
                             <a href="<?php echo get_permalink() . '?direct=index'; ?>">Home</a>
                         </li>
                         <li>
+                            <a href="<?php echo get_permalink() . '?direct=templates'; ?>">Duyệt mẫu mới</a>
+                        </li>
+                        <li>
                             <a href="<?php echo get_permalink() . '?direct=users'; ?>">Danh sách user</a>
                         </li>
                     </ul>
@@ -54,6 +57,10 @@ if ( is_user_logged_in() && current_user_can('administrator') ) {
                             switch ($page) {
                                 case 'users':
                                     require_once( $dir . '/webadmin/users.php');
+                                    break;
+                                
+                                case 'templates':
+                                    require_once( $dir . '/webadmin/templates.php');
                                     break;
                                 
                                 default:
