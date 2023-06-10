@@ -2,6 +2,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Ms+Madi&display=swap");
 .blink_me {
   animation: blinker 4s cubic-bezier(0.77, 0, 0.18, 1) infinite;
   animation-direction: normal;
@@ -150,6 +151,9 @@ img {
   color: white;
   background: #ff1212;
   opacity: 0.8;
+}
+.hera-btn i {
+  margin: 0 5px 0 -5px;
 }
 
 #mui-overlay {
@@ -679,6 +683,38 @@ img {
 .heracard_list .loader img {
   margin: 0 auto;
 }
+.heracard_list .first_group {
+  font-size: 16px;
+}
+.heracard_list .first_group span.example {
+  font-size: 14px;
+  font-style: italic;
+  color: #b89062;
+}
+.heracard_list .first_group button {
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  margin: 8px 0px;
+  color: antiquewhite;
+  background: #b89062;
+  border: 1px dotted #fff;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.heracard_list .first_group button i.fa {
+  font-size: 20px;
+  margin-right: 12px;
+}
+.heracard_list .first_group:hover {
+  border-color: #71aa4f;
+}
+.heracard_list .first_group:hover button {
+  color: #e5fad7;
+  background: #6da84b;
+  border-color: #e5fad7;
+  border-radius: 8px;
+}
 .heracard_list .addnew_card {
   text-align: center;
   height: 153px;
@@ -691,14 +727,15 @@ img {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
 .heracard_list .addnew_card .fa {
   font-size: 48px;
 }
 .heracard_list .addnew_card:hover {
   color: #1c1c1c;
-  border-color: #4a4a4a;
-  background: #f4f4f4;
+  border-color: #71aa4f;
+  background: #f5ffef;
 }
 .heracard_list .heracard {
   position: relative;
@@ -840,7 +877,7 @@ img {
   justify-content: center;
   flex-wrap: wrap;
   gap: 8px;
-  padding: 12px 3px;
+  padding: 12px 15px;
   background: whitesmoke;
 }
 .use_card form .form_element {
@@ -1036,12 +1073,13 @@ img {
   display: block;
   width: calc(50% - 65px);
   padding: 22px;
-  font-size: x-large;
+  font-size: 36px;
   background: #fff4f4;
   color: #d52831;
   margin: 20px;
   text-align: center;
-  font-family: "Aphrodite";
+  font-family: "Ms Madi";
+  text-transform: capitalize;
 }
 #main-info .mui-textfield span {
   min-width: 80%;
@@ -2022,6 +2060,47 @@ img {
   border: 2px dashed;
   font-size: 16px;
   background: #bb9261;
+}
+
+.guideline {
+  background: linear-gradient(180deg, rgb(196, 158, 113) 0%, rgb(154, 117, 74) 95%);
+  color: antiquewhite;
+  border-radius: 9px;
+  padding: 15px;
+  margin-bottom: 15px;
+  font-size: 16px;
+  font-family: "Quicksand";
+}
+.guideline h2 {
+  margin: 5px 0 10px;
+  color: floralwhite;
+}
+.guideline .action {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}
+.guideline .action .mui-btn {
+  box-shadow: 0 3px 2px #7d6666;
+  padding: 0 20px;
+  border-radius: 5px;
+  font-weight: bold;
+}
+.guideline .action .mui-btn.hera-btn {
+  background: #faf3d7;
+  color: #a87b4b;
+}
+.guideline .action .mui-btn.hera-btn:hover {
+  opacity: 1;
+  box-shadow: 0 2px 4px #272222;
+}
+.guideline .action .no-btn {
+  padding: 10px 15px;
+  text-transform: uppercase;
+  color: #d1ad7d;
+}
+.guideline .action .no-btn:hover {
+  color: antiquewhite;
 }
 
 @media screen and (max-width: 1024px) {

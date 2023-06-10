@@ -5,9 +5,13 @@
 $user_login = get_query_var('myacc');
 $user = get_user_by('login', $user_login);
 $_group = get_query_var('group');
-$_invitee = get_query_var('invitee');
+$customer = get_query_var('invitee');
 $group = inova_encrypt($_group, 'd');
-$customer = inova_encrypt($_invitee, 'd');
+$package_id = get_field('package_id', 'user_' . $user->ID);
+if(!($package_id || is_user_logged_in())){
+    wp_redirect(get_permalink(5));
+    exit;
+}
 
 $cardid         = get_field('card_id', $group);
 $html           = get_field('html', $group);

@@ -83,13 +83,21 @@ function viewDetailCard(){
                     <?php
                         }
                         wp_reset_postdata();
+
+                        echo '<div class="mui-row">
+                                <button id="close_select_card" class="mui-btn mui-btn--raised"><i class="fa fa-close"></i></button>
+                                <input type="submit" value="Chọn thiệp này" class="mui-btn mui-btn--raised mui-btn--primary">
+                            </div>';
+                    } else {
+                        echo '<span><i>Bạn phải tạo nhóm khách mời trước khi chọn thiệp. Hãy quay lại trang chủ để tạo nhóm.</i></span>';
+                        echo '<div class="mui-row">
+                                <button id="close_select_card" class="mui-btn mui-btn--raised"><i class="fa fa-close"></i></button>
+                                <a href="' . get_bloginfo('url') . '" class="mui-btn mui-btn--raised mui-btn--primary">Quay lại</a>
+                            </div>';
                     }
                     wp_nonce_field('post_nonce', 'post_nonce_field');
                     ?>
-                    <div class="mui-row">
-                        <button id="close_select_card" class="mui-btn mui-btn--raised"><i class="fa fa-close"></i></button>
-                        <input type="submit" value="Chọn thiệp này" class="mui-btn mui-btn--raised mui-btn--primary">
-                    </div>
+                    
                 </form>
             </div>
         </div>

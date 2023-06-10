@@ -14,6 +14,7 @@ $lightBG: #ffefe0
 
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap')
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap')
+@import url('https://fonts.googleapis.com/css2?family=Ms+Madi&display=swap')
 
 body
     background: $lightsmokeColor
@@ -69,6 +70,9 @@ img
         color: white
         background: #ff1212
         opacity: 0.8
+
+    i
+        margin: 0 5px 0 -5px
 
 #mui-overlay
     display: flex
@@ -585,6 +589,38 @@ img
         img
             margin: 0 auto
 
+    .first_group
+        font-size: 16px
+
+        span.example
+            font-size: 14px
+            font-style: italic
+            color: #b89062
+
+        button
+            display: flex
+            align-items: center
+            padding: 10px 15px
+            margin: 8px 0px
+            color: antiquewhite
+            background: #b89062
+            border: 1px dotted #fff
+            border-radius: 4px
+            cursor: pointer
+
+            i.fa
+                font-size: 20px
+                margin-right: 12px
+
+        &:hover
+            border-color: #71aa4f
+            
+            button
+                color: #e5fad7
+                background: #6da84b
+                border-color: #e5fad7
+                border-radius: 8px
+
     .addnew_card
         text-align: center
         height: 153px
@@ -597,14 +633,15 @@ img
         display: flex
         justify-content: center
         align-items: center
+        flex-direction: column
 
         .fa
             font-size: 48px
 
         &:hover
             color: #1c1c1c
-            border-color: #4a4a4a
-            background: #f4f4f4
+            border-color: #71aa4f
+            background: #f5ffef
 
     .heracard
         position: relative
@@ -743,7 +780,7 @@ img
         justify-content: center
         flex-wrap: wrap
         gap: 8px
-        padding: 12px 3px
+        padding: 12px 15px
         background: whitesmoke
 
         .form_element
@@ -935,12 +972,13 @@ img
         display: block
         width: calc(50% - 65px)
         padding: 22px
-        font-size: x-large
+        font-size: 36px
         background: #fff4f4
         color: #d52831
         margin: 20px
         text-align: center
-        font-family: 'Aphrodite'
+        font-family: 'Ms Madi'
+        text-transform: capitalize
 
         span
             min-width: 80%
@@ -1858,7 +1896,7 @@ img
 
     #withdraw_form
         border-radius: 9px
-        
+
         .commission
             font-size: 24px
             margin-bottom: 24px
@@ -1926,6 +1964,46 @@ img
                 border: 2px dashed
                 font-size: 16px
                 background: #bb9261
+
+.guideline
+    background: linear-gradient(180deg, rgb(196, 158, 113) 0%, rgb(154, 117, 74) 95%)
+    color: antiquewhite
+    border-radius: 9px
+    padding: 15px
+    margin-bottom: 15px
+    font-size: 16px
+    font-family: "Quicksand"
+
+    h2
+        margin: 5px 0 10px
+        color: floralwhite
+
+    .action
+        display: flex
+        justify-content: left
+        align-items: center
+
+        .mui-btn
+            box-shadow: 0 3px 2px #7d6666
+            padding: 0 20px
+            border-radius: 5px
+            font-weight: bold
+
+            &.hera-btn
+                background: #faf3d7
+                color: #a87b4b
+
+                &:hover
+                    opacity: 1
+                    box-shadow: 0 2px 4px #272222
+
+        .no-btn
+            padding: 10px 15px
+            text-transform: uppercase
+            color: #d1ad7d
+
+            &:hover
+                color: antiquewhite
 
 @include Responsive(XL)
 @include Responsive(MD)

@@ -63,7 +63,6 @@ function inovacards_load_scripts()
         ));
     } else {
         /* Css */
-        // wp_enqueue_style('boostrap', 'https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css');
         wp_enqueue_style('mui', get_template_directory_uri() . '/css/mui.min.css');
         wp_enqueue_style('main-style', get_template_directory_uri() . '/style.css');
         wp_enqueue_style('font-awesome', get_template_directory_uri() . '/css/font-awesome.css');
@@ -114,7 +113,7 @@ function custom_rewrite_rules() {
     $wp->add_query_var('myacc');
     $wp->add_query_var('group');
     $wp->add_query_var('invitee');
-    add_rewrite_rule('^myacc/(.*)/(.*)/(.*)?', 'index.php?page_id=72&myacc=$matches[1]&group=$matches[2]&invitee=$matches[3]', 'top');
+    add_rewrite_rule('^myacc/(.*)-(.*)-(.*)?', 'index.php?page_id=72&myacc=$matches[1]&group=$matches[2]&invitee=$matches[3]', 'top');
 }
 add_action('init', 'custom_rewrite_rules');
 

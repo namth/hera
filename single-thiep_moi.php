@@ -189,9 +189,9 @@ if (have_posts()) {
                                 </div>
                             </div>
                             <div class="mui-col-md-4">
-                                <a href="<?php echo $link_select_card; ?>" class="mui-btn hera-btn">Chọn thiệp</a><br>
-                                <a href="<?php echo $link_view_demo; ?>" target="_blank" class="mui-btn hera-btn">Xem mẫu</a><br>
-                                <a href="<?php echo $link_edit_content; ?>" class="mui-btn hera-btn">Sửa nội dung thiệp</a>
+                                <a href="<?php echo $link_select_card; ?>" class="mui-btn hera-btn"><i class="fa fa-pagelines" aria-hidden="true"></i> Chọn thiệp</a><br>
+                                <a href="<?php echo $link_view_demo; ?>" target="_blank" class="mui-btn hera-btn"><i class="fa fa-weibo" aria-hidden="true"></i> Xem mẫu</a><br>
+                                <a href="<?php echo $link_edit_content; ?>" class="mui-btn hera-btn"><i class="fa fa-foursquare" aria-hidden="true"></i> Sửa nội dung thiệp</a>
                             </div>
                             <div class="mui-col-md-5 statistic">
                                 <h4>Thống kê</h4>
@@ -220,6 +220,11 @@ if (have_posts()) {
 
                         <h3 class="mb10">Danh sách khách</h3>
                         <div class="mui-row">
+                            <div class="mui-col-md-12 mb10">
+                                <div class="notification">
+                                    <span><i class="fa fa-eye-slash" aria-hidden="true"></i> Bạn chưa kích hoạt gói thiệp. Khách mời sẽ không thể xem link bạn gửi!</span> 
+                                    <a class="card_link" href="<?php echo get_bloginfo('url') . "/danh-sach-goi-san-pham/"; ?>"><i class="fa fa-gift" aria-hidden="true"></i> Xem gói thiệp</a></div>
+                            </div>
                             <div class="mui-col-md-12 mb10">
                                 <input type="hidden" name="groupid" value="<?php echo get_the_ID(); ?>">
                                 <button class="mui-btn hera-btn" onclick="activateModal()">
@@ -273,10 +278,10 @@ if (have_posts()) {
                                                     $guests = $name . ' và ' . $guest_attach;
                                                 } else $guests = $name;
 
-                                                $viewlink = get_bloginfo('url') . '/myacc/' . $current_user->user_login . '/' . $groupid_encode . '/' . inova_encrypt($row_index, 'e');
+                                                $viewlink = get_bloginfo('url') . '/myacc/' . $current_user->user_login . '-' . $groupid_encode . '-' . $row_index;
                                         ?>
                                                 <tr>
-                                                    <td><?php echo $row_index; ?></td>
+                                                    <td data-encode="<?php echo $data_card_encode; ?>"><?php echo $row_index; ?></td>
                                                     <td><?php echo $guests; ?></td>
                                                     <td><?php echo get_sub_field('xung_ho'); ?></td>
                                                     <td><?php echo get_sub_field('phone'); ?></td>
@@ -306,7 +311,7 @@ if (have_posts()) {
                                                     <td>
                                                         <?php
                                                             # Nếu chưa đăng ký gói thì chưa hiện tính năng chia sẻ
-                                                            if ($package_id && $card_id) {
+                                                            if ($card_id) {
                                                                 echo '<a href="' . $viewlink . '" target="_blank"><i class="fa fa-eye"></i></a>';
                                                             }
                                                         ?>
@@ -322,6 +327,7 @@ if (have_posts()) {
                                         ?>
                                     </tbody>
                                 </table>
+                                
                             </div>
                         </div>
                     </div>

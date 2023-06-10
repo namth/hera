@@ -32,7 +32,7 @@ $listcards = inova_api($api_url, $token, 'GET', '');
                 echo "<td>" . $card->ID . "</td>";
                 echo "<td><img src='" . $card->thumbnail . "' width=80/></td>";
                 echo "<td>" . $card->title . "</td>";
-                echo "<td><a href='" . get_bloginfo('url') . "/view-demo/?cardid=" . $card->ID . "' target='_blank'>Xem mẫu</a></td>";
+                echo "<td><a href='" . get_bloginfo('url') . "/view-demo/?cardid=" . $card->ID . "' target='_blank'><i class='fa fa-eye' aria-hidden='true'></i> Xem mẫu</a></td>";
                 echo "</tr>";
             }
         }

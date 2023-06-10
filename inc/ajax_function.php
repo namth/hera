@@ -99,7 +99,6 @@ function listCardFromAPI() {
         ?>
         <div class="error_messages">
             <span>Xin lỗi, server hệ thống đang phản hồi chậm. Hãy thử lại sau một lát nữa.</span>
-            <span><?php echo $listcards->errors['http_request_failed'][0]; ?></span>
             <button class="mui-btn hera-btn" id='reload_card'>Tải lại</button>
             <img src="<?php echo get_template_directory_uri() . '/img/f_loading.gif'; ?>" alt="" style="display: none;">
         </div>

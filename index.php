@@ -1,11 +1,16 @@
 <?php
+
+if(isset($_GET['guide']) && ($_GET['guide'] == 'none')) {
+    setcookie('noguide', true, time() + 86400);
+}
+
 get_header();
 get_template_part('header', 'topbar');
 
 if (isset($_POST['group_name'])) {
     $group_name = strip_tags($_POST['group_name']);
-    $category = strip_tags($_POST['category']);
-    $permalink = gen_uuid();
+    $category   = strip_tags($_POST['category']);
+    $permalink  = gen_uuid();
     $args = array(
         'post_title'    => $group_name,
         'post_status'   => 'publish',
@@ -35,6 +40,21 @@ $total_customer = 0;
 $normal_license = get_field('normal_card', 'user_' . $current_user_id);
 $vip_license    = get_field('vip_card', 'user_' . $current_user_id);
 
+// echo $_COOKIE['noguide'];
+unset($_COOKIE['noguide']);
+
+$args   = array(
+    'post_type'     => 'thiep_moi',
+    'posts_per_page' => -1,
+    'author'        => $current_user_id,
+    'post_status'   => 'publish',
+);
+
+$count_query = new WP_Query($args);
+$count = $count_query->post_count;
+
+// echo $count;
+
 ?>
 <div class="mui-container-fluid">
     <div class="mui-row">
@@ -44,6 +64,20 @@ $vip_license    = get_field('vip_card', 'user_' . $current_user_id);
             ?>
         </div>
         <div class="mui-col-md-8 mt20">
+            <?php 
+                if(!$_COOKIE['noguide']) {
+            ?>
+            <div class="guideline">
+                <h2>Chào mừng bạn đến với Thiệp cưới Online HERA</h2>
+                <p>Nếu đây là lần đầu tiên bạn đến với trang web thì hãy tham khảo qua những hướng dẫn của chúng tôi. Hoặc làm theo những hướng dẫn ngắn gọn của chúng tôi ở từng mục.</p>
+                <div class="action">
+                    <a href="" class="mui-btn hera-btn">Xem hướng dẫn</a>
+                    <a href="?guide=none" class="no-btn">Tôi đã hiểu</a>
+                </div>
+            </div>
+            <?php 
+                }
+            ?>
             <div class="mui-panel" id="list_my_card">
                 <h3 class="title_general mui--divider-bottom">Danh sách thiệp mời của nhà trai</h3>
                 <div class="heracard_list">
@@ -104,14 +138,24 @@ $vip_license    = get_field('vip_card', 'user_' . $current_user_id);
                             }
                         }
                         wp_reset_postdata();
-                    }
 
+                        echo '<div class="mui-col-md-3">
+                                <button class="addnew_card" onclick="activateModal(\'groom\')">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                            </div>';
+                    } else {
                     ?>
-                        <div class="mui-col-md-3">
-                            <button class="addnew_card" onclick="activateModal('groom')">
-                                <i class="fa fa-plus"></i>
-                            </button>
+                    <div class="mui-col-md-12">
+                        <div class="first_group addnew_card">
+                            <span>Bạn chưa tạo nhóm khách mời nào cho nhà trai?</span>
+                            <span class="example">Ví dụ: Bạn công ty, Bạn cấp 3, Bạn đại học, Họ hàng bên nội, Nhóm bạn thân ...</span>
+                            <button class="" onclick="activateModal('groom')"><i class="fa fa-plus"></i> Bấm để tạo một nhóm!</button>
                         </div>
+                    </div>
+                    <?php
+                    }
+                    ?>
                     </div>
                 </div>
                 <h3 class="title_general mui--divider-bottom">Danh sách thiệp mời của nhà gái</h3>
@@ -168,14 +212,23 @@ $vip_license    = get_field('vip_card', 'user_' . $current_user_id);
                     <?php
                         }
                         wp_reset_postdata();
-                    }
-
+                        echo '<div class="mui-col-md-3">
+                                <button class="addnew_card" onclick="activateModal(\'groom\')">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                            </div>';
+                    } else {
                     ?>
-                    <div class="mui-col-md-3">
-                        <button class="addnew_card" onclick="activateModal('bride')">
-                            <i class="fa fa-plus"></i>
-                        </button>
+                    <div class="mui-col-md-12">
+                        <div class="first_group addnew_card">
+                            <span>Bạn chưa tạo nhóm khách mời nào cho nhà gái?</span>
+                            <span class="example">Ví dụ: Bạn công ty, Bạn cấp 3, Bạn đại học, Họ hàng bên nội, Nhóm bạn thân ...</span>
+                            <button class="" onclick="activateModal('groom')"><i class="fa fa-plus"></i> Bấm để tạo một nhóm!</button>
+                        </div>
                     </div>
+                    <?php
+                    }
+                    ?>
                 </div>
             </div>
         </div>

@@ -7,7 +7,6 @@ function activateModal(data) {
 
     // hiển thị popup
     mui.overlay('on', modalEl);
-    modalEl.firstElementChild[1].value = data;
     setTimeout(function() { modalEl.firstElementChild[0].focus(); }, 100);
 }
 function clearAllInterval(){
