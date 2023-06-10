@@ -338,11 +338,12 @@ img
 
 #header_bar
     position: relative
-    display: table
+    display: flex
     padding: 0px 15px
     width: 100%
     margin-bottom: 0
     border-bottom: 1px solid #f9f3ee
+    justify-content: space-between
 
     .logo
         display: table-cell
@@ -391,8 +392,10 @@ img
                 z-index: -1
 
     .greeting
-        display: table-cell
-        text-align: right
+        display: flex
+        width: 100%
+        justify-content: flex-end
+        align-items: center
 
         span
             margin-right: 10px
