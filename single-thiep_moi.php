@@ -1,14 +1,16 @@
 <?php
-$guest_list = get_field('guest_list');
-$current_user = wp_get_current_user();
-$used_cards = get_field('used_cards', 'user_' . $current_user->ID);
-$package_id = get_field('package_id', 'user_' . $current_user->ID);
+$guest_list     = get_field('guest_list');
+$current_user   = wp_get_current_user();
+$used_cards     = get_field('used_cards', 'user_' . $current_user->ID);
+$package_id     = get_field('package_id', 'user_' . $current_user->ID);
+$category       = get_the_terms(get_the_ID(), 'category');
+$category_name  = $category[0]->name;
 
 # Kiểm tra xem user hiện tại có đủ thẩm quyền để xem trang này hay không
-$author_id = get_post_field( 'post_author' );
-if (($current_user->ID != $author_id) && !current_user_can( 'manage_options' )) {
+$author_id = get_post_field('post_author');
+if (($current_user->ID != $author_id) && !current_user_can('manage_options')) {
     # Nếu user hiện tại không phải tác giả và cũng không phải là admin thì sẽ chuyển về trang chủ 
-    wp_redirect( get_bloginfo('url') );
+    wp_redirect(get_bloginfo('url'));
     exit;
 }
 
@@ -29,16 +31,16 @@ if (
     $sdt = substr(preg_replace("/[^0-9]/", "", $_POST['sdt']), 0, 10);
     $update = $_POST['update'];
 
-    if (!$update){
-    
+    if (!$update) {
+
         if (!$vai_ve) {
             $vai_ve = "Bạn";
         }
-    
+
         if (!$xung_ho) {
             $xung_ho = "Tôi";
         }
-    
+
         if ($guest_name) {
             $row_update = array(
                 'name'          => $guest_name,
@@ -48,7 +50,7 @@ if (
                 'sent'          => false,
                 'joined'        => false,
             );
-    
+
             add_row('field_61066efde7dbc', $row_update);
             # Cập nhật số lượng thiệp đã sử dụng
             update_field('field_63b853e50f9a8', $used_cards + 1, 'user_' . $current_user->ID);
@@ -62,16 +64,16 @@ if (
             if (have_rows('guest_list') && $guestid) {
                 while (have_rows('guest_list')) {
                     the_row();
-                    
+
                     $sent       = get_sub_field('sent');
                     $joined     = get_sub_field('joined');
                     $row        = get_row_index();
                     if ($vai_ve && $xung_ho) {
                         $xungho = $vai_ve . "/" . $xung_ho;
                     } else {
-                        $xungho = $xung_ho?$xung_ho:$vai_ve;
+                        $xungho = $xung_ho ? $xung_ho : $vai_ve;
                     }
-                    
+
                     if ($row == $guestid) {
                         $row_update = array(
                             'name'          => $guest_name,
@@ -81,7 +83,7 @@ if (
                             'sent'          => $sent,
                             'joined'        => $joined,
                         );
-                                                
+
                         update_row('field_61066efde7dbc', $row, $row_update);
                         break;
                     }
@@ -105,7 +107,7 @@ if (isset($_GET['d']) && ($_GET['d'] != '')) {
             'ID'            => $delete->groupid,
             'post_status'   => 'private',
         ));
-        wp_redirect( get_bloginfo('url') );
+        wp_redirect(get_bloginfo('url'));
     }
 }
 
@@ -149,20 +151,19 @@ if (have_posts()) {
                 the_row();
 
                 $guest_data['total']++;
-                $guest_data['sent'] += get_sub_field('sent')?1:0;
+                $guest_data['sent'] += get_sub_field('sent') ? 1 : 0;
                 $joined = get_sub_field('joined');
                 $name = get_sub_field('name');
                 $guest_attach = get_sub_field('guest_attach');
                 $row_index = get_row_index();
 
-                if ($joined=="Y") {
+                if ($joined == "Y") {
                     $guest_data['joined']++;
-                } else if ($joined == "N") $guest_data['decline']++; 
+                } else if ($joined == "N") $guest_data['decline']++;
                 else $guest_data['notanswer']++;
             }
             reset_rows();
         }
-        // print_r($guest_data);
 ?>
         <div class="mui-container-fluid">
             <div class="mui-row">
@@ -189,31 +190,69 @@ if (have_posts()) {
                                 </div>
                             </div>
                             <div class="mui-col-md-4">
-                                <a href="<?php echo $link_select_card; ?>" class="mui-btn hera-btn"><i class="fa fa-pagelines" aria-hidden="true"></i> Chọn thiệp</a><br>
-                                <a href="<?php echo $link_view_demo; ?>" target="_blank" class="mui-btn hera-btn"><i class="fa fa-weibo" aria-hidden="true"></i> Xem mẫu</a><br>
-                                <a href="<?php echo $link_edit_content; ?>" class="mui-btn hera-btn"><i class="fa fa-foursquare" aria-hidden="true"></i> Sửa nội dung thiệp</a>
+                                <a href="<?php echo $link_select_card; ?>" class="mui-btn hera-btn"><i class="fa fa-pagelines" aria-hidden="true"></i> Chọn thiệp</a>
+                                <?php 
+                                    # Nếu chưa chọn thiệp thì không hiện 2 nút dưới
+                                    if ($card_id) {
+                                        # Lấy thông tin đám cưới: 
+                                        $groom = get_field('groom', 'user_' . $current_user->ID);
+                                        $bride = get_field('bride', 'user_' . $current_user->ID);
+
+                                        if ($category_name == "Nhà gái") {
+                                            $wedding_adress     = get_field('bride_wedding_adress', 'user_' . $current_user->ID);
+                                            $wedding_time       = explode(' ',get_field('bride_wedding_time', 'user_' . $current_user->ID));
+                                            $party_adress       = get_field('bride_party_address', 'user_' . $current_user->ID);
+                                            $party_time         = explode(' ',get_field('bride_party_time', 'user_' . $current_user->ID));
+                                        } else {
+                                            $wedding_adress     = get_field('groom_wedding_adress', 'user_' . $current_user->ID);
+                                            $wedding_time       = explode(' ',get_field('groom_wedding_time', 'user_' . $current_user->ID));
+                                            $party_adress       = get_field('groom_party_address', 'user_' . $current_user->ID);
+                                            $party_time         = explode(' ',get_field('groom_party_time', 'user_' . $current_user->ID));
+                                        }
+                                        # Nếu chưa có thông tin cô dâu chú rể thì hiển thị nút "Nhập tên cô dâu chú rể"
+                                        # Nếu chưa có thông tin thời gian địa điểm ăn cỗ thì hiển thị nút "Nhập thời gian và địa điểm tổ chức"
+                                        # Khi điền đầy đủ thông tin, thì mới hiện nút "xem thiệp" và "sửa nội dung thiệp"
+                                        $check_groombride = $groom && $bride;
+                                        $check_party = $party_adress && $party_time;
+                                        $link_wedding_infomation = get_bloginfo('url') . "/wedding-infomation";
+                                        if (!$check_groombride) {
+                                            echo "<a href='" . $link_wedding_infomation . "' class='hera-link'><i class='fa fa-venus-mars' aria-hidden='true'></i> Nhập tên cô dâu chú rể</a>";
+                                        } else if (!$check_party) {
+                                            echo "<a href='" . $link_wedding_infomation . "' class='hera-link'><i class='fa fa-globe' aria-hidden='true'></i>  Nhập thời gian và địa điểm tổ chức</a>";
+                                        } else {
+                                            echo '<a href="' . $link_view_demo . '" target="_blank" class="hera-link"><i class="fa fa-weibo" aria-hidden="true"></i> Xem mẫu</a>';
+                                            echo '<a href="' . $link_edit_content . '" class="hera-link"><i class="fa fa-foursquare" aria-hidden="true"></i> Sửa nội dung thiệp</a>';
+                                        }
+                                    }
+                                ?>
                             </div>
+                            <?php 
+                            if ($guest_data['total']) {
+                            ?>
                             <div class="mui-col-md-5 statistic">
                                 <h4>Thống kê</h4>
                                 <p>Tổng số người trong nhóm này: <b><?php echo $guest_data['total']; ?></b></p>
-                                <?php 
-                                    if ($guest_data['joined']) {
+                                <?php
+                                if ($guest_data['joined']) {
                                 ?>
-                                <span><b><?php echo $guest_data['joined']; ?></b> người tham dự được</span>
-                                <?php 
-                                    }
-                                    if ($guest_data['decline']) {
+                                    <span><b><?php echo $guest_data['joined']; ?></b> người tham dự được</span>
+                                <?php
+                                }
+                                if ($guest_data['decline']) {
                                 ?>
-                                <span><b><?php echo $guest_data['decline']; ?></b> người không tham dự được</span>
-                                <?php 
-                                    }
-                                    if ($guest_data['notanswer']) {
+                                    <span><b><?php echo $guest_data['decline']; ?></b> người không tham dự được</span>
+                                <?php
+                                }
+                                if ($guest_data['notanswer']) {
                                 ?>
-                                <span><b><?php echo $guest_data['notanswer']; ?></b> người chưa trả lời</span>
-                                <?php 
-                                    }
+                                    <span><b><?php echo $guest_data['notanswer']; ?></b> người chưa trả lời</span>
+                                <?php
+                                }
                                 ?>
                             </div>
+                            <?php 
+                            }
+                            ?>
                         </div>
 
                         <div class="mui-divider"></div>
@@ -221,9 +260,16 @@ if (have_posts()) {
                         <h3 class="mb10">Danh sách khách</h3>
                         <div class="mui-row">
                             <div class="mui-col-md-12 mb10">
-                                <div class="notification">
-                                    <span><i class="fa fa-eye-slash" aria-hidden="true"></i> Bạn chưa kích hoạt gói thiệp. Khách mời sẽ không thể xem link bạn gửi!</span> 
-                                    <a class="card_link" href="<?php echo get_bloginfo('url') . "/danh-sach-goi-san-pham/"; ?>"><i class="fa fa-gift" aria-hidden="true"></i> Xem gói thiệp</a></div>
+                                <?php
+                                if (!$package_id && $guest_data['total']) {
+                                ?>
+                                    <div class="notification">
+                                        <span><i class="fa fa-eye-slash" aria-hidden="true"></i> Bạn chưa kích hoạt gói thiệp. Khách mời sẽ không thể xem link bạn gửi!</span>
+                                        <a class="card_link" href="<?php echo get_bloginfo('url') . "/danh-sach-goi-san-pham/"; ?>"><i class="fa fa-gift" aria-hidden="true"></i> Xem gói thiệp</a>
+                                    </div>
+                                <?php
+                                }
+                                ?>
                             </div>
                             <div class="mui-col-md-12 mb10">
                                 <input type="hidden" name="groupid" value="<?php echo get_the_ID(); ?>">
@@ -241,14 +287,14 @@ if (have_posts()) {
                                             <th>Cách xưng hô</th>
                                             <th>Số điện thoại</th>
                                             <?php
-                                                # Nếu chưa đăng ký gói thì chưa hiện tính năng chia sẻ
-                                                if ($package_id && $card_id) {
+                                            # Nếu chưa đăng ký gói thì chưa hiện tính năng chia sẻ
+                                            if ($package_id && $card_id) {
                                             ?>
                                                 <th>Link thiệp mời</th>
                                                 <th>Đã mời</th>
                                                 <th>Tham dự</th>
                                             <?php
-                                                }
+                                            }
                                             ?>
                                             <th>Thao tác</th>
                                         </tr>
@@ -265,7 +311,7 @@ if (have_posts()) {
                                                 $name = get_sub_field('name');
                                                 $guest_attach = get_sub_field('guest_attach');
                                                 $row_index = get_row_index();
-                                                
+
                                                 # Xoá khách mời
                                                 $del_data = inova_encrypt(json_encode(array(
                                                     'userid'    => $current_user->ID,
@@ -286,36 +332,35 @@ if (have_posts()) {
                                                     <td><?php echo get_sub_field('xung_ho'); ?></td>
                                                     <td><?php echo get_sub_field('phone'); ?></td>
                                                     <?php
-                                                        # Nếu chưa đăng ký gói thì chưa hiện tính năng chia sẻ
-                                                        if ($package_id && $card_id) {
-                                                            echo '<td>';
-                                                            echo '    <a href="' . $viewlink . '" class="copy_link">Copy link</a>';
-                                                            echo '</td>';
+                                                    # Nếu chưa đăng ký gói thì chưa hiện tính năng chia sẻ
+                                                    if ($package_id && $card_id) {
+                                                        echo '<td>';
+                                                        echo '    <a href="' . $viewlink . '" class="copy_link">Copy link</a>';
+                                                        echo '</td>';
                                                     ?>
-                                                    <td><input type="checkbox" class="sent_friend"
-                                                        <?php if ($sent) {
-                                                            echo "checked";
-                                                        } ?>
-                                                        data-field="field_61066fd1e7dc1" data-index="<?php echo $row_index; ?>">
-                                                    </td>
-                                                    <td><?php 
-                                                        if ($joined=="Y") {
-                                                            echo "Có";
-                                                        } else if ($joined == "N") echo "Không"; 
-                                                        else echo "Chưa trả lời";
-                                                        ?>
-                                                    </td>
+                                                        <td><input type="checkbox" class="sent_friend" <?php if ($sent) {
+                                                                                                            echo "checked";
+                                                                                                        } ?> data-field="field_61066fd1e7dc1" data-index="<?php echo $row_index; ?>">
+                                                        </td>
+                                                        <td><?php
+                                                            if ($joined == "Y") {
+                                                                echo "Có";
+                                                            } else if ($joined == "N") echo "Không";
+                                                            else echo "Chưa trả lời";
+                                                            ?>
+                                                        </td>
                                                     <?php
-                                                        }
+                                                    }
                                                     ?>
                                                     <td>
                                                         <?php
-                                                            # Nếu chưa đăng ký gói thì chưa hiện tính năng chia sẻ
-                                                            if ($card_id) {
-                                                                echo '<a href="' . $viewlink . '" target="_blank"><i class="fa fa-eye"></i></a>';
-                                                            }
+                                                        # Nếu chưa đăng ký gói thì chưa hiện tính năng chia sẻ
+                                                        if ($card_id) {
+                                                            $_icon = $package_id?'<i class="fa fa-eye"></i>':'<i class="fa fa-eye-slash"></i>';
+                                                            echo '<a href="' . $viewlink . '" target="_blank">' . $_icon . '</a>';
+                                                        } 
                                                         ?>
-                                                        
+
                                                         <a href="#" class="edit_guest" data-guest="<?php echo $row_index; ?>"><i class="fa fa-pencil"></i></a>
                                                         <a href="#" data-del="<?php echo $del_data; ?>" class="del_customer"><i class="fa fa-trash"></i></a>
                                                         <span class="loader"><img src="<?php echo get_template_directory_uri() . '/img/heart-preloader.gif'; ?>" alt=""></span>
@@ -327,18 +372,20 @@ if (have_posts()) {
                                         ?>
                                     </tbody>
                                 </table>
-                                
+                                <div class="new_guest" onclick="activateModal()">
+                                    <i class="fa fa-user-plus"></i> Thêm khách mời 
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="footer_section mui--text-center">
-                        <?php 
-                            $dnonce = wp_create_nonce('delete');
-                            $del_token = inova_encrypt(json_encode(array(
-                                'groupid'   => $groupid,
-                                'userid'    => $current_user->ID,
-                                'nonce'     => $dnonce,
-                            )), 'e');
+                        <?php
+                        $dnonce = wp_create_nonce('delete');
+                        $del_token = inova_encrypt(json_encode(array(
+                            'groupid'   => $groupid,
+                            'userid'    => $current_user->ID,
+                            'nonce'     => $dnonce,
+                        )), 'e');
                         ?>
                         <a href="?d=<?php echo $del_token ?>" class="mui--text-danger" onclick="return confirm('Bạn chắc chắn muốn xoá nhóm này?')">Xoá nhóm này?</a>
                     </div>
@@ -379,6 +426,12 @@ if (have_posts()) {
             </form>
         </div>
         <script src="<?php echo get_template_directory_uri(); ?>/js/single-thiep_moi.js"></script>
+        <script>
+            /* Prevent resubmit form when page is reloaded */
+            if ( window.history.replaceState ) {
+                window.history.replaceState( null, null, window.location.href );
+            }
+        </script>
 <?php
     }
 }

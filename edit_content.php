@@ -51,9 +51,6 @@ if (isset($_GET['g']) && ($_GET['g'] != "" )) {
                                     <span class="none_edit">Thời gian và địa điểm tổ chức</span>
                                     <span class="diveditable content_editable" contenteditable=true data-field="field_610eb5f9cdc28" data-where="<?php echo $postid; ?>"><?php echo $loi_moi; ?></span>
                                 </div>
-                                <div class="guideline">
-
-                                </div>
                             </div>
                         </div>
                     </div>

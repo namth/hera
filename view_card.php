@@ -94,12 +94,12 @@ if ($party_moontime[0]) {
 
 if ($google_maps_dam_cuoi) {
     $button_maps_dam_cuoi = '<a href="https://www.google.com/maps/dir/?api=1&destination=' . $google_maps_dam_cuoi . '" class="googlemaps keychainify-checked" target="_blank">Chỉ đường</a>
-                            <a href="https://maps.google.com/?q=' . $google_maps_dam_cuoi . '" class="googlemaps" id="googlemaps" target="_blank">Xem đường đi</a>';
+                            <a href="https://maps.google.com/?q=' . $google_maps_dam_cuoi . '" class="googlemaps" id="googlemaps" target="_blank">Xem vị trí</a>';
 }
 
 if ($google_maps_an_co) {
     $button_maps_an_co = '<a href="https://www.google.com/maps/dir/?api=1&destination=' . $google_maps_an_co . '" class="googlemaps keychainify-checked" target="_blank">Chỉ đường</a>
-                            <a href="https://maps.google.com/?q=' . $google_maps_an_co . '" class="googlemaps" id="googlemaps" target="_blank">Xem đường đi</a>';
+                            <a href="https://maps.google.com/?q=' . $google_maps_an_co . '" class="googlemaps" id="googlemaps" target="_blank">Xem vị trí</a>';
 }
 
 # Lấy các thông tin cần thiết để replace vào thiệp

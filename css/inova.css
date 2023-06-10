@@ -156,6 +156,25 @@ img {
   margin: 0 5px 0 -5px;
 }
 
+.hera-link {
+  display: inline-block;
+  line-height: 36px;
+  background: #fff5e4;
+  padding: 0 18px 0 12px;
+  margin: 5px 0;
+  border-radius: 8px;
+  color: #916d45;
+  border: 1px dotted;
+}
+.hera-link:hover {
+  background: #e5fad7;
+  color: #6da84b;
+  border: 1px solid #6da84b;
+}
+.hera-link i {
+  padding: 0 6px;
+}
+
 #mui-overlay {
   display: flex;
   justify-content: center;
@@ -995,6 +1014,11 @@ img {
   z-index: 99;
 }
 
+#list_customer {
+  border-spacing: unset;
+  margin-bottom: 0;
+  border: 1px dotted #9e9e9e;
+}
 #list_customer .loader {
   display: none;
   width: 20px;
@@ -1021,6 +1045,25 @@ img {
   display: block;
 }
 
+.new_guest {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px dotted #b7b7b7;
+  background: #f7f7f7;
+  padding: 10px;
+  margin-top: -1px;
+  cursor: pointer;
+}
+.new_guest:hover {
+  background: #e5fad7;
+  color: #6da84b;
+  border: 1px solid #6da84b;
+}
+.new_guest i {
+  margin-right: 8px;
+}
+
 #wedding_infomation {
   padding: 0 18px;
 }
@@ -1030,9 +1073,9 @@ img {
   padding: 25px 10px 0;
 }
 #wedding_infomation form .mui-textfield input {
-  color: rgb(136, 74, 74);
+  color: #884a4a;
   transition: color 0.1s ease 0s;
-  background-color: rgb(255, 241, 228);
+  background-color: #fffaf5;
   height: 40px;
 }
 #wedding_infomation form .mui-textfield input:focus {

@@ -254,7 +254,7 @@ $google_api     = get_field('google_maps_api_key', 'option');
                                             <form class="mui-form" method="POST">
                                                 <div class="mui-textfield">
                                                     <input type="text" name="field_62b12acd93a81" value="<?php if ($groom_wedding_adress) echo $groom_wedding_adress; ?>">
-                                                    <label for="">Địa điểm</label>
+                                                    <label for="">Nhập địa điểm tổ chức</label>
                                                 </div>
                                                 <div class="mui-textfield date_calculate">
                                                     <input class="solar" type="datetime-local" name="field_62b12b8f93a83" value="<?php if ($_groom_wedding_time) echo $_groom_wedding_time->format('Y-m-d\TH:i:s'); ?>">
@@ -262,7 +262,7 @@ $google_api     = get_field('google_maps_api_key', 'option');
                                                     <label for="">Thời gian (dương lịch)</label>
                                                 </div>
                                                 <div class="mui-textfield">
-                                                    <label for="">Link google maps</label>
+                                                    <label for="">Chọn vị trí tổ chức chính xác trên bản đồ</label>
                                                     <input type="text" id="pac-input" class="controls">
                                                     <div id="gw_googlemaps" class="google_maps"></div>
                                                 </div>
@@ -325,7 +325,7 @@ $google_api     = get_field('google_maps_api_key', 'option');
                                             <form class="mui-form" method="POST">
                                                 <div class="mui-textfield">
                                                     <input type="text" name="field_62b12b4593a82" value="<?php if ($groom_party_address) echo $groom_party_address; ?>">
-                                                    <label for="">Địa điểm</label>
+                                                    <label for="">Nhập địa điểm tổ chức</label>
                                                 </div>
                                                 <div class="mui-textfield date_calculate">
                                                     <input class="solar" type="datetime-local" name="field_62b12bb293a84" value="<?php if ($_groom_party_time) echo $_groom_party_time->format('Y-m-d\TH:i:s'); ?>">
@@ -333,7 +333,7 @@ $google_api     = get_field('google_maps_api_key', 'option');
                                                     <label for="">Thời gian (dương lịch)</label>
                                                 </div>
                                                 <div class="mui-textfield">
-                                                    <label for="">Link google maps</label>
+                                                    <label for="">Chọn vị trí tổ chức chính xác trên bản đồ</label>
                                                     <input type="text" id="pac-input" class="controls">
                                                     <div id="gp_googlemaps" class="google_maps"></div>
                                                 </div>
@@ -485,7 +485,7 @@ $google_api     = get_field('google_maps_api_key', 'option');
                                                 <form class="mui-form" method="POST">
                                                     <div class="mui-textfield">
                                                         <input type="text" name="field_62b1363fb06a6" value="<?php if ($bride_wedding_adress) echo $bride_wedding_adress; ?>">
-                                                        <label for="">Địa điểm</label>
+                                                        <label for="">Nhập địa điểm tổ chức</label>
                                                     </div>
                                                     <div class="mui-textfield date_calculate">
                                                         <input class="solar" type="datetime-local" name="field_62b1363fb06af" value="<?php if ($_bride_wedding_time) echo $_bride_wedding_time->format('Y-m-d\TH:i:s'); ?>">
@@ -493,7 +493,7 @@ $google_api     = get_field('google_maps_api_key', 'option');
                                                         <label for="">Thời gian (dương lịch)</label>
                                                     </div>
                                                     <div class="mui-textfield">
-                                                        <label for="">Link google maps</label>
+                                                        <label for="">Chọn vị trí tổ chức chính xác trên bản đồ</label>
                                                         <div id="bw_googlemaps" class="google_maps"></div>
                                                     </div>
                                                     <input id="bw_latlng" type="hidden" name="field_63dbd5791d673" value="<?php if ($bride_wedding_maps) echo $bride_wedding_maps; ?>">
@@ -555,7 +555,7 @@ $google_api     = get_field('google_maps_api_key', 'option');
                                             <form class="mui-form" method="POST">
                                                 <div class="mui-textfield">
                                                     <input type="text" name="field_62b1363fb06bf" value="<?php if ($bride_party_address) echo $bride_party_address; ?>">
-                                                    <label for="">Địa điểm</label>
+                                                    <label for="">Nhập địa điểm tổ chức</label>
                                                 </div>
                                                 <div class="mui-textfield date_calculate">
                                                     <input class="solar" type="datetime-local" name="field_62b1363fb06c7" value="<?php if ($_bride_party_time) echo $_bride_party_time->format('Y-m-d\TH:i:s'); ?>">
@@ -563,8 +563,8 @@ $google_api     = get_field('google_maps_api_key', 'option');
                                                     <label for="">Thời gian (dương lịch)</label>
                                                 </div>
                                                 <div class="mui-textfield">
-                                                    <label for="">Link google maps</label>
-                                                    <input type="text" id="pac-input" class="controls">
+                                                    <label for="">Chọn vị trí tổ chức chính xác trên bản đồ</label>
+                                                    <!-- <input type="text" id="pac-input" class="controls"> -->
                                                     <div id="bp_googlemaps" class="google_maps"></div>
                                                 </div>
                                                 <input id="bp_latlng" type="hidden" name="field_63dbd5ab1d674" value="<?php if ($bride_party_maps) echo $bride_party_maps; ?>">
@@ -590,11 +590,15 @@ $google_api     = get_field('google_maps_api_key', 'option');
         <div class="mui-col-md-2"></div>
     </div>
 </div>
+<script src="<?php echo get_template_directory_uri(); ?>/js/cookie.js"></script>
 <script>
     let latlngStr;
 
     function initGeocode() {
-        navigator.geolocation.getCurrentPosition(showLocation);
+        /* read cookie */
+        latlngStr = getCookie('latlngStr');
+        /* if not have cookie, then get permission to guest's position */
+        if (latlngStr == null) navigator.geolocation.getCurrentPosition(showLocation);
     }
 
     function showLocation(position){
@@ -602,6 +606,9 @@ $google_api     = get_field('google_maps_api_key', 'option');
             position.coords.latitude,
             position.coords.longitude
         ].join(',');
+
+        /* set cookie */
+        setCookie('latlngStr', latlngStr, 7);
     }
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google_api; ?>&callback=initGeocode&libraries=places" type="text/javascript"></script>
