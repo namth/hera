@@ -147,7 +147,7 @@ $wp_head   .= echo_to_string('wp_head');
 
 # data to get response from guests
 $data_input =  '<input type="hidden" name="group" value="' . $_group . '">
-                <input type="hidden" name="invitee" value="' . $_invitee . '">';
+                <input type="hidden" name="invitee" value="' . $customer . '">';
 $wp_footer  = $data_input . echo_to_string('wp_footer');
 
 # dữ liệu tuỳ chỉnh

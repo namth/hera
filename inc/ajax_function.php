@@ -177,7 +177,7 @@ add_action('wp_ajax_acceptInvite', 'acceptInvite');
 add_action('wp_ajax_nopriv_acceptInvite', 'acceptInvite');
 function acceptInvite() {
     $group = inova_encrypt($_POST['group'], 'd');
-    $invitee = inova_encrypt($_POST['invitee'], 'd');
+    $invitee = $_POST['invitee'];
     $answer = $_POST['answer'];
 
     if (($answer=='Y')||($answer == 'N')) {
@@ -203,7 +203,7 @@ function acceptInvite() {
         $notification = $answer=='Y'?'<div class="accept notification">Đã xác nhận tham dự.</div>':'<div class="deny notification">Đã xác nhận không tham dự được.</div>';
         echo $notification;
     } else {
-        echo '<div class="deny notification">Không thể cập nhật bạn vào dữ liệu thiệp, hãy kiểm tra lại.</div>';
+        echo '<div class="deny notification">Không thể cập nhật vào dữ liệu thiệp, hãy kiểm tra lại.</div>';
     }
     exit;
 }
