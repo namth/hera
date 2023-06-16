@@ -1,18 +1,17 @@
 <?php
-$guest_list     = get_field('guest_list');
-$current_user   = wp_get_current_user();
-$used_cards     = get_field('used_cards', 'user_' . $current_user->ID);
-$package_id     = get_field('package_id', 'user_' . $current_user->ID);
-$category       = get_the_terms(get_the_ID(), 'category');
-$category_name  = $category[0]->name;
-
 # Kiểm tra xem user hiện tại có đủ thẩm quyền để xem trang này hay không
-$author_id = get_post_field('post_author');
-if (($current_user->ID != $author_id) && !current_user_can('manage_options')) {
+$current_userID = get_current_user_id();
+$author_id      = get_post_field('post_author');
+if (($current_userID != $author_id) && !current_user_can('manage_options')) {
     # Nếu user hiện tại không phải tác giả và cũng không phải là admin thì sẽ chuyển về trang chủ 
     wp_redirect(get_bloginfo('url'));
     exit;
 }
+$guest_list     = get_field('guest_list');
+$category       = get_the_terms(get_the_ID(), 'category');
+$category_name  = $category[0]->name;
+$used_cards     = get_field('used_cards', 'user_' . $author_id);
+$package_id     = get_field('package_id', 'user_' . $author_id);
 
 /* 
 Kiểm tra xem có sử dụng package nào không
@@ -53,7 +52,7 @@ if (
 
             add_row('field_61066efde7dbc', $row_update);
             # Cập nhật số lượng thiệp đã sử dụng
-            update_field('field_63b853e50f9a8', $used_cards + 1, 'user_' . $current_user->ID);
+            update_field('field_63b853e50f9a8', $used_cards + 1, 'user_' . $author_id);
         }
     } else {
         # if you are in update mode
@@ -131,7 +130,7 @@ if (have_posts()) {
 
         $data_token = inova_encrypt(json_encode(array(
             'groupid'   => $groupid,
-            'userid'    => $current_user->ID,
+            'userid'    => $author_id,
         )), 'e');
 
         $link_view_demo = get_bloginfo('url') . '/view-demo/?group=' . $groupid_encode;
@@ -195,19 +194,19 @@ if (have_posts()) {
                                     # Nếu chưa chọn thiệp thì không hiện 2 nút dưới
                                     if ($card_id) {
                                         # Lấy thông tin đám cưới: 
-                                        $groom = get_field('groom', 'user_' . $current_user->ID);
-                                        $bride = get_field('bride', 'user_' . $current_user->ID);
+                                        $groom = get_field('groom', 'user_' . $author_id);
+                                        $bride = get_field('bride', 'user_' . $author_id);
 
                                         if ($category_name == "Nhà gái") {
-                                            $wedding_adress     = get_field('bride_wedding_adress', 'user_' . $current_user->ID);
-                                            $wedding_time       = explode(' ',get_field('bride_wedding_time', 'user_' . $current_user->ID));
-                                            $party_adress       = get_field('bride_party_address', 'user_' . $current_user->ID);
-                                            $party_time         = explode(' ',get_field('bride_party_time', 'user_' . $current_user->ID));
+                                            $wedding_adress     = get_field('bride_wedding_adress', 'user_' . $author_id);
+                                            $wedding_time       = explode(' ',get_field('bride_wedding_time', 'user_' . $author_id));
+                                            $party_adress       = get_field('bride_party_address', 'user_' . $author_id);
+                                            $party_time         = explode(' ',get_field('bride_party_time', 'user_' . $author_id));
                                         } else {
-                                            $wedding_adress     = get_field('groom_wedding_adress', 'user_' . $current_user->ID);
-                                            $wedding_time       = explode(' ',get_field('groom_wedding_time', 'user_' . $current_user->ID));
-                                            $party_adress       = get_field('groom_party_address', 'user_' . $current_user->ID);
-                                            $party_time         = explode(' ',get_field('groom_party_time', 'user_' . $current_user->ID));
+                                            $wedding_adress     = get_field('groom_wedding_adress', 'user_' . $author_id);
+                                            $wedding_time       = explode(' ',get_field('groom_wedding_time', 'user_' . $author_id));
+                                            $party_adress       = get_field('groom_party_address', 'user_' . $author_id);
+                                            $party_time         = explode(' ',get_field('groom_party_time', 'user_' . $author_id));
                                         }
                                         # Nếu chưa có thông tin cô dâu chú rể thì hiển thị nút "Nhập tên cô dâu chú rể"
                                         # Nếu chưa có thông tin thời gian địa điểm ăn cỗ thì hiển thị nút "Nhập thời gian và địa điểm tổ chức"
@@ -314,7 +313,7 @@ if (have_posts()) {
 
                                                 # Xoá khách mời
                                                 $del_data = inova_encrypt(json_encode(array(
-                                                    'userid'    => $current_user->ID,
+                                                    'userid'    => $author_id,
                                                     'groupid'   => get_the_ID(),
                                                     'row_index' => $row_index,
                                                     'nonce'     => wp_create_nonce('delcustomer_' . $row_index),
@@ -383,7 +382,7 @@ if (have_posts()) {
                         $dnonce = wp_create_nonce('delete');
                         $del_token = inova_encrypt(json_encode(array(
                             'groupid'   => $groupid,
-                            'userid'    => $current_user->ID,
+                            'userid'    => $author_id,
                             'nonce'     => $dnonce,
                         )), 'e');
                         ?>

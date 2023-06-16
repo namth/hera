@@ -213,7 +213,7 @@ $count = $count_query->post_count;
                         }
                         wp_reset_postdata();
                         echo '<div class="mui-col-md-3">
-                                <button class="addnew_card" onclick="activateModal(\'groom\')">
+                                <button class="addnew_card" onclick="activateModal(\'bride\')">
                                     <i class="fa fa-plus"></i>
                                 </button>
                             </div>';
@@ -223,7 +223,7 @@ $count = $count_query->post_count;
                         <div class="first_group addnew_card">
                             <span>Bạn chưa tạo nhóm khách mời nào cho nhà gái?</span>
                             <span class="example">Ví dụ: Bạn công ty, Bạn cấp 3, Bạn đại học, Họ hàng bên nội, Nhóm bạn thân ...</span>
-                            <button class="" onclick="activateModal('groom')"><i class="fa fa-plus"></i> Bấm để tạo một nhóm!</button>
+                            <button class="" onclick="activateModal('bride')"><i class="fa fa-plus"></i> Bấm để tạo một nhóm!</button>
                         </div>
                     </div>
                     <?php
