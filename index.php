@@ -67,14 +67,14 @@ $count = $count_query->post_count;
             <?php 
                 if(!$_COOKIE['noguide']) {
             ?>
-            <!-- <div class="guideline">
+            <div class="guideline">
                 <h2>Chào mừng bạn đến với Thiệp cưới Online HERA</h2>
                 <p>Nếu đây là lần đầu tiên bạn đến với trang web thì hãy tham khảo qua những hướng dẫn của chúng tôi. Hoặc làm theo những hướng dẫn ngắn gọn của chúng tôi ở từng mục.</p>
                 <div class="action">
-                    <a href="" class="mui-btn hera-btn">Xem hướng dẫn</a>
+                    <a href="<?php echo get_bloginfo('url') . '/huong-dan-su-dung/'; ?>" class="mui-btn hera-btn">Xem hướng dẫn</a>
                     <a href="?guide=none" class="no-btn">Tôi đã hiểu</a>
                 </div>
-            </div> -->
+            </div>
             <?php 
                 }
             ?>

@@ -39,7 +39,7 @@ $google_api     = get_field('google_maps_api_key', 'option');
         </div>
         <div class="mui-col-md-8">
             <div class="breadcrumb">
-                <a href="<?php echo get_bloginfo('url'); ?>">Trang chủ</a>
+                <a href="<?php echo get_bloginfo('url'); ?>"><i class="fa fa-home" aria-hidden="true"></i></a>
                 <i class="fa fa-chevron-right"></i>
                 <span class="title"> <?php the_title(); ?></span>
             </div>

@@ -93,9 +93,8 @@ if (is_user_logged_in()) {
     $url = get_permalink();
 ?>
 <div id="login">
-
     <div class="large_left" style="
-        background-image: url('https://margoandbees.com/thumbs/887/templates/template_7/8/images/products/407/002GNBo/wedding-invitations-gold-rose-gold-silver-glitter-002-gn-z.jpg');
+        background-image: url('https://source.unsplash.com/1920x1024?hdr,flower,coffee,wedding');
         background-size: cover;
     "></div>
     <div class="small_right mui-panel">

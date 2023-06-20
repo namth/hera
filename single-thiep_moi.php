@@ -1,4 +1,13 @@
 <?php
+function show_notification($icon, $notification, $icon2, $link, $button_label) {
+    if ($notification && $button_label) {
+        echo '<div class="notification">
+                <span><i class="fa ' . $icon . '" aria-hidden="true"></i> ' . $notification . '</span>
+                <a class="card_link" href="' . $link . '"><i class="fa ' . $icon2 . '" aria-hidden="true"></i> ' . $button_label . '</a>
+            </div>';
+    }
+}
+
 # Kiểm tra xem user hiện tại có đủ thẩm quyền để xem trang này hay không
 $current_userID = get_current_user_id();
 $author_id      = get_post_field('post_author');
@@ -198,27 +207,17 @@ if (have_posts()) {
                                         $bride = get_field('bride', 'user_' . $author_id);
 
                                         if ($category_name == "Nhà gái") {
-                                            $wedding_adress     = get_field('bride_wedding_adress', 'user_' . $author_id);
-                                            $wedding_time       = explode(' ',get_field('bride_wedding_time', 'user_' . $author_id));
                                             $party_adress       = get_field('bride_party_address', 'user_' . $author_id);
                                             $party_time         = explode(' ',get_field('bride_party_time', 'user_' . $author_id));
                                         } else {
-                                            $wedding_adress     = get_field('groom_wedding_adress', 'user_' . $author_id);
-                                            $wedding_time       = explode(' ',get_field('groom_wedding_time', 'user_' . $author_id));
                                             $party_adress       = get_field('groom_party_address', 'user_' . $author_id);
                                             $party_time         = explode(' ',get_field('groom_party_time', 'user_' . $author_id));
                                         }
-                                        # Nếu chưa có thông tin cô dâu chú rể thì hiển thị nút "Nhập tên cô dâu chú rể"
-                                        # Nếu chưa có thông tin thời gian địa điểm ăn cỗ thì hiển thị nút "Nhập thời gian và địa điểm tổ chức"
                                         # Khi điền đầy đủ thông tin, thì mới hiện nút "xem thiệp" và "sửa nội dung thiệp"
                                         $check_groombride = $groom && $bride;
                                         $check_party = $party_adress && $party_time;
                                         $link_wedding_infomation = get_bloginfo('url') . "/wedding-infomation";
-                                        if (!$check_groombride) {
-                                            echo "<a href='" . $link_wedding_infomation . "' class='hera-link'><i class='fa fa-venus-mars' aria-hidden='true'></i> Nhập tên cô dâu chú rể</a>";
-                                        } else if (!$check_party) {
-                                            echo "<a href='" . $link_wedding_infomation . "' class='hera-link'><i class='fa fa-globe' aria-hidden='true'></i>  Nhập thời gian và địa điểm tổ chức</a>";
-                                        } else {
+                                        if ($check_groombride && $check_party) {
                                             echo '<a href="' . $link_view_demo . '" target="_blank" class="hera-link"><i class="fa fa-weibo" aria-hidden="true"></i> Xem mẫu</a>';
                                             echo '<a href="' . $link_edit_content . '" class="hera-link"><i class="fa fa-foursquare" aria-hidden="true"></i> Sửa nội dung thiệp</a>';
                                         }
@@ -260,13 +259,27 @@ if (have_posts()) {
                         <div class="mui-row">
                             <div class="mui-col-md-12 mb10">
                                 <?php
-                                if (!$package_id && $guest_data['total']) {
-                                ?>
-                                    <div class="notification">
-                                        <span><i class="fa fa-eye-slash" aria-hidden="true"></i> Bạn chưa kích hoạt gói thiệp. Khách mời sẽ không thể xem link bạn gửi!</span>
-                                        <a class="card_link" href="<?php echo get_bloginfo('url') . "/danh-sach-goi-san-pham/"; ?>"><i class="fa fa-gift" aria-hidden="true"></i> Xem gói thiệp</a>
-                                    </div>
-                                <?php
+                                if ($card_id) {
+                                    if (!$check_groombride) {
+                                        $icon = 'fa-exclamation-circle';
+                                        $thongbao = 'Bạn chưa nhập thông tin cô dâu chú rể';
+                                        $link = $link_wedding_infomation;
+                                        $icon2 = 'fa-venus-mars';
+                                        $button = 'Nhập tên cô dâu chú rể';
+                                    } else if (!$check_party) {
+                                        $icon = 'fa-globe';
+                                        $thongbao = 'Bạn chưa nhập thời gian và địa điểm tổ chức';
+                                        $link = $link_wedding_infomation;
+                                        $icon2 = 'fa-exclamation-circle';
+                                        $button = 'Nhập thông tin';
+                                    } else if (!$package_id && $guest_data['total']) {
+                                        $icon = 'fa-eye-slash';
+                                        $thongbao = 'Bạn chưa kích hoạt gói thiệp. Khách mời sẽ không thể xem link bạn gửi!';
+                                        $link = get_bloginfo('url') . "/danh-sach-goi-san-pham/";
+                                        $icon2 = 'fa-gift';
+                                        $button = 'Xem gói thiệp';
+                                    }
+                                    show_notification($icon, $thongbao, $icon2, $link, $button);
                                 }
                                 ?>
                             </div>
@@ -353,8 +366,8 @@ if (have_posts()) {
                                                     ?>
                                                     <td>
                                                         <?php
-                                                        # Nếu chưa đăng ký gói thì chưa hiện tính năng chia sẻ
-                                                        if ($card_id) {
+                                                        # Nếu chưa chọn mẫu thiệp và chưa nhập đủ thông tin thì chưa hiện tính năng chia sẻ
+                                                        if ($card_id && $check_party) {
                                                             $_icon = $package_id?'<i class="fa fa-eye"></i>':'<i class="fa fa-eye-slash"></i>';
                                                             echo '<a href="' . $viewlink . '" target="_blank">' . $_icon . '</a>';
                                                         } 
@@ -397,8 +410,8 @@ if (have_posts()) {
             <form class="mui-form" method="POST" name="guest_form">
                 <legend>Thêm khách mời</legend>
                 <div class="mui-textfield">
-                    <input type="text" placeholder="VD: Anh Nam" name="guest_name">
-                    <label for="">Tên khách mời</label>
+                    <input type="text" placeholder="VD: Anh Nam" name="guest_name" required>
+                    <label for="">Tên khách mời *</label>
                 </div>
                 <div class="mui-textfield">
                     <input type="text" placeholder="VD: người thương" name="guest_attach">
