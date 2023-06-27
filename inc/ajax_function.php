@@ -115,7 +115,7 @@ function listCardFromAPI() {
             $liked = $card->liked?$card->liked:0;
             $used = $card->used?$card->used:0;
         ?>
-        <div class="mui-col-md-3">
+        <div class="mui-col-lg-3 mui-col-md-4 mui-col-sm-6">
             <div class="heracard">
                 <div class="images" style="<?php 
                     echo 'background: url('. $card_thumbnail .') no-repeat 50% 50%;';

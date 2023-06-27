@@ -1,7 +1,7 @@
 // Khai báo kích thước tương ứng với màn hình thiết bị
 $XS: 480px
 $SM: 768px
-$MD: 1024px
+$MD: 991px
 $XL: 1170px
 
 // media queries
@@ -72,6 +72,37 @@ $XL: 1170px
             #detail_card
                 width: 100%
 
+            table
+                thead
+                    border: none
+                    clip: rect(0 0 0 0)
+                    height: 1px
+                    margin: -1px
+                    overflow: hidden
+                    padding: 0
+                    position: absolute
+                    width: 1px
+
+                tr
+                    border-bottom: 3px solid #ddd
+                    display: block
+                    margin-bottom: .625em
+
+                    td
+                        border-bottom: 1px solid #ddd
+                        display: block
+                        text-align: left
+
+                        &::before
+                            content: attr(data-label)
+                            float: left
+                            font-size: 0.8em
+                            font-weight: bold
+                            text-transform: uppercase
+                            color: brown
+                            padding-left: 9px
+                            width: 132px
+
     @else if $canvas == MD
         @media screen and (max-width: $MD)
             #login
@@ -93,9 +124,16 @@ $XL: 1170px
                 .mobile_menu
                     display: block
 
+            .heracard
+                .images
+                    margin-bottom: 20px
+
             .mui-col-md-10,
             .mui-col-md-2
                 display: block
+                width: 100%
+
+            #detail_card
                 width: 100%
 
     @else if $canvas == XL

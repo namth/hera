@@ -63,7 +63,7 @@ $count = $count_query->post_count;
             get_sidebar();
             ?>
         </div>
-        <div class="mui-col-md-8 mt20">
+        <div class="mui-col-lg-8 mui-col-md-12 mt20">
             <?php 
                 if(!$_COOKIE['noguide']) {
             ?>

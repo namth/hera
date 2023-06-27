@@ -3,7 +3,7 @@
     Template Name: List Card from API
 */
 get_header();
-get_template_part('header', 'topbar');
+get_template_part('header', 'top-nologin');
 
 $current_user_id = get_current_user_id();
 
@@ -26,12 +26,12 @@ if (isset($_GET['g']) && ($_GET['g'] != "")) {
             </div>
             <h1>Mẫu thiệp cưới cho mọi người</h1>
             <h4>Hàng trăm mẫu thiệp mới nhất sẽ được cập nhật tại đây.</h4>
-            <form class="mui-form--inline" method="POST">
+            <!-- <form class="mui-form--inline" method="POST">
                 <div class="mui-textfield search_bar">
                     <input type="text" name="search" placeholder="Tìm kiếm tất cả mẫu thiệp tại đây" value="<?php echo $search; ?>">
                     <button class=""><i class="fa fa-search"></i></button>
                 </div>
-            </form>
+            </form> -->
         </div>
         <div class="mui-col-md-12">
             <?php 

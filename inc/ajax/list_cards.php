@@ -17,10 +17,10 @@ function viewDetailCard(){
 
     ?>
     <div class="mui-row" id="detail_card_popup">
-        <div class="mui-col-md-9 card_thumbnail">
+        <div class="mui-col-lg-9 mui-col-md-12 card_thumbnail">
             <img src="<?php echo $mycard->thumbnail; ?>" alt="">
         </div>
-        <div class="mui-col-md-3" id="detail_data_box">
+        <div class="mui-col-lg-3 mui-col-md-12" id="detail_data_box">
             <h2><?php echo $mycard->title; ?></h2>
             <div class="mui-divider"></div>
 
@@ -42,60 +42,98 @@ function viewDetailCard(){
                     <input type="hidden" name="cardid" value="<?php echo $cardid; ?>">
                     <input type="hidden" name="thumbnail" value="<?php echo $mycard->thumbnail; ?>">
                     <?php 
-                    $args   = array(
-                        'post_type'     => 'thiep_moi',
-                        'posts_per_page' => -1,
-                        'author'        => $current_user_id,
-                    );
-                    $args['meta_query'] = array(
-                        array(
-                            'key'       => 'status',
-                            'value'     => 'Running',
-                            'compare'   => '=',
-                        ),
-                    );
+                    if ($current_user_id) {
+                        $args   = array(
+                            'post_type'     => 'thiep_moi',
+                            'posts_per_page' => -1,
+                            'author'        => $current_user_id,
+                        );
+                        $args['meta_query'] = array(
+                            array(
+                                'key'       => 'status',
+                                'value'     => 'Running',
+                                'compare'   => '=',
+                            ),
+                        );
 
-                    $query = new WP_Query($args);
+                        $query = new WP_Query($args);
 
-                    if ($query->have_posts()) {
-                        while ($query->have_posts()) {
-                            $query->the_post();
-                            
-                            $groupid = get_the_ID();
-                            $current_cardid = get_field('card_id');
-                            if ($current_cardid == $cardid) {
-                                $checked = "checked";
-                            } else {
-                                $checked = "";
+                        if ($query->have_posts()) {
+                            while ($query->have_posts()) {
+                                $query->the_post();
+                                
+                                $groupid = get_the_ID();
+                                $current_cardid = get_field('card_id');
+                                if ($current_cardid == $cardid) {
+                                    $checked = "checked";
+                                } else {
+                                    $checked = "";
+                                }
+                        ?>
+                        <div class="form_element">
+                            <input type="checkbox" name="customer_group[]" id="<?php echo "group_" . $groupid; ?>" value="<?php echo $groupid; ?>" <?php echo $checked; ?>>
+                            <label for="<?php echo "group_" . $groupid; ?>">
+                                <div class="img_icon">
+                                    <i class="fa fa-user-o"></i>
+                                </div>
+                                <div class="customer_name">
+                                    <?php the_title(); ?>
+                                </div>
+                            </label>
+                        </div>
+                        <?php
                             }
-                    ?>
-                    <div class="form_element">
-                        <input type="checkbox" name="customer_group[]" id="<?php echo "group_" . $groupid; ?>" value="<?php echo $groupid; ?>" <?php echo $checked; ?>>
-                        <label for="<?php echo "group_" . $groupid; ?>">
-                            <div class="img_icon">
-                                <i class="fa fa-user-o"></i>
-                            </div>
-                            <div class="customer_name">
-                                <?php the_title(); ?>
-                            </div>
-                        </label>
-                    </div>
-                    <?php
-                        }
-                        wp_reset_postdata();
+                            wp_reset_postdata();
 
-                        echo '<div class="mui-row">
-                                <button id="close_select_card" class="mui-btn mui-btn--raised"><i class="fa fa-close"></i></button>
-                                <input type="submit" value="Chọn thiệp này" class="mui-btn mui-btn--raised mui-btn--primary">
-                            </div>';
+                            echo '<div class="mui-row">
+                                    <button id="close_select_card" class="mui-btn mui-btn--raised"><i class="fa fa-close"></i></button>
+                                    <input type="submit" value="Chọn thiệp này" class="mui-btn mui-btn--raised mui-btn--primary">
+                                </div>';
+                        } else {
+                            echo '<span><i>Bạn phải tạo nhóm khách mời trước khi chọn thiệp. Hãy quay lại trang chủ để tạo nhóm.</i></span>';
+                            echo '<div class="mui-row">
+                                    <button id="close_select_card" class="mui-btn mui-btn--raised"><i class="fa fa-close"></i></button>
+                                    <a href="' . get_bloginfo('url') . '" class="mui-btn mui-btn--raised mui-btn--primary">Quay lại</a>
+                                </div>';
+                        }
+                        wp_nonce_field('post_nonce', 'post_nonce_field');
                     } else {
-                        echo '<span><i>Bạn phải tạo nhóm khách mời trước khi chọn thiệp. Hãy quay lại trang chủ để tạo nhóm.</i></span>';
-                        echo '<div class="mui-row">
-                                <button id="close_select_card" class="mui-btn mui-btn--raised"><i class="fa fa-close"></i></button>
-                                <a href="' . get_bloginfo('url') . '" class="mui-btn mui-btn--raised mui-btn--primary">Quay lại</a>
-                            </div>';
+                        ?>
+                        <div class="login_require">
+                            <div class="social_login">
+                                <h4>Bạn có thể đăng nhập nhanh qua</h4>
+                                <div class="google_btn social_btn">
+                                    <a href="<?php echo get_bloginfo('url'); ?>/herasecurelogin?loginSocial=google" data-plugin="nsl" data-action="connect" data-redirect="current" data-provider="google" data-popupwidth="600" data-popupheight="600">
+                                        <img src="<?php echo get_template_directory_uri(); ?>/img/gg.svg" alt="" /> <span>Google</span>
+                                    </a>
+                                </div>
+                                <div class="facebook_btn social_btn">
+                                    <a href="<?php echo get_bloginfo('url'); ?>/herasecurelogin?loginSocial=facebook" data-plugin="nsl" data-action="connect" data-redirect="current" data-provider="facebook" data-popupwidth="600" data-popupheight="679">
+                                        <img src="<?php echo get_template_directory_uri(); ?>/img/fb.png" alt="" /> <span>Facebook</span>
+                                    </a>
+                                </div>
+                                <?php
+                                    # Zalo login link
+                                    $code_verify = generate_verify_code();
+                                    update_field('field_6356c04455afc', $code_verify, 'option');
+                                    
+                                    $code_challenge = generate_code_challenge($code_verify);
+                                    $url = get_bloginfo('url') . '/zalo-login';
+                                    
+                                    echo '<div class="zalo_btn social_btn">
+                                            <a href="https://oauth.zaloapp.com/v4/permission?app_id=4424878354763274341&redirect_uri=' . $url . '&code_challenge=' . $code_challenge . '&state=' . $code_verify . '">
+                                                <img src="' . get_template_directory_uri() . '/img/zl.webp" alt="" /> <span>Zalo</span>
+                                            </a>
+                                        </div>';
+                                ?>
+                            </div>
+                            <div class="signup">
+                                <p>Hoặc có thể đăng ký tài khoản tại đây.</p>
+                                <a href="<?php echo get_bloginfo('url'); ?>/dang-ky"><img src="<?php echo get_template_directory_uri(); ?>/img/logo.png" alt=""> Đăng ký</a>
+                            </div>
+                        </div>
+                        <?php
                     }
-                    wp_nonce_field('post_nonce', 'post_nonce_field');
                     ?>
                     
                 </form>

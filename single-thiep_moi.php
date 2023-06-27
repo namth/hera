@@ -180,7 +180,7 @@ if (have_posts()) {
                     get_sidebar();
                     ?>
                 </div>
-                <div class="mui-col-md-8">
+                <div class="mui-col-lg-8 mui-col-md-12">
                     <div class="breadcrumb">
                         <a href="<?php echo get_bloginfo('url'); ?>"><i class="fa fa-home" aria-hidden="true"></i></a>
                         <i class="fa fa-chevron-right"></i>
@@ -190,14 +190,14 @@ if (have_posts()) {
                     <div class="mui-panel">
                         <h3 class="title_general">Mẫu thiệp</h3>
                         <div class="mui-row mb20">
-                            <div class="mui-col-md-3">
+                            <div class="mui-col-lg-3 mui-col-md-6">
                                 <div class="heracard">
                                     <div class="images">
                                         <img src="<?php echo $card_thumbnail; ?>" alt="">
                                     </div>
                                 </div>
                             </div>
-                            <div class="mui-col-md-4">
+                            <div class="mui-col-lg-4 mui-col-md-3 mui-col-sm-6">
                                 <a href="<?php echo $link_select_card; ?>" class="mui-btn hera-btn"><i class="fa fa-pagelines" aria-hidden="true"></i> Chọn thiệp</a>
                                 <?php 
                                     # Nếu chưa chọn thiệp thì không hiện 2 nút dưới
@@ -227,7 +227,7 @@ if (have_posts()) {
                             <?php 
                             if ($guest_data['total']) {
                             ?>
-                            <div class="mui-col-md-5 statistic">
+                            <div class="mui-col-lg-5 mui-col-md-3 mui-col-sm-6 statistic">
                                 <h4>Thống kê</h4>
                                 <p>Tổng số người trong nhóm này: <b><?php echo $guest_data['total']; ?></b></p>
                                 <?php
@@ -339,22 +339,22 @@ if (have_posts()) {
                                                 $viewlink = get_bloginfo('url') . '/myacc/' . $current_user->user_login . '-' . $groupid_encode . '-' . $row_index;
                                         ?>
                                                 <tr>
-                                                    <td data-encode="<?php echo $data_card_encode; ?>"><?php echo $row_index; ?></td>
-                                                    <td><?php echo $guests; ?></td>
-                                                    <td><?php echo get_sub_field('xung_ho'); ?></td>
-                                                    <td><?php echo get_sub_field('phone'); ?></td>
+                                                    <td data-label="Số thứ tự" data-encode="<?php echo $data_card_encode; ?>"><?php echo $row_index; ?></td>
+                                                    <td data-label="Khách mời"><?php echo $guests; ?></td>
+                                                    <td data-label="Cách xưng hô"><?php echo get_sub_field('xung_ho'); ?></td>
+                                                    <td data-label="Số điện thoại"><?php echo get_sub_field('phone'); ?></td>
                                                     <?php
                                                     # Nếu chưa đăng ký gói thì chưa hiện tính năng chia sẻ
                                                     if ($package_id && $card_id) {
-                                                        echo '<td>';
+                                                        echo '<td data-label="Link thiệp mời">';
                                                         echo '    <a href="' . $viewlink . '" class="copy_link">Copy link</a>';
                                                         echo '</td>';
                                                     ?>
-                                                        <td><input type="checkbox" class="sent_friend" <?php if ($sent) {
+                                                        <td data-label="Đã mời"><input type="checkbox" class="sent_friend" <?php if ($sent) {
                                                                                                             echo "checked";
                                                                                                         } ?> data-field="field_61066fd1e7dc1" data-index="<?php echo $row_index; ?>">
                                                         </td>
-                                                        <td><?php
+                                                        <td data-label="Tham dự"><?php
                                                             if ($joined == "Y") {
                                                                 echo "Có";
                                                             } else if ($joined == "N") echo "Không";
@@ -364,7 +364,7 @@ if (have_posts()) {
                                                     <?php
                                                     }
                                                     ?>
-                                                    <td>
+                                                    <td data-label="Thao tác">
                                                         <?php
                                                         # Nếu chưa chọn mẫu thiệp và chưa nhập đủ thông tin thì chưa hiện tính năng chia sẻ
                                                         if ($card_id && $check_party) {
