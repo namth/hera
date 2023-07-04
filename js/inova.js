@@ -267,6 +267,6 @@ jQuery(document).ready(function ($) {
     * Khi bấm like cho card, ... 
     */
     $(document).on('click', "#like", function(){
-      alert('alo');
+      alert('Tính năng đang phát triển!');
     });
 });

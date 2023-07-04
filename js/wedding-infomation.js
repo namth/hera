@@ -97,7 +97,7 @@ jQuery(document).ready(function ($) {
     /* Khi bấm submit một form thì gọi ajax để xử lý form đó, thêm dữ liệu vào  */
     $('.hide_form button[type="submit"]').click(function () {
         var $data = $(this).parents().eq(1).serialize();
-        // console.log($data);
+        // alert($data);
         $.ajax({
             type: "POST",
             url: AJAX.ajax_url,

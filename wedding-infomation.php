@@ -4,7 +4,7 @@
 */ 
 get_header();
 get_template_part('header', 'topbar');
-date_default_timezone_set('Asia/Ho_Chi_Minh');
+// date_default_timezone_set('Asia/Ho_Chi_Minh');
 
 # get some of user infomation
 $current_user_id = get_current_user_id();

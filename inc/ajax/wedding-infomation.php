@@ -3,6 +3,8 @@
 * Source: wedding-infomation.php
 * Xử lý khi nhập dữ liệu đám cưới ở trang nhập liệu
 */
+// date_default_timezone_set('Asia/Ho_Chi_Minh');
+
 add_action('wp_ajax_addWeddingInfo', 'addWeddingInfo');
 add_action('wp_ajax_nopriv_addWeddingInfo', 'addWeddingInfo');
 function addWeddingInfo(){
@@ -22,6 +24,8 @@ function addWeddingInfo(){
             if (in_array($key, $lunar_field)) {
                 # tính toán ngày tháng 
                 $time = substr($value, 10);
+
+                date_default_timezone_set('Asia/Ho_Chi_Minh');
                 $today = new DateTime($value);
                 $lunar= ShowLunarDate($today, 'YYYY-mm-dd') . $time;
 

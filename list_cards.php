@@ -17,12 +17,18 @@ if (isset($_GET['g']) && ($_GET['g'] != "")) {
     $data = false;
 }
 
+if (is_user_logged_in()) {
+    $back_link = get_bloginfo('url');
+} else {
+    $back_link = 'https://thiepcuoi.hra.vn';
+}
+
 ?>
 <div class="mui-container-fluid">
     <div class="mui-row">
         <div class="mui-col-md-12" id="search_box">
             <div class="back-btn mt20">
-                <a href="<?php echo get_bloginfo('url'); ?>"><i class="fa fa-arrow-left"></i> Trang chủ </a>
+                <a href="<?php echo $back_link; ?>"><i class="fa fa-arrow-left"></i> Trang chủ </a>
             </div>
             <h1>Mẫu thiệp cưới cho mọi người</h1>
             <h4>Hàng trăm mẫu thiệp mới nhất sẽ được cập nhật tại đây.</h4>
