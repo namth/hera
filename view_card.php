@@ -157,8 +157,10 @@ $data_replace = array(
     '{noi_dung_3}'  => $noi_dung_3,
     '{loi_moi}'     => wpautop($loi_moi),
     '{khach_moi}'   => $guests,
-    '{chu_re}'      => $groom,
-    '{co_dau}'      => $bride,
+    '{chu_re}'      => ucwords($groom),
+    '{co_dau}'      => ucwords($bride),
+    '{G}'           => nameLetter($groom),
+    '{B}'           => nameLetter($bride),
     '{ngay_duong_lich_dam_cuoi}' => $wedding_time[0],
     '{ngay_am_lich_dam_cuoi}'    => $wedding_moon_date,
     '{gio_dam_cuoi}' => $wedding_time[1],
@@ -205,4 +207,4 @@ if ($cardid) {
     echo "Lỗi trang 404.";
 }
     
-
+echo nameLetter($bride);
