@@ -7,9 +7,13 @@
   background: #b89062;
 }
 #header_topbar ul {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   list-style: none;
-  justify-content: right;
+  -webkit-box-pack: right;
+      -ms-flex-pack: right;
+          justify-content: right;
   padding: 0;
   margin: 0;
 }
@@ -25,24 +29,38 @@
   margin: 0;
 }
 #header #center_logo {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
-  margin-bottom: 10px;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin-top: 10px;
 }
 #header #center_logo a img {
   width: 105px;
 }
-#header #header_bottom ul {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 20px;
+
+#header_bottom {
+  position: relative;
   margin-bottom: 0;
 }
-#header #header_bottom ul li {
+#header_bottom ul {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-bottom: 0;
+}
+#header_bottom ul li {
   list-style: none;
 }
-#header #header_bottom ul li a {
+#header_bottom ul li a {
   padding: 10px 20px;
   text-transform: uppercase;
   color: #9e7c55;

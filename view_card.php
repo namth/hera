@@ -206,5 +206,3 @@ if ($cardid) {
 } else {
     echo "Lỗi trang 404.";
 }
-    
-echo nameLetter($bride);

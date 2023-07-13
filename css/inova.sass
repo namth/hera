@@ -548,25 +548,29 @@ img
         td
             border-bottom: 1px solid lightgray
 
-            a
+            a:not(.copy_link)
                 color: $primaryColor
 
-            .fa
-                font-size: large
-                color: #916d45
-                background: white
-                box-shadow: 1px 2px 5px #e7d8c7
-                border-radius: 36px
-                margin: 0px 3px
-                width: 36px
-                height: 36px
-                display: inline-flex
-                justify-content: center
-                align-items: center
+                .fa
+                    font-size: large
+                    color: #916d45
+                    background: white
+                    box-shadow: 1px 2px 5px #e7d8c7
+                    border-radius: 36px
+                    margin: 0px 3px
+                    width: 36px
+                    height: 36px
+                    display: inline-flex
+                    justify-content: center
+                    align-items: center
 
-                &:hover
-                    background: antiquewhite
-                    box-shadow: 1px 3px 5px #ccb499
+                    &:hover
+                        background: antiquewhite
+                        box-shadow: 1px 3px 5px #ccb499
+
+            .copy_link
+                .fa
+                    margin: 0px 3px
 
 #search_box
     position: relative
