@@ -20,10 +20,10 @@ if ( is_user_logged_in() && (current_user_can('contributor') || current_user_can
             <img src="<?php echo $link_avatar; ?>" alt="" data-mui-toggle="dropdown">
             <ul class="mui-dropdown__menu">
                 <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home">
-                    <a href="<?php echo get_author_posts_url($user->ID); ?>"><i class="fa fa-id-card-o" aria-hidden="true"></i> Cài đặt tài khoản</a>
+                    <a href="<?php echo get_permalink() . '?direct=bank'; ?>"><i class="fa fa-id-card-o" aria-hidden="true"></i> Cài đặt tài khoản</a>
                 </li>
                 <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home">
-                    <a href="<?php echo wp_logout_url(); ?>"><i class="fa fa-sign-out" aria-hidden="true"></i> Đăng xuất</a>
+                    <a href="<?php echo wp_logout_url( home_url(). '/new-login' ); ?>"><i class="fa fa-sign-out" aria-hidden="true"></i> Đăng xuất</a>
                 </li>
             </ul>
         </div>
@@ -35,7 +35,7 @@ if ( is_user_logged_in() && (current_user_can('contributor') || current_user_can
                     <img src="<?php echo get_template_directory_uri(); ?>/img/top.png" alt="">
                     <ul class="main_menu">
                         <li>
-                            <a href="<?php echo get_permalink() . '?direct=main'; ?>">Home</a>
+                            <a href="<?php echo get_permalink() . '?direct=main'; ?>">Tổng quan</a>
                         </li>
                         <!-- <li>
                             <a href="<?php echo get_permalink() . '?direct=withdraw'; ?>">Yêu cầu rút tiền</a>

@@ -35,8 +35,10 @@
                 width: 105px
 
 #header_bottom
+    padding: 13px
     position: relative
     margin-bottom: 0
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.06),0 0 2px 0 rgba(0, 0, 0, 0.03)
 
     ul
         display: flex
@@ -51,3 +53,52 @@
                 padding: 10px 20px
                 text-transform: uppercase
                 color: #9e7c55
+
+.voucher
+    display: flex
+    border: 1px dotted #b89062
+    background: #fef8f4
+    color: #082646
+    margin-bottom: 20px
+
+    .logo_partner
+        img
+            width: 200px
+            border-right: 1px dashed #b89062
+            margin-right: 20px
+
+    .content_voucher
+        width: calc(100% - 240px)
+        position: relative
+
+        h3
+            border-bottom: 1px dotted
+            padding-bottom: 7px
+
+        h4
+            background: #e05822
+            display: inline-flex
+            color: white
+            padding: 6px 6px 6px 15px
+            align-items: center
+            border-left: 3px dotted #fef8f4
+            border-right: 3px dotted #fef8f4
+
+            span
+                background: white
+                color: #052743
+                font-size: 30px
+                padding: 10px 20px
+                margin-left: 15px
+
+        a.action
+            padding: 12px 18px
+            color: #fff
+            font-size: 18px
+            text-transform: uppercase
+            font-weight: bold
+            border-left: 3px dotted #fef8f4
+            background: #042742
+            position: absolute
+            right: 0
+            bottom: 10px

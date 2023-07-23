@@ -4,7 +4,7 @@
 */
 if (is_user_logged_in()) {
     // redirect sang trang chủ
-    wp_redirect(get_bloginfo('url'));
+    wp_redirect(get_bloginfo('url') . '/doi-tac/');
     exit;
 } else {
     // check form
@@ -54,14 +54,17 @@ if (is_user_logged_in()) {
             do_action( 'wp_login', $username );
             
             // redirect sang trang chủ
-            wp_redirect( get_bloginfo('url') );
+            wp_redirect( get_bloginfo('url') . '/doi-tac/');
             exit;
         }
     }
     get_header();
 
 ?>
-<div id="newlogin">
+<div id="newlogin" style="
+        background-image: url('https://source.unsplash.com/1920x1024?hdr,wedding,flower');
+        background-size: cover;
+">
     <form name="loginform" id="loginform" action="" method="post">
         <img src="<?php echo get_template_directory_uri(); ?>/img/logo_hera.png">
         <p class="error_message"><?php if ($error_message) {
@@ -84,7 +87,7 @@ if (is_user_logged_in()) {
             <input type="hidden" name="redirect_to" value="<?php echo get_bloginfo('url'); ?>">
         </p>
 
-        <div class="social_login">
+        <!-- <div class="social_login">
             <div class="google_btn social_btn">
                 <a href="<?php echo get_bloginfo('url'); ?>/herasecurelogin?loginSocial=google" data-plugin="nsl" data-action="connect" data-redirect="current" data-provider="google" data-popupwidth="600" data-popupheight="600">
                     <img src="<?php echo get_template_directory_uri(); ?>/img/gg.svg" alt="" /> <span>Đăng nhập bằng Google</span>
@@ -112,7 +115,7 @@ if (is_user_logged_in()) {
         </div>
         <div class="signup">
             <p>Bạn chưa có tài khoản? <a href="<?php echo get_bloginfo('url'); ?>/dang-ky">Đăng ký</a></p>
-        </div>
+        </div> -->
     </form>
 
 </div>

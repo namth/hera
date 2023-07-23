@@ -98,8 +98,11 @@
 }
 
 #header_bottom {
+  padding: 13px;
   position: relative;
   margin-bottom: 0;
+  -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.06), 0 0 2px 0 rgba(0, 0, 0, 0.03);
+          box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.06), 0 0 2px 0 rgba(0, 0, 0, 0.03);
 }
 #header_bottom ul {
   display: -webkit-box;
@@ -120,6 +123,61 @@
   padding: 10px 20px;
   text-transform: uppercase;
   color: #9e7c55;
+}
+
+.voucher {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  border: 1px dotted #b89062;
+  background: #fef8f4;
+  color: #082646;
+  margin-bottom: 20px;
+}
+.voucher .logo_partner img {
+  width: 200px;
+  border-right: 1px dashed #b89062;
+  margin-right: 20px;
+}
+.voucher .content_voucher {
+  width: calc(100% - 240px);
+  position: relative;
+}
+.voucher .content_voucher h3 {
+  border-bottom: 1px dotted;
+  padding-bottom: 7px;
+}
+.voucher .content_voucher h4 {
+  background: #e05822;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  color: white;
+  padding: 6px 6px 6px 15px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-left: 3px dotted #fef8f4;
+  border-right: 3px dotted #fef8f4;
+}
+.voucher .content_voucher h4 span {
+  background: white;
+  color: #052743;
+  font-size: 30px;
+  padding: 10px 20px;
+  margin-left: 15px;
+}
+.voucher .content_voucher a.action {
+  padding: 12px 18px;
+  color: #fff;
+  font-size: 18px;
+  text-transform: uppercase;
+  font-weight: bold;
+  border-left: 3px dotted #fef8f4;
+  background: #042742;
+  position: absolute;
+  right: 0;
+  bottom: 10px;
 }
 
 @font-face {
@@ -364,8 +422,6 @@ img {
 }
 
 #newlogin {
-  background: url(https://source.unsplash.com/1920x2400?hdr,sunset,ocean);
-  background-size: cover;
   background-repeat: no-repeat;
   height: 100vh;
 }
@@ -390,12 +446,6 @@ img {
   -webkit-box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
           box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
   padding: 50px 35px;
-}
-#newlogin form * {
-  font-family: "Poppins", sans-serif;
-  color: #ffffff;
-  outline: none;
-  border: none;
 }
 #newlogin form h3 {
   font-size: 40px;
