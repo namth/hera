@@ -40,9 +40,6 @@ $total_customer = 0;
 $normal_license = get_field('normal_card', 'user_' . $current_user_id);
 $vip_license    = get_field('vip_card', 'user_' . $current_user_id);
 
-// echo $_COOKIE['noguide'];
-// unset($_COOKIE['noguide']);
-
 $args   = array(
     'post_type'     => 'thiep_moi',
     'posts_per_page' => -1,
@@ -52,8 +49,6 @@ $args   = array(
 
 $count_query = new WP_Query($args);
 $count = $count_query->post_count;
-
-// echo $count;
 
 ?>
 <div class="mui-container-fluid">
@@ -65,7 +60,7 @@ $count = $count_query->post_count;
         </div>
         <div class="mui-col-lg-8 mui-col-md-12 mt20">
             <?php 
-                if(!$_COOKIE['noguide']) {
+                if(!$_COOKIE["noguide"]) {
             ?>
             <div class="guideline">
                 <h2>Chào mừng bạn đến với Thiệp cưới Online HERA</h2>

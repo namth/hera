@@ -11,8 +11,7 @@ if (isset($_GET['code'])) {
     $partner_id = $code[1];
     
     if ($partner_id && ($owner_coupon == $partner_id)){
-        # set coupon id to cookie
-        setcookie('noguide', true, time() + 432000);
+        # set partner id to cookie
 
         # lấy một số thông tin của coupon
         $coupon_name = get_field('coupon_name', $coupon_id);
@@ -28,6 +27,16 @@ if (isset($_GET['code'])) {
         
         # Lấy thông tin đối tác
         $partner_name = get_field('partner_name', 'user_'. $partner_id);
+
+        # đếm số lượt truy cập coupon
+        $number_of_click = get_field('number_of_clicks', 'user_' . $partner_id);
+        if (is_numeric($partner_id)) {
+            // tăng số đếm khi click vào link theo partner_id
+            update_field('field_63eb41b276ba7', $number_of_click + 1, 'user_' . $partner_id);
+
+            // lưu partner_id vào cookie 1 tháng cho đến khi user thanh toán 
+            setcookie('partner', $partner_id, time() + 2592000, '/');
+        }
         
         get_header();
         get_header('logocenter');
@@ -52,7 +61,7 @@ if (isset($_GET['code'])) {
                             </div>
                         </div>
         
-                        <div class="content">
+                        <div class="guideline_content">
                             <?php the_content(); ?>
                         </div>
                     </div>
