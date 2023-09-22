@@ -476,3 +476,9 @@ function nameLetter($name){
     
     return $first_character;
 }
+
+# lưu lại thời điểm login cuối cùng
+function user_last_login( $user_login, $user ){
+    update_user_meta( $user->ID, '_last_login', time() );
+}
+add_action( 'wp_login', 'user_last_login', 10, 2 );

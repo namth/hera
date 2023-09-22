@@ -16,11 +16,14 @@ if ( is_user_logged_in() && (current_user_can('contributor') || current_user_can
             </a>
         </div>
         <div class="mui-dropdown greeting">
-            <span><b><?php echo $user->data->display_name; ?></b></span>
+            <span>Xin chào, <b><?php echo $user->data->display_name; ?></b></span>
             <img src="<?php echo $link_avatar; ?>" alt="" data-mui-toggle="dropdown">
             <ul class="mui-dropdown__menu">
                 <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home">
-                    <a href="<?php echo get_permalink() . '?direct=bank'; ?>"><i class="fa fa-id-card-o" aria-hidden="true"></i> Cài đặt tài khoản</a>
+                    <a href="<?php echo get_permalink() . '?direct=main'; ?>"><i class="fa fa-handshake-o" aria-hidden="true"></i> Cộng tác viên</a>
+                </li>
+                <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home">
+                    <a href="<?php echo get_author_posts_url($user->ID); ?>"><i class="fa fa-id-card-o" aria-hidden="true"></i> Cài đặt tài khoản</a>
                 </li>
                 <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home">
                     <a href="<?php echo wp_logout_url( home_url(). '/new-login' ); ?>"><i class="fa fa-sign-out" aria-hidden="true"></i> Đăng xuất</a>

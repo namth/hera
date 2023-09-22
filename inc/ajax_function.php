@@ -256,14 +256,15 @@ function checkUsernameExist() {
     $username = sanitize_user($_POST['user_login']);
     $check_user = username_exists($username);
     if (!$check_user) {
+        $altered = preg_replace("/[^a-zA-Z.0-9]+/", "", $username);
         # Nếu chưa có tài khoản thì kiểm tra xem có hợp lệ không và thông báo
-        if ((strlen($username) >= 3) && validate_username($username)) {
+        if ((strlen($altered) >= 3) && validate_username($altered)) {
             print_r(false);
         } else {
             print_r("Tên đăng nhập phải có ít nhất 3 ký tự");
         }
     } else {
-        print_r("Tài khoản này đã tồn tại.");
+        print_r("Tài khoản này đã tồn tại hoặc tên tài khoản không hợp lệ.");
     }
     exit;
 }
@@ -285,6 +286,25 @@ function checkEmailExist() {
         }
     } else {
         print_r("Email này đã được sử dụng.");
+    }
+    exit;
+}
+
+/* 
+* Source: change-author-password.php
+* Kiểm tra password có đúng chưa
+*/
+add_action('wp_ajax_checkPassword', 'checkPassword');
+add_action('wp_ajax_nopriv_checkPassword', 'checkPassword');
+function checkPassword() {
+    $user_pass = sanitize_user($_POST['user_pass']);
+    $current_user = wp_get_current_user();
+    $check = wp_authenticate_username_password( NULL, $current_user->user_login, $user_pass );
+
+    if($check->ID){
+        print_r(false);
+    } else {
+        print_r("Mật khẩu không đúng.");
     }
     exit;
 }

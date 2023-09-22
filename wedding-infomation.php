@@ -587,10 +587,31 @@ $google_api     = get_field('google_maps_api_key', 'option');
                 ?>
             </div>
         </div>
-        <div class="mui-col-md-2"></div>
+        <div class="mui-col-md-2 left_sidebar">
+            <?php
+            $menu = 'Hướng dẫn trang điền thông tin';
+            $guideline = wp_nav_menu(array(
+                'menu'          => $menu,
+                'container_id'  => 'guide_section',
+                'container_class'   => '',
+                'items_wrap'    => '<a href="#" class="maximize"><i class="fa fa-external-link" aria-hidden="true"></i> Khôi phục</a><img src="' . get_template_directory_uri() . '/img/thaochi.jpg"><ul class="playlist"><h4>Hướng dẫn nhanh</h4>%3$s</ul><a href="#" class="minimize"><i class="fa fa-level-down" aria-hidden="true"></i> Thu nhỏ</a>',
+                'menu_class'    => 'main_menu mb20',
+                'echo' => FALSE,
+                'fallback_cb' => '__return_false'
+            ));
+
+            if ( ! empty ( $guideline ) ){
+                echo $guideline;
+            }
+            ?>
+        </div>
     </div>
 </div>
 <script src="<?php echo get_template_directory_uri(); ?>/js/cookie.js"></script>
+<script src="<?php echo get_template_directory_uri(); ?>/js/guideline.js"></script>
+<script src="<?php echo get_template_directory_uri(); ?>/js/soundmanager2-jsmin.js"></script>
+<script src="<?php echo get_template_directory_uri(); ?>/js/soundmanager2-player.js"></script>
+<link href="<?php echo get_template_directory_uri(); ?>/css/soundmanager2-player.css" rel="stylesheet" type="text/css">
 <script>
     let latlngStr;
 

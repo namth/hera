@@ -529,12 +529,12 @@ img
 
 .mui-table
     thead tr
-        background: #eaeaea
-        border-top: 1px solid lightgray
-        border-bottom: 1px solid lightgray
+    background: #eaeaea
+    border-top: 1px solid lightgray
+    border-bottom: 1px solid lightgray
 
-        th
-            border: none
+    th
+        border: none
 
     tbody tr
         td
@@ -1527,6 +1527,7 @@ img
     .avatar
         position: relative
         border-radius: 100px
+        height: 100px
         overflow: hidden
 
         img
@@ -1595,9 +1596,16 @@ img
         position: relative
         z-index: 1
 
-.update_user_button
-    margin-top: 20px
+.delete_user
     text-align: center
+    
+    .confirm_delete
+        display: none
+
+.update_user_button
+    display: flex
+    margin-top: 20px
+    justify-content: center
 
 .uploadform
     display: none
@@ -2109,6 +2117,60 @@ img
 
             &:hover
                 color: antiquewhite
+
+#hera_form
+    .mui-textfield
+        position: relative
+
+        input
+            margin-top: 10px
+            background: #f5efe8
+            color: #906f47
+            padding: 3px 9px
+            border-radius: 6px
+            font-size: 16px
+            height: 42px
+
+            &:focus
+                border-bottom-color: #906f47
+                color: #906f47
+
+                & ~ label
+                    color: #906f47
+                    font-size: 14px
+
+        label
+            .required
+                color: red
+
+        .form_check_icon
+            position: absolute
+            top: 32px
+            right: 5px
+            width: 24px
+            font-size: 18px
+            color: #8bc45d
+
+        .error
+            color: #ee4e00
+            margin-top: 3px
+            display: block
+
+        .see_pass
+            position: absolute
+            top: 25px
+            right: 8%
+            margin: 3px 0
+            padding: 8px 15px 8px 14px
+            border-top-right-radius: 8px
+            border-bottom-right-radius: 8px
+            border-left: 1px solid #d4cbc5
+            cursor: pointer
+            color: #906f47
+
+.left_sidebar
+    position: relative
+    padding: 0
 
 @include Responsive(XL)
 @include Responsive(MD)

@@ -136,8 +136,107 @@ $XL: 1170px
             #detail_card
                 width: 100%
 
+            #guide_section
+                position: fixed
+                right: 15px
+                bottom: 30px
+                display: flex
+                flex-direction: column-reverse
+                align-items: end
+                z-index: 999
+
+                img
+                    border-radius: 50px
+                    width: 72px
+                    border: 1px solid #3c729a
+                    cursor: pointer
+
+                ul.playlist
+                    display: none
+                    margin-bottom: 10px
+                    padding: 0 0 10px 0
+                    background: #f9f9f9
+                    border-radius: 10px
+                    border: 1px solid #3c729a
+
+                    h4
+                        font-weight: bold
+                        text-align: center
+                        border-bottom: 1px solid #c6d3dc
+                        margin: 0
+                        padding: 9px
+                        background: #dfe9f3
+                        color: #3171a1
+                        border-top-left-radius: 10px
+                        border-top-right-radius: 10px
+
+                .minimize
+                    display: none
+
+                .maximize
+                    display: none
+
     @else if $canvas == XL
         @media screen and (min-width: $MD)
+            #guide_section                
+                ul.playlist
+                    h4
+                        font-weight: bold
+                        text-align: center
+                        border-bottom: 1px solid #c6d3dc
+                        margin: 0
+                        padding: 9px
+                        background: #dfe9f3
+                        color: #3171a1
+
+                .minimize
+                    position: absolute
+                    top: 10px
+                    left: 10px
+                    font-size: 11px
+                    color: #235d96
+
+                    &:hover
+                        font-weight: bold
+
+                .maximize
+                    display: none
+                    font-size: 11px
+                    color: #235d96
+                    width: 72px
+                    text-align: center
+
+                    &:hover
+                        font-weight: bold
+
+            .guide_section_minimize
+                position: fixed
+                right: 15px
+                bottom: 30px
+                display: flex
+                flex-direction: column-reverse
+                align-items: end
+                z-index: 999
+
+                img
+                    border-radius: 50px
+                    width: 72px
+                    border: 1px solid #3c729a
+                    cursor: pointer
+
+                ul.playlist
+                    display: none
+                    margin-bottom: 10px
+                    padding: 0 0 10px 0
+                    background: #f9f9f9
+                    border-radius: 10px
+                    border: 1px solid #3c729a
+                    max-height: 300px
+                    overflow: scroll
+
+                    h4
+                        border-top-left-radius: 10px
+                        border-top-right-radius: 10px
 
     @else if $canvas == XXL
         @media screen and (min-width: $XL)

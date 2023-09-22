@@ -235,12 +235,16 @@ if (is_user_logged_in()) {
 
         /* Dùng axjax kiểm tra user đã sử dụng chưa */
         $('input[name="user_login"]').change(function(){
+            var user_login = $(this).val();
+            user_login = user_login.replace(/[^a-zA-Z.0-9]+/g, '');
+            $(this).val(user_login);
+
             $.ajax({
                 type: "POST",
                 url: AJAX.ajax_url,
                 data: {
                     action: "checkUsernameExist",
-                    user_login: $(this).val(),
+                    user_login: user_login,
                 },
                 beforeSend: function() {
                     $('input[name="user_login"]').prop('disabled', true).parent().find('.form_check_icon').html(loading);
@@ -270,12 +274,16 @@ if (is_user_logged_in()) {
 
         /* Dùng axjax kiểm tra email đã sử dụng chưa */
         $('input[name="user_email"]').change(function(){
+            var user_email = $(this).val();
+            user_email = user_email.replace(/[^a-zA-Z0-9_/-@.]/g, '');
+            $(this).val(user_email);
+
             $.ajax({
                 type: "POST",
                 url: AJAX.ajax_url,
                 data: {
                     action: "checkEmailExist",
-                    user_email: $(this).val(),
+                    user_email: user_email,
                 },
                 beforeSend: function() {
                     $('input[name="user_email"]').prop('disabled', true).parent().find('.form_check_icon').html(loading);
