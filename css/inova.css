@@ -585,17 +585,51 @@ img {
 }
 #header_bar .mobile_menu .menu {
   display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #fef8f4;
+  width: 100%;
+  height: 100%;
+  z-index: 9;
+  text-align: center;
+}
+#header_bar .mobile_menu .menu img {
+  width: 100%;
+}
+#header_bar .mobile_menu .menu .close_mobile_menu_button {
   background: white;
-  width: 300px;
+  padding: 5px 13px 3px;
+  border-radius: 24px;
+  color: #916d45;
+  border: 1px solid;
+  font-size: 24px;
+  text-transform: uppercase;
   position: absolute;
-  height: 100vh;
+  top: 30px;
+  right: 32px;
+  cursor: pointer;
 }
 #header_bar .mobile_menu .menu #menu-main-menu {
-  padding: 0 20px;
-  margin-top: -21px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  height: calc(100% - 120px);
 }
 #header_bar .mobile_menu .menu #menu-main-menu li {
-  border-radius: 12px;
+  font-size: 18px;
+  text-transform: uppercase;
+}
+#header_bar .mobile_menu .menu #menu-main-menu li a {
+  padding: 15px;
+  color: #916d45;
 }
 #header_bar .mobile_menu .menu .overlay {
   display: block;
@@ -644,6 +678,50 @@ img {
 #header_bar .greeting .mui-dropdown__menu li a i {
   margin-right: 10px;
   min-width: 16px;
+}
+
+.mobile_menu_nologin {
+  display: none;
+}
+
+#header_bottom .mobile_menu {
+  display: none;
+  position: absolute;
+  z-index: 9;
+  top: 0;
+  left: 0;
+}
+#header_bottom .mobile_menu .mobile_menu_icon {
+  position: absolute;
+  top: 12px;
+  left: 90px;
+  font-size: 25px;
+  color: #b89062;
+  cursor: pointer;
+}
+#header_bottom .mobile_menu .menu {
+  display: none;
+  background: white;
+  width: 300px;
+  position: absolute;
+  height: 100vh;
+}
+#header_bottom .mobile_menu .menu #menu-main-menu {
+  padding: 0 20px;
+  margin-top: -21px;
+}
+#header_bottom .mobile_menu .menu #menu-main-menu li {
+  border-radius: 12px;
+}
+#header_bottom .mobile_menu .menu .overlay {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  background: rgba(0, 0, 0, 0.3019607843);
+  top: 0;
+  left: 0;
+  z-index: -1;
 }
 
 #hera_sidebar {
@@ -2799,6 +2877,71 @@ img {
     color: brown;
     padding-left: 9px;
     width: 132px;
+  }
+  .mobile_menu_nologin {
+    display: block;
+    position: absolute;
+    top: 50px;
+    left: 20px;
+    padding: 5px 12px;
+    background: white;
+    border: 1px solid #d7c8c8;
+    border-radius: 6px;
+  }
+  .mobile_menu_nologin .mobile_menu_icon {
+    font-size: 24px;
+    color: #916d45;
+  }
+  .mobile_menu_nologin .menu {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: #fef8f4;
+    width: 100%;
+    height: 100%;
+    z-index: 9;
+    text-align: center;
+  }
+  .mobile_menu_nologin .menu img {
+    width: 100%;
+  }
+  .mobile_menu_nologin .menu .close_mobile_menu_button {
+    background: white;
+    padding: 5px 13px 3px;
+    border-radius: 24px;
+    color: #916d45;
+    border: 1px solid;
+    font-size: 24px;
+    text-transform: uppercase;
+    position: absolute;
+    top: 30px;
+    right: 32px;
+    cursor: pointer;
+  }
+  .mobile_menu_nologin .menu .nologin-mobile-menu {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    height: calc(100% - 120px);
+  }
+  .mobile_menu_nologin .menu .nologin-mobile-menu li {
+    font-size: 18px;
+    text-transform: uppercase;
+  }
+  .mobile_menu_nologin .menu .nologin-mobile-menu li a {
+    padding: 15px;
+    color: #916d45;
+  }
+  #header_bottom {
+    display: none;
   }
 }
 @media screen and (max-width: 480px) {

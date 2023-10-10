@@ -162,9 +162,9 @@ if (have_posts()) {
                 $guest_data['total']++;
                 $guest_data['sent'] += get_sub_field('sent') ? 1 : 0;
                 $joined = get_sub_field('joined');
-                $name = get_sub_field('name');
+                /* $name = get_sub_field('name');
                 $guest_attach = get_sub_field('guest_attach');
-                $row_index = get_row_index();
+                $row_index = get_row_index(); */
 
                 if ($joined == "Y") {
                     $guest_data['joined']++;
@@ -201,12 +201,12 @@ if (have_posts()) {
                             <div class="mui-col-lg-4 mui-col-md-3 mui-col-sm-6">
                                 <a href="<?php echo $link_select_card; ?>" class="mui-btn hera-btn"><i class="fa fa-pagelines" aria-hidden="true"></i> Chọn thiệp</a>
                                 <?php
+                                # Lấy thông tin đám cưới: 
+                                $groom = get_field('groom', 'user_' . $author_id);
+                                $bride = get_field('bride', 'user_' . $author_id);
+
                                 # Nếu chưa chọn thiệp thì không hiện 2 nút dưới
                                 if ($card_id) {
-                                    # Lấy thông tin đám cưới: 
-                                    $groom = get_field('groom', 'user_' . $author_id);
-                                    $bride = get_field('bride', 'user_' . $author_id);
-
                                     if ($category_name == "Nhà gái") {
                                         $party_adress       = get_field('bride_party_address', 'user_' . $author_id);
                                         $party_time         = explode(' ', get_field('bride_party_time', 'user_' . $author_id));
@@ -260,6 +260,9 @@ if (have_posts()) {
                         <div class="mui-row">
                             <div class="mui-col-md-12 mb10">
                                 <?php
+                                $icon = $icon2 = "";
+                                $thongbao = $link = $button = '';
+
                                 if ($card_id) {
                                     if (!$check_groombride) {
                                         $icon = 'fa-exclamation-circle';
@@ -319,11 +322,39 @@ if (have_posts()) {
                                             while (have_rows('guest_list')) {
                                                 the_row();
 
-                                                $sent = get_sub_field('sent');
+                                                $id     = get_sub_field('id');
+                                                $sent   = get_sub_field('sent');
                                                 $joined = get_sub_field('joined');
-                                                $name = get_sub_field('name');
-                                                $guest_attach = get_sub_field('guest_attach');
-                                                $row_index = get_row_index();
+                                                $name   = get_sub_field('name');
+                                                $guest_attach   = get_sub_field('guest_attach');
+                                                $row_index      = get_row_index();
+
+                                                # Nếu id khách mời chưa có, sẽ cấp một số mới từ số khách tổng của user và tăng số khách tổng lên 1
+                                                if(!$id) {
+                                                    $new_guest_id = get_user_meta($current_userID, 'hera_total_guest', true);
+                                                    if(!$new_guest_id){
+                                                        $new_guest_id = 1;
+                                                    } else {
+                                                        $new_guest_id++;
+                                                    }
+                                                    # update id mới vào row này và update tổng id vào data user
+                                                    update_sub_field('id', $new_guest_id);
+                                                    update_user_meta( $current_userID, 'hera_total_guest', $new_guest_id );
+                                                    # set lại id mới thành id hiện tại
+                                                    $id = $new_guest_id;
+                                                }
+
+                                                # lấy tên cô dâu chú rể
+                                                $wedding_character = get_user_meta($current_userID, 'hera_wedding_character', true);
+                                                if (!$wedding_character) {
+                                                    # Nếu không có ký hiệu có sẵn thì lấy chữ cái đầu của chú rể + cô dâu và lưu lại
+                                                    $_character = nameLetter($groom) . nameLetter($bride);
+                                                    $wedding_character = strtolower($_character);
+                                                    update_user_meta($current_userID, 'hera_wedding_character', $wedding_character);
+                                                }
+
+                                                # xử lý tên khách mời thành dạng link
+                                                $guest_link = strtolower(convertToUnaccented(str_replace(' ', '-', $name)));
 
                                                 # Xoá khách mời
                                                 $del_data = inova_encrypt(json_encode(array(
@@ -337,7 +368,8 @@ if (have_posts()) {
                                                     $guests = $name . ' và ' . $guest_attach;
                                                 } else $guests = $name;
 
-                                                $viewlink = get_bloginfo('url') . '/myacc/' . $current_user->user_login . '-' . $groupid_encode . '-' . $row_index;
+                                                // $viewlink = get_bloginfo('url') . '/myacc/' . $current_user->user_login . '-' . $groupid_encode . '-' . $row_index;
+                                                $viewlink = get_bloginfo('url') . '/thiepcuoi/' . $groupid . '/' . $wedding_character . '/' . $id . '/' . $guest_link;
                                         ?>
                                                 <tr>
                                                     <td data-label="Số thứ tự" data-encode="<?php echo $data_card_encode; ?>"><?php echo $row_index; ?></td>

@@ -257,10 +257,10 @@ jQuery(document).ready(function ($) {
     * Khi bấm mobile menu show menu
     */
     $(document).on('click', ".mobile_menu_icon", function(){
-      $('.mobile_menu .menu').show();
+      $(this).parent().find('.menu').show();
     });
-    $(document).on('click', ".mobile_menu .overlay", function(){
-      $('.mobile_menu .menu').hide();
+    $(document).on('click', ".mobile_menu .overlay, .close_mobile_menu_button", function(){
+      $(this).parents().eq(2).find('.menu').hide();
     });
 
     /* 

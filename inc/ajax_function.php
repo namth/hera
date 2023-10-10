@@ -186,7 +186,7 @@ function acceptInvite() {
             while (have_rows('guest_list', $group)) {
                 the_row();
         
-                $row_index = get_row_index();
+                $row_index = get_sub_field('id');
                 if ($row_index != $invitee) {
                     continue;
                 } else {

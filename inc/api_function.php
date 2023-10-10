@@ -55,7 +55,7 @@ function inova_api($api, $token, $method, $body) {
             'Content-Type'  => 'application/json; charset=utf-8',
             'Authorization' => $token,
         ),
-        'body'      => json_encode($body),
+        'body'      => $body,
         'sslverify' => true,
     );
 

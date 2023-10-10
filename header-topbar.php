@@ -25,14 +25,15 @@ if (is_user_logged_in()) {
             </a>
             <div class="menu">
                 <img src="<?php echo get_template_directory_uri(); ?>/img/top.png" alt="">
+                <span class="close_mobile_menu_button">X</span>
                 <?php 
                     wp_nav_menu(array(
                         'menu'      => 2,
                         'container' => '',
-                        'menu_class' => 'main_menu mb20'
+                        'menu_class' => 'main_menu nologin-mobile-menu mb20'
                     ));
                 ?>
-                <div class="overlay"></div>
+                <!-- <div class="overlay"></div> -->
             </div>
         </div>
         <div class="mui-dropdown greeting">

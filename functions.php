@@ -114,7 +114,7 @@ function custom_rewrite_rules() {
     $wp->add_query_var('myacc');
     $wp->add_query_var('group');
     $wp->add_query_var('invitee');
-    add_rewrite_rule('^myacc/(.*)-(.*)-(.*)?', 'index.php?page_id=72&myacc=$matches[1]&group=$matches[2]&invitee=$matches[3]', 'top');
+    add_rewrite_rule('^thiepcuoi/(.*)/(.*)/(.*)/(.*)?', 'index.php?page_id=72&group=$matches[1]&character=$matches[2]&invitee=$matches[3]&guest=$matches[4]', 'top');
 }
 add_action('init', 'custom_rewrite_rules');
 

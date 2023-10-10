@@ -21,7 +21,7 @@ if (is_user_logged_in()) {
     $back_link = get_bloginfo('url');
     get_header('topbar');
 } else {
-    // $back_link = 'https://thiepcuoi.hra.vn';
+    $back_link = '';
     get_header('logocenter');
 }
 

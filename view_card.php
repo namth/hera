@@ -2,11 +2,14 @@
 /* 
 * Template Name: View Card 
 */
-$user_login = get_query_var('myacc');
-$user = get_user_by('login', $user_login);
-$_group = get_query_var('group');
+$group = get_query_var('group');
+$character = get_query_var('character');
 $customer = get_query_var('invitee');
-$group = inova_encrypt($_group, 'd');
+
+$user_login = get_post_field('post_author', $group);
+$user = get_user_by('ID', $user_login);
+$hera_character = get_user_meta($user_login, 'hera_wedding_character', true);
+$_group = inova_encrypt($group, 'e');
 $package_id = get_field('package_id', 'user_' . $user->ID);
 if(!($package_id || is_user_logged_in())){
     wp_redirect(get_permalink(5));
@@ -71,7 +74,7 @@ if ($wedding_moontime[0]) {
     $wedding_moon_day       = $time_object->format('d');
     $wedding_moon_month     = $time_object->format('m');
     $wedding_moon_year      = $time_object->format('Y');
-    $wedding_moonyear_text  = ConvertMoonYear($party_moon_year);
+    $wedding_moonyear_text  = ConvertMoonYear($wedding_moon_year);
 }
 
 # sun-day party time
@@ -107,7 +110,7 @@ if (have_rows('guest_list', $group)) {
     while (have_rows('guest_list', $group)) {
         the_row();
 
-        $row_index = get_row_index();
+        $row_index = get_sub_field('id');
         if ($row_index != $customer) {
             continue;
         } else {
