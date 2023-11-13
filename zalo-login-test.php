@@ -49,7 +49,7 @@ if (isset($_GET['code'])) {
             # Đăng nhập sau khi tạo tài khoản
             wp_set_current_user( $user, $user_login );
             wp_set_auth_cookie( $user, true, false );
-            do_action( 'wp_login', $user_login, $user->ID );
+            do_action( 'wp_login', $user_login, $user );
             
             # add checking login number to user account 
             if( $login_amount = get_user_meta( $user, 'login_amount', true ) ) {
