@@ -47,7 +47,7 @@ jQuery(document).ready(function ($) {
         return false;
     });
 
-    /* Khi bấm submit một form thì gọi ajax để xử lý form đó, thêm dữ liệu vào  */
+    /* Khi bấm submit một form thì gọi ajax để xử lý form add coupon, thêm dữ liệu vào  */
     $('.coupon_form button').click(function () {
         // alert('alo');
         var data = $('input[name="coupon_code"]').val();
@@ -97,7 +97,7 @@ jQuery(document).ready(function ($) {
                         style: 'currency',
                         currency: 'VND',
                     });
-                    $('.view_coupon .final_price').html(formatter.format(obj['final_total'])).show();
+                    $('.package_box .final_price').html(formatter.format(obj['final_total'])).show();
                 }
             },
         });
@@ -111,7 +111,7 @@ jQuery(document).ready(function ($) {
         var customer_phone = $("input[name='customer_phone']").val();
         var customer_email = $("input[name='customer_email']").val();
         var customer_address = $("input[name='customer_address']").val();
-        var notification = "Có lỗi gì đó. Hãy điền đầy đủ thông tin.";
+        var notification = '<i class="fa fa-exclamation-circle" aria-hidden="true"></i> Hãy điền đầy đủ thông tin của bạn.';
         var valid = false;
         
         if (customer_address && customer_email && customer_phone && customer_name) {

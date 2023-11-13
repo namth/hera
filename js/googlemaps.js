@@ -5,13 +5,14 @@ var address_infos = {};
 function initMap(element, input, output, latlng) {
     if (latlng) {
         var pos = latlng.split(',');
-        console.log(pos);
         lat = parseFloat(pos[0]);
         lng = parseFloat(pos[1]);
     } else {
         lat = 21.0167904;
         lng = 105.7819856;
     }
+    console.log(lat);
+    console.log(lng);
     
     map = new google.maps.Map(element, {
         zoom: 15,

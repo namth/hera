@@ -4,7 +4,7 @@
 */ 
 get_header();
 get_template_part('header', 'topbar');
-date_default_timezone_set('Asia/Ho_Chi_Minh');
+// date_default_timezone_set('Asia/Ho_Chi_Minh');
 
 # get some of user infomation
 $current_user_id = get_current_user_id();
@@ -12,13 +12,11 @@ $where_update = 'user_' . $current_user_id;
 
 if ( isset($_POST['post_nonce_field']) &&
 wp_verify_nonce($_POST['post_nonce_field'], 'post_nonce') ) {
-    $groom = strip_tags($_POST['groom']);
-    $bride = strip_tags($_POST['bride']);
+    $groom = trim(strip_tags($_POST['groom']));
+    $bride = trim(strip_tags($_POST['bride']));
     
-    if ($groom) {
+    if ($groom && $bride) {
         update_field('field_62b13a3d49b34', $groom, $where_update);
-    }
-    if ($bride) {
         update_field('field_62b13a4949b35', $bride, $where_update);
     }
 
@@ -41,7 +39,7 @@ $google_api     = get_field('google_maps_api_key', 'option');
         </div>
         <div class="mui-col-md-8">
             <div class="breadcrumb">
-                <a href="<?php echo get_bloginfo('url'); ?>">Trang chủ</a>
+                <a href="<?php echo get_bloginfo('url'); ?>"><i class="fa fa-home" aria-hidden="true"></i></a>
                 <i class="fa fa-chevron-right"></i>
                 <span class="title"> <?php the_title(); ?></span>
             </div>
@@ -74,7 +72,7 @@ $google_api     = get_field('google_maps_api_key', 'option');
                     ?>
                     <div id="main-info">
                         <div class="mui-textfield groom">
-                            <span class="diveditable" contenteditable=true oncut="return false" onpaste="return false" data-field="field_62b13a3d49b34">
+                            <span class="diveditable" contenteditable=true oncut="return false" onpaste="return false" data-field="field_62b13a3d49b34" data-where="<?php echo $where_update; ?>">
                                 <?php echo $groom; ?>
                             </span>
                         </div>
@@ -82,9 +80,44 @@ $google_api     = get_field('google_maps_api_key', 'option');
                             <img src="<?php echo get_template_directory_uri() . '/img/heart-preloader.gif'; ?>" alt="">
                         </div>
                         <div class="mui-textfield bride">
-                            <span class="diveditable" contenteditable=true oncut="return false" onpaste="return false" data-field="field_62b13a4949b35">
+                            <span class="diveditable" contenteditable=true oncut="return false" onpaste="return false" data-field="field_62b13a4949b35" data-where="<?php echo $where_update; ?>">
                                 <?php echo $bride; ?>
                             </span>
+                        </div>
+                    </div>
+                    <h3>Ảnh cưới</h3>
+                    <p>Lựa chọn một ảnh đẹp nhất của hai bạn để làm hình ảnh đại diện cho đám cưới</p>
+                    <div>
+                        <div class="wedding_photo">
+                        <?php 
+                            $wedding_photo = get_field('wedding_photo', $where_update);
+                            if ($wedding_photo) {
+                                echo "<button class='mui-btn hera-btn uploadbtn'>Đổi ảnh khác</button>";
+                                echo '<img src="' . wp_get_attachment_url($wedding_photo) . '" alt="" width="300">';
+                            } else {
+                                echo "<button class='mui-btn hera-btn uploadbtn'>Tải ảnh lên</button>";
+                            }
+                        ?>
+                        </div>
+                        <div class="uploadform" id="uploadform">
+                            <span class='close_btn'>x</span>
+                            <form class="box" method="post" action="" enctype="multipart/form-data">
+                                <div class="box__input">
+                                    <input class="box__file" type="file" name="files[]" id="file" data-multiple-caption="{count} files selected" multiple />
+                                    <label for="file" style="display: block;">
+                                        <figure>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="34" viewBox="0 0 20 17">
+                                                <path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/>
+                                            </svg>
+                                        </figure> 
+                                        <strong>Tải tệp lên</strong><br>
+                                        <span class="box__dragndrop">hoặc kéo ảnh vào đây</span>.
+                                    </label>
+                                </div>
+                                <div class="box__uploading">Uploading…</div>
+                                <div class="box__success">Done!</div>
+                                <div class="box__error">Error! <span></span></div>
+                            </form>
                         </div>
                     </div>
                     <h3>Thông tin chi tiết</h3>
@@ -142,12 +175,12 @@ $google_api     = get_field('google_maps_api_key', 'option');
                                                 echo "</div>";
                                             } else {
                                         ?>
-                                            <div class="no_data edit_section data_item" data-form='#groom_parents_form'>
+                                            <!-- <div class="no_data edit_section data_item" data-form='#groom_parents_form'>
                                                 <a class="section_name" href="#">
                                                     <i class="fa fa-plus" aria-hidden="true"></i>
                                                     <span>Thêm tên bố mẹ chú rể...</span>
                                                 </a>
-                                            </div>
+                                            </div> -->
                                         <?php
                                             }
                                         ?>
@@ -172,7 +205,7 @@ $google_api     = get_field('google_maps_api_key', 'option');
                                         </div>
                                     </div>
                                 </section>
-                                <section class="content_box">
+                                <!-- <section class="content_box">
                                     <span class="content_title">
                                         <h4>Địa điểm, thời gian tổ chức hôn lễ</h4>
                                         <span class="edit_section" data-form='#groom_wedding_form' data-mapid="gw_googlemaps" data-latlng='gw_latlng'>
@@ -203,12 +236,12 @@ $google_api     = get_field('google_maps_api_key', 'option');
                                                     </div>
                                                 </div>';
                                             if ($groom_wedding_moontime) {
-                                                echo '<div class="lunar_date data_item"><i class="fa fa-calendar-o"></i> (âm lịch)<span class="diveditable">' . $_groom_wedding_moontime->format('d/m/Y g:i a') . '</span></div>'; 
+                                                echo '<div class="lunar_date data_item"><i class="fa fa-calendar-o"></i> (âm lịch)<span class="diveditable">' . formatLunarDate($_groom_wedding_moontime, 'Ngày dd tháng mm năm MYMY') . '</span></div>'; 
                                             }
                                             echo '</div>';
                                         } else {
                                         ?>
-                                            <div class="no_data edit_section data_item" data-form='#groom_wedding_form'>
+                                            <div class="no_data edit_section data_item" data-form='#groom_wedding_form' data-mapid="gw_googlemaps" data-latlng='gw_latlng'>
                                                 <a class="section_name" href="#">
                                                     <i class="fa fa-plus" aria-hidden="true"></i>
                                                     <span>Địa điểm tổ chức hôn lễ tại nhà trai</span>
@@ -221,7 +254,7 @@ $google_api     = get_field('google_maps_api_key', 'option');
                                             <form class="mui-form" method="POST">
                                                 <div class="mui-textfield">
                                                     <input type="text" name="field_62b12acd93a81" value="<?php if ($groom_wedding_adress) echo $groom_wedding_adress; ?>">
-                                                    <label for="">Địa điểm</label>
+                                                    <label for="">Nhập địa điểm tổ chức</label>
                                                 </div>
                                                 <div class="mui-textfield date_calculate">
                                                     <input class="solar" type="datetime-local" name="field_62b12b8f93a83" value="<?php if ($_groom_wedding_time) echo $_groom_wedding_time->format('Y-m-d\TH:i:s'); ?>">
@@ -229,7 +262,7 @@ $google_api     = get_field('google_maps_api_key', 'option');
                                                     <label for="">Thời gian (dương lịch)</label>
                                                 </div>
                                                 <div class="mui-textfield">
-                                                    <label for="">Link google maps</label>
+                                                    <label for="">Chọn vị trí tổ chức chính xác trên bản đồ</label>
                                                     <input type="text" id="pac-input" class="controls">
                                                     <div id="gw_googlemaps" class="google_maps"></div>
                                                 </div>
@@ -244,7 +277,7 @@ $google_api     = get_field('google_maps_api_key', 'option');
                                             <span class="close_button">X</span>
                                         </div>
                                     </div>
-                                </section>
+                                </section> -->
                                 <section class="content_box">
                                     <span class="content_title">
                                         <h4>Địa điểm, thời gian tổ chức tiệc cưới</h4>
@@ -275,11 +308,11 @@ $google_api     = get_field('google_maps_api_key', 'option');
                                                         </form>
                                                     </div>
                                                 </div>';
-                                            echo '<div class="lunar_date data_item"><i class="fa fa-calendar-o"></i> (âm lịch)<span class="diveditable">' . $_groom_party_moontime->format('d/m/Y g:i a') . '</span></div>';
+                                            echo '<div class="lunar_date data_item"><i class="fa fa-calendar-o"></i> (âm lịch)<span class="diveditable">' . formatLunarDate($_groom_party_moontime, 'Ngày dd tháng mm năm MYMY') . '</span></div>';
                                             echo '</div>';
                                         } else {
                                         ?>
-                                            <div class="no_data edit_section data_item" data-form='#groom_party_form'>
+                                            <div class="no_data edit_section data_item" data-form='#groom_party_form' data-mapid='gp_googlemaps' data-latlng='gp_latlng'>
                                                 <a class="section_name" href="#">
                                                     <i class="fa fa-plus" aria-hidden="true"></i>
                                                     <span>Địa điểm dự tiệc của nhà trai</span>
@@ -292,7 +325,7 @@ $google_api     = get_field('google_maps_api_key', 'option');
                                             <form class="mui-form" method="POST">
                                                 <div class="mui-textfield">
                                                     <input type="text" name="field_62b12b4593a82" value="<?php if ($groom_party_address) echo $groom_party_address; ?>">
-                                                    <label for="">Địa điểm</label>
+                                                    <label for="">Nhập địa điểm tổ chức</label>
                                                 </div>
                                                 <div class="mui-textfield date_calculate">
                                                     <input class="solar" type="datetime-local" name="field_62b12bb293a84" value="<?php if ($_groom_party_time) echo $_groom_party_time->format('Y-m-d\TH:i:s'); ?>">
@@ -300,8 +333,8 @@ $google_api     = get_field('google_maps_api_key', 'option');
                                                     <label for="">Thời gian (dương lịch)</label>
                                                 </div>
                                                 <div class="mui-textfield">
-                                                    <label for="">Link google maps</label>
-                                                    <!-- <input type="text" class="controls"> -->
+                                                    <label for="">Chọn vị trí tổ chức chính xác trên bản đồ</label>
+                                                    <input type="text" id="pac-input" class="controls">
                                                     <div id="gp_googlemaps" class="google_maps"></div>
                                                 </div>
                                                 <input id="gp_latlng" type="hidden" name="field_63dbd4bfcc721" value="<?php if ($groom_party_maps) echo $groom_party_maps; ?>">
@@ -369,12 +402,12 @@ $google_api     = get_field('google_maps_api_key', 'option');
                                                 echo '</div>';
                                             } else {
                                         ?>
-                                            <div class="no_data edit_section data_item" data-form='#bride_parents_form'>
+                                            <!-- <div class="no_data edit_section data_item" data-form='#bride_parents_form'>
                                                 <a class="section_name" href="#">
                                                     <i class="fa fa-plus" aria-hidden="true"></i>
                                                     <span>Thêm tên bố mẹ cô dâu...</span>
                                                 </a>
-                                            </div>
+                                            </div> -->
                                         <?php 
                                             }
                                         ?>
@@ -399,7 +432,7 @@ $google_api     = get_field('google_maps_api_key', 'option');
                                         </div>
                                     </div>
                                 </section>
-                                <section class="content_box">
+                                <!-- <section class="content_box">
                                     <span class="content_title">
                                         <h4>Địa điểm, thời gian tổ chức lễ vu quy</h4>
                                         <span class="edit_section" data-form='#bride_wedding_form' data-mapid='bw_googlemaps' data-latlng='bw_latlng'>
@@ -433,13 +466,13 @@ $google_api     = get_field('google_maps_api_key', 'option');
                                                     </div>';
                                                 
                                                 if ($bride_wedding_moontime) {
-                                                    echo '<div class="lunar_date data_item"><i class="fa fa-calendar-o"></i> (âm lịch)<span class="diveditable">' . $_bride_wedding_moontime->format('d/m/Y g:i a') . '</span></div>';
+                                                    echo '<div class="lunar_date data_item"><i class="fa fa-calendar-o"></i> (âm lịch)<span class="diveditable">' . formatLunarDate($_bride_wedding_moontime, 'Ngày dd tháng mm năm MYMY') . '</span></div>';
                                                 }
                                             }
                                             echo '</div>';
                                         } else {
                                         ?>
-                                            <div class="no_data edit_section data_item" data-form='#bride_wedding_form'>
+                                            <div class="no_data edit_section data_item" data-form='#bride_wedding_form' data-mapid='bw_googlemaps' data-latlng='bw_latlng'>
                                                 <a class="section_name" href="#">
                                                     <i class="fa fa-plus" aria-hidden="true"></i>
                                                     <span>Thêm địa điểm tổ chức lễ vu quy tại nhà gái...</span>
@@ -452,7 +485,7 @@ $google_api     = get_field('google_maps_api_key', 'option');
                                                 <form class="mui-form" method="POST">
                                                     <div class="mui-textfield">
                                                         <input type="text" name="field_62b1363fb06a6" value="<?php if ($bride_wedding_adress) echo $bride_wedding_adress; ?>">
-                                                        <label for="">Địa điểm</label>
+                                                        <label for="">Nhập địa điểm tổ chức</label>
                                                     </div>
                                                     <div class="mui-textfield date_calculate">
                                                         <input class="solar" type="datetime-local" name="field_62b1363fb06af" value="<?php if ($_bride_wedding_time) echo $_bride_wedding_time->format('Y-m-d\TH:i:s'); ?>">
@@ -460,8 +493,7 @@ $google_api     = get_field('google_maps_api_key', 'option');
                                                         <label for="">Thời gian (dương lịch)</label>
                                                     </div>
                                                     <div class="mui-textfield">
-                                                        <!-- <textarea name="field_63dbd5791d673"><?php if ($bride_wedding_maps) echo $bride_wedding_maps; ?></textarea> -->
-                                                        <label for="">Link google maps</label>
+                                                        <label for="">Chọn vị trí tổ chức chính xác trên bản đồ</label>
                                                         <div id="bw_googlemaps" class="google_maps"></div>
                                                     </div>
                                                     <input id="bw_latlng" type="hidden" name="field_63dbd5791d673" value="<?php if ($bride_wedding_maps) echo $bride_wedding_maps; ?>">
@@ -475,7 +507,7 @@ $google_api     = get_field('google_maps_api_key', 'option');
                                                 <span class="close_button">X</span>
                                             </div>
                                     </div>
-                                </section>
+                                </section> -->
                                 <section class="content_box">
                                     <span class="content_title">
                                         <h4>Địa điểm, thời gian tổ chức tiệc cưới</h4>
@@ -506,11 +538,11 @@ $google_api     = get_field('google_maps_api_key', 'option');
                                                         </form>
                                                     </div>    
                                                 </div>';
-                                            echo '<div class="lunar_date data_item"><i class="fa fa-calendar-o"></i> (âm lịch)<span class="diveditable">' . $_bride_party_moontime->format('d/m/Y g:i a') . '</span></div>';
+                                            echo '<div class="lunar_date data_item"><i class="fa fa-calendar-o"></i> (âm lịch)<span class="diveditable">' . formatLunarDate($_bride_party_moontime, 'Ngày dd tháng mm năm MYMY') . '</span></div>';
                                             echo '</div>';
                                         } else {
                                         ?>
-                                            <div class="no_data edit_section data_item" data-form='#bride_party_form'>
+                                            <div class="no_data edit_section data_item" data-form='#bride_party_form' data-mapid='bp_googlemaps' data-latlng='bp_latlng'>
                                                 <a class="section_name" href="#">
                                                     <i class="fa fa-plus" aria-hidden="true"></i>
                                                     <span>Địa điểm dự tiệc của nhà gái</span>
@@ -523,7 +555,7 @@ $google_api     = get_field('google_maps_api_key', 'option');
                                             <form class="mui-form" method="POST">
                                                 <div class="mui-textfield">
                                                     <input type="text" name="field_62b1363fb06bf" value="<?php if ($bride_party_address) echo $bride_party_address; ?>">
-                                                    <label for="">Địa điểm</label>
+                                                    <label for="">Nhập địa điểm tổ chức</label>
                                                 </div>
                                                 <div class="mui-textfield date_calculate">
                                                     <input class="solar" type="datetime-local" name="field_62b1363fb06c7" value="<?php if ($_bride_party_time) echo $_bride_party_time->format('Y-m-d\TH:i:s'); ?>">
@@ -531,7 +563,8 @@ $google_api     = get_field('google_maps_api_key', 'option');
                                                     <label for="">Thời gian (dương lịch)</label>
                                                 </div>
                                                 <div class="mui-textfield">
-                                                    <label for="">Link google maps</label>
+                                                    <label for="">Chọn vị trí tổ chức chính xác trên bản đồ</label>
+                                                    <!-- <input type="text" id="pac-input" class="controls"> -->
                                                     <div id="bp_googlemaps" class="google_maps"></div>
                                                 </div>
                                                 <input id="bp_latlng" type="hidden" name="field_63dbd5ab1d674" value="<?php if ($bride_party_maps) echo $bride_party_maps; ?>">
@@ -554,10 +587,52 @@ $google_api     = get_field('google_maps_api_key', 'option');
                 ?>
             </div>
         </div>
-        <div class="mui-col-md-2"></div>
+        <div class="mui-col-md-2 left_sidebar">
+            <?php
+            $menu = 'Hướng dẫn trang điền thông tin';
+            $guideline = wp_nav_menu(array(
+                'menu'          => $menu,
+                'container_id'  => 'guide_section',
+                'container_class'   => '',
+                'items_wrap'    => '<a href="#" class="maximize"><i class="fa fa-external-link" aria-hidden="true"></i> Khôi phục</a><img src="' . get_template_directory_uri() . '/img/thaochi.jpg"><ul class="playlist"><h4>Hướng dẫn nhanh</h4>%3$s</ul><a href="#" class="minimize"><i class="fa fa-level-down" aria-hidden="true"></i> Thu nhỏ</a>',
+                'menu_class'    => 'main_menu mb20',
+                'echo' => FALSE,
+                'fallback_cb' => '__return_false'
+            ));
+
+            if ( ! empty ( $guideline ) ){
+                echo $guideline;
+            }
+            ?>
+        </div>
     </div>
 </div>
-<script src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google_api; ?>&callback=initMap&libraries=places" type="text/javascript"></script>
+<script src="<?php echo get_template_directory_uri(); ?>/js/cookie.js"></script>
+<script src="<?php echo get_template_directory_uri(); ?>/js/guideline.js"></script>
+<script src="<?php echo get_template_directory_uri(); ?>/js/soundmanager2-jsmin.js"></script>
+<script src="<?php echo get_template_directory_uri(); ?>/js/soundmanager2-player.js"></script>
+<link href="<?php echo get_template_directory_uri(); ?>/css/soundmanager2-player.css" rel="stylesheet" type="text/css">
+<script>
+    let latlngStr;
+
+    function initGeocode() {
+        /* read cookie */
+        latlngStr = getCookie('latlngStr');
+        /* if not have cookie, then get permission to guest's position */
+        if (latlngStr == null) navigator.geolocation.getCurrentPosition(showLocation);
+    }
+
+    function showLocation(position){
+        latlngStr = [
+            position.coords.latitude,
+            position.coords.longitude
+        ].join(',');
+
+        /* set cookie */
+        setCookie('latlngStr', latlngStr, 7);
+    }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google_api; ?>&callback=initGeocode&libraries=places" type="text/javascript"></script>
 <script src="<?php echo get_template_directory_uri(); ?>/js/googlemaps.js"></script>
 <script src="<?php echo get_template_directory_uri(); ?>/js/wedding-infomation.js"></script>
 <?php

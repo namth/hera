@@ -1,4 +1,9 @@
 <?php
+$api_dir = dirname( __FILE__ );
+require_once( $api_dir . '/payment/casso_endpoint.php');
+require_once( $api_dir . '/payment/momo_endpoint.php');
+require_once( $api_dir . '/payment/tpbank_api.php');
+
 # get authentication code
 # refresh token everyday
 function refresh_token()
@@ -50,7 +55,7 @@ function inova_api($api, $token, $method, $body) {
             'Content-Type'  => 'application/json; charset=utf-8',
             'Authorization' => $token,
         ),
-        'body'      => json_encode($body),
+        'body'      => $body,
         'sslverify' => true,
     );
 
@@ -76,7 +81,3 @@ function getHTML($cardid){
 
     return $mycard->html;
 }
-
-# tạo hook cronjob để refresh_token hàng ngày.
-add_action( 'daily_refresh_token', 'refresh_token' );
-add_action( 'daily_check_payment_status', 'check_payment_status' );

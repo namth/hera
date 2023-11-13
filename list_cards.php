@@ -3,7 +3,7 @@
     Template Name: List Card from API
 */
 get_header();
-get_template_part('header', 'topbar');
+// get_template_part('header', 'top-nologin');
 
 $current_user_id = get_current_user_id();
 
@@ -17,21 +17,33 @@ if (isset($_GET['g']) && ($_GET['g'] != "")) {
     $data = false;
 }
 
+if (is_user_logged_in()) {
+    $back_link = get_bloginfo('url');
+    get_header('topbar');
+} else {
+    $back_link = '';
+    get_header('logocenter');
+}
+
 ?>
 <div class="mui-container-fluid">
     <div class="mui-row">
         <div class="mui-col-md-12" id="search_box">
-            <div class="back-btn mt20">
-                <a href="<?php echo get_bloginfo('url'); ?>"><i class="fa fa-arrow-left"></i> Trang chủ </a>
-            </div>
+            <?php 
+                if ($back_link) {
+                    echo '<div class="back-btn mt20">
+                            <a href="' . $back_link . '"><i class="fa fa-arrow-left"></i> Trang chủ </a>
+                        </div>';
+                }
+            ?>
             <h1>Mẫu thiệp cưới cho mọi người</h1>
             <h4>Hàng trăm mẫu thiệp mới nhất sẽ được cập nhật tại đây.</h4>
-            <form class="mui-form--inline" method="POST">
+            <!-- <form class="mui-form--inline" method="POST">
                 <div class="mui-textfield search_bar">
                     <input type="text" name="search" placeholder="Tìm kiếm tất cả mẫu thiệp tại đây" value="<?php echo $search; ?>">
                     <button class=""><i class="fa fa-search"></i></button>
                 </div>
-            </form>
+            </form> -->
         </div>
         <div class="mui-col-md-12">
             <?php 

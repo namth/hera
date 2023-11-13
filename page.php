@@ -1,29 +1,10 @@
 <?php 
 get_header();
-
+get_template_part('header', 'top-nologin');
 ?>
-<div class="mui-panel" id="header_bar">
-    <div class="logo">
-        <a href="<?php echo get_bloginfo('url'); ?>">
-            <img src="<?php echo get_template_directory_uri(); ?>/img/logo.png" alt="">
-        </a>
-    </div>
-    <div class="mui-dropdown main_menu">
-        <button class="mui-btn" data-mui-toggle="dropdown">
-            <i class="fa fa-users"></i>
-        </button>
-        <?php
-        wp_nav_menu(array(
-            'menu'          => '5',
-            'container'     => '',
-            'menu_class'    => 'mui-dropdown__menu'
-        ));
-        ?>
-    </div>
-</div>
 <div class="mui-container-fluid">
     <div class="mui-row">
-        <div class="mui-col-md-2">
+        <div class="mui-col-md-2 npl">
             <?php
             get_sidebar('nologin');
             echo $thongbao;

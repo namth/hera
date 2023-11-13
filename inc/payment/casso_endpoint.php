@@ -53,8 +53,10 @@ function casso_endpoint(WP_REST_Request $request) {
     $active = get_field('activate', $search);
 
     # Nếu tìm được order ID thì xử lý kích hoạt đơn hàng.
-    if ($search && !$active) {
-        $output["error"] = 0;
+    if (!$active) {
+        process_transferbank($search, $data->id, $data->amount);
+
+        /* $output["error"] = 0;
         # check xem id đã được xử lý hay chưa
         $pre_casso_id_array = explode(',', get_field('casso_id', $search));
 
@@ -109,6 +111,70 @@ function casso_endpoint(WP_REST_Request $request) {
             }
         } else {
             $output["status"] = "Đơn hàng đã xử lý";
+        } */
+    } else {
+        $output["error"] = 404;
+        $output["status"] = "Không phải đơn thanh toán";
+    }
+    return $output;
+}
+
+function process_transferbank ( $orderid, $payment_id, $amount ) {
+    if ($orderid) {
+        $output["error"] = 0;
+        # check xem id đã được xử lý hay chưa
+        $pre_casso_id_array = explode(',', get_field('casso_id', $orderid));
+
+        if (!$pre_casso_id_array || !in_array($payment_id, $pre_casso_id_array)) {
+            # kiểm tra xem đủ tiền hay thiếu tiền
+            // GIÁ TIỀN TỔNG CỘNG CỦA ĐƠN HÀNG
+            $total = get_field('final_total', $orderid);
+            $pre_paid = get_field('paid', $orderid);
+            $ORDER_MONEY = $total - $pre_paid;
+    
+            // Số tiền chuyển thiếu tối đa mà hệ thống vẫn chấp nhận để xác nhận đã thanh toán
+            $ACCEPTABLE_DIFFERENCE = 10000;
+    
+            # Số tiền khách chuyển
+            $paid = $amount;
+    
+            $ACCEPTABLE_DIFFERENCE = abs($ACCEPTABLE_DIFFERENCE);
+    
+            if ( $paid < $ORDER_MONEY  - $ACCEPTABLE_DIFFERENCE ){
+                # chuyển trạng thái đơn hàng sang  Thanh toán thiếu 
+                $output["status"] = 'Thanh toán thiếu';
+    
+            } else {
+                if ($paid <= $ORDER_MONEY + $ACCEPTABLE_DIFFERENCE){
+                    # chuyển trạng thái đơn hàng sang đã thanh toán 
+                    $output["status"] = 'Đã thanh toán';
+                } else {
+                    # chuyển trạng thái đơn hàng sang Thanh toán dư 
+                    $output["status"] = 'Thanh toán dư';
+                }
+
+                # Kích hoạt đơn hàng 
+                $active_done = activation_package($orderid);
+
+            }
+            
+            # update status
+            update_field('field_62eb93b78ca79', $output["status"], $orderid);
+            # update số tiền khách trả.
+            update_field('field_636c40bbd3e8c', $paid + $pre_paid, $orderid);
+            # update casso id
+            $pre_casso_id_array[] = $payment_id;
+            $casso_id_array = implode(',', array_filter($pre_casso_id_array));
+            update_field('field_636c856e9d08d', $casso_id_array, $orderid);
+
+            # update payment method
+            $method = get_field('payment_method', $orderid);
+            if (!$method) {
+                update_field('field_636c85b89d08e', 'Chuyển khoản ngân hàng (Kích hoạt tự động)', $orderid);
+            }
+
+        } else {
+            $output["status"] = "Đơn hàng đã xử lý";
         }
     } else {
         $output["error"] = 404;
@@ -122,10 +188,16 @@ function advance_search_order( $orderid ) {
     $args = array(
         'post_type' => 'inova_order',
         'meta_query' => array(
+            'relation'      => 'OR',
             array(
-                'key'     => 'status',
-                'value'   => "Chưa thanh toán",
-                'compare' => '='
+                'key'       => 'status',
+                'value'     => 'Chưa thanh toán',
+                'compare'   => '=',
+            ),
+            array(
+                'key'       => 'status',
+                'value'     => 'Thanh toán thiếu',
+                'compare'   => '=',
             ),
         )
     );
@@ -149,13 +221,19 @@ function quick_search_order( $orderid ) {
     $args = array(
         'post_type' => 'inova_order',
         's'         => $orderid,
-        /* 'meta_query' => array(
+        'meta_query' => array(
+            'relation'      => 'OR',
             array(
-                'key'     => 'status',
-                'value'   => "Chưa thanh toán",
-                'compare' => '='
+                'key'       => 'status',
+                'value'     => 'Chưa thanh toán',
+                'compare'   => '=',
             ),
-        ) */
+            array(
+                'key'       => 'status',
+                'value'     => 'Thanh toán thiếu',
+                'compare'   => '=',
+            ),
+        )
     );
     $query = new WP_Query($args);
 

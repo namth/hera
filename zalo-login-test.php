@@ -33,14 +33,14 @@ if (isset($_GET['code'])) {
         # Nếu không có thì tạo tài khoản dựa trên ID của tài khoản zalo sau đó đăng nhập và chuyển về trang chủ
         $user_login = $output->id;
         $user_pass  = incrementalHash(10);
-        $email      = incrementalHash(8) . '@hra.vn';
+        $email      = incrementalHash(8) . '@hera.ai.vn';
 
         $args = [
             'user_login'    => $user_login,
             'user_pass'     => $user_pass,
             'user_email'    => $email,
             'display_name'  => $output->name,
-            'user_nicename' => $output->name,
+            'nickname'      => $output->name,
         ];
 
         $user = wp_insert_user($args);
@@ -61,7 +61,10 @@ if (isset($_GET['code'])) {
             }
 
             # Set avatar for user
-            $result = Generate_Featured_Image($output->picture->data->url, $user);
+            $avatar_url = $output->picture->data->url;
+            if ($avatar_url) {
+                $result = Generate_Featured_Image($avatar_url, $user);
+            }
             # Sau đó chuyển về trang chủ
             wp_redirect( get_bloginfo('url') );
             exit;
@@ -75,5 +78,5 @@ if (isset($_GET['code'])) {
     $code_challenge = generate_code_challenge($code_verify);
     
     echo "<br><br>Code Challenge: " . $code_challenge;
-    echo "<br><br><a href='https://oauth.zaloapp.com/v4/permission?app_id=4424878354763274341&redirect_uri=" . get_permalink() . "&code_challenge=" . $code_challenge . "&state=" . $code_verify . "'>Login Zalo</a>";
+    echo "<br><br><a href='https://oauth.zaloapp.com/v4/permission?app_id=61533937584017085&redirect_uri=" . get_permalink() . "&code_challenge=" . $code_challenge . "&state=" . $code_verify . "'>Login Zalo</a>";
 }

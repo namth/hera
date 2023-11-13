@@ -60,14 +60,25 @@ if ( isset( $_GET['p'] ) && ($_GET['p'] != "")) {
                         <div class="mui-col-md-3">
                             <h3>Gói sản phẩm đã chọn</h3>
                             <?php
+                                $partner = $_COOKIE['partner'];
                                 $price = get_field('price', $package_id);
+                                $coupon = get_field('coupon', $package_id);
+                                # check coupon xem có được sử dụng chưa, nếu limit thì set coupon về 0
+                                if (!check_coupon_limit($coupon, $current_user->ID)) {
+                                    $coupon = 0;
+                                }
+                                if ($coupon) {
+                                    $final_price = get_value_after_coupon( $coupon, $package_id);
+                                } else {
+                                    $final_price = $price;
+                                }
 
                                 $thumbnail_url = get_the_post_thumbnail_url($package_id, 'thumbnail');
-                                
+
                                 # setup hash
                                 $hash = inova_encrypt(json_encode(array(
-                                    'id'            => 0,
-                                    'final_total'   => $price,
+                                    'id'            => $coupon,
+                                    'final_total'   => $final_price,
                                     'package_id'    => $package_id,
                                 )), 'e');
 
@@ -77,11 +88,13 @@ if ( isset( $_GET['p'] ) && ($_GET['p'] != "")) {
                                 $customer_email = $current_user->user_email;
                                 $customer_phone = get_field('phone', 'user_' . $current_user->ID);
                                 $customer_address = get_field('address', 'user_' . $current_user->ID);
+
+                                $class_coupon = $coupon?'has_coupon':'';
                             ?>
                             <div class="package_box">
                                 <img src="<?php echo $thumbnail_url; ?>" alt="">
                                 <h4><?php echo get_the_title($package_id); ?></h4>
-                                <span class="price">
+                                <span class="price <?php echo $class_coupon; ?>">
                                     <?php echo number_format($price) . " ₫"; ?>
                                 </span>
                                 <div class="view_coupon">
@@ -89,8 +102,10 @@ if ( isset( $_GET['p'] ) && ($_GET['p'] != "")) {
                                         Mã <span class="value"></span> 
                                         <span class="coupon_name"></span>
                                     </div>
-                                    <span class="final_price"></span>
                                 </div>
+                                <span class="final_price">
+                                    <?php if ($final_price != $price) echo number_format($final_price) . " ₫"; ?>
+                                </span>
                             </div>
                             <div class="coupon">
                                 <a href="#" class="coupon_link">Bạn có mã giảm giá?</a>
@@ -126,18 +141,17 @@ if ( isset( $_GET['p'] ) && ($_GET['p'] != "")) {
                                     wp_nonce_field('post_nonce', 'post_nonce_field');
                                 ?>
                                 <input type="hidden" name="coupon" value="<?php echo $hash; ?>">
+                                <input type="hidden" name="partner" value="<?php echo $partner; ?>">
                                 <button type="submit" class="mui-btn hera-btn fullwidth">Tiếp tục thanh toán</button>
                             </form>
                         </div>
                         <div class="mui-col-md-3">
                             <h3>Hỗ trợ thanh toán</h3>
                             <p>Hãy điền đầy đủ thông tin để chúng tôi dễ dàng hỗ trợ bạn khi cần thiết.</p>
-                            <a href="" class="mui-btn hera-btn">Đổi gói</a>
+                            <a href="<?php echo get_bloginfo('url') . "/danh-sach-goi-san-pham/"; ?>" class="mui-btn hera-btn">Đổi gói</a>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="mui-col-md-2">
             </div>
         </div>
     </div>

@@ -38,7 +38,7 @@ jQuery(document).ready(function ($) {
                 order: order_id
             },
             beforeSend: function() {
-                $("#fullloading .description").html('<span class="blink_me">Kiểm tra giao dịch ...</span>');
+                $("#fullloading .description").html('<span class="blink_me">Đang kiểm tra giao dịch</span>');
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 console.log(xhr.status);

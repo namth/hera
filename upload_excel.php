@@ -97,7 +97,9 @@ if (isset($_POST['post_upload_field']) && wp_verify_nonce($_POST['post_upload_fi
                         }
                         
                         # Tìm kiếm phone của khách xem đã có hay chưa
-                        $row = array_search($phone, $guest_array);
+                        if ($phone) {
+                            $row = array_search($phone, $guest_array);
+                        } else $row = 0;
         
                         # Nếu có thì update, không có thì thêm row mới
                         if ($row) {
@@ -157,19 +159,20 @@ if (isset($_POST['post_upload_field']) && wp_verify_nonce($_POST['post_upload_fi
         update_field('field_63b853e50f9a8', $used_cards, 'user_' . $userID);
 
         if ($new_customer_amount) {
-            $thongbao = "<p>Đã thêm " . $new_customer_amount . " khách vào nhóm.</p>";
+            $thongbao = "<p class='success_notification'>Đã thêm " . $new_customer_amount . " khách vào nhóm.</p>";
         }
         if ($update_customer_amount) {
-            $thongbao .= "<p>Đã cập nhật " . $update_customer_amount . " khách trong nhóm</p>";
+            $thongbao .= "<p class='success_notification'>Đã cập nhật " . $update_customer_amount . " khách trong nhóm</p>";
         }
         if ($full_cards) {
             $customer_not_added = count($rowData) - $new_customer_amount;
             $thongbao .= "<p>Đã đạt đến giới hạn thiệp. Có " . $customer_not_added . " người chưa được thêm vào nhóm.</p>";
             $thongbao .= "<a class='card_link' href='" . get_bloginfo('url') . "/danh-sach-goi-san-pham/'>Mua thêm thiệp</a>";
         }
+        $thongbao .= '<a href="' . get_permalink($groupID) . '" class="mui-btn mui-btn--danger">Xem nhóm ' . strtolower(get_the_title($groupID)) . ' <i class="fa fa-arrow-right"></i></a>';
         // wp_redirect(get_permalink($groupID));
     } else {
-        $thongbao = "File không đúng định dạng hoặc không có dữ liệu hợp lệ. Hãy chỉnh sửa file hoặc download mẫu bên dưới.";
+        $thongbao = "<p class='error_notification'>File không đúng định dạng hoặc không có dữ liệu hợp lệ. Hãy chỉnh sửa file hoặc download mẫu bên dưới.</p>";
     }
 
 }
@@ -199,10 +202,14 @@ get_template_part('header', 'topbar');
                 <?php
                 }
                 ?>
+                <?php 
+                    if ($thongbao){ 
+                        echo $thongbao; 
+                    } 
+                ?>
                 <form action="" method="post" enctype="multipart/form-data" class="mui-form mui-row">
                     
                     <div class="mui-col-md-12 mui-col-sm-12">
-                        <p><?php if ($thongbao){ echo $thongbao; } ?></p>
                         
                         <input name="fileupload" type="file">
                         
@@ -219,12 +226,14 @@ get_template_part('header', 'topbar');
                         display: inline-block;
                         text-align: center;
                         border-spacing: 0px;
+                        border: 1px solid #b3b3b3;
                     }
 
                     .excel_form th,
                     .excel_form td {
                         text-align: center;
                         padding: 5px 15px;
+                        border: 1px dotted #c2c2c2;
                     }
                     ol li code{
                         font-size: .8em;

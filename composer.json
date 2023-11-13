@@ -16,6 +16,7 @@
     "require" : {
         "ext-zip": "*",
         "phpoffice/phpspreadsheet": "^1.25",
-        "zaloplatform/zalo-php-sdk": "^2.0"
+        "zaloplatform/zalo-php-sdk": "^2.0",
+        "endroid/qr-code": "^4.6"
     }
 }

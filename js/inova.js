@@ -7,7 +7,10 @@ function activateModal(data) {
 
     // hiển thị popup
     mui.overlay('on', modalEl);
-    // modalEl.firstElementChild[1].value = data;
+    if (data) {
+      /* data để sử dụng phân loại category nhóm Nhà Trai hoặc Nhà Gái */
+      modalEl.firstElementChild[1].value = data;
+    }
     setTimeout(function() { modalEl.firstElementChild[0].focus(); }, 100);
 }
 function clearAllInterval(){
@@ -251,9 +254,19 @@ jQuery(document).ready(function ($) {
     });
 
     /* 
+    * Khi bấm mobile menu show menu
+    */
+    $(document).on('click', ".mobile_menu_icon", function(){
+      $(this).parent().find('.menu').show();
+    });
+    $(document).on('click', ".mobile_menu .overlay, .close_mobile_menu_button", function(){
+      $(this).parents().eq(2).find('.menu').hide();
+    });
+
+    /* 
     * Khi bấm like cho card, ... 
     */
     $(document).on('click', "#like", function(){
-      alert('alo');
+      alert('Tính năng đang phát triển!');
     });
 });

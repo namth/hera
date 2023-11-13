@@ -1,5 +1,4 @@
 <?php 
-// print_r($_POST);
 if (have_posts()) {
     while (have_posts()) {
         the_post();
@@ -234,8 +233,11 @@ if (have_posts()) {
                                         } else {
                                             $coupon = number_format($coupon_value) . " ₫";
                                         }
+                                        if ($coupon_name) {
+                                            $coupon_label = "<span class='code'>" . $coupon_name . "</span>";
+                                        }
                                         echo "<tr class='coupon'>
-                                                <td>Mã giảm giá <span class='code'>" . $coupon_name . "</span></td>
+                                                <td>Mã giảm giá " . $coupon_label . "</td>
                                                 <td>" . $coupon . "</td>
                                             </tr>";
                                     }
@@ -279,14 +281,16 @@ if (have_posts()) {
                                 <p>Quý khách có thể chuyển vào một trong số các tài khoản dưới đây:</p>
                                 <div class="bank_info">
                                     <ul>
-                                        <li>TPBank</li>
-                                        <li>Số tài khoản: 14719869999</li>
-                                        <li>Tên tài khoản: TRAN HAI NAM</li>
+                                        <li><img src="<?php echo get_template_directory_uri(); ?>/img/tpbank.webp" alt="TPBank" width="250"></li>
+                                        <!-- <li><b>TPBank</b></li> -->
+                                        <li>Số tài khoản: <b>14719869999</b></li>
+                                        <li>Tên tài khoản: <b>TRAN HAI NAM</b></li>
                                     </ul>
                                     <ul>
-                                        <li>Techcombank</li>
-                                        <li>Số tài khoản: 19038145926015</li>
-                                        <li>Tên tài khoản: Công ty TNHH Công Nghệ INOVA</li>
+                                        <li><img src="<?php echo get_template_directory_uri(); ?>/img/techcombank.svg" alt="Techcombank" width="333"></li>
+                                        <!-- <li><b>Techcombank</b></li> -->
+                                        <li>Số tài khoản: <b>19038145926015</b></li>
+                                        <li>Tên tài khoản: <b>Công ty TNHH Công Nghệ INOVA</b></li>
                                     </ul>
                                 </div>
                                 <?php 
@@ -331,6 +335,7 @@ if (have_posts()) {
     <div>
         <h3 class="description"><span class="blink_me">Đang đồng bộ hoá với ngân hàng ...</span></h3>
         <img src="<?php echo get_template_directory_uri(); ?>/img/bank_loading.gif" alt="" />
+        <p>Việc xác nhận chuyển khoản có thể mất khoảng 10 phút<br> bạn có thể quay lại trang chủ và chờ đợi thiệp được kích hoạt.</p>
         <span class="close_button">X</span>
     </div>
 </div>

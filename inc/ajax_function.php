@@ -99,7 +99,6 @@ function listCardFromAPI() {
         ?>
         <div class="error_messages">
             <span>Xin lỗi, server hệ thống đang phản hồi chậm. Hãy thử lại sau một lát nữa.</span>
-            <span><?php echo $listcards->errors['http_request_failed'][0]; ?></span>
             <button class="mui-btn hera-btn" id='reload_card'>Tải lại</button>
             <img src="<?php echo get_template_directory_uri() . '/img/f_loading.gif'; ?>" alt="" style="display: none;">
         </div>
@@ -116,7 +115,7 @@ function listCardFromAPI() {
             $liked = $card->liked?$card->liked:0;
             $used = $card->used?$card->used:0;
         ?>
-        <div class="mui-col-md-3">
+        <div class="mui-col-lg-3 mui-col-md-4 mui-col-sm-6">
             <div class="heracard">
                 <div class="images" style="<?php 
                     echo 'background: url('. $card_thumbnail .') no-repeat 50% 50%;';
@@ -178,7 +177,7 @@ add_action('wp_ajax_acceptInvite', 'acceptInvite');
 add_action('wp_ajax_nopriv_acceptInvite', 'acceptInvite');
 function acceptInvite() {
     $group = inova_encrypt($_POST['group'], 'd');
-    $invitee = inova_encrypt($_POST['invitee'], 'd');
+    $invitee = $_POST['invitee'];
     $answer = $_POST['answer'];
 
     if (($answer=='Y')||($answer == 'N')) {
@@ -187,7 +186,7 @@ function acceptInvite() {
             while (have_rows('guest_list', $group)) {
                 the_row();
         
-                $row_index = get_row_index();
+                $row_index = get_sub_field('id');
                 if ($row_index != $invitee) {
                     continue;
                 } else {
@@ -204,83 +203,8 @@ function acceptInvite() {
         $notification = $answer=='Y'?'<div class="accept notification">Đã xác nhận tham dự.</div>':'<div class="deny notification">Đã xác nhận không tham dự được.</div>';
         echo $notification;
     } else {
-        echo '<div class="deny notification">Không thể cập nhật bạn vào dữ liệu thiệp, hãy kiểm tra lại.</div>';
+        echo '<div class="deny notification">Không thể cập nhật vào dữ liệu thiệp, hãy kiểm tra lại.</div>';
     }
-    exit;
-}
-
-/* 
-* Source: checkout.php | js/checkout.js
-* Cho phép sửa nhanh nội dung trên giao diện hiển thị thông tin đám cưới */
-add_action('wp_ajax_addCouponCode', 'addCouponCode');
-add_action('wp_ajax_nopriv_addCouponCode', 'addCouponCode');
-function addCouponCode() {
-    $data = $_POST['data'];
-    $package = $_POST['package'];
-    $sub_total = get_field('price', $package);
-
-    /* Kiểm tra coupon có tồn tại không */
-    $id_coupon = search_customfield('coupon', $data, 'coupon_name');
-
-    /* Nếu có thì validate coupon xem đã hết hạn hoặc hết mã chưa */
-    if ($id_coupon) {
-        $expired = get_field('expired', $id_coupon);
-        $coupon_type = get_field('coupon_type', $id_coupon);
-        $coupon_value = get_field('coupon_value', $id_coupon);
-        $coupon_quantity = get_field('coupon_quantity', $id_coupon);
-        
-        /* validate data */
-        $today = new DateTime();
-        if (($coupon_quantity > 0) && ($expired >= $today->format('Ymd'))) {
-            $data = array(
-                'status' => true,
-                'coupon' => $data,
-                'message'=> '<div class="success_notification"><i class="fa fa-check-circle-o" aria-hidden="true"></i> Đã thêm mã coupon thành công.</div>',
-            );
-            if ($coupon_type == "Phần trăm") {
-                /* Tính số tiền cuối nhận được */
-                $final_total = $sub_total * (100 - $coupon_value) / 100;
-                /* Lưu vào data */
-                $data['type'] = 'percent';
-                $data['value'] = $coupon_value;
-                $data['coupon_label'] = '- ' . $coupon_value . '%';
-                $data['final_total'] = $final_total;
-                $data['hash'] = inova_encrypt(json_encode(array(
-                    'id'            => $id_coupon,
-                    'final_total'   => $final_total,
-                    'package_id'    => $package,
-                )), 'e');
-            } else {
-                /* Tính số tiền cuối nhận được */
-                $final_total = ($sub_total > $coupon_value)?($sub_total - $coupon_value):"0";
-                /* Lưu vào data */
-                $data['type'] = 'fix';
-                $data['value'] = $coupon_value;
-                $data['coupon_label'] = '- ' . number_format($coupon_value) . ' ₫';
-                $data['final_total'] = $final_total;
-                $data['hash'] = inova_encrypt(json_encode(array(
-                    'id'            => $id_coupon,
-                    'final_total'   => $final_total,
-                    'package_id'    => $package,
-                )), 'e');
-            }
-        } else {
-            $check_fail = true;
-            $message = "Mã khuyến mại đã hết hạn hoặc hết số lượng.";
-        }
-
-    } else {
-        $check_fail = true;
-        $message = "Không tìm thấy mã khuyến mại.";
-    }
-    
-    if ($check_fail) {
-        $data = array(
-            'status' => false,
-            'message'=> '<div class="error_notification"><i class="fa fa-time-circle-o" aria-hidden="true"></i> ' . $message . '</div>',
-        );
-    }
-    echo json_encode($data);
     exit;
 }
 
@@ -332,14 +256,15 @@ function checkUsernameExist() {
     $username = sanitize_user($_POST['user_login']);
     $check_user = username_exists($username);
     if (!$check_user) {
+        $altered = preg_replace("/[^a-zA-Z.0-9]+/", "", $username);
         # Nếu chưa có tài khoản thì kiểm tra xem có hợp lệ không và thông báo
-        if ((strlen($username) >= 3) && validate_username($username)) {
+        if ((strlen($altered) >= 3) && validate_username($altered)) {
             print_r(false);
         } else {
             print_r("Tên đăng nhập phải có ít nhất 3 ký tự");
         }
     } else {
-        print_r("Tài khoản này đã tồn tại.");
+        print_r("Tài khoản này đã tồn tại hoặc tên tài khoản không hợp lệ.");
     }
     exit;
 }
@@ -366,14 +291,31 @@ function checkEmailExist() {
 }
 
 /* 
+* Source: change-author-password.php
+* Kiểm tra password có đúng chưa
+*/
+add_action('wp_ajax_checkPassword', 'checkPassword');
+add_action('wp_ajax_nopriv_checkPassword', 'checkPassword');
+function checkPassword() {
+    $user_pass = sanitize_user($_POST['user_pass']);
+    $current_user = wp_get_current_user();
+    $check = wp_authenticate_username_password( NULL, $current_user->user_login, $user_pass );
+
+    if($check->ID){
+        print_r(false);
+    } else {
+        print_r("Mật khẩu không đúng.");
+    }
+    exit;
+}
+
+/* 
 * Source: author.php
 * Upload avatar
 */
 add_action('wp_ajax_uploadAvatar', 'uploadAvatar');
 add_action('wp_ajax_nopriv_uploadAvatar', 'uploadAvatar');
 function uploadAvatar() {
-    
-
     if( ! isset( $_FILES ) || empty( $_FILES ) || ! isset( $_FILES['files'] ) )
         return;
 

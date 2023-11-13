@@ -93,9 +93,8 @@ if (is_user_logged_in()) {
     $url = get_permalink();
 ?>
 <div id="login">
-
     <div class="large_left" style="
-        background-image: url('https://margoandbees.com/thumbs/887/templates/template_7/8/images/products/407/002GNBo/wedding-invitations-gold-rose-gold-silver-glitter-002-gn-z.jpg');
+        background-image: url('https://source.unsplash.com/1920x1024?hdr,flower,coffee,wedding');
         background-size: cover;
     "></div>
     <div class="small_right mui-panel">
@@ -134,7 +133,7 @@ if (is_user_logged_in()) {
                                 <p>Hãy quay trở lại và chọn hình thức đăng nhập hoặc <a target="_blank" href="https://id.zalo.me/" class="link">đổi tài khoản zalo khác</a></p>';
                 echo            '<a href="' . get_bloginfo('url') . '/login" class="mui-btn hera-btn">Quay lại trang đăng nhập</a>';
                 echo            '<div class="zalo_btn social_btn">
-                                    <a href="https://oauth.zaloapp.com/v4/permission?app_id=4424878354763274341&redirect_uri=' . $url . '&code_challenge=' . $code_challenge . '&state=' . $code_verify . '">
+                                    <a href="https://oauth.zaloapp.com/v4/permission?app_id=61533937584017085&redirect_uri=' . $url . '&code_challenge=' . $code_challenge . '&state=' . $code_verify . '">
                                         <img src="' . get_template_directory_uri() . '/img/zl.webp" alt="" /> <span>Đăng nhập bằng tài khoản này</span>
                                     </a>
                                 </div>';
@@ -147,18 +146,18 @@ if (is_user_logged_in()) {
                 <h3>Bạn chưa có tài khoản?</h3>
                 <p>Xin hãy chọn một số lựa chọn bên dưới.</p>
                 <div class="google_btn social_btn">
-                    <a href="<?php echo get_bloginfo('url'); ?>/wp-login.php?loginSocial=google" data-plugin="nsl" data-action="connect" data-redirect="current" data-provider="google" data-popupwidth="600" data-popupheight="600">
+                    <a href="<?php echo get_bloginfo('url'); ?>/herasecurelogin?loginSocial=google" data-plugin="nsl" data-action="connect" data-redirect="current" data-provider="google" data-popupwidth="600" data-popupheight="600">
                         <img src="<?php echo get_template_directory_uri(); ?>/img/gg.svg" alt="" /> <span>Đăng ký bằng Google</span>
                     </a>
                 </div>
                 <div class="facebook_btn social_btn">
-                    <a href="<?php echo get_bloginfo('url'); ?>/wp-login.php?loginSocial=facebook" data-plugin="nsl" data-action="connect" data-redirect="current" data-provider="facebook" data-popupwidth="600" data-popupheight="679">
+                    <a href="<?php echo get_bloginfo('url'); ?>/herasecurelogin?loginSocial=facebook" data-plugin="nsl" data-action="connect" data-redirect="current" data-provider="facebook" data-popupwidth="600" data-popupheight="679">
                         <img src="<?php echo get_template_directory_uri(); ?>/img/fb.png" alt="" /> <span>Đăng ký bằng Facebook</span>
                     </a>
                 </div>
                 <?php
                     echo '<div class="zalo_btn social_btn">
-                            <a href="https://oauth.zaloapp.com/v4/permission?app_id=4424878354763274341&redirect_uri=' . $url . '&code_challenge=' . $code_challenge . '&state=' . $code_verify . '">
+                            <a href="https://oauth.zaloapp.com/v4/permission?app_id=61533937584017085&redirect_uri=' . $url . '&code_challenge=' . $code_challenge . '&state=' . $code_verify . '">
                                 <img src="' . get_template_directory_uri() . '/img/zl.webp" alt="" /> <span>Đăng ký bằng Zalo</span>
                             </a>
                         </div>';
@@ -236,12 +235,16 @@ if (is_user_logged_in()) {
 
         /* Dùng axjax kiểm tra user đã sử dụng chưa */
         $('input[name="user_login"]').change(function(){
+            var user_login = $(this).val();
+            user_login = user_login.replace(/[^a-zA-Z.0-9]+/g, '');
+            $(this).val(user_login);
+
             $.ajax({
                 type: "POST",
                 url: AJAX.ajax_url,
                 data: {
                     action: "checkUsernameExist",
-                    user_login: $(this).val(),
+                    user_login: user_login,
                 },
                 beforeSend: function() {
                     $('input[name="user_login"]').prop('disabled', true).parent().find('.form_check_icon').html(loading);
@@ -271,12 +274,16 @@ if (is_user_logged_in()) {
 
         /* Dùng axjax kiểm tra email đã sử dụng chưa */
         $('input[name="user_email"]').change(function(){
+            var user_email = $(this).val();
+            user_email = user_email.replace(/[^a-zA-Z0-9_/-@.]/g, '');
+            $(this).val(user_email);
+
             $.ajax({
                 type: "POST",
                 url: AJAX.ajax_url,
                 data: {
                     action: "checkEmailExist",
-                    user_email: $(this).val(),
+                    user_email: user_email,
                 },
                 beforeSend: function() {
                     $('input[name="user_email"]').prop('disabled', true).parent().find('.form_check_icon').html(loading);

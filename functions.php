@@ -8,8 +8,8 @@ function all_my_hooks(){
     # function library
     require_once( $dir . '/inc/api_function.php');
     require_once( $dir . '/inc/ajax_function.php');
-    require_once( $dir . '/inc/payment/casso_endpoint.php');
-    require_once( $dir . '/inc/payment/momo_endpoint.php');
+    require_once( $dir . '/inc/cronjob.php');
+    require_once( $dir . '/api.php');
     # Init SESSION
     if(!session_id()) {
         session_start();
@@ -57,15 +57,15 @@ function inovacards_load_scripts()
 {
     /* Js */
     wp_enqueue_script('jquery');
-    if (is_page(72)) {
+    if (is_page(72) || is_page(276)) {
         wp_enqueue_script('mycards', get_template_directory_uri() . '/js/mycards.js', array('jquery'), '1.0', true);
         wp_localize_script('mycards', 'AJAX', array(
             'ajax_url' => admin_url('admin-ajax.php')
         ));
     } else {
         /* Css */
-        wp_enqueue_style('main-style', get_template_directory_uri() . '/style.css');
         wp_enqueue_style('mui', get_template_directory_uri() . '/css/mui.min.css');
+        wp_enqueue_style('main-style', get_template_directory_uri() . '/style.css');
         wp_enqueue_style('font-awesome', get_template_directory_uri() . '/css/font-awesome.css');
         wp_enqueue_style('slidecaptcha', get_template_directory_uri() . '/js/slidecaptcha/slidercaptcha.min.css');
         wp_enqueue_style('inova', get_template_directory_uri() . '/css/inova.css');
@@ -114,7 +114,7 @@ function custom_rewrite_rules() {
     $wp->add_query_var('myacc');
     $wp->add_query_var('group');
     $wp->add_query_var('invitee');
-    add_rewrite_rule('^myacc/(.*)/(.*)/(.*)?', 'index.php?page_id=72&myacc=$matches[1]&group=$matches[2]&invitee=$matches[3]', 'top');
+    add_rewrite_rule('^thiepcuoi/(.*)/(.*)/(.*)/(.*)?', 'index.php?page_id=72&group=$matches[1]&character=$matches[2]&invitee=$matches[3]&guest=$matches[4]', 'top');
 }
 add_action('init', 'custom_rewrite_rules');
 
@@ -191,46 +191,6 @@ function incrementalHash($len = 6){
     return $rand;
 }
 
-/* 
-* Check xem thanh toán nào quá hạn 7 ngày thì chuyển sang trạng thái huỷ thanh toán
-*/
-function check_payment_status(){
-    $status = 'Chưa thanh toán';
-    $now = current_time('timestamp', 7);
-
-    /* query tat ca nhung don hang chua thanh toan */
-    $args   = array(
-        'post_type'     => 'inova_order',
-        'posts_per_page' => -1,
-        'post_status'   => 'publish',
-        'meta_query'    => array(
-            array(
-                'key'       => 'status',
-                'value'     => $status,
-                'compare'   => '=',
-            ),
-        ),
-    );
-
-    $query = new WP_Query($args);
-
-    if ($query->have_posts()) {
-        while ($query->have_posts()) {
-            $query->the_post();
-
-            /* Kiểm tra ngày hiện tại và ngày tạo đơn có quá 7 ngày không */
-            $start_date = strtotime(get_the_date('d-m-Y'));
-            $end_date = strtotime("+7 day", $start_date);
-
-            # miss deadline
-            if ($now > $end_date) {
-                # cập nhật trạng thái huỷ
-                update_field('field_62eb93b78ca79', 'Huỷ'); # status
-            }
-        }
-    }
-}
-
 # reading excel PHPExcel
 function wp_reading_excel($tmp_name)
 {
@@ -284,7 +244,7 @@ function get_access_token($authorization_code, $code_verifier) {
     # get access code 
     $data = array(
         'code'          => $authorization_code,
-        'app_id'        => '4424878354763274341',
+        'app_id'        => '61533937584017085',
         'grant_type'    => 'authorization_code',
         'code_verifier' => $code_verifier,
     );
@@ -426,3 +386,99 @@ function echo_to_string( $function )
     ob_end_clean();
     return $html;
 }
+
+# check coupon xem có được sử dụng chưa 
+function check_coupon_limit($coupon_id, $user_id){
+    $limit = get_field('limit', $coupon_id);
+
+    # nếu limit bằng 0 thì trả về true (mã hợp lệ)
+    if (!$limit) {
+        return true;
+    }
+    
+    $args   = array(
+        'post_type'     => 'inova_order',
+        'posts_per_page' => 999,
+        'author'        => $user_id,
+        'post_status'   => 'publish',
+        'orderby' => 'ID',
+        'order' => 'DESC',
+        'meta_query'    => array(
+            array(
+                'key'       => 'status',
+                'value'     => array('Đã thanh toán', 'Thanh toán dư'),
+                'compare'   => 'IN',
+            ),
+        ),
+    );
+
+    $query = new WP_Query($args);
+    if ($query->have_posts()) {
+        while ($query->have_posts()) {
+            $query->the_post();
+
+            $coupon  = get_field('coupon');
+            # nếu có mã giảm giá được sử dụng thành công thì trừ giới hạn đi 1
+            if ($coupon == $coupon_id) {
+                $limit--;
+            }
+
+            # nếu limit về 0 thì trả về false 
+            if (!$limit) {
+                return $limit;
+            }
+        }
+    }
+
+    # nếu check hết mà limit vẫn dương thì trả về limit
+    return $limit;
+}
+
+function convertToUnaccented($str) {
+    $unaccentedStr = "";
+    $unicodeChars = array(
+        'Á'=>'A', 'À'=>'A', 'Ả'=>'A', 'Ã'=>'A', 'Ạ'=>'A', 'Ă'=>'A', 'Ắ'=>'A', 'Ằ'=>'A', 'Ẳ'=>'A', 'Ẵ'=>'A', 'Ặ'=>'A',
+        'Â'=>'A', 'Ấ'=>'A', 'Ầ'=>'A', 'Ẩ'=>'A', 'Ẫ'=>'A', 'Ậ'=>'A', 'Đ'=>'D', 'É'=>'E', 'È'=>'E', 'Ẻ'=>'E', 'Ẽ'=>'E',
+        'Ẹ'=>'E', 'Ê'=>'E', 'Ế'=>'E', 'Ề'=>'E', 'Ể'=>'E', 'Ễ'=>'E', 'Ệ'=>'E', 'Í'=>'I', 'Ì'=>'I', 'Ỉ'=>'I', 'Ĩ'=>'I',
+        'Ị'=>'I', 'Ó'=>'O', 'Ò'=>'O', 'Ỏ'=>'O', 'Õ'=>'O', 'Ọ'=>'O', 'Ô'=>'O', 'Ố'=>'O', 'Ồ'=>'O', 'Ổ'=>'O', 'Ỗ'=>'O',
+        'Ộ'=>'O', 'Ơ'=>'O', 'Ớ'=>'O', 'Ờ'=>'O', 'Ở'=>'O', 'Ỡ'=>'O', 'Ợ'=>'O', 'Ú'=>'U', 'Ù'=>'U', 'Ủ'=>'U', 'Ũ'=>'U',
+        'Ụ'=>'U', 'Ư'=>'U', 'Ứ'=>'U', 'Ừ'=>'U', 'Ử'=>'U', 'Ữ'=>'U', 'Ự'=>'U', 'Ý'=>'Y', 'Ỳ'=>'Y', 'Ỷ'=>'Y', 'Ỹ'=>'Y',
+        'Ỵ'=>'Y',
+        'á'=>'a', 'à'=>'a', 'ả'=>'a', 'ã'=>'a', 'ạ'=>'a', 'ă'=>'a', 'ắ'=>'a', 'ằ'=>'a', 'ẳ'=>'a', 'ẵ'=>'a', 'ặ'=>'a',
+        'â'=>'a', 'ấ'=>'a', 'ầ'=>'a', 'ẩ'=>'a', 'ẫ'=>'a', 'ậ'=>'a', 'đ'=>'d', 'é'=>'e', 'è'=>'e', 'ẻ'=>'e', 'ẽ'=>'e',
+        'ẹ'=>'e', 'ê'=>'e', 'ế'=>'e', 'ề'=>'e', 'ể'=>'e', 'ễ'=>'e', 'ệ'=>'e', 'í'=>'i', 'ì'=>'i', 'ỉ'=>'i', 'ĩ'=>'i',
+        'ị'=>'i', 'ó'=>'o', 'ò'=>'o', 'ỏ'=>'o', 'õ'=>'o', 'ọ'=>'o', 'ô'=>'o', 'ố'=>'o', 'ồ'=>'o', 'ổ'=>'o', 'ỗ'=>'o',
+        'ộ'=>'o', 'ơ'=>'o', 'ớ'=>'o', 'ờ'=>'o', 'ở'=>'o', 'ỡ'=>'o', 'ợ'=>'o', 'ú'=>'u', 'ù'=>'u', 'ủ'=>'u', 'ũ'=>'u',
+        'ụ'=>'u', 'ư'=>'u', 'ứ'=>'u', 'ừ'=>'u', 'ử'=>'u', 'ữ'=>'u', 'ự'=>'u', 'ý'=>'y', 'ỳ'=>'y', 'ỷ'=>'y', 'ỹ'=>'y',
+        'ỵ'=>'y'
+    );
+    
+    for($i = 0; $i < mb_strlen($str, 'UTF-8'); $i++) {
+        $char = mb_substr($str, $i, 1, 'UTF-8');
+        if(isset($unicodeChars[$char])) {
+            $unaccentedStr .= $unicodeChars[$char];
+        } else {
+            $unaccentedStr .= $char;
+        }
+    }
+    
+    return $unaccentedStr;
+}
+
+# Lấy chữ cái đầu của tên
+function nameLetter($name){
+    # Lấy ra từ cuối cùng trong tên
+    $pieces = explode(' ', $name);
+    $last_word = convertToUnaccented(array_pop($pieces)); # Chuyển về không dấu
+
+    # Lấy ra chữ cái đầu tiên
+    $first_character = $last_word[0];
+    
+    return $first_character;
+}
+
+# lưu lại thời điểm login cuối cùng
+function user_last_login( $user_login, $user ){
+    update_user_meta( $user->ID, '_last_login', time() );
+}
+add_action( 'wp_login', 'user_last_login', 10, 2 );

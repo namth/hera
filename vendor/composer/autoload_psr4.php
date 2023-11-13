@@ -16,5 +16,8 @@ return array(
     'Namtran\\Hera\\' => array($baseDir . '/src'),
     'MyCLabs\\Enum\\' => array($vendorDir . '/myclabs/php-enum/src'),
     'Matrix\\' => array($vendorDir . '/markbaker/matrix/classes/src'),
+    'Endroid\\QrCode\\' => array($vendorDir . '/endroid/qr-code/src'),
+    'DASPRiD\\Enum\\' => array($vendorDir . '/dasprid/enum/src'),
     'Complex\\' => array($vendorDir . '/markbaker/complex/classes/src'),
+    'BaconQrCode\\' => array($vendorDir . '/bacon/bacon-qr-code/src'),
 );

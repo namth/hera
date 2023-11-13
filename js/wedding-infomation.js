@@ -47,22 +47,9 @@
 //     });
 // }
 
-var latlngStr;
-
-function showLocation(position){
-    latlngStr = [
-        position.coords.latitude,
-        position.coords.longitude
-    ].join(',');
-}
-
 jQuery(document).ready(function ($) {
     /* Bấm vào mỗi section thì sẽ hiện form tương ứng và ẩn các form khác đi */
-    $('.edit_section').click(function(){
-        if(navigator.geolocation){
-            navigator.geolocation.getCurrentPosition(showLocation);
-        }
-    
+    $('.edit_section').click(function(){    
         var form = $(this).data('form');
         var mapid = $(this).data('mapid');
         var latlng = $(this).data('latlng');
@@ -110,7 +97,7 @@ jQuery(document).ready(function ($) {
     /* Khi bấm submit một form thì gọi ajax để xử lý form đó, thêm dữ liệu vào  */
     $('.hide_form button[type="submit"]').click(function () {
         var $data = $(this).parents().eq(1).serialize();
-        // console.log($data);
+        // alert($data);
         $.ajax({
             type: "POST",
             url: AJAX.ajax_url,
@@ -260,4 +247,117 @@ jQuery(document).ready(function ($) {
 
         $(this).parent().find('.lunar').val(data_input);
     });
+
+    /* Khi bấm vào nút upload ảnh cưới sẽ hiện ra form upload */
+    $('.uploadbtn').click(function(){
+        $('.wedding_photo').hide();
+        // $(this).parent().find('img').hide();
+        $('#uploadform').show();
+    });
+
+    $('.uploadform .close_btn').click(function(){
+        // $(this).parents().eq(2).find('img').show();
+        $('.wedding_photo').show();
+        $('#uploadform').hide();
+    });
+
+    var isAdvancedUpload = function() {
+        var div = document.createElement('div');
+        return (('draggable' in div) || ('ondragstart' in div && 'ondrop' in div)) && 'FormData' in window && 'FileReader' in window;
+    }();
+    var $form = $('.box');
+    var $input    = $form.find('input[type="file"]'),
+        $label    = $form.find('label'),
+        showFiles = function(files) {
+            $label.text(files.length > 1 ? ($input.attr('data-multiple-caption') || '').replace( '{count}', files.length ) : files[ 0 ].name);
+        };
+
+    if (isAdvancedUpload) {
+        $form.addClass('has-advanced-upload');
+
+        var droppedFiles = false;
+
+        $form.on('drag dragstart dragend dragover dragenter dragleave drop', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        })
+        .on('dragover dragenter', function() {
+            $form.addClass('is-dragover');
+        })
+        .on('dragleave dragend drop', function() {
+            $form.removeClass('is-dragover');
+        })
+        .on('drop', function(e) {
+            droppedFiles = e.originalEvent.dataTransfer.files;
+            showFiles( droppedFiles );
+            $form.trigger('submit');
+        });
+
+        $input.on('change', function(e) {
+            showFiles(e.target.files);
+            $form.trigger('submit');
+        });
+
+        $form.on('submit', function(e) {
+            if ($form.hasClass('is-uploading')) return false;
+            $form.addClass('is-uploading').removeClass('is-error');
+
+            if (isAdvancedUpload) {
+                // ajax for modern browsers
+                e.preventDefault();
+                var ajaxData = new FormData($form[0]);
+                ajaxData.append("action", "uploadWeddingPhoto");
+                // console.log(ajaxData);
+
+                if (droppedFiles) {
+                    $.each( droppedFiles, function(i, file) {
+                        ajaxData.append( $input.attr('name'), file );
+                    });
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: AJAX.ajax_url,
+                    data: ajaxData,
+                    dataType: 'json',
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    complete: function() {
+                        $form.removeClass('is-uploading');
+                    },
+                    success: function(data) {
+                        console.log(data);
+                        if (data) {
+                            location.reload();
+                        } else {
+                            
+                        }
+                    },
+                    error: function() {
+
+                    }
+                });
+                
+            } else {
+                // ajax for legacy browsers
+                var iframeName  = 'uploadiframe' + new Date().getTime();
+                    $iframe   = $('<iframe name="' + iframeName + '" style="display: none;"></iframe>');
+
+                $('body').append($iframe);
+                $form.attr('target', iframeName);
+
+                $iframe.one('load', function() {
+                    var data = JSON.parse($iframe.contents().find('body' ).text());
+                    $form
+                        .removeClass('is-uploading')
+                        .addClass(data.success == true ? 'is-success' : 'is-error')
+                        .removeAttr('target');
+                    if (!data.success) $errorMsg.text(data.error);
+                    $form.removeAttr('target');
+                    $iframe.remove();
+                });
+            }
+        });
+    }
 });

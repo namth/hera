@@ -1,7 +1,7 @@
 // Khai báo kích thước tương ứng với màn hình thiết bị
 $XS: 480px
 $SM: 768px
-$MD: 1024px
+$MD: 991px
 $XL: 1170px
 
 // media queries
@@ -40,13 +40,13 @@ $XL: 1170px
                     margin-top: 15px
 
                 #payment
-                    .mui-tabs__bar 
-                        li 
+                    .mui-tabs__bar
+                        li
                             a
                                 font-size: 12px
 
     @else if $canvas == SM
-        @media screen and (max-width: $SM)
+        @media screen and (max-width: $SM) and (orientation: portrait)
             #login
                 display: block
 
@@ -59,18 +59,107 @@ $XL: 1170px
                     width: 100%
                     align-items: center
 
-            #hera_sidebar
-                display: none
-
             .btxs
                 border-top: 1px solid lightgray
 
             #checkout
                 #payment
-                    .mui-tabs__bar 
-                        li 
+                    .mui-tabs__bar
+                        li
                             a
                                 font-size: 14px
+
+            #detail_card
+                width: 100%
+
+            table
+                thead
+                    border: none
+                    clip: rect(0 0 0 0)
+                    height: 1px
+                    margin: -1px
+                    overflow: hidden
+                    padding: 0
+                    position: absolute
+                    width: 1px
+
+                tr
+                    border-bottom: 3px solid #ddd
+                    display: block
+                    margin-bottom: .625em
+
+                    td
+                        border-bottom: 1px solid #ddd
+                        display: block
+                        text-align: left
+
+                        &::before
+                            content: attr(data-label)
+                            float: left
+                            font-size: 0.8em
+                            font-weight: bold
+                            text-transform: uppercase
+                            color: brown
+                            padding-left: 9px
+                            width: 132px
+
+            .mobile_menu_nologin
+                display: block
+                position: absolute
+                top: 50px
+                left: 20px
+                padding: 5px 12px
+                background: white
+                border: 1px solid $lightBGBorder
+                border-radius: 6px
+
+                .mobile_menu_icon
+                    font-size: 24px
+                    color: $primaryColor
+
+                .menu
+                    display: none
+                    position: fixed
+                    top: 0
+                    left: 0
+                    background: $softLightBG
+                    width: 100%
+                    height: 100%
+                    z-index: 9
+                    text-align: center
+
+                    img 
+                        width: 100%
+
+                    .close_mobile_menu_button
+                        background: white
+                        padding: 5px 13px 3px
+                        border-radius: 24px
+                        color: $primaryColor
+                        border: 1px solid
+                        font-size: 24px
+                        text-transform: uppercase
+                        position: absolute
+                        top: 30px
+                        right: 32px
+                        cursor: pointer
+
+                    .nologin-mobile-menu
+                        display: flex
+                        flex-direction: column
+                        justify-content: center
+                        height: calc(100% - 120px)
+
+                        li
+                            font-size: 18px
+                            text-transform: uppercase
+
+                            a
+                                padding: 15px
+                                color: $primaryColor
+
+            #header_bottom
+                display: none
 
     @else if $canvas == MD
         @media screen and (max-width: $MD)
@@ -86,8 +175,126 @@ $XL: 1170px
                     #loginform
                         padding: 0 7%
 
+            #hera_sidebar
+                display: none
+
+            #header_bar
+                .mobile_menu
+                    display: block
+
+            .heracard
+                .images
+                    margin-bottom: 20px
+
+            .mui-col-md-10,
+            .mui-col-md-2
+                display: block
+                width: 100%
+
+            #detail_card
+                width: 100%
+
+            #guide_section
+                position: fixed
+                right: 15px
+                bottom: 30px
+                display: flex
+                flex-direction: column-reverse
+                align-items: end
+                z-index: 999
+
+                img
+                    border-radius: 50px
+                    width: 72px
+                    border: 1px solid #3c729a
+                    cursor: pointer
+
+                ul.playlist
+                    display: none
+                    margin-bottom: 10px
+                    padding: 0 0 10px 0
+                    background: #f9f9f9
+                    border-radius: 10px
+                    border: 1px solid #3c729a
+
+                    h4
+                        font-weight: bold
+                        text-align: center
+                        border-bottom: 1px solid #c6d3dc
+                        margin: 0
+                        padding: 9px
+                        background: #dfe9f3
+                        color: #3171a1
+                        border-top-left-radius: 10px
+                        border-top-right-radius: 10px
+
+                .minimize
+                    display: none
+
+                .maximize
+                    display: none
+
     @else if $canvas == XL
         @media screen and (min-width: $MD)
+            #guide_section
+                ul.playlist
+                    h4
+                        font-weight: bold
+                        text-align: center
+                        border-bottom: 1px solid #c6d3dc
+                        margin: 0
+                        padding: 9px
+                        background: #dfe9f3
+                        color: #3171a1
+
+                .minimize
+                    position: absolute
+                    top: 10px
+                    left: 10px
+                    font-size: 11px
+                    color: #235d96
+
+                    &:hover
+                        font-weight: bold
+
+                .maximize
+                    display: none
+                    font-size: 11px
+                    color: #235d96
+                    width: 72px
+                    text-align: center
+
+                    &:hover
+                        font-weight: bold
+
+            .guide_section_minimize
+                position: fixed
+                right: 15px
+                bottom: 30px
+                display: flex
+                flex-direction: column-reverse
+                align-items: end
+                z-index: 999
+
+                img
+                    border-radius: 50px
+                    width: 72px
+                    border: 1px solid #3c729a
+                    cursor: pointer
+
+                ul.playlist
+                    display: none
+                    margin-bottom: 10px
+                    padding: 0 0 10px 0
+                    background: #f9f9f9
+                    border-radius: 10px
+                    border: 1px solid #3c729a
+                    max-height: 300px
+                    overflow: scroll
+
+                    h4
+                        border-top-left-radius: 10px
+                        border-top-right-radius: 10px
 
     @else if $canvas == XXL
         @media screen and (min-width: $XL)

@@ -9,7 +9,7 @@ function syncCasso(){
     $curl = curl_init();
 
     # Gọi số tài khoản TP Bank
-    $data = array(
+    /* $data = array(
         'bank_acc_id' => '14719869999',
     );
     $postdata = json_encode($data);
@@ -28,7 +28,7 @@ function syncCasso(){
     ));
 
     $response = curl_exec($curl);
-    $err = curl_error($curl);
+    $err = curl_error($curl); */
     
     # Gọi thêm số tài khoản của ngân hàng khác
     $data = array(
@@ -85,6 +85,7 @@ function createInvoice() {
     $customer_phone = $output['customer_phone'];
     $customer_email = $output['customer_email'];
     $customer_address = $output['customer_address'];
+    $partner = $output['partner'];
     $current_user = wp_get_current_user();
     
     # Nếu có dữ liệu gói thì mới tạo hoá đơn
@@ -110,6 +111,15 @@ function createInvoice() {
         ));
     
         # Update dữ liệu vào hoá đơn mới tạo
+        if ($partner) {
+            update_field('field_63eb529586f37', $partner, $inserted);
+        } else {
+            # nếu ko có dữ liệu partner từ đối tác thì lấy dữ liệu người giới thiệu từ user 
+            $partner = get_field('inviter', 'user_' . $current_user->ID);
+            if ($partner) {
+                update_field('field_63eb529586f37', $partner, $inserted);
+            }
+        }
         update_field('field_62e6ae7175ee5', $current_user->ID, $inserted); # customer
         update_field('field_62eb93b78ca79', 'Chưa thanh toán', $inserted); # status
         update_field('field_62e6ad5875ee1', $coupon->package_id, $inserted); # package
@@ -157,5 +167,80 @@ function activeOrder(){
     }
 
     echo get_bloginfo("url") . "/thank-you/";
+    exit;
+}
+
+/* 
+* Source: checkout.php | js/checkout.js
+* Cho phép sửa nhanh nội dung trên giao diện hiển thị thông tin đám cưới */
+add_action('wp_ajax_addCouponCode', 'addCouponCode');
+add_action('wp_ajax_nopriv_addCouponCode', 'addCouponCode');
+function addCouponCode() {
+    $data = $_POST['data'];
+    $package = $_POST['package'];
+    $sub_total = get_field('price', $package);
+
+    /* Kiểm tra coupon có tồn tại không */
+    $id_coupon = search_customfield('coupon', $data, 'coupon_name');
+
+    /* Nếu có thì validate coupon xem đã hết hạn hoặc hết mã chưa */
+    if ($id_coupon) {
+        $expired = get_field('expired', $id_coupon);
+        $coupon_type = get_field('coupon_type', $id_coupon);
+        $coupon_value = get_field('coupon_value', $id_coupon);
+        $coupon_quantity = get_field('coupon_quantity', $id_coupon);
+        
+        /* validate data */
+        $today = new DateTime();
+        if (($coupon_quantity > 0) && ($expired >= $today->format('Ymd'))) {
+            $data = array(
+                'status' => true,
+                'coupon' => $data,
+                'message'=> '<div class="success_notification"><i class="fa fa-check-circle-o" aria-hidden="true"></i> Đã thêm mã coupon thành công.</div>',
+            );
+            if ($coupon_type == "Phần trăm") {
+                /* Tính số tiền cuối nhận được */
+                $final_total = $sub_total * (100 - $coupon_value) / 100;
+                /* Lưu vào data */
+                $data['type'] = 'percent';
+                $data['value'] = $coupon_value;
+                $data['coupon_label'] = '- ' . $coupon_value . '%';
+                $data['final_total'] = $final_total;
+                $data['hash'] = inova_encrypt(json_encode(array(
+                    'id'            => $id_coupon,
+                    'final_total'   => $final_total,
+                    'package_id'    => $package,
+                )), 'e');
+            } else {
+                /* Tính số tiền cuối nhận được */
+                $final_total = ($sub_total > $coupon_value)?($sub_total - $coupon_value):"0";
+                /* Lưu vào data */
+                $data['type'] = 'fix';
+                $data['value'] = $coupon_value;
+                $data['coupon_label'] = '- ' . number_format($coupon_value) . ' ₫';
+                $data['final_total'] = $final_total;
+                $data['hash'] = inova_encrypt(json_encode(array(
+                    'id'            => $id_coupon,
+                    'final_total'   => $final_total,
+                    'package_id'    => $package,
+                )), 'e');
+            }
+        } else {
+            $check_fail = true;
+            $message = "Mã khuyến mại đã hết hạn hoặc hết số lượng.";
+        }
+
+    } else {
+        $check_fail = true;
+        $message = "Không tìm thấy mã khuyến mại.";
+    }
+    
+    if ($check_fail) {
+        $data = array(
+            'status' => false,
+            'message'=> '<div class="error_notification"><i class="fa fa-time-circle-o" aria-hidden="true"></i> ' . $message . '</div>',
+        );
+    }
+    echo json_encode($data);
     exit;
 }
