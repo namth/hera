@@ -61,7 +61,10 @@ if (isset($_GET['code'])) {
             }
 
             # Set avatar for user
-            $result = Generate_Featured_Image($output->picture->data->url, $user);
+            $avatar_url = $output->picture->data->url;
+            if ($avatar_url) {
+                $result = Generate_Featured_Image($avatar_url, $user);
+            }
             # Sau đó chuyển về trang chủ
             wp_redirect( get_bloginfo('url') );
             exit;
