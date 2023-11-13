@@ -109,7 +109,7 @@ if (is_user_logged_in()) {
                     $url = get_bloginfo('url') . '/zalo-login';
                     
                     echo '<div class="zalo_btn social_btn">
-                            <a href="https://oauth.zaloapp.com/v4/permission?app_id=4424878354763274341&redirect_uri=' . $url . '&code_challenge=' . $code_challenge . '&state=' . $code_verify . '">
+                            <a href="https://oauth.zaloapp.com/v4/permission?app_id=61533937584017085&redirect_uri=' . $url . '&code_challenge=' . $code_challenge . '&state=' . $code_verify . '">
                                 <img src="' . get_template_directory_uri() . '/img/zl.webp" alt="" /> <span>Đăng nhập bằng Zalo</span>
                             </a>
                         </div>';

@@ -244,7 +244,7 @@ function get_access_token($authorization_code, $code_verifier) {
     # get access code 
     $data = array(
         'code'          => $authorization_code,
-        'app_id'        => '4424878354763274341',
+        'app_id'        => '61533937584017085',
         'grant_type'    => 'authorization_code',
         'code_verifier' => $code_verifier,
     );

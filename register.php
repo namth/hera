@@ -133,7 +133,7 @@ if (is_user_logged_in()) {
                                 <p>Hãy quay trở lại và chọn hình thức đăng nhập hoặc <a target="_blank" href="https://id.zalo.me/" class="link">đổi tài khoản zalo khác</a></p>';
                 echo            '<a href="' . get_bloginfo('url') . '/login" class="mui-btn hera-btn">Quay lại trang đăng nhập</a>';
                 echo            '<div class="zalo_btn social_btn">
-                                    <a href="https://oauth.zaloapp.com/v4/permission?app_id=4424878354763274341&redirect_uri=' . $url . '&code_challenge=' . $code_challenge . '&state=' . $code_verify . '">
+                                    <a href="https://oauth.zaloapp.com/v4/permission?app_id=61533937584017085&redirect_uri=' . $url . '&code_challenge=' . $code_challenge . '&state=' . $code_verify . '">
                                         <img src="' . get_template_directory_uri() . '/img/zl.webp" alt="" /> <span>Đăng nhập bằng tài khoản này</span>
                                     </a>
                                 </div>';
@@ -157,7 +157,7 @@ if (is_user_logged_in()) {
                 </div>
                 <?php
                     echo '<div class="zalo_btn social_btn">
-                            <a href="https://oauth.zaloapp.com/v4/permission?app_id=4424878354763274341&redirect_uri=' . $url . '&code_challenge=' . $code_challenge . '&state=' . $code_verify . '">
+                            <a href="https://oauth.zaloapp.com/v4/permission?app_id=61533937584017085&redirect_uri=' . $url . '&code_challenge=' . $code_challenge . '&state=' . $code_verify . '">
                                 <img src="' . get_template_directory_uri() . '/img/zl.webp" alt="" /> <span>Đăng ký bằng Zalo</span>
                             </a>
                         </div>';
