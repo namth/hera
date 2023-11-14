@@ -26,9 +26,10 @@ if (isset($_GET['code'])) {
         wp_set_auth_cookie( $userid, true, false );
         do_action( 'wp_login', $user_obj->user_login, $userid );
         
+        print_r($user_obj);
         # redirect sang trang chủ
-        wp_redirect( get_bloginfo('url') );
-        exit;
+        // wp_redirect( get_bloginfo('url') );
+        // exit;
     } else {
         # Nếu không có thì tạo tài khoản dựa trên ID của tài khoản zalo sau đó đăng nhập và chuyển về trang chủ
         $user_login = $output->id;
@@ -65,9 +66,11 @@ if (isset($_GET['code'])) {
             if ($avatar_url) {
                 $result = Generate_Featured_Image($avatar_url, $user);
             }
+
+            print_r($output);
             # Sau đó chuyển về trang chủ
-            wp_redirect( get_bloginfo('url') );
-            exit;
+            // wp_redirect( get_bloginfo('url') );
+            // exit;
         }
     }
 } else {
