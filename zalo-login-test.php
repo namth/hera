@@ -10,6 +10,9 @@ if (isset($_GET['code'])) {
     $authorization_code = $_GET['code'];
     $code_verifier = get_field('zalo_code_verifier', 'option');
 
+    echo "Authorization Code: $authorization_code <br>";
+    echo "Code verifier: $code_verifier <br>";
+
     $access_token = get_access_token($authorization_code, $code_verifier);
 
     # Lấy thông tin user từ access token
@@ -81,5 +84,5 @@ if (isset($_GET['code'])) {
     $code_challenge = generate_code_challenge($code_verify);
     
     echo "<br><br>Code Challenge: " . $code_challenge;
-    echo "<br><br><a href='https://oauth.zaloapp.com/v4/permission?app_id=61533937584017085&redirect_uri=" . get_permalink() . "&code_challenge=" . $code_challenge . "&state=" . $code_verify . "'>Login Zalo</a>";
+    echo "<br><br><a href='https://oauth.zaloapp.com/v4/permission?app_id=" . ZALO_APP_ID . "&redirect_uri=" . get_permalink() . "&code_challenge=" . $code_challenge . "&state=" . $code_verify . "'>Login Zalo</a>";
 }
