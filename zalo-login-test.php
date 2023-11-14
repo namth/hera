@@ -29,7 +29,7 @@ if (isset($_GET['code'])) {
         wp_set_auth_cookie( $userid, true, false );
         do_action( 'wp_login', $user_obj->user_login, $userid );
         
-        print_r($user_obj);
+        // print_r($user_obj);
         # redirect sang trang chủ
         wp_redirect( get_bloginfo('url') );
         exit;
@@ -70,7 +70,7 @@ if (isset($_GET['code'])) {
                 $result = Generate_Featured_Image($avatar_url, $user);
             }
 
-            print_r($output);
+            // print_r($output);
             # Sau đó chuyển về trang chủ
             wp_redirect( get_bloginfo('url') );
             exit;
