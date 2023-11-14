@@ -31,8 +31,8 @@ if (isset($_GET['code'])) {
         
         print_r($user_obj);
         # redirect sang trang chủ
-        // wp_redirect( get_bloginfo('url') );
-        // exit;
+        wp_redirect( get_bloginfo('url') );
+        exit;
     } else {
         # Nếu không có thì tạo tài khoản dựa trên ID của tài khoản zalo sau đó đăng nhập và chuyển về trang chủ
         $user_login = $output->id;
@@ -72,8 +72,8 @@ if (isset($_GET['code'])) {
 
             print_r($output);
             # Sau đó chuyển về trang chủ
-            // wp_redirect( get_bloginfo('url') );
-            // exit;
+            wp_redirect( get_bloginfo('url') );
+            exit;
         }
     }
 } else {
