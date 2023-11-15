@@ -121,7 +121,7 @@ function viewDetailCard(){
                                     $url = get_bloginfo('url') . '/zalo-login';
                                     
                                     echo '<div class="zalo_btn social_btn">
-                                            <a href="https://oauth.zaloapp.com/v4/permission?app_id=61533937584017085&redirect_uri=' . $url . '&code_challenge=' . $code_challenge . '&state=' . $code_verify . '">
+                                            <a href="https://oauth.zaloapp.com/v4/permission?app_id=' . ZALO_APP_ID . '&redirect_uri=' . $url . '&code_challenge=' . $code_challenge . '&state=' . $code_verify . '">
                                                 <img src="' . get_template_directory_uri() . '/img/zl.webp" alt="" /> <span>Zalo</span>
                                             </a>
                                         </div>';

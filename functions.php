@@ -244,7 +244,7 @@ function get_access_token($authorization_code, $code_verifier) {
     # get access code 
     $data = array(
         'code'          => $authorization_code,
-        'app_id'        => '61533937584017085',
+        'app_id'        => ZALO_APP_ID,
         'grant_type'    => 'authorization_code',
         'code_verifier' => $code_verifier,
     );
@@ -252,7 +252,7 @@ function get_access_token($authorization_code, $code_verifier) {
     $ch = curl_init();
 
     curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-        "secret_key: 1qFDWGD94kuPapqjryca",
+        "secret_key: " . ZALO_SECRET_KEY,
     ));
     
     curl_setopt($ch, CURLOPT_URL,"https://oauth.zaloapp.com/v4/access_token");
