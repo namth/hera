@@ -8,13 +8,15 @@ require_once( $general_dir . '/custom_field.php');
 require_once( $general_dir . '/order.php');
 
 # convert time
-function convert_time($time) {
+function convert_time($time, $connect=" giờ ") {
     $time_arr = explode(':', $time);
 
-    if ($time_arr[0] > 12) {
+    /* if ($time_arr[0] > 12) {
         $time_arr[0] -= 12;
         $symbol = ' PM';
     } else $symbol = ' AM';
 
-    return implode(':', $time_arr) . $symbol;
+    return implode(':', $time_arr) . $symbol; */
+
+    return implode($connect, $time_arr);
 }
