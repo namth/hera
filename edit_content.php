@@ -17,7 +17,7 @@ if (isset($_GET['g']) && ($_GET['g'] != "" )) {
     /* Kiểm tra xem có đúng là của user đó không, nếu đúng thì cho sửa, nếu không thì không hiển thị */
     $current_user_id = get_current_user_id();
     
-    if ($userID == $current_user_id) {
+    if (($userID == $current_user_id) && is_admin() && is_user_logged_in()) {
         
         $groom = get_field('groom', 'user_' . $userID);
         $bride = get_field('bride', 'user_' . $userID);

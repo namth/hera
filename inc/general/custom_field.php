@@ -1,5 +1,5 @@
 <?php
-if( function_exists('acf_add_local_field_group') ):
+if (function_exists('acf_add_local_field_group')) :
 
     acf_add_local_field_group(array(
         'key' => 'group_63eb4191de5d2',
@@ -204,6 +204,13 @@ if( function_exists('acf_add_local_field_group') ):
                     'value' => 'contributor',
                 ),
             ),
+            array(
+                array(
+                    'param' => 'user_role',
+                    'operator' => '==',
+                    'value' => 'administrator',
+                ),
+            ),
         ),
         'menu_order' => 0,
         'position' => 'normal',
@@ -214,7 +221,7 @@ if( function_exists('acf_add_local_field_group') ):
         'active' => true,
         'description' => '',
     ));
-    
+
     acf_add_local_field_group(array(
         'key' => 'group_63ca4171180ae',
         'title' => 'Data mẫu',
@@ -559,7 +566,7 @@ if( function_exists('acf_add_local_field_group') ):
         'active' => true,
         'description' => '',
     ));
-    
+
     acf_add_local_field_group(array(
         'key' => 'group_62e6ad3befe53',
         'title' => 'Đơn hàng',
@@ -871,7 +878,7 @@ if( function_exists('acf_add_local_field_group') ):
         'active' => true,
         'description' => '',
     ));
-    
+
     acf_add_local_field_group(array(
         'key' => 'group_63eb4c99ea034',
         'title' => 'Hoá đơn cộng tác viên rút tiền',
@@ -969,7 +976,7 @@ if( function_exists('acf_add_local_field_group') ):
         'active' => true,
         'description' => '',
     ));
-    
+
     acf_add_local_field_group(array(
         'key' => 'group_62e793a5da6d5',
         'title' => 'Mã giảm giá',
@@ -1131,7 +1138,7 @@ if( function_exists('acf_add_local_field_group') ):
         'active' => true,
         'description' => '',
     ));
-    
+
     acf_add_local_field_group(array(
         'key' => 'group_62b1363fa8093',
         'title' => 'Nhà gái',
@@ -1159,6 +1166,25 @@ if( function_exists('acf_add_local_field_group') ):
                 'key' => 'field_62b1363fb069e',
                 'label' => 'Mẹ cô dâu',
                 'name' => 'bride_mother',
+                'type' => 'text',
+                'instructions' => '',
+                'required' => 0,
+                'conditional_logic' => 0,
+                'wrapper' => array(
+                    'width' => '',
+                    'class' => '',
+                    'id' => '',
+                ),
+                'default_value' => '',
+                'placeholder' => '',
+                'prepend' => '',
+                'append' => '',
+                'maxlength' => '',
+            ),
+            array(
+                'key' => 'field_6568a76696279',
+                'label' => 'Nơi tổ chức lễ vu quy',
+                'name' => 'bride_wedding_location',
                 'type' => 'text',
                 'instructions' => '',
                 'required' => 0,
@@ -1247,8 +1273,27 @@ if( function_exists('acf_add_local_field_group') ):
                 'first_day' => 1,
             ),
             array(
+                'key' => 'field_6568a8029627a',
+                'label' => 'Nơi tổ chức tiệc cưới',
+                'name' => 'bride_party_location',
+                'type' => 'text',
+                'instructions' => '',
+                'required' => 0,
+                'conditional_logic' => 0,
+                'wrapper' => array(
+                    'width' => '',
+                    'class' => '',
+                    'id' => '',
+                ),
+                'default_value' => '',
+                'placeholder' => '',
+                'prepend' => '',
+                'append' => '',
+                'maxlength' => '',
+            ),
+            array(
                 'key' => 'field_62b1363fb06bf',
-                'label' => 'Địa điểm tổ chức tiệc cưới',
+                'label' => 'Địa chỉ tổ chức tiệc cưới',
                 'name' => 'bride_party_address',
                 'type' => 'text',
                 'instructions' => '',
@@ -1337,7 +1382,7 @@ if( function_exists('acf_add_local_field_group') ):
         'active' => true,
         'description' => '',
     ));
-    
+
     acf_add_local_field_group(array(
         'key' => 'group_62b128ca42f2f',
         'title' => 'Nhà trai',
@@ -1365,6 +1410,25 @@ if( function_exists('acf_add_local_field_group') ):
                 'key' => 'field_62b129b693a80',
                 'label' => 'Mẹ chú rể',
                 'name' => 'groom_mother',
+                'type' => 'text',
+                'instructions' => '',
+                'required' => 0,
+                'conditional_logic' => 0,
+                'wrapper' => array(
+                    'width' => '',
+                    'class' => '',
+                    'id' => '',
+                ),
+                'default_value' => '',
+                'placeholder' => '',
+                'prepend' => '',
+                'append' => '',
+                'maxlength' => '',
+            ),
+            array(
+                'key' => 'field_6568ba0dd5db1',
+                'label' => 'Nơi tổ chức hôn lễ',
+                'name' => 'groom_wedding_location',
                 'type' => 'text',
                 'instructions' => '',
                 'required' => 0,
@@ -1453,8 +1517,27 @@ if( function_exists('acf_add_local_field_group') ):
                 'first_day' => 1,
             ),
             array(
+                'key' => 'field_6568ba25d5db2',
+                'label' => 'Nơi tổ chức tiệc cưới',
+                'name' => 'groom_party_location',
+                'type' => 'text',
+                'instructions' => '',
+                'required' => 0,
+                'conditional_logic' => 0,
+                'wrapper' => array(
+                    'width' => '',
+                    'class' => '',
+                    'id' => '',
+                ),
+                'default_value' => '',
+                'placeholder' => '',
+                'prepend' => '',
+                'append' => '',
+                'maxlength' => '',
+            ),
+            array(
                 'key' => 'field_62b12b4593a82',
-                'label' => 'Địa điểm tổ chức tiệc cưới',
+                'label' => 'Địa chỉ tổ chức tiệc cưới',
                 'name' => 'groom_party_address',
                 'type' => 'text',
                 'instructions' => '',
@@ -1543,7 +1626,7 @@ if( function_exists('acf_add_local_field_group') ):
         'active' => true,
         'description' => '',
     ));
-    
+
     acf_add_local_field_group(array(
         'key' => 'group_61066eef7f279',
         'title' => 'Thiệp mời',
@@ -1867,7 +1950,7 @@ if( function_exists('acf_add_local_field_group') ):
         'active' => true,
         'description' => '',
     ));
-    
+
     acf_add_local_field_group(array(
         'key' => 'group_62a7d13d4f7ff',
         'title' => 'Thiết kế thiệp',
@@ -1948,7 +2031,7 @@ if( function_exists('acf_add_local_field_group') ):
         'active' => true,
         'description' => '',
     ));
-    
+
     acf_add_local_field_group(array(
         'key' => 'group_636b4f2fc11ff',
         'title' => 'Thông tin công ty',
@@ -1991,7 +2074,7 @@ if( function_exists('acf_add_local_field_group') ):
         'active' => true,
         'description' => '',
     ));
-    
+
     acf_add_local_field_group(array(
         'key' => 'group_63663d7d3ab5b',
         'title' => 'Thông tin gói',
@@ -2094,7 +2177,7 @@ if( function_exists('acf_add_local_field_group') ):
         'active' => true,
         'description' => '',
     ));
-    
+
     acf_add_local_field_group(array(
         'key' => 'group_636e14e8c1ee6',
         'title' => 'Thông tin gói sản phẩm',
@@ -2235,7 +2318,7 @@ if( function_exists('acf_add_local_field_group') ):
         'active' => true,
         'description' => '',
     ));
-    
+
     acf_add_local_field_group(array(
         'key' => 'group_62ee6271439e8',
         'title' => 'Thông tin user',
@@ -2316,7 +2399,7 @@ if( function_exists('acf_add_local_field_group') ):
         'active' => true,
         'description' => '',
     ));
-    
+
     acf_add_local_field_group(array(
         'key' => 'group_610faf7fdd1d9',
         'title' => 'Tuỳ biến chung',
@@ -2433,7 +2516,7 @@ if( function_exists('acf_add_local_field_group') ):
         'active' => true,
         'description' => '',
     ));
-    
+
     acf_add_local_field_group(array(
         'key' => 'group_62b13a218984d',
         'title' => 'Wedding Infomation',
@@ -2519,5 +2602,5 @@ if( function_exists('acf_add_local_field_group') ):
         'active' => true,
         'description' => '',
     ));
-    
+
 endif;
