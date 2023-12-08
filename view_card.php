@@ -70,11 +70,11 @@ if ($wedding_time[0]) {
     $wedding_day        = $time_object->format('d');
     $wedding_month      = $time_object->format('m');
     $wedding_year       = $time_object->format('Y');
+    $wedding_moon_date  = ShowLunarDate($time_object, 'ngày dd tháng mm năm MYMY');
 }
 # moon-day wedding time
 if ($wedding_moontime[0]) {
     $time_object            = DateTime::createFromFormat('d/m/Y', $wedding_moontime[0]);
-    $wedding_moon_date      = ShowLunarDate($time_object, 'ngày dd tháng mm năm MYMY');
     $wedding_moon_day       = $time_object->format('d');
     $wedding_moon_month     = $time_object->format('m');
     $wedding_moon_year      = $time_object->format('Y');
@@ -88,11 +88,11 @@ if ($party_time[0]) {
     $party_day          = $time_object->format('d');
     $party_month        = $time_object->format('m');
     $party_year         = $time_object->format('Y');
+    $party_moon_date    = ShowLunarDate($time_object, 'ngày dd tháng mm năm MYMY');
 }
 # moon-day party time
 if ($party_moontime[0]) {
     $time_object        = DateTime::createFromFormat('d/m/Y', $party_moontime[0]);
-    $party_moon_date    = ShowLunarDate($time_object, 'ngày dd tháng mm năm MYMY');
     $party_moon_day     = $time_object->format('d');
     $party_moon_month   = $time_object->format('m');
     $party_moon_year    = $time_object->format('Y');
@@ -148,7 +148,7 @@ if ($joined =="Y") {
 # setup wp_head & wp_footer
 $wp_head    = "<title>Đám cưới " . $groom . " và " . $bride . "</title>";
 if ($wedding_photo) {
-    $wp_head   .= "<meta property='og:image' content='" . $wedding_photo . "'/>";
+    $wp_head   .= "<meta property='og:image' content='" .  wp_get_attachment_url($wedding_photo) . "'/>";
 }
 $wp_head   .= echo_to_string('wp_head');
 

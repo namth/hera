@@ -1,5 +1,9 @@
 <?php
 $current_user_id = get_current_user_id();
+# nếu là admin thì cho phép đọc biến số $_GET["uid"] để xem thiệp của user khác
+if (current_user_can('manage_options') && isset($_GET["uid"]) && ($_GET["uid"] != "")) {
+    $current_user_id = $_GET["uid"];
+}
 
 if (isset($_GET['guide']) && ($_GET['guide'] == 'none')) {
     setcookie('noguide', true, time() + 86400);
@@ -18,6 +22,7 @@ if (isset($_POST['group_name'])) {
         'post_status'   => 'publish',
         'post_type'     => 'thiep_moi',
         'post_name'     => $permalink,
+        'post_author'   => $current_user_id
     );
 
     $inserted = wp_insert_post($args, $error);
@@ -89,7 +94,7 @@ $count = $count_query->post_count;
                         );
 
                         $query = new WP_Query($args);
-
+                        
                         $i = 0;
                         if ($query->have_posts()) {
                             while ($query->have_posts()) {
