@@ -47,7 +47,7 @@ if (is_user_logged_in()) {
         </div>
         <div class="mui-col-md-12">
             <?php 
-                if (isset($data->userid) && ($data->userid == $current_user_id)) {
+                if (isset($data->userid)) {
                     echo '<input type="hidden" name="groupid" value="' . $data->groupid  . '">';
                 }
             ?>

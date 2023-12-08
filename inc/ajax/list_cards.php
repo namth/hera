@@ -237,7 +237,7 @@ function addCardToSelectedGroup(){
     $thumbnail = $_POST['thumbnail'];
 
     $author_id = get_post_field ('post_author', $groupid);
-    if ($author_id == $current_user_id) {
+    if (($author_id == $current_user_id) || current_user_can('manage_options')) {
         update_field('field_610ead267af54', $cardid, $groupid); # setup cardid
         update_field('field_610ead167af53', $thumbnail, $groupid); # setup thumbnail
         
