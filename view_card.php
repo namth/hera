@@ -7,7 +7,7 @@ $character = get_query_var('character');
 $customer = get_query_var('invitee');
 $key_html = $_GET['key'];
 
-echo $key_html;
+// echo $key_html;
 
 $user_login = get_post_field('post_author', $group);
 $user = get_user_by('ID', $user_login);
