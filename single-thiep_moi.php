@@ -403,6 +403,10 @@ if (have_posts()) {
                                                         if ($card_id && $check_party) {
                                                             $_icon = $package_id ? '<i class="fa fa-eye"></i>' : '<i class="fa fa-eye-slash"></i>';
                                                             echo '<a href="' . $viewlink . '" target="_blank">' . $_icon . '</a>';
+
+                                                            if (current_user_can('manage_options')){
+                                                                echo '<a href="' . $viewlink . '?key=print_card_temp" target="_blank"><i class="fa fa-envelope-open" aria-hidden="true"></i></a>';
+                                                            }
                                                         }
                                                         ?>
 
