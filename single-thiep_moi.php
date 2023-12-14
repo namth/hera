@@ -331,7 +331,7 @@ if (have_posts()) {
 
                                                 # Nếu id khách mời chưa có, sẽ cấp một số mới từ số khách tổng của user và tăng số khách tổng lên 1
                                                 if(!$id) {
-                                                    $new_guest_id = get_user_meta($current_userID, 'hera_total_guest', true);
+                                                    $new_guest_id = get_user_meta($author_id, 'hera_total_guest', true);
                                                     if(!$new_guest_id){
                                                         $new_guest_id = 1;
                                                     } else {
@@ -339,18 +339,18 @@ if (have_posts()) {
                                                     }
                                                     # update id mới vào row này và update tổng id vào data user
                                                     update_sub_field('id', $new_guest_id);
-                                                    update_user_meta( $current_userID, 'hera_total_guest', $new_guest_id );
+                                                    update_user_meta( $author_id, 'hera_total_guest', $new_guest_id );
                                                     # set lại id mới thành id hiện tại
                                                     $id = $new_guest_id;
                                                 }
 
                                                 # lấy tên cô dâu chú rể
-                                                $wedding_character = get_user_meta($current_userID, 'hera_wedding_character', true);
+                                                $wedding_character = get_user_meta($author_id, 'hera_wedding_character', true);
                                                 if (!$wedding_character) {
                                                     # Nếu không có ký hiệu có sẵn thì lấy chữ cái đầu của chú rể + cô dâu và lưu lại
                                                     $_character = nameLetter($groom) . nameLetter($bride);
                                                     $wedding_character = strtolower($_character);
-                                                    update_user_meta($current_userID, 'hera_wedding_character', $wedding_character);
+                                                    update_user_meta($author_id, 'hera_wedding_character', $wedding_character);
                                                 }
 
                                                 # xử lý tên khách mời thành dạng link

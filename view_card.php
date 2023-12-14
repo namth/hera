@@ -5,6 +5,9 @@
 $group = get_query_var('group');
 $character = get_query_var('character');
 $customer = get_query_var('invitee');
+$key_html = $_GET['key'];
+
+echo $key_html;
 
 $user_login = get_post_field('post_author', $group);
 $user = get_user_by('ID', $user_login);
@@ -17,7 +20,20 @@ if(!($package_id || is_user_logged_in())){
 }
 
 $cardid         = get_field('card_id', $group);
-$html           = get_field('html', $group);
+if (!$key_html) {
+    $html           = get_field('html', $group);
+} else {
+    $token = get_field('token', 'option');
+    if (!check_token($token)) {
+        # Kiểm tra nếu token vẫn hoạt động thì thôi, nếu không thì phải lấy lại token mới.
+        $token = refresh_token();
+    }
+    $api_base_url = get_field('api_base_url', 'option');
+    $api_url = $api_base_url . '/wp-json/inova/v1/html/' . $cardid . '/print_card_temp';
+    $mycard = inova_api($api_url, $token, 'GET', '');
+
+    $html           = $mycard->html;
+}
 $noi_dung_1     = get_field('content_1', $group)?get_field('content_1', $group):get_field('content_1', 'option');
 $noi_dung_2     = get_field('content_2', $group)?get_field('content_2', $group):get_field('content_2', 'option');
 $noi_dung_3     = get_field('content_3', $group)?get_field('content_3', $group):get_field('content_3', 'option');
