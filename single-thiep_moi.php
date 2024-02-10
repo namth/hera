@@ -162,9 +162,6 @@ if (have_posts()) {
                 $guest_data['total']++;
                 $guest_data['sent'] += get_sub_field('sent') ? 1 : 0;
                 $joined = get_sub_field('joined');
-                /* $name = get_sub_field('name');
-                $guest_attach = get_sub_field('guest_attach');
-                $row_index = get_row_index(); */
 
                 if ($joined == "Y") {
                     $guest_data['joined']++;
@@ -173,6 +170,8 @@ if (have_posts()) {
             }
             reset_rows();
         }
+
+        $uid_slug = $current_userID == $author_id ? "" : "?uid=" . $author_id;
 ?>
         <div class="mui-container-fluid">
             <div class="mui-row">
@@ -183,7 +182,7 @@ if (have_posts()) {
                 </div>
                 <div class="mui-col-lg-8 mui-col-md-12">
                     <div class="breadcrumb">
-                        <a href="<?php echo get_bloginfo('url'); ?>"><i class="fa fa-home" aria-hidden="true"></i></a>
+                        <a href="<?php echo get_bloginfo('url') . $uid_slug; ?>"><i class="fa fa-home" aria-hidden="true"></i></a>
                         <i class="fa fa-chevron-right"></i>
                         <span contenteditable="true" oncut="return false" onpaste="return false" class="title" data-guestid="<?php echo get_the_ID(); ?>"> <?php the_title(); ?></span>
                         <span class="loader"><img src="<?php echo get_template_directory_uri() . '/img/heart-preloader.gif'; ?>" alt=""></span>
@@ -330,16 +329,16 @@ if (have_posts()) {
                                                 $row_index      = get_row_index();
 
                                                 # Nếu id khách mời chưa có, sẽ cấp một số mới từ số khách tổng của user và tăng số khách tổng lên 1
-                                                if(!$id) {
+                                                if (!$id) {
                                                     $new_guest_id = get_user_meta($author_id, 'hera_total_guest', true);
-                                                    if(!$new_guest_id){
+                                                    if (!$new_guest_id) {
                                                         $new_guest_id = 1;
                                                     } else {
                                                         $new_guest_id++;
                                                     }
                                                     # update id mới vào row này và update tổng id vào data user
                                                     update_sub_field('id', $new_guest_id);
-                                                    update_user_meta( $author_id, 'hera_total_guest', $new_guest_id );
+                                                    update_user_meta($author_id, 'hera_total_guest', $new_guest_id);
                                                     # set lại id mới thành id hiện tại
                                                     $id = $new_guest_id;
                                                 }
@@ -404,7 +403,7 @@ if (have_posts()) {
                                                             $_icon = $package_id ? '<i class="fa fa-eye"></i>' : '<i class="fa fa-eye-slash"></i>';
                                                             echo '<a href="' . $viewlink . '" target="_blank">' . $_icon . '</a>';
 
-                                                            if (current_user_can('manage_options')){
+                                                            if (current_user_can('manage_options')) {
                                                                 echo '<a href="' . $viewlink . '?key=print_card_temp" target="_blank"><i class="fa fa-envelope-open" aria-hidden="true"></i></a>';
                                                             }
                                                         }
@@ -464,12 +463,31 @@ if (have_posts()) {
             <form class="mui-form" method="POST" name="guest_form">
                 <legend>Thêm khách mời</legend>
                 <div class="mui-textfield">
-                    <input type="text" placeholder="VD: Anh Nam" name="guest_name" required>
+                    <input type="hidden" name="category" value="<?php echo $category[0]->slug; ?>">
+                    <input type="text" placeholder="VD: Anh Nam" name="guest_name" required onchange="checkName(this)">
                     <label for="">Tên khách mời *</label>
                 </div>
-                <div class="mui-textfield">
-                    <input type="text" placeholder="VD: người thương" name="guest_attach">
-                    <label for="">Và</label>
+                <div class="mui-field">
+                    <div class="mui-textfield">
+                        <label for="">Và</label>
+                        <div class="mui-radio">
+                            <label>
+                                <input type="radio" name="guest_attach" value="người thương">
+                                <span>Người thương</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="guest_attach" value="gia đình">
+                                <span>Gia đình</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="guest_attach" id="guestinput">
+                                <span>Tự nhập</span>
+                                <div id="guest_attach">
+                                    <input type="text" placeholder="VD: người thương" name="guest_attach">
+                                </div>
+                            </label>
+                        </div>
+                    </div>
                 </div>
                 <div class="mui-textfield">
                     <input type="text" name="vai_ve" placeholder="Cô, Chú, Bạn, Cậu, Em, Anh ...">

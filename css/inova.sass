@@ -104,6 +104,28 @@ img
     display: none
     padding: 20px
 
+    .mui-radio
+        label
+            margin-right: 20px
+            color: lightgray
+
+            input[type="radio"]:checked + span
+                color: black
+
+            #guest_attach 
+                display: none
+                
+                input[type="text"]
+                    width: 100%
+                    line-height: 33px
+                    border: 1px solid lightgray
+                    border-radius: 6px
+                    padding: 0 10px
+                    margin-top: 10px
+
+            #guestinput:checked + span + #guest_attach
+                display: block
+
 .inova_card
     margin: 15px 0
 

@@ -300,6 +300,27 @@ img {
   display: none;
   padding: 20px;
 }
+#create_card_form .mui-radio label {
+  margin-right: 20px;
+  color: lightgray;
+}
+#create_card_form .mui-radio label input[type=radio]:checked + span {
+  color: black;
+}
+#create_card_form .mui-radio label #guest_attach {
+  display: none;
+}
+#create_card_form .mui-radio label #guest_attach input[type=text] {
+  width: 100%;
+  line-height: 33px;
+  border: 1px solid lightgray;
+  border-radius: 6px;
+  padding: 0 10px;
+  margin-top: 10px;
+}
+#create_card_form .mui-radio label #guestinput:checked + span + #guest_attach {
+  display: block;
+}
 
 .inova_card {
   margin: 15px 0;

@@ -175,12 +175,12 @@ $google_api     = get_field('google_maps_api_key', 'option');
                                                 echo "</div>";
                                             } else {
                                         ?>
-                                            <!-- <div class="no_data edit_section data_item" data-form='#groom_parents_form'>
+                                            <div class="no_data edit_section data_item" data-form='#groom_parents_form'>
                                                 <a class="section_name" href="#">
                                                     <i class="fa fa-plus" aria-hidden="true"></i>
                                                     <span>Thêm tên bố mẹ chú rể...</span>
                                                 </a>
-                                            </div> -->
+                                            </div>
                                         <?php
                                             }
                                         ?>
@@ -205,7 +205,7 @@ $google_api     = get_field('google_maps_api_key', 'option');
                                         </div>
                                     </div>
                                 </section>
-                                <!-- <section class="content_box">
+                                <section class="content_box">
                                     <span class="content_title">
                                         <h4>Địa điểm, thời gian tổ chức hôn lễ</h4>
                                         <span class="edit_section" data-form='#groom_wedding_form' data-mapid="gw_googlemaps" data-latlng='gw_latlng'>
@@ -277,7 +277,7 @@ $google_api     = get_field('google_maps_api_key', 'option');
                                             <span class="close_button">X</span>
                                         </div>
                                     </div>
-                                </section> -->
+                                </section>
                                 <section class="content_box">
                                     <span class="content_title">
                                         <h4>Địa điểm, thời gian tổ chức tiệc cưới</h4>
@@ -402,12 +402,12 @@ $google_api     = get_field('google_maps_api_key', 'option');
                                                 echo '</div>';
                                             } else {
                                         ?>
-                                            <!-- <div class="no_data edit_section data_item" data-form='#bride_parents_form'>
+                                            <div class="no_data edit_section data_item" data-form='#bride_parents_form'>
                                                 <a class="section_name" href="#">
                                                     <i class="fa fa-plus" aria-hidden="true"></i>
                                                     <span>Thêm tên bố mẹ cô dâu...</span>
                                                 </a>
-                                            </div> -->
+                                            </div>
                                         <?php 
                                             }
                                         ?>
@@ -432,7 +432,7 @@ $google_api     = get_field('google_maps_api_key', 'option');
                                         </div>
                                     </div>
                                 </section>
-                                <!-- <section class="content_box">
+                                <section class="content_box">
                                     <span class="content_title">
                                         <h4>Địa điểm, thời gian tổ chức lễ vu quy</h4>
                                         <span class="edit_section" data-form='#bride_wedding_form' data-mapid='bw_googlemaps' data-latlng='bw_latlng'>
@@ -507,7 +507,7 @@ $google_api     = get_field('google_maps_api_key', 'option');
                                                 <span class="close_button">X</span>
                                             </div>
                                     </div>
-                                </section> -->
+                                </section>
                                 <section class="content_box">
                                     <span class="content_title">
                                         <h4>Địa điểm, thời gian tổ chức tiệc cưới</h4>

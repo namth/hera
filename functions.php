@@ -45,6 +45,16 @@ function myEndSession() {
     session_destroy ();
 }
 
+# set secure for wp_login
+add_action( 'set_auth_cookie', function ( $cookie ) {
+    $cookie_name = is_ssl() ? SECURE_AUTH_KEY : AUTH_KEY;
+    $_COOKIE[ $cookie_name ] = $cookie;
+} );
+
+add_action( 'set_logged_in_cookie', function ( $cookie ) {
+    $_COOKIE[ LOGGED_IN_KEY ] = $cookie;
+} );
+
 // function
 register_nav_menus(array('main-menu' => esc_html__('Main Menu', 'inovacards')));
 add_theme_support('title-tag');
