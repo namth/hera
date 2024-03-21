@@ -1,6 +1,6 @@
 <?php
 /* 
-* Template Name: List Order Nologin
+* Template Name: List Package Nologin
 */
 
 get_header();

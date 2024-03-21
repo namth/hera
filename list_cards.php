@@ -17,6 +17,7 @@ if (isset($_GET['g']) && ($_GET['g'] != "")) {
     $data = false;
 }
 
+# hiển thị header khác nếu chưa đăng đăng nhập
 if (is_user_logged_in()) {
     $back_link = get_bloginfo('url');
     get_header('topbar');

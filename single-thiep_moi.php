@@ -16,6 +16,8 @@ if (($current_userID != $author_id) && !current_user_can('manage_options')) {
     # Nếu user hiện tại không phải tác giả và cũng không phải là admin thì sẽ chuyển về trang chủ 
     wp_redirect(get_bloginfo('url'));
     exit;
+} else {
+    $uid_query = $current_userID != $author_id?"?uid=" . $author_id:"";
 }
 $guest_list     = get_field('guest_list');
 $category       = get_the_terms(get_the_ID(), 'category');
@@ -107,7 +109,7 @@ if (
 if (isset($_GET['d']) && ($_GET['d'] != '')) {
     $delete = json_decode(inova_encrypt($_GET['d'], 'd'));
 
-    if (wp_verify_nonce($delete->nonce, 'delete') && ($current_user->ID == $delete->userid)) {
+    if (wp_verify_nonce($delete->nonce, 'delete') && (($current_user->ID == $delete->userid) || current_user_can('manage_options'))) {
         # cập nhật lại số thiệp đã sử dụng
 
         # soft delete nhóm bằng cách chuyển nhóm sang trạng thái đã xoá và private.
@@ -116,7 +118,7 @@ if (isset($_GET['d']) && ($_GET['d'] != '')) {
             'ID'            => $delete->groupid,
             'post_status'   => 'private',
         ));
-        wp_redirect(get_bloginfo('url'));
+        wp_redirect(get_bloginfo('url') . "?uid=" . $delete->userid);
     }
 }
 
@@ -216,7 +218,7 @@ if (have_posts()) {
                                     # Khi điền đầy đủ thông tin, thì mới hiện nút "xem thiệp" và "sửa nội dung thiệp"
                                     $check_groombride = $groom && $bride;
                                     $check_party = $party_adress && $party_time;
-                                    $link_wedding_infomation = get_bloginfo('url') . "/wedding-infomation";
+                                    $link_wedding_infomation = get_bloginfo('url') . "/wedding-infomation" . $uid_query;
                                     if ($check_groombride && $check_party) {
                                         echo '<a href="' . $link_view_demo . '" target="_blank" class="hera-link"><i class="fa fa-weibo" aria-hidden="true"></i> Xem mẫu</a>';
                                         echo '<a href="' . $link_edit_content . '" class="hera-link"><i class="fa fa-foursquare" aria-hidden="true"></i> Sửa nội dung thiệp</a>';

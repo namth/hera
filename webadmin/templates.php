@@ -24,10 +24,8 @@ $listcards = inova_api($api_url, $token, 'GET', '');
         <th>Thao tác</th>
     </tr>
     <?php 
-        $i = $offset;
         if (!empty($listcards)) {
             foreach ($listcards as $card) {
-                $i++;
                 echo "<tr>";
                 echo "<td>" . $card->ID . "</td>";
                 echo "<td><img src='" . $card->thumbnail . "' width=80/></td>";
@@ -38,19 +36,3 @@ $listcards = inova_api($api_url, $token, 'GET', '');
         }
     ?>
 </table>
-<div class="pagination justify-content-center">
-    <?php
-    $total_user = $query->total_users; 
-    $total_pages = ceil($total_user / $users_per_page);
-    
-    $big = 999999999; // need an unlikely integer
-
-    echo paginate_links(array(
-        'base'      => str_replace($big, '%#%', esc_url(get_pagenum_link($big))),
-        'format'    => '?paged=%#%',
-        'current'   => max(1, get_query_var('paged')),
-        'total'     => $total_pages,
-        'type'      => 'list',
-    ));
-    ?>
-</div>

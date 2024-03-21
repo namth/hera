@@ -7,7 +7,6 @@ get_template_part('header', 'top-nologin');
         <div class="mui-col-md-2 npl">
             <?php
             get_sidebar('nologin');
-            echo $thongbao;
             ?>
         </div>
         <div class="mui-col-md-10">

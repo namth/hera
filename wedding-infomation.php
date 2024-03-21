@@ -8,6 +8,19 @@ get_template_part('header', 'topbar');
 
 # get some of user infomation
 $current_user_id = get_current_user_id();
+# nếu là admin thì cho phép đọc biến số $_GET["uid"] để xem thiệp của user khác
+if (current_user_can('manage_options') && isset($_GET["uid"]) && ($_GET["uid"] != "")) {
+    $current_user_id = $_GET["uid"];
+
+    $current_user = get_user_by("ID", $current_user_id);
+
+    if (!$current_user) {
+        # neu khong ton tai user thi ve trang chu
+        wp_redirect(get_bloginfo('url'));
+        exit;
+    }
+}
+
 $where_update = 'user_' . $current_user_id;
 
 if ( isset($_POST['post_nonce_field']) &&
