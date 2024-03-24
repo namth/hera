@@ -67,6 +67,8 @@ if ( is_user_logged_in() && current_user_can('administrator') ) {
                                     require_once( $dir . '/webadmin/index.php');
                                     break;
                             }
+                        } else {
+                            require_once( $dir . '/webadmin/index.php');
                         }
                     ?>
                 </div>

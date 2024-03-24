@@ -67,6 +67,7 @@ function inovacards_load_scripts()
 {
     /* Js */
     wp_enqueue_script('jquery');
+
     if (is_page(72) || is_page(276)) {
         wp_enqueue_script('mycards', get_template_directory_uri() . '/js/mycards.js', array('jquery'), '1.0', true);
         wp_localize_script('mycards', 'AJAX', array(

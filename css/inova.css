@@ -1,6 +1,5 @@
 @charset "UTF-8";
 @import url("https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Ms+Madi&display=swap");
 .blink_me {
@@ -55,135 +54,6 @@
     text-shadow: 0px 0px 39px #f7ad00;
   }
 }
-@font-face {
-  font-family: "Aphrodite";
-  src: url("../fonts/aphrodite.ttf") format("truetype");
-}
-#header_topbar {
-  background: #b89062;
-}
-#header_topbar ul {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  list-style: none;
-  -webkit-box-pack: right;
-      -ms-flex-pack: right;
-          justify-content: right;
-  padding: 0;
-  margin: 0;
-}
-#header_topbar ul li a {
-  display: block;
-  padding: 10px;
-  color: #ffecd6;
-  font-size: 0.9em;
-}
-
-#header {
-  background: #fef8f4;
-  margin: 0;
-}
-#header #center_logo {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  margin-top: 10px;
-}
-#header #center_logo a img {
-  width: 105px;
-}
-
-#header_bottom {
-  padding: 13px;
-  position: relative;
-  margin-bottom: 0;
-  -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.06), 0 0 2px 0 rgba(0, 0, 0, 0.03);
-          box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.06), 0 0 2px 0 rgba(0, 0, 0, 0.03);
-}
-#header_bottom ul {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  margin-bottom: 0;
-}
-#header_bottom ul li {
-  list-style: none;
-}
-#header_bottom ul li a {
-  padding: 10px 20px;
-  text-transform: uppercase;
-  color: #9e7c55;
-}
-
-.voucher {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  border: 1px dotted #b89062;
-  background: #fef8f4;
-  color: #082646;
-  margin-bottom: 20px;
-}
-.voucher .logo_partner img {
-  width: 200px;
-  border-right: 1px dashed #b89062;
-  margin-right: 20px;
-}
-.voucher .content_voucher {
-  width: calc(100% - 240px);
-  position: relative;
-}
-.voucher .content_voucher h3 {
-  border-bottom: 1px dotted;
-  padding-bottom: 7px;
-}
-.voucher .content_voucher h4 {
-  background: #e05822;
-  display: -webkit-inline-box;
-  display: -ms-inline-flexbox;
-  display: inline-flex;
-  color: white;
-  padding: 6px 6px 6px 15px;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  border-left: 3px dotted #fef8f4;
-  border-right: 3px dotted #fef8f4;
-}
-.voucher .content_voucher h4 span {
-  background: white;
-  color: #052743;
-  font-size: 30px;
-  padding: 10px 20px;
-  margin-left: 15px;
-}
-.voucher .content_voucher a.action {
-  padding: 12px 18px;
-  color: #fff;
-  font-size: 18px;
-  text-transform: uppercase;
-  font-weight: bold;
-  border-left: 3px dotted #fef8f4;
-  background: #042742;
-  position: absolute;
-  right: 0;
-  bottom: 10px;
-}
-
-.guideline_content {
-  margin-bottom: 50px;
-}
-
 @font-face {
   font-family: "Aphrodite";
   src: url("../fonts/aphrodite.ttf") format("truetype");
@@ -963,12 +833,24 @@ img {
   margin-top: 20px;
 }
 .heracard_list .loader {
-  text-align: center;
-  display: block;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   font-size: 18px;
-  color: chocolate;
+  color: #d3ae83;
   font-style: italic;
   width: 100%;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-bottom: 50px;
 }
 .heracard_list .loader img {
   margin: 0 auto;
@@ -1149,6 +1031,15 @@ img {
   width: calc(100% - 200px);
   max-height: calc(100vh - 20px);
   overflow: scroll;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+#detail_card dotlottie-player {
+  min-height: 80vh;
 }
 #detail_card #detail_card_popup .card_thumbnail {
   padding: 0px;
@@ -1366,6 +1257,24 @@ img {
   border-radius: 5px;
   background: #dbdbdb;
   color: #2f2f2f;
+}
+
+#p404 {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  background: #f8f3f2;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: calc(100vh - 100px);
 }
 
 .error_messages {
@@ -2701,71 +2610,9 @@ img {
   padding: 0;
 }
 
-@media screen and (min-width: 991px) {
-  #guide_section ul.playlist h4 {
-    font-weight: bold;
-    text-align: center;
-    border-bottom: 1px solid #c6d3dc;
-    margin: 0;
-    padding: 9px;
-    background: #dfe9f3;
-    color: #3171a1;
-  }
-  #guide_section .minimize {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    font-size: 11px;
-    color: #235d96;
-  }
-  #guide_section .minimize:hover {
-    font-weight: bold;
-  }
-  #guide_section .maximize {
-    display: none;
-    font-size: 11px;
-    color: #235d96;
-    width: 72px;
-    text-align: center;
-  }
-  #guide_section .maximize:hover {
-    font-weight: bold;
-  }
-  .guide_section_minimize {
-    position: fixed;
-    right: 15px;
-    bottom: 30px;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: reverse;
-        -ms-flex-direction: column-reverse;
-            flex-direction: column-reverse;
-    -webkit-box-align: end;
-        -ms-flex-align: end;
-            align-items: end;
-    z-index: 999;
-  }
-  .guide_section_minimize img {
-    border-radius: 50px;
-    width: 72px;
-    border: 1px solid #3c729a;
-    cursor: pointer;
-  }
-  .guide_section_minimize ul.playlist {
-    display: none;
-    margin-bottom: 10px;
-    padding: 0 0 10px 0;
-    background: #f9f9f9;
-    border-radius: 10px;
-    border: 1px solid #3c729a;
-    max-height: 300px;
-    overflow: scroll;
-  }
-  .guide_section_minimize ul.playlist h4 {
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+@media screen and (min-width: 1650px) {
+  #detail_card {
+    width: calc(100% - 256px);
   }
 }
 @media screen and (max-width: 991px) {

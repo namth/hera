@@ -2,7 +2,8 @@
 $XS: 480px
 $SM: 768px
 $MD: 991px
-$XL: 1170px
+$LG: 1170px
+$XL: 1650px
 
 // media queries
 @mixin Responsive($canvas)
@@ -234,7 +235,7 @@ $XL: 1170px
                 .maximize
                     display: none
 
-    @else if $canvas == XL
+    @else if $canvas == LG
         @media screen and (min-width: $MD)
             #guide_section
                 ul.playlist
@@ -296,5 +297,7 @@ $XL: 1170px
                         border-top-left-radius: 10px
                         border-top-right-radius: 10px
 
-    @else if $canvas == XXL
+    @else if $canvas == XL
         @media screen and (min-width: $XL)
+            #detail_card
+                width: calc(100% - 256px)

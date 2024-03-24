@@ -54,7 +54,14 @@ if (is_user_logged_in()) {
             ?>
             <div class="mui-panel">
                 <div class="heracard_list mui-row">
-                    <span class="loader"><img src="<?php echo get_template_directory_uri() . '/img/flower_loading.gif'; ?>" alt="">Đang tải ...</span>
+                    <span class="loader">
+                        <dotlottie-player src="<?php echo get_template_directory_uri() . '/img/flowerloading.json'; ?>" 
+                                background="transparent" speed="1" 
+                                style="width: 300px; height: 300px" direction="1" playMode="bounce" loop autoplay style="margin: 0 auto;">
+                        </dotlottie-player>
+                        Đang tải ...
+                    
+                    </span>
                     
                 </div>
             </div>
@@ -63,7 +70,10 @@ if (is_user_logged_in()) {
 </div>
 
 <div class="mui-container-fluid" id="detail_card" style="display: none;">
-    <img src="<?php echo get_template_directory_uri() . '/img/flower_puzzles_preloader.gif'; ?>" style="margin: 0 auto;">
+    <dotlottie-player src="<?php echo get_template_directory_uri() . '/img/flowerloading.json'; ?>" 
+            background="transparent" speed="1" 
+            style="width: 500px; height: 500px" direction="1" playMode="bounce" loop autoplay style="margin: 0 auto;">
+    </dotlottie-player>
 </div>
 <script>
     jQuery(document).ready(function ($) {
