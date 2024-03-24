@@ -17,7 +17,10 @@ get_template_part('header', 'topbar');
         <div class="mui-col-md-10 mt20">
             <div class="mui-panel" id="thankyou">
                 <div>
-                    <img src="<?php echo get_template_directory_uri(); ?>/img/thankyou.gif" alt="" />
+                    <dotlottie-player src="<?php echo get_template_directory_uri() . '/img/payment_success.json'; ?>" 
+                            background="transparent" speed="1" 
+                            style="width: 300px; height: 300px" direction="1" playMode="normal" autoplay>
+                    </dotlottie-player>
                     <h3>
                         Thanh toán thành công. Bạn có thể quay lại trang chủ để tiếp tục.
                     </h3>

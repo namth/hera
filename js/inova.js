@@ -166,7 +166,7 @@ jQuery(document).ready(function ($) {
             },
             beforeSend: function() {
                 detailcard.style.backgroundColor = '#fff';
-                detailcard.style.display = 'block';
+                detailcard.style.display = 'flex';
                 detailcard.style.float = 'inherit';
                 // detailcard.innerHTML = resp;
                 mui.overlay('on', detailcard);

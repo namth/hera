@@ -6,6 +6,7 @@ if (isset($_GET['g']) && ($_GET['g'] != "" )) {
     $group_data = json_decode(inova_encrypt($_GET['g'], 'd'));
     $group_check = true;
 
+    // print_r($group_data);
     /* Đọc dữ liệu groupID và userID */
     $postid = $group_data->groupid;
     $userID = $group_data->userid;
@@ -16,8 +17,10 @@ if (isset($_GET['g']) && ($_GET['g'] != "" )) {
 
     /* Kiểm tra xem có đúng là của user đó không, nếu đúng thì cho sửa, nếu không thì không hiển thị */
     $current_user_id = get_current_user_id();
+
+    $uid_slug = $current_user_id == $userID ? "" : "?uid=" . $userID;
     
-    if (($userID == $current_user_id) && is_admin() && is_user_logged_in()) {
+    if (($userID == $current_user_id) || current_user_can('manage_options')) {
         
         $groom = get_field('groom', 'user_' . $userID);
         $bride = get_field('bride', 'user_' . $userID);
@@ -56,7 +59,7 @@ if (isset($_GET['g']) && ($_GET['g'] != "" )) {
                         </div>
                         <div class="mui-col-md-8">
                             <div class="breadcrumb">
-                                <a href="<?php echo get_bloginfo('url'); ?>"><i class="fa fa-home" aria-hidden="true"></i></a>
+                                <a href="<?php echo get_bloginfo('url') . $uid_slug; ?>"><i class="fa fa-home" aria-hidden="true"></i></a>
                                 <i class="fa fa-chevron-right"></i>
                                 <span contenteditable="true" oncut="return false" onpaste="return false" class="title" data-guestid="<?php echo get_the_ID(); ?>"> <?php the_title(); ?></span>
                                 <span class="loader"><img src="<?php echo get_template_directory_uri() . '/img/heart-preloader.gif'; ?>" alt=""></span>

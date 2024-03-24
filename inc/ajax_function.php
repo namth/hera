@@ -4,6 +4,7 @@ $ajax_dir = dirname( __FILE__ );
 require_once( $ajax_dir . '/ajax/wedding-infomation.php');
 require_once( $ajax_dir . '/ajax/list_cards.php');
 require_once( $ajax_dir . '/ajax/payment.php');
+require_once( $ajax_dir . '/ajax/single-thiep_moi.php');
 
 /* 
 * Source: single-thiep_moi.php
