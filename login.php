@@ -54,7 +54,7 @@ if (is_user_logged_in()) {
             wp_set_auth_cookie( $userID, true );
             
             // redirect sang trang chủ
-            wp_redirect( get_bloginfo('url') );
+            wp_redirect( get_bloginfo('url') . '/main/' );
             exit;
         }
     }

@@ -1,4 +1,7 @@
 <?php
+/* 
+    Template Name: Main Page
+*/
 $current_user_id = get_current_user_id();
 # nếu là admin thì cho phép đọc biến số $_GET["uid"] để xem thiệp của user khác
 if (current_user_can('manage_options') && isset($_GET["uid"]) && ($_GET["uid"] != "")) {
@@ -56,6 +59,14 @@ $args   = array(
 $count_query = new WP_Query($args);
 $count = $count_query->post_count;
 
+$no_img = '<div class="no-images">
+                <div id="dummy"></div>
+                <dotlottie-player src="' . get_template_directory_uri() . '/img/heartfly.json" 
+                    background="transparent" speed="1" 
+                    direction="1" playMode="normal" loop autoplay>
+                </dotlottie-player>
+            </div>';
+
 ?>
 <div class="mui-container-fluid">
     <div class="mui-row">
@@ -110,13 +121,7 @@ $count = $count_query->post_count;
                                 if ($image) {
                                     $card_thumbnail = '<div class="images" style="background: url(' . $image . ') no-repeat 50% 50%;background-size: contain;"></div>';
                                 } else {
-                                    $card_thumbnail = '
-                                        <div class="no-images">
-                                            <dotlottie-player src="' . get_template_directory_uri() . '/img/dandelion.json" 
-                                                background="transparent" speed="1" 
-                                                style="width: 150px; height: 150px" direction="1" playMode="normal" loop autoplay>
-                                            </dotlottie-player>
-                                        </div>';
+                                    $card_thumbnail = $no_img;
                                 }
 
                                 $total_customer += $_customer;
@@ -189,13 +194,7 @@ $count = $count_query->post_count;
                             if ($image) {
                                 $card_thumbnail = '<div class="images" style="background: url(' . $image . ') no-repeat 50% 50%;background-size: contain;"></div>';
                             } else {
-                                $card_thumbnail = '
-                                    <div class="no-images">
-                                        <dotlottie-player src="' . get_template_directory_uri() . '/img/dandelion.json" 
-                                            background="transparent" speed="1" 
-                                            style="width: 150px; height: 150px" direction="1" playMode="normal" loop autoplay>
-                                        </dotlottie-player>
-                                    </div>';
+                                $card_thumbnail = $no_img;
                             }
 
                             $total_customer += $_customer;

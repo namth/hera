@@ -84,8 +84,12 @@ function listCardFromAPI() {
             $token = refresh_token();
         }
     }
+    $category = '?cat=1';
+    if (isset($_POST['cat'])) {
+        $category = '?cat=' . $_POST['cat'];
+    } 
     $api_base_url = get_field('api_base_url', 'option');
-    $api_url = $api_base_url . '/wp-json/inova/v1/cards';
+    $api_url = $api_base_url . '/wp-json/inova/v1/cards/' . $category;
     $listcards = inova_api($api_url, $token, 'GET', '');
 
     if ($listcards->code === "rest_forbidden") {
@@ -105,16 +109,23 @@ function listCardFromAPI() {
         </div>
         <?php
     } else{
-        foreach ($listcards as $card) {
+        $current_user_id = get_current_user_id();
+        $liked = get_user_meta($current_user_id, 'liked')?get_user_meta($current_user_id, 'liked'):array();
+        $liked_arr = explode(',', $liked[0]);
 
+        $cards = $listcards->cards;
+        foreach ($cards as $card) {
+
+            # lay hinh anh thiep
             if ($card->thumbnail) {
                 $card_thumbnail = $card->thumbnail;
             } else {
                 $card_thumbnail = get_template_directory_uri() . '/img/no-img.png';
             }
 
-            $liked = $card->liked?$card->liked:0;
-            $used = $card->used?$card->used:0;
+            $liked  = $card->liked?$card->liked:0;
+            $used   = $card->used?$card->used:0;
+            $icon   = in_array($card->ID, $liked_arr)?"fa-heart":"fa-heart-o";
         ?>
         <div class="mui-col-lg-3 mui-col-md-4 mui-col-sm-6">
             <div class="heracard">
@@ -126,18 +137,20 @@ function listCardFromAPI() {
                 </div>
                 <div class="caption">
                     <div class="user_action">
-                        <a href="#"><i class="fa fa-heart-o"></i><span>Thích</span></a>
+                        <a href="#" class="like" data-card=<?php echo $card->ID; ?>><i class="fa <?php echo $icon . " heracard-" . $card->ID; ?>"></i><span>Thích</span></a>
                         <a href="#"><i class="fa fa-star-o"></i><span>Thêm vào danh sách yêu thích</span></a>
                         <a href="#"><i class="fa fa-share-alt"></i><span>Chia sẻ</span></a>
                     </div>
                     <div class="caption_title mui-col-md-12">
                         <span><?php echo $card->title; ?></span>
-                        <!-- <div class="like_share">
+                        <div class="like_share">
                             <i class="fa fa-heart"></i> <?php echo $liked; ?>
-                            <i class="fa fa-vcard-o"></i> <?php echo $used; ?>
-                        </div> -->
+                            <!-- <i class="fa fa-vcard-o"></i> <?php echo $used; ?> -->
+                        </div>
                     </div>
-                    <a href="#" class="viewcard" data-cardid="<?php echo $card->ID; ?>">
+                    <a href="#" class="viewcard heracard-<?php echo $card->ID; ?>" 
+                        data-cardid="<?php echo $card->ID; ?>"
+                        data-cardlink="<?php echo get_bloginfo('url') . "/thiep-moi/?c=" . inova_encrypt($card->ID, 'e'); ?>">
                         <div class="bg-overlay"></div>
                     </a>
                 </div>

@@ -19,13 +19,12 @@ if (isset($_GET['g']) && ($_GET['g'] != "")) {
 
 # hiển thị header khác nếu chưa đăng đăng nhập
 if (is_user_logged_in()) {
-    $back_link = get_bloginfo('url');
+    $back_link = get_bloginfo('url') . '/main';
     get_header('topbar');
 } else {
     $back_link = '';
     get_header('logocenter');
 }
-
 ?>
 <div class="mui-container-fluid">
     <div class="mui-row">
@@ -45,6 +44,10 @@ if (is_user_logged_in()) {
                     <button class=""><i class="fa fa-search"></i></button>
                 </div>
             </form> -->
+            <div class="hera_tab">
+                <span class="active" data-cat="1">Thiệp mời dự tiệc</span>
+                <span data-cat="4">Thiệp mời đầy đủ</span>
+            </div>
         </div>
         <div class="mui-col-md-12">
             <?php 
@@ -62,7 +65,7 @@ if (is_user_logged_in()) {
                         Đang tải ...
                     
                     </span>
-                    
+                    <div class="cards"></div>
                 </div>
             </div>
         </div>
@@ -70,9 +73,11 @@ if (is_user_logged_in()) {
 </div>
 
 <div class="mui-container-fluid" id="detail_card" style="display: none;">
-    <dotlottie-player src="<?php echo get_template_directory_uri() . '/img/flowerloading.json'; ?>" 
-            background="transparent" speed="1" 
-            style="width: 500px; height: 500px" direction="1" playMode="bounce" loop autoplay style="margin: 0 auto;">
+    <dotlottie-player 
+        class="loading"
+        src="<?php echo get_template_directory_uri() . '/img/flowerloading.json'; ?>" 
+        background="transparent" speed="1" 
+        style="width: 500px; height: 500px" direction="1" playMode="bounce" loop autoplay style="margin: 0 auto;">
     </dotlottie-player>
 </div>
 <script>
@@ -92,8 +97,43 @@ if (is_user_logged_in()) {
                 console.log(thrownError);
             },
             success: function (resp) {
-                $('.heracard_list').html(resp);
+                $('.heracard_list .loader').hide();
+                $('.heracard_list .cards').html(resp);
             },
+        });
+
+        $(document.body).on('click', '.hera_tab span', function(event){
+            // event.preventDefault();
+
+            var cat = $(this).data('cat');
+            $('.hera_tab span').removeClass("active");
+            $(this).addClass("active");
+
+            console.log(cat);
+
+            $.ajax({
+                type: "POST",
+                url: AJAX.ajax_url,
+                data: {
+                    action: "listCardFromAPI",
+                    cat: cat
+                },
+                beforeSend: function() {
+                    $('.heracard_list .loader').show();
+                    $('.heracard_list .cards').html('');
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(xhr.responseText);
+                    console.log(thrownError);
+                },
+                success: function (resp) {
+                    $('.heracard_list .loader').hide();
+                    $('.heracard_list .cards').html(resp);
+                },
+            });
+
+            return false
         });
 
         $(document.body).on('click', '.error_messages #reload_card', function(){

@@ -14,6 +14,9 @@ function viewDetailCard(){
     $mycard = inova_api($api_url, $token, 'GET', '');
 
     $current_user_id = get_current_user_id();
+    $liked      = get_user_meta($current_user_id, 'liked')?get_user_meta($current_user_id, 'liked'):array();
+    $liked_arr  = explode(',', $liked[0]);
+    $icon       = in_array($cardid, $liked_arr)?"fa-heart":"fa-heart-o";
 
     ?>
     <div class="mui-row" id="detail_card_popup">
@@ -25,7 +28,7 @@ function viewDetailCard(){
             <div class="mui-divider"></div>
 
             <div class="button_group">
-                <button id="like" class="mui-btn mui-btn--raised"><i class="fa fa-heart-o"></i></button>
+                <button id="like" class="like mui-btn mui-btn--raised" data-card=<?php echo $cardid; ?>><i class="fa <?php echo $icon; ?>"></i></button>
                 <button class="mui-btn mui-btn--raised"><i class="fa fa-star-o" aria-hidden="true"></i> Lưu</button>
                 <button class="mui-btn mui-btn--raised"><i class="fa fa-share-alt" aria-hidden="true"></i> Chia sẻ</button>
             </div>
@@ -74,7 +77,10 @@ function viewDetailCard(){
                             <input type="checkbox" name="customer_group[]" id="<?php echo "group_" . $groupid; ?>" value="<?php echo $groupid; ?>" <?php echo $checked; ?>>
                             <label for="<?php echo "group_" . $groupid; ?>">
                                 <div class="img_icon">
-                                    <i class="fa fa-user-o"></i>
+                                    <dotlottie-player src="<?php echo get_template_directory_uri() . '/img/heart_card.json'; ?>" 
+                                            background="transparent" speed="1" 
+                                            style="width: 50px; height: 50px" direction="1" playMode="bounce" loop autoplay style="margin: 0 auto;">
+                                    </dotlottie-player>
                                 </div>
                                 <div class="customer_name">
                                     <?php the_title(); ?>
@@ -139,6 +145,15 @@ function viewDetailCard(){
                 </form>
             </div>
         </div>
+    </div>
+    <div id="direction">
+        <?php 
+            $nextlink = $_POST['nextid']?inova_encrypt($_POST['nextid'], 'e'):"";
+            $prevlink = $_POST['previd']?inova_encrypt($_POST['previd'], 'e'):"";
+
+            if ($nextlink) echo '<a class="arrow right" href="?c=' . $nextlink . '" data-card=".heracard-' . $_POST['nextid'] . '"><i class="fa fa-angle-right" aria-hidden="true"></i></a>';
+            if ($prevlink) echo '<a class="arrow left" href="?c=' . $prevlink . '" data-card=".heracard-' . $_POST['previd'] . '"><i class="fa fa-angle-left" aria-hidden="true"></i></a>';
+        ?>
     </div>
     <?php
     exit;
@@ -265,5 +280,42 @@ function addCardToSelectedGroup(){
         }
     }
     echo get_permalink($groupid);
+    exit;
+}
+
+/* 
+* Source: list_cards.php (trong popup)
+* Set like or dislike to card */
+add_action('wp_ajax_pressLikeButton', 'pressLikeButton');
+function pressLikeButton(){
+    $cardid = $_POST['card'];
+    $current_user_id = get_current_user_id();
+
+    $liked = get_user_meta($current_user_id, 'liked')?get_user_meta($current_user_id, 'liked'):array();
+    $liked_arr = explode(',', $liked[0]);
+
+    if (!empty($liked_arr) && (($key = array_search($cardid, $liked_arr)) !== false)) {
+        unset($liked_arr[$key]);
+        $type = 'dislike';
+    } else {
+        $liked_arr[] = $cardid;
+        $type = 'like';
+    }
+
+    # cap nhat vao du lieu user
+    $new_liked = implode(',', $liked_arr);
+    update_user_meta($current_user_id, 'liked', $new_liked);
+
+    # goi API de set like 
+    $token = get_field('token', 'option');
+    $api_base_url = get_field('api_base_url', 'option');
+    $api_url = $api_base_url . '/wp-json/inova/v1/update_card/';
+    $data = array(
+        'postID'    => $cardid,
+        'type'      => $type,
+    );
+    $mycard = inova_api($api_url, $token, 'POST', $data);
+
+    echo implode(',', $liked_arr);
     exit;
 }

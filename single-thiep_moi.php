@@ -36,7 +36,9 @@ if (
     wp_verify_nonce($_POST['post_nonce_field'], 'post_nonce')
 ) {
     $guest_name = $_POST['guest_name'];
-    $guest_attach = $_POST['guest_attach'];
+    if ( isset($_POST['guest_attach_text']) && ($_POST['guest_attach_text'] != "") ) {
+        $guest_attach = $_POST['guest_attach_text'];
+    } else $guest_attach = $_POST['guest_attach'];
     $vai_ve = $_POST['vai_ve'];
     $xung_ho = $_POST['xung_ho'];
     $sdt = substr(preg_replace("/[^0-9]/", "", $_POST['sdt']), 0, 10);
@@ -184,7 +186,7 @@ if (have_posts()) {
                 </div>
                 <div class="mui-col-lg-8 mui-col-md-12">
                     <div class="breadcrumb">
-                        <a href="<?php echo get_bloginfo('url') . $uid_slug; ?>"><i class="fa fa-home" aria-hidden="true"></i></a>
+                        <a href="<?php echo get_bloginfo('url') . "/main/" . $uid_slug; ?>"><i class="fa fa-home" aria-hidden="true"></i></a>
                         <i class="fa fa-chevron-right"></i>
                         <span contenteditable="true" oncut="return false" onpaste="return false" class="title" data-guestid="<?php echo get_the_ID(); ?>"> <?php the_title(); ?></span>
                         <span class="loader"><img src="<?php echo get_template_directory_uri() . '/img/heart-preloader.gif'; ?>" alt=""></span>
@@ -485,7 +487,7 @@ if (have_posts()) {
                                 <input type="radio" name="guest_attach" id="guestinput">
                                 <span>Tự nhập</span>
                                 <div id="guest_attach">
-                                    <input type="text" placeholder="VD: người thương" name="guest_attach">
+                                    <input type="text" placeholder="VD: người thương" name="guest_attach_text">
                                 </div>
                             </label>
                         </div>

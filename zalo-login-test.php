@@ -72,7 +72,7 @@ if (isset($_GET['code'])) {
 
             // print_r($output);
             # Sau đó chuyển về trang chủ
-            wp_redirect( get_bloginfo('url') );
+            wp_redirect( get_bloginfo('url') . '/main/' );
             exit;
         }
     }
