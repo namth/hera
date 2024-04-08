@@ -59,7 +59,7 @@
   src: url("../fonts/aphrodite.ttf") format("truetype");
 }
 body {
-  background: #eeeeee;
+  background: #fdfcfa;
 }
 
 a {
@@ -169,6 +169,9 @@ img {
 #create_card_form {
   display: none;
   padding: 20px;
+  min-width: -webkit-max-content;
+  min-width: -moz-max-content;
+  min-width: max-content;
 }
 #create_card_form .mui-radio label {
   margin-right: 20px;
@@ -197,7 +200,7 @@ img {
 }
 .inova_card h3 {
   font-family: Arial, Helvetica, sans-serif;
-  background-color: #eeeeee;
+  background-color: #fdfcfa;
 }
 .inova_card .mui-panel {
   margin: 0;
@@ -205,7 +208,7 @@ img {
 
 #login {
   max-width: 100%;
-  background-color: #eeeeee;
+  background-color: #fdfcfa;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -732,7 +735,7 @@ img {
 }
 #loi_moi .mui-textfield textarea {
   min-height: 64px;
-  background: #eeeeee;
+  background: #fdfcfa;
   padding: 15px;
   border-radius: 5px;
   resize: vertical;
@@ -803,6 +806,27 @@ img {
   left: 15px;
   top: 0;
 }
+#search_box .hera_tab {
+  padding: 5px;
+  background: #f5f1ee;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  border-radius: 35px;
+}
+#search_box .hera_tab span {
+  padding: 14px 30px;
+  border-radius: 35px;
+  color: #807566;
+  font-size: 16px;
+  cursor: pointer;
+}
+#search_box .hera_tab span.active, #search_box .hera_tab span:focus {
+  background: white;
+  color: black;
+  text-decoration: none;
+  border: none;
+}
 #search_box form .search_bar {
   position: relative;
   width: 50%;
@@ -821,7 +845,7 @@ img {
   border-radius: 5px;
   top: 2px;
   right: 2px;
-  background: #ffefe0;
+  background: #f9f5f0;
   border: 1px solid #d7c8c8;
   padding: 0 20px;
   font-size: large;
@@ -892,8 +916,8 @@ img {
   border-radius: 8px;
 }
 .heracard_list .addnew_card {
+  position: relative;
   text-align: center;
-  height: 153px;
   width: 100%;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
@@ -914,9 +938,12 @@ img {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  padding-top: 66%;
 }
 .heracard_list .addnew_card .fa {
   font-size: 48px;
+  position: absolute;
+  top: calc(50% - 24px);
 }
 .heracard_list .addnew_card:hover {
   color: #1c1c1c;
@@ -926,13 +953,36 @@ img {
 .heracard_list .heracard {
   position: relative;
   padding: 0;
-  border-radius: 5px;
   overflow: hidden;
   margin-bottom: 30px;
+}
+.heracard_list .heracard .no-images {
+  background: #f9f5f0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border: 1px dotted #dc8040;
+  border-radius: 5px;
+}
+.heracard_list .heracard .no-images #dummy {
+  margin-top: 66%;
+}
+.heracard_list .heracard .no-images dotlottie-player {
+  width: 66%;
+  position: absolute;
+  top: -6%;
+  left: 17%;
 }
 .heracard_list .heracard .images {
   width: 100%;
   padding-bottom: 65%;
+  border-radius: 5px;
 }
 .heracard_list .heracard .info_card {
   position: relative;
@@ -973,7 +1023,7 @@ img {
   visibility: hidden;
 }
 .heracard_list .heracard .user_action a:hover {
-  color: #ffefe0;
+  color: #f9f5f0;
 }
 .heracard_list .heracard .user_action a:hover span {
   opacity: 1;
@@ -1030,7 +1080,6 @@ img {
   position: absolute;
   width: calc(100% - 200px);
   max-height: calc(100vh - 20px);
-  overflow: scroll;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
@@ -1038,8 +1087,11 @@ img {
       -ms-flex-align: center;
           align-items: center;
 }
-#detail_card dotlottie-player {
+#detail_card dotlottie-player.loading {
   min-height: 80vh;
+}
+#detail_card #detail_card_popup {
+  overflow: scroll;
 }
 #detail_card #detail_card_popup .card_thumbnail {
   padding: 0px;
@@ -1062,9 +1114,36 @@ img {
 #detail_card #detail_card_popup #detail_data_box .button_group .mui-btn {
   padding: 0 12px;
 }
+#detail_card #direction .arrow {
+  position: absolute;
+  cursor: pointer;
+  font-size: 80px;
+  color: rgba(255, 255, 255, 0.768627451);
+  text-shadow: 1px 1px 8px #4c4c4c;
+  width: 70px;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  top: calc(50% - 40px);
+}
+#detail_card #direction .arrow:hover {
+  background: rgba(255, 255, 255, 0.2117647059);
+}
+#detail_card #direction .left {
+  left: -80px;
+}
+#detail_card #direction .right {
+  right: -80px;
+}
 
 .fa-heart {
-  color: crimson;
+  color: lightsalmon;
 }
 
 .fa-star {
@@ -1075,23 +1154,10 @@ img {
   color: steelblue;
 }
 
-.use_card form {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
-  gap: 8px;
-  padding: 12px 15px;
-  background: whitesmoke;
-}
-.use_card form .login_require .social_login {
+.login_require .social_login {
   margin-top: 10px;
 }
-.use_card form .login_require .social_login .social_btn a {
+.login_require .social_login .social_btn a {
   display: block;
   text-align: center;
   margin: 12px 0;
@@ -1101,17 +1167,17 @@ img {
   -webkit-box-shadow: 0px 2px 5px #e3e3e3;
           box-shadow: 0px 2px 5px #e3e3e3;
 }
-.use_card form .login_require .social_login .social_btn a:hover {
+.login_require .social_login .social_btn a:hover {
   color: initial;
   background: #fbfbfb;
   -webkit-box-shadow: 0px 2px 5px #c1c1c1;
           box-shadow: 0px 2px 5px #c1c1c1;
 }
-.use_card form .login_require .social_login .social_btn a img {
+.login_require .social_login .social_btn a img {
   display: inline-block;
   width: 27px;
 }
-.use_card form .login_require .social_login .social_btn a span {
+.login_require .social_login .social_btn a span {
   display: inline-block;
   line-height: 36px;
   vertical-align: text-bottom;
@@ -1121,10 +1187,10 @@ img {
   width: 50%;
   text-align: left;
 }
-.use_card form .login_require .signup {
+.login_require .signup {
   padding-top: 15px;
 }
-.use_card form .login_require .signup a {
+.login_require .signup a {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -1144,24 +1210,37 @@ img {
           justify-content: center;
   text-transform: uppercase;
 }
-.use_card form .login_require .signup a img {
+.login_require .signup a img {
   width: 40px;
   margin-right: 10px;
+}
+
+.use_card form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  gap: 8px;
+  padding: 12px 15px;
+  background: #f9f5f0;
 }
 .use_card form .form_element {
   position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  width: 30%;
-  min-height: 84px;
+  width: 100%;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  text-align: center;
+  text-align: left;
   border: 1px solid lightgray;
   border-radius: 10px;
   -webkit-box-shadow: 0px 1px 5px lightgray;
@@ -1171,42 +1250,44 @@ img {
 .use_card form .form_element input[type=checkbox] {
   display: none;
 }
+.use_card form .form_element input[type=checkbox]:checked + label {
+  background: #fff2ee;
+  border-radius: 9px;
+  -webkit-box-shadow: 2px 2px 5px #f9d0c6;
+          box-shadow: 2px 2px 5px #f9d0c6;
+}
 .use_card form .form_element input[type=checkbox]:checked + label:before {
   content: "✓";
   -webkit-transform: scale(1);
           transform: scale(1);
-  background: #ff5a5a;
-  color: #fff;
+  color: #c0222e;
   border: none;
   -webkit-box-shadow: none;
           box-shadow: none;
 }
-.use_card form .form_element input[type=checkbox]:checked + label .img_icon {
-  color: #41c7fb;
-}
+.use_card form .form_element input[type=checkbox]:checked + label .img_icon,
 .use_card form .form_element input[type=checkbox]:checked + label .customer_name {
-  color: #41c7fb;
+  color: #c0222e;
 }
 .use_card form .form_element label {
   width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  -webkit-box-pack: left;
+      -ms-flex-pack: left;
+          justify-content: left;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 .use_card form .form_element label:before {
   content: "";
   position: absolute;
   width: 18px;
   height: 18px;
-  top: 4px;
-  left: 4px;
+  top: calc(50% - 9px);
+  right: 12px;
   border: 1px solid #bbbbbb;
   text-align: center;
   line-height: 18px;
@@ -1222,6 +1303,7 @@ img {
   transition: all 200ms ease-in-out;
 }
 .use_card form .form_element label .img_icon {
+  padding: 0 15px;
   font-size: 30px;
   color: #555;
   -webkit-transition: all 200ms ease-in-out;
@@ -2610,9 +2692,74 @@ img {
   padding: 0;
 }
 
-@media screen and (min-width: 1650px) {
+@media screen and (max-width: 2000px) {
   #detail_card {
     width: calc(100% - 256px);
+  }
+  #guide_section ul.playlist h4 {
+    font-weight: bold;
+    text-align: center;
+    border-bottom: 1px solid #c6d3dc;
+    margin: 0;
+    padding: 9px;
+    background: #dfe9f3;
+    color: #3171a1;
+  }
+  #guide_section .minimize {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 11px;
+    color: #235d96;
+  }
+  #guide_section .minimize:hover {
+    font-weight: bold;
+  }
+  #guide_section .maximize {
+    display: none;
+    font-size: 11px;
+    color: #235d96;
+    width: 72px;
+    text-align: center;
+  }
+  #guide_section .maximize:hover {
+    font-weight: bold;
+  }
+  .guide_section_minimize {
+    position: fixed;
+    right: 15px;
+    bottom: 30px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: reverse;
+        -ms-flex-direction: column-reverse;
+            flex-direction: column-reverse;
+    -webkit-box-align: end;
+        -ms-flex-align: end;
+            align-items: end;
+    z-index: 999;
+  }
+  .guide_section_minimize img {
+    border-radius: 50px;
+    width: 72px;
+    border: 1px solid #3c729a;
+    cursor: pointer;
+  }
+  .guide_section_minimize ul.playlist {
+    display: none;
+    margin-bottom: 10px;
+    padding: 0 0 10px 0;
+    background: #f9f9f9;
+    border-radius: 10px;
+    border: 1px solid #3c729a;
+    max-height: 300px;
+    overflow: scroll;
+  }
+  .guide_section_minimize ul.playlist h4 {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
   }
 }
 @media screen and (max-width: 991px) {

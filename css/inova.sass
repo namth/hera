@@ -1,8 +1,8 @@
-$lightsmokeColor: #eeeeee
+$lightsmokeColor: #fdfcfa
 $primaryColor: #916d45
 $textColor: #444444
 $lightBGBorder: #d7c8c8
-$lightBG: #ffefe0
+$lightBG: #f9f5f0
 $softLightBG: #fef8f4
 
 @import responsive
@@ -102,6 +102,7 @@ img
 #create_card_form
     display: none
     padding: 20px
+    min-width: max-content
 
     .mui-radio
         label
@@ -670,6 +671,25 @@ img
         left: 15px
         top: 0
 
+    .hera_tab
+        padding: 5px
+        background: #f5f1ee
+        display: inline-flex
+        border-radius: 35px
+
+        span
+            padding: 14px 30px
+            border-radius: 35px
+            color: #807566
+            font-size: 16px
+            cursor: pointer
+
+            &.active, &:focus
+                background: white
+                color: black
+                text-decoration: none
+                border: none
+
     form
         .search_bar
             position: relative
@@ -746,8 +766,8 @@ img
                 border-radius: 8px
 
     .addnew_card
+        position: relative
         text-align: center
-        height: 153px
         width: 100%
         box-sizing: border-box
         border: 2px dashed #4a4a4a
@@ -758,9 +778,12 @@ img
         justify-content: center
         align-items: center
         flex-direction: column
+        padding-top: 66%
 
         .fa
             font-size: 48px
+            position: absolute
+            top: calc(50% - 24px)
 
         &:hover
             color: #1c1c1c
@@ -770,13 +793,30 @@ img
     .heracard
         position: relative
         padding: 0
-        border-radius: 5px
         overflow: hidden
         margin-bottom: 30px
+
+        .no-images
+            background: #f9f5f0
+            display: flex
+            justify-content: center
+            align-items: center
+            border: 1px dotted #dc8040
+            border-radius: 5px
+
+            #dummy
+                margin-top: 66%
+
+            dotlottie-player
+                width: 66%
+                position: absolute
+                top: -6%
+                left: 17%
 
         .images
             width: 100%
             padding-bottom: 65%
+            border-radius: 5px
 
         .info_card
             position: relative
@@ -868,14 +908,15 @@ img
     position: absolute
     width: calc( 100% - 200px )
     max-height: calc( 100vh - 20px )
-    overflow: scroll
     justify-content: center
     align-items: center
 
-    dotlottie-player
+    dotlottie-player.loading
         min-height: 80vh
-        
+
     #detail_card_popup
+        overflow: scroll
+
         .card_thumbnail
             padding: 0px
             background: whitesmoke
@@ -894,14 +935,89 @@ img
                 .mui-btn
                     padding: 0 12px
 
+    #direction
+        .arrow
+            position: absolute
+            cursor: pointer
+            font-size: 80px
+            color: #ffffffc4
+            text-shadow: 1px 1px 8px #4c4c4c
+            width: 70px
+            display: inline-flex
+            justify-content: center
+            align-items: center
+            top: calc(50% - 40px)
+
+            &:hover
+                background: #ffffff36
+
+        .left
+            left: -80px
+
+        .right
+            right: -80px
+
 .fa-heart
-    color: crimson
+    color: lightsalmon
 
 .fa-star
     color: gold
 
 .fa-share-alt
     color: steelblue
+
+.login_require
+    .social_login
+        margin-top: 10px
+
+        .social_btn
+            a
+                display: block
+                text-align: center
+                margin: 12px 0
+                padding: 2px 15px
+                background: white
+                border-radius: 8px
+                box-shadow: 0px 2px 5px #e3e3e3
+
+                &:hover
+                    color: initial
+                    background: #fbfbfb
+                    box-shadow: 0px 2px 5px #c1c1c1
+
+                img
+                    display: inline-block
+                    width: 27px
+
+                span
+                    display: inline-block
+                    line-height: 36px
+                    vertical-align: text-bottom
+                    padding-left: 10px
+                    color: #4d4d4d
+                    font-size: 16px
+                    width: 50%
+                    text-align: left
+
+    .signup
+        padding-top: 15px
+
+        a
+            display: flex
+            padding: 2px 33px 2px 10px
+            background: white
+            color: #8e6a40
+            border-radius: 8px
+            box-shadow: 0px 2px 5px #e3e3e3
+            font-size: 1.2em
+            margin: 10px 0
+            align-items: center
+            justify-content: center
+            text-transform: uppercase
+
+            img
+                width: 40px
+                margin-right: 10px
 
 .use_card
     form
@@ -910,69 +1026,15 @@ img
         flex-wrap: wrap
         gap: 8px
         padding: 12px 15px
-        background: whitesmoke
-
-        .login_require
-            .social_login
-                margin-top: 10px
-
-                .social_btn
-                    a
-                        display: block
-                        text-align: center
-                        margin: 12px 0
-                        padding: 2px 15px
-                        background: white
-                        border-radius: 8px
-                        box-shadow: 0px 2px 5px #e3e3e3
-
-                        &:hover
-                            color: initial
-                            background: #fbfbfb
-                            box-shadow: 0px 2px 5px #c1c1c1
-
-                        img
-                            display: inline-block
-                            width: 27px
-
-                        span
-                            display: inline-block
-                            line-height: 36px
-                            vertical-align: text-bottom
-                            padding-left: 10px
-                            color: #4d4d4d
-                            font-size: 16px
-                            width: 50%
-                            text-align: left
-
-            .signup
-                padding-top: 15px
-
-                a
-                    display: flex
-                    padding: 2px 33px 2px 10px
-                    background: white
-                    color: #8e6a40
-                    border-radius: 8px
-                    box-shadow: 0px 2px 5px #e3e3e3
-                    font-size: 1.2em
-                    margin: 10px 0
-                    align-items: center
-                    justify-content: center
-                    text-transform: uppercase
-
-                    img
-                        width: 40px
-                        margin-right: 10px
+        background: $lightBG
 
         .form_element
             position: relative
             display: flex
-            width: 30%
-            min-height: 84px
+            width: 100%
             align-items: center
             justify-content: center
-            text-align: center
+            text-align: left
             border: 1px solid lightgray
             border-radius: 10px
             box-shadow: 0px 1px 5px lightgray
@@ -983,33 +1045,35 @@ img
 
                 &:checked
                     + label
+                        background: #fff2ee
+                        border-radius: 9px
+                        box-shadow: 2px 2px 5px #f9d0c6
+
                         &:before
                             content: "✓"
                             transform: scale(1)
-                            background: #ff5a5a
-                            color: #fff
+                            color: #c0222e
                             border: none
                             box-shadow: none
 
                     + label
-                        .img_icon
-                            color: #41c7fb
+                        .img_icon,
                         .customer_name
-                            color: #41c7fb
+                            color: #c0222e
 
             label
                 width: 100%
                 display: flex
-                justify-content: center
-                flex-direction: column
+                justify-content: left
+                align-items: center
 
                 &:before
                     content: ""
                     position: absolute
                     width: 18px
                     height: 18px
-                    top: 4px
-                    left: 4px
+                    top: calc(50% - 9px)
+                    right: 12px
                     border: 1px solid #bbbbbb
                     text-align: center
                     line-height: 18px
@@ -1022,6 +1086,7 @@ img
                     transition: all 200ms ease-in-out
 
                 .img_icon
+                    padding: 0 15px
                     font-size: 30px
                     color: #555
                     transition: all 200ms ease-in-out
@@ -2281,6 +2346,7 @@ img
     padding: 0
 
 @include Responsive(XL)
+@include Responsive(LG)
 @include Responsive(MD)
 @include Responsive(SM)
 @include Responsive(XS)

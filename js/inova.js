@@ -147,10 +147,27 @@ jQuery(document).ready(function ($) {
     /*
     * Setup view to display detail card when customer click to each card.
     */ 
-    $(document.body).on('click', '.viewcard', function(){
+    $(document.body).on('click', '.viewcard', function(event){
+        event.preventDefault();
+
+        var parent = $(this).parents().eq(2);
+        var next = parent.next().find('.viewcard');
+        var prev = parent.prev().find('.viewcard');
+
+        var old_path = window.location.href;
+        var new_path = $(this).data('cardlink');
+        var options = {
+          'keyboard': true, // teardown when <esc> key is pressed (default: true)
+          'static': false, // maintain overlay when clicked (default: false)
+          'onclose': function() {
+            window.history.pushState({}, null, old_path);
+          } // quay lai link truoc khi dong thiep 
+        };
+
         var cardid = $(this).data('cardid');
         var detailcard = document.getElementById('detail_card').cloneNode(true);
         var groupid;
+
         if($('input[name="groupid"]').val()){
           groupid = $('input[name="groupid"]').val();
         } else {
@@ -163,13 +180,16 @@ jQuery(document).ready(function ($) {
               action: "viewDetailCard",
               cardid: cardid,
               groupid: groupid,
+              nextid: next.data('cardid'),
+              previd: prev.data('cardid')
             },
             beforeSend: function() {
                 detailcard.style.backgroundColor = '#fff';
                 detailcard.style.display = 'flex';
                 detailcard.style.float = 'inherit';
                 // detailcard.innerHTML = resp;
-                mui.overlay('on', detailcard);
+                mui.overlay('on', options, detailcard);
+                // set next and prev
             },
             error: function (xhr, ajaxOptions, thrownError) {
               console.log(xhr.status);
@@ -177,9 +197,23 @@ jQuery(document).ready(function ($) {
               console.log(thrownError);
             },
             success: function (resp) {
-                detailcard.innerHTML = resp;
+              window.history.pushState({}, null, new_path);
+              detailcard.innerHTML = resp;
             },
         });
+        
+        return false;
+    });
+
+    /* Click next and previous button on popup detailCard */
+    $(document.body).on('click', '#direction .arrow', function(event){
+      event.preventDefault();
+      event.stopPropagation();
+
+      mui.overlay('off');
+      var cardelm = $(this).data('card');
+      $(cardelm).trigger('click');
+      return false;
     });
     
     $(document.body).on('click', '#select_card', function(){
@@ -266,7 +300,32 @@ jQuery(document).ready(function ($) {
     /* 
     * Khi bấm like cho card, ... 
     */
-    $(document).on('click', "#like", function(){
-      alert('Tính năng đang phát triển!');
+    $(document).on('click', ".like", function(){
+      var cardid = $(this).data('card');
+      $(this).find('i').toggleClass('fa-heart-o').toggleClass('fa-heart');
+      if($(this).attr('id') == 'like'){
+        $('.heracard-' + cardid).toggleClass('fa-heart-o').toggleClass('fa-heart');
+      }
+      
+      console.log(cardid);
+
+      /* $.ajax({
+        type: "POST",
+        url: AJAX.ajax_url,
+        data: {
+          action: "pressLikeButton",
+          card: cardid
+        },
+        beforeSend: function () {},
+        error: function (xhr, ajaxOptions, thrownError) {
+          console.log(xhr.status);
+          console.log(xhr.responseText);
+          console.log(thrownError);
+        },
+        success: function (resp) {
+          console.log(resp);
+        },
+      }); */
+      return false;
     });
 });

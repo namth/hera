@@ -24,8 +24,9 @@ $listcards = inova_api($api_url, $token, 'GET', '');
         <th>Thao tác</th>
     </tr>
     <?php 
-        if (!empty($listcards)) {
-            foreach ($listcards as $card) {
+        $cards = $listcards->cards;
+        if (!empty($cards)) {
+            foreach ($cards as $card) {
                 echo "<tr>";
                 echo "<td>" . $card->ID . "</td>";
                 echo "<td><img src='" . $card->thumbnail . "' width=80/></td>";
