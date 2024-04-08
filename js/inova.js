@@ -207,6 +207,9 @@ jQuery(document).ready(function ($) {
 
     /* Click next and previous button on popup detailCard */
     $(document.body).on('click', '#direction .arrow', function(event){
+      event.preventDefault();
+      event.stopPropagation();
+
       mui.overlay('off');
       var cardelm = $(this).data('card');
       $(cardelm).trigger('click');
@@ -306,7 +309,7 @@ jQuery(document).ready(function ($) {
       
       console.log(cardid);
 
-      $.ajax({
+      /* $.ajax({
         type: "POST",
         url: AJAX.ajax_url,
         data: {
@@ -322,7 +325,7 @@ jQuery(document).ready(function ($) {
         success: function (resp) {
           console.log(resp);
         },
-      });
+      }); */
       return false;
     });
 });
