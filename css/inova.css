@@ -813,6 +813,24 @@ img {
   display: -ms-inline-flexbox;
   display: inline-flex;
   border-radius: 35px;
+  position: relative;
+}
+#search_box .hera_tab:after {
+  content: "";
+  width: 185px;
+  height: 50px;
+  background: white;
+  border-radius: 35px;
+  position: absolute;
+  z-index: 0;
+  -webkit-transition: -webkit-transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  transition: -webkit-transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1), -webkit-transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+#search_box .hera_tab.right:after {
+  -webkit-transform: translateX(185px);
+          transform: translateX(185px);
 }
 #search_box .hera_tab span {
   padding: 14px 30px;
@@ -820,9 +838,11 @@ img {
   color: #807566;
   font-size: 16px;
   cursor: pointer;
+  z-index: 1;
+  -webkit-transition: color 0.5s ease;
+  transition: color 0.5s ease;
 }
 #search_box .hera_tab span.active, #search_box .hera_tab span:focus {
-  background: white;
   color: black;
   text-decoration: none;
   border: none;
@@ -1637,6 +1657,7 @@ img {
   padding: 3px 9px;
   background: white;
   width: 80%;
+  outline: none;
 }
 #addition_info .content_info .group_data .hide_form form .google_maps #pac-input:forcus {
   border-color: #4d90fe;

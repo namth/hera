@@ -44,7 +44,7 @@ if (is_user_logged_in()) {
                     <button class=""><i class="fa fa-search"></i></button>
                 </div>
             </form> -->
-            <div class="hera_tab">
+            <div class="hera_tab left">
                 <span class="active" data-cat="1">Thiệp mời dự tiệc</span>
                 <span data-cat="4">Thiệp mời đầy đủ</span>
             </div>
@@ -108,6 +108,7 @@ if (is_user_logged_in()) {
             var cat = $(this).data('cat');
             $('.hera_tab span').removeClass("active");
             $(this).addClass("active");
+            $('.hera_tab').toggleClass("left").toggleClass("right");
 
             console.log(cat);
 

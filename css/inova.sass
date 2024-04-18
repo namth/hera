@@ -676,6 +676,20 @@ img
         background: #f5f1ee
         display: inline-flex
         border-radius: 35px
+        position: relative
+        
+        &:after
+            content: ""
+            width: 185px
+            height: 50px
+            background: white
+            border-radius: 35px
+            position: absolute
+            z-index: 0
+            transition: transform .5s cubic-bezier(0.23, 1, 0.32, 1)
+
+        &.right:after
+            transform: translateX(185px)
 
         span
             padding: 14px 30px
@@ -683,9 +697,11 @@ img
             color: #807566
             font-size: 16px
             cursor: pointer
+            z-index: 1
+            transition: color .5s ease
 
             &.active, &:focus
-                background: white
+                // background: white
                 color: black
                 text-decoration: none
                 border: none
@@ -1377,6 +1393,7 @@ img
                             padding: 3px 9px
                             background: white
                             width: 80%
+                            outline: none
 
                             &:forcus
                                 border-color: #4d90fe

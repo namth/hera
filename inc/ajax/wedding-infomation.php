@@ -10,6 +10,12 @@ add_action('wp_ajax_nopriv_addWeddingInfo', 'addWeddingInfo');
 function addWeddingInfo(){
     $current_user_id = get_current_user_id();
     $data = parse_str($_POST['data'], $output);
+    if (isset($output['whereupdate'])) {
+        $where_update = $output['whereupdate'];
+    } else {
+        $where_update = 'user_' . $current_user_id;
+    }
+
     array_pop($output); # remove refer_link
     $lunar_field = [
         'field_62b135cb93a85',
@@ -29,10 +35,10 @@ function addWeddingInfo(){
                 $today = new DateTime($value);
                 $lunar= ShowLunarDate($today, 'YYYY-mm-dd') . $time;
 
-                update_field($key, $lunar, 'user_' . $current_user_id);
+                update_field($key, $lunar, $where_update);
             } else {
                 if (trim($value)) {
-                    update_field($key, $value, 'user_' . $current_user_id);
+                    update_field($key, $value, $where_update);
                 }
             }
             echo $key . " " . $value;
