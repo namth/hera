@@ -52,7 +52,7 @@ $google_api     = get_field('google_maps_api_key', 'option');
         </div>
         <div class="mui-col-md-8">
             <div class="breadcrumb">
-                <a href="<?php echo get_bloginfo('url'); ?>"><i class="fa fa-home" aria-hidden="true"></i></a>
+                <a href="<?php echo get_bloginfo('url') . "/main/"; ?>"><i class="fa fa-home" aria-hidden="true"></i></a>
                 <i class="fa fa-chevron-right"></i>
                 <span class="title"> <?php the_title(); ?></span>
             </div>
@@ -140,10 +140,12 @@ $google_api     = get_field('google_maps_api_key', 'option');
                                 <?php 
                                     $groom_father           = get_field('groom_father', $where_update);
                                     $groom_mother           = get_field('groom_mother', $where_update);
+                                    $groom_wedding_location = get_field('groom_wedding_location', $where_update);
                                     $groom_wedding_adress   = get_field('groom_wedding_adress', $where_update);
                                     $groom_wedding_maps     = get_field('groom_wedding_maps', $where_update);
                                     $groom_wedding_time     = get_field('groom_wedding_time', $where_update);
                                     $groom_wedding_moontime = get_field('groom_wedding_moontime', $where_update);
+                                    $groom_party_location   = get_field('groom_party_location', $where_update);
                                     $groom_party_address    = get_field('groom_party_address', $where_update);
                                     $groom_party_maps       = get_field('groom_party_maps', $where_update);
                                     $groom_party_time       = get_field('groom_party_time', $where_update);
@@ -210,6 +212,7 @@ $google_api     = get_field('google_maps_api_key', 'option');
                                                 <?php
                                                 wp_nonce_field('wedding', 'wedding_field');
                                                 ?>
+                                                <input type="hidden" name="whereupdate" value="<?php echo $where_update; ?>">
                                                 <div class="submit_div">
                                                     <button type="submit" class="mui-btn mui-btn--danger">Cập nhật</button>
                                                 </div>
@@ -233,7 +236,10 @@ $google_api     = get_field('google_maps_api_key', 'option');
                                         <?php
                                         if ($groom_wedding_adress) {
                                             echo '<div class="has_data">';
-                                            echo '<div class="data_item"><i class="fa fa-building"></i> <span class="diveditable" contenteditable=true oncut="return false" onpaste="return false" data-field="field_62b12acd93a81" data-where="' . $where_update . '">' . $groom_wedding_adress . '</span></div>';
+                                            echo '<div class="data_item">
+                                                    <i class="fa fa-building"></i> <span class="diveditable" contenteditable=true oncut="return false" onpaste="return false" data-field="field_6568ba0dd5db1" data-where="' . $where_update . '">' . $groom_wedding_location . '</span>
+                                                </div>';
+                                            echo '<div class="data_item"><i class="fa fa-map-marker"></i> <span class="diveditable" contenteditable=true oncut="return false" onpaste="return false" data-field="field_62b12acd93a81" data-where="' . $where_update . '">' . $groom_wedding_adress . '</span></div>';
                                             echo '<div class="date_editable data_item">
                                                     <div class="date_data">
                                                         <i class="fa fa-calendar"></i> <span class="diveditable">' . $_groom_wedding_time->format('d/m/Y g:i a') . '</span>
@@ -266,6 +272,10 @@ $google_api     = get_field('google_maps_api_key', 'option');
                                         <div id="groom_wedding_form" class="hide_form">
                                             <form class="mui-form" method="POST">
                                                 <div class="mui-textfield">
+                                                    <input type="text" name="field_6568ba0dd5db1" value="<?php if ($groom_wedding_location) echo $groom_wedding_location; ?>" placeholder="Tư gia, Trung tâm tiệc cưới, Nhà văn hóa ...">
+                                                    <label for="">Nhập nơi tổ chức</label>
+                                                </div>
+                                                <div class="mui-textfield">
                                                     <input type="text" name="field_62b12acd93a81" value="<?php if ($groom_wedding_adress) echo $groom_wedding_adress; ?>">
                                                     <label for="">Nhập địa điểm tổ chức</label>
                                                 </div>
@@ -276,10 +286,11 @@ $google_api     = get_field('google_maps_api_key', 'option');
                                                 </div>
                                                 <div class="mui-textfield">
                                                     <label for="">Chọn vị trí tổ chức chính xác trên bản đồ</label>
-                                                    <input type="text" id="pac-input" class="controls">
+                                                    <!-- <input type="text" id="pac-input" class="controls"> -->
                                                     <div id="gw_googlemaps" class="google_maps"></div>
                                                 </div>
                                                 <input id="gw_latlng" type="hidden" name="field_63dbd489cc720" value="<?php if ($groom_wedding_maps) echo $groom_wedding_maps; ?>">
+                                                <input type="hidden" name="whereupdate" value="<?php echo $where_update; ?>">
                                                 <?php
                                                 wp_nonce_field('wedding', 'wedding_field');
                                                 ?>
@@ -306,7 +317,10 @@ $google_api     = get_field('google_maps_api_key', 'option');
                                         <?php
                                         if ($groom_party_address) {
                                             echo '<div class="has_data">';
-                                            echo '<div class="data_item"><i class="fa fa-building"></i> <span class="diveditable" contenteditable=true oncut="return false" onpaste="return false" data-field="field_62b12b4593a82" data-where="' . $where_update . '">' . $groom_party_address . '</span></div>';
+                                            echo '<div class="data_item">
+                                                    <i class="fa fa-building"></i> <span class="diveditable" contenteditable=true oncut="return false" onpaste="return false" data-field="field_6568ba25d5db2" data-where="' . $where_update . '">' . $groom_party_location . '</span>
+                                                </div>';
+                                            echo '<div class="data_item"><i class="fa fa-map-marker"></i> <span class="diveditable" contenteditable=true oncut="return false" onpaste="return false" data-field="field_62b12b4593a82" data-where="' . $where_update . '">' . $groom_party_address . '</span></div>';
                                             echo '<div class="date_editable data_item">
                                                     <div class="date_data">
                                                         <i class="fa fa-calendar"></i> <span class="diveditable">' . $_groom_party_time->format('d/m/Y g:i a') . '</span>
@@ -337,6 +351,10 @@ $google_api     = get_field('google_maps_api_key', 'option');
                                         <div id="groom_party_form" class="hide_form">
                                             <form class="mui-form" method="POST">
                                                 <div class="mui-textfield">
+                                                    <input type="text" name="field_6568ba25d5db2" value="<?php if ($groom_party_location) echo $groom_party_location; ?>" placeholder="Tư gia, Trung tâm tiệc cưới, Nhà văn hóa ...">
+                                                    <label for="">Nhập nơi tổ chức</label>
+                                                </div>
+                                                <div class="mui-textfield">
                                                     <input type="text" name="field_62b12b4593a82" value="<?php if ($groom_party_address) echo $groom_party_address; ?>">
                                                     <label for="">Nhập địa điểm tổ chức</label>
                                                 </div>
@@ -347,10 +365,11 @@ $google_api     = get_field('google_maps_api_key', 'option');
                                                 </div>
                                                 <div class="mui-textfield">
                                                     <label for="">Chọn vị trí tổ chức chính xác trên bản đồ</label>
-                                                    <input type="text" id="pac-input" class="controls">
+                                                    <!-- <input type="text" id="pac-input" class="controls"> -->
                                                     <div id="gp_googlemaps" class="google_maps"></div>
                                                 </div>
                                                 <input id="gp_latlng" type="hidden" name="field_63dbd4bfcc721" value="<?php if ($groom_party_maps) echo $groom_party_maps; ?>">
+                                                <input type="hidden" name="whereupdate" value="<?php echo $where_update; ?>">
                                                 <?php
                                                 wp_nonce_field('wedding', 'wedding_field');
                                                 ?>
@@ -369,10 +388,12 @@ $google_api     = get_field('google_maps_api_key', 'option');
                                 <?php 
                                     $bride_father           = get_field('bride_father', $where_update);
                                     $bride_mother           = get_field('bride_mother', $where_update);
+                                    $bride_wedding_location = get_field('bride_wedding_location', $where_update);
                                     $bride_wedding_adress   = get_field('bride_wedding_adress', $where_update);
                                     $bride_wedding_maps     = get_field('bride_wedding_maps', $where_update);
                                     $bride_wedding_time     = get_field('bride_wedding_time', $where_update);
                                     $bride_wedding_moontime = get_field('bride_wedding_moontime', $where_update);
+                                    $bride_party_location   = get_field('bride_party_location', $where_update);
                                     $bride_party_address    = get_field('bride_party_address', $where_update);
                                     $bride_party_maps       = get_field('bride_party_maps', $where_update);
                                     $bride_party_time       = get_field('bride_party_time', $where_update);
@@ -437,6 +458,7 @@ $google_api     = get_field('google_maps_api_key', 'option');
                                                 <?php
                                                 wp_nonce_field('wedding', 'wedding_field');
                                                 ?>
+                                                <input type="hidden" name="whereupdate" value="<?php echo $where_update; ?>">
                                                 <div class="submit_div">
                                                     <button type="submit" class="mui-btn mui-btn--danger">Cập nhật</button>
                                                 </div>
@@ -460,7 +482,10 @@ $google_api     = get_field('google_maps_api_key', 'option');
                                         <?php
                                         if ($bride_wedding_adress) {
                                             echo '<div class="has_data">';
-                                            echo '<div class="data_item"><i class="fa fa-building"></i> <span class="diveditable" contenteditable=true oncut="return false" onpaste="return false" data-field="field_62b1363fb06a6" data-where="' . $where_update . '">' . $bride_wedding_adress . '</span></div>';
+                                            echo '<div class="data_item">
+                                                    <i class="fa fa-building"></i> <span class="diveditable" contenteditable=true oncut="return false" onpaste="return false" data-field="field_6568a76696279" data-where="' . $where_update . '">' . $bride_wedding_location . '</span>
+                                                </div>';
+                                            echo '<div class="data_item"><i class="fa fa-map-marker"></i> <span class="diveditable" contenteditable=true oncut="return false" onpaste="return false" data-field="field_62b1363fb06a6" data-where="' . $where_update . '">' . $bride_wedding_adress . '</span></div>';
 
                                             if ($bride_wedding_time) {
                                                 echo '<div class="date_editable data_item">
@@ -497,6 +522,10 @@ $google_api     = get_field('google_maps_api_key', 'option');
                                             <div id="bride_wedding_form" class="hide_form">
                                                 <form class="mui-form" method="POST">
                                                     <div class="mui-textfield">
+                                                        <input type="text" name="field_6568a76696279" value="<?php if ($bride_wedding_location) echo $bride_wedding_location; ?>" placeholder="Tư gia, Trung tâm tiệc cưới, Nhà văn hóa ...">
+                                                        <label for="">Nhập nơi tổ chức</label>
+                                                    </div>
+                                                    <div class="mui-textfield">
                                                         <input type="text" name="field_62b1363fb06a6" value="<?php if ($bride_wedding_adress) echo $bride_wedding_adress; ?>">
                                                         <label for="">Nhập địa điểm tổ chức</label>
                                                     </div>
@@ -510,6 +539,7 @@ $google_api     = get_field('google_maps_api_key', 'option');
                                                         <div id="bw_googlemaps" class="google_maps"></div>
                                                     </div>
                                                     <input id="bw_latlng" type="hidden" name="field_63dbd5791d673" value="<?php if ($bride_wedding_maps) echo $bride_wedding_maps; ?>">
+                                                    <input type="hidden" name="whereupdate" value="<?php echo $where_update; ?>">
                                                     <?php
                                                     wp_nonce_field('wedding', 'wedding_field');
                                                     ?>
@@ -536,7 +566,10 @@ $google_api     = get_field('google_maps_api_key', 'option');
                                         <?php
                                         if ($bride_party_address) {
                                             echo '<div class="has_data">';
-                                            echo '<div class="data_item"><i class="fa fa-building"></i> <span class="diveditable" contenteditable=true oncut="return false" onpaste="return false" data-field="field_62b1363fb06bf" data-where="' . $where_update . '">' . $bride_party_address . '</span></div>';
+                                            echo '<div class="data_item">
+                                                    <i class="fa fa-building"></i> <span class="diveditable" contenteditable=true oncut="return false" onpaste="return false" data-field="field_6568a8029627a" data-where="' . $where_update . '">' . $bride_party_location . '</span>
+                                                </div>';
+                                            echo '<div class="data_item"><i class="fa fa-map-marker"></i> <span class="diveditable" contenteditable=true oncut="return false" onpaste="return false" data-field="field_62b1363fb06bf" data-where="' . $where_update . '">' . $bride_party_address . '</span></div>';
                                             echo '<div class="date_editable data_item">
                                                     <div class="date_data">
                                                         <i class="fa fa-calendar"></i> <span class="diveditable">' . $_bride_party_time->format('d/m/Y g:i a') . '</span>
@@ -567,6 +600,10 @@ $google_api     = get_field('google_maps_api_key', 'option');
                                         <div id="bride_party_form" class="hide_form">
                                             <form class="mui-form" method="POST">
                                                 <div class="mui-textfield">
+                                                    <input type="text" name="field_6568a8029627a" value="<?php if ($bride_party_location) echo $bride_party_location; ?>" placeholder="Tư gia, Trung tâm tiệc cưới, Nhà văn hóa ...">
+                                                    <label for="">Nhập nơi tổ chức</label>
+                                                </div>
+                                                <div class="mui-textfield">
                                                     <input type="text" name="field_62b1363fb06bf" value="<?php if ($bride_party_address) echo $bride_party_address; ?>">
                                                     <label for="">Nhập địa điểm tổ chức</label>
                                                 </div>
@@ -581,6 +618,7 @@ $google_api     = get_field('google_maps_api_key', 'option');
                                                     <div id="bp_googlemaps" class="google_maps"></div>
                                                 </div>
                                                 <input id="bp_latlng" type="hidden" name="field_63dbd5ab1d674" value="<?php if ($bride_party_maps) echo $bride_party_maps; ?>">
+                                                <input type="hidden" name="whereupdate" value="<?php echo $where_update; ?>">
                                                 <?php
                                                     wp_nonce_field('wedding', 'wedding_field');
                                                 ?>
@@ -619,6 +657,9 @@ $google_api     = get_field('google_maps_api_key', 'option');
             ?>
         </div>
     </div>
+</div>
+<div style="display:none;">
+    <input type="text" id="pac-input" class="controls" placeholder="Tìm kiếm tọa độ chính xác của đám cưới">
 </div>
 <script src="<?php echo get_template_directory_uri(); ?>/js/cookie.js"></script>
 <script src="<?php echo get_template_directory_uri(); ?>/js/guideline.js"></script>

@@ -5,16 +5,16 @@
 $group = get_query_var('group');
 $character = get_query_var('character');
 $customer = get_query_var('invitee');
-$key_html = $_GET['key'];
-
-// echo $key_html;
+if(isset($_GET['key'])){
+    $key_html = $_GET['key'];
+} else $key_html = "";
 
 $user_login = get_post_field('post_author', $group);
 $user = get_user_by('ID', $user_login);
 $hera_character = get_user_meta($user_login, 'hera_wedding_character', true);
 $_group = inova_encrypt($group, 'e');
 $package_id = get_field('package_id', 'user_' . $user->ID);
-if(!($package_id || is_user_logged_in())){
+if (!($package_id || is_user_logged_in())) {
     wp_redirect(get_permalink(5));
     exit;
 }
@@ -34,10 +34,10 @@ if (!$key_html) {
 
     $html           = $mycard->html;
 }
-$noi_dung_1     = get_field('content_1', $group)?get_field('content_1', $group):get_field('content_1', 'option');
-$noi_dung_2     = get_field('content_2', $group)?get_field('content_2', $group):get_field('content_2', 'option');
-$noi_dung_3     = get_field('content_3', $group)?get_field('content_3', $group):get_field('content_3', 'option');
-$loi_moi        = get_field('custom_invite', $group)?get_field('custom_invite', $group):get_field('wedding_invitation', 'option');
+$noi_dung_1     = get_field('content_1', $group) ? get_field('content_1', $group) : get_field('content_1', 'option');
+$noi_dung_2     = get_field('content_2', $group) ? get_field('content_2', $group) : get_field('content_2', 'option');
+$noi_dung_3     = get_field('content_3', $group) ? get_field('content_3', $group) : get_field('content_3', 'option');
+$loi_moi        = get_field('custom_invite', $group) ? get_field('custom_invite', $group) : get_field('wedding_invitation', 'option');
 $found_customer = false;
 
 # co dau chu re
@@ -58,28 +58,50 @@ $category_name = $category[0]->name;
 if ($category_name == "Nhà gái") {
     $wedding_location   = get_field('bride_wedding_location', 'user_' . $user->ID);
     $wedding_address    = get_field('bride_wedding_address', 'user_' . $user->ID);
-    $wedding_time       = explode(' ',get_field('bride_wedding_time', 'user_' . $user->ID));
-    $wedding_moontime   = explode(' ',get_field('bride_wedding_moontime', 'user_' . $user->ID));
+    $_wedding_time      = get_field('bride_wedding_time', 'user_' . $user->ID);
+    // $wedding_moontime   = explode(' ', get_field('bride_wedding_moontime', 'user_' . $user->ID));
     $party_location     = get_field('bride_party_location', 'user_' . $user->ID);
     $party_address      = get_field('bride_party_address', 'user_' . $user->ID);
-    $party_time         = explode(' ',get_field('bride_party_time', 'user_' . $user->ID));
-    $party_moontime     = explode(' ',get_field('bride_party_moontime', 'user_' . $user->ID));
+    $_party_time        = get_field('bride_party_time', 'user_' . $user->ID);
+    // $party_moontime     = explode(' ', get_field('bride_party_moontime', 'user_' . $user->ID));
     $google_maps_dam_cuoi = get_field('bride_wedding_maps', 'user_' . $user->ID);
     $google_maps_an_co  = get_field('bride_party_maps', 'user_' . $user->ID);
 } else {
     $wedding_location   = get_field('groom_wedding_location', 'user_' . $user->ID);
     $wedding_address    = get_field('groom_wedding_address', 'user_' . $user->ID);
-    $wedding_time       = explode(' ',get_field('groom_wedding_time', 'user_' . $user->ID));
-    $wedding_moontime   = explode(' ',get_field('groom_wedding_moontime', 'user_' . $user->ID));
+    $_wedding_time      = get_field('groom_wedding_time', 'user_' . $user->ID);
+    // $wedding_moontime   = explode(' ', get_field('groom_wedding_moontime', 'user_' . $user->ID));
     $party_location     = get_field('groom_party_location', 'user_' . $user->ID);
     $party_address      = get_field('groom_party_address', 'user_' . $user->ID);
-    $party_time         = explode(' ',get_field('groom_party_time', 'user_' . $user->ID));
-    $party_moontime     = explode(' ',get_field('groom_party_moontime', 'user_' . $user->ID));
+    $_party_time        = get_field('groom_party_time', 'user_' . $user->ID);
+    // $party_moontime     = explode(' ', get_field('groom_party_moontime', 'user_' . $user->ID));
     $google_maps_dam_cuoi = get_field('groom_wedding_maps', 'user_' . $user->ID);
     $google_maps_an_co  = get_field('groom_party_maps', 'user_' . $user->ID);
 }
 
+# custom info from card
+$custom_wedding_location = get_field('custom_wedding_location', $group);
+$custom_wedding_address  = get_field('custom_wedding_address', $group);
+$custom_wedding_maps     = get_field('custom_wedding_maps', $group);
+$custom_wedding_time     = get_field('custom_wedding_time', $group);
+$custom_party_location   = get_field('custom_party_location', $group);
+$custom_party_address    = get_field('custom_party_address', $group);
+$custom_party_maps       = get_field('custom_party_maps', $group);
+$custom_party_time       = get_field('custom_party_time', $group);
+
+$wedding_location       = $custom_wedding_location?$custom_wedding_location:$wedding_location;
+$wedding_address        = $custom_wedding_address?$custom_wedding_address:$wedding_address;
+$_wedding_time          = $custom_wedding_time?$custom_wedding_time:$_wedding_time;
+$google_maps_dam_cuoi   = $custom_wedding_maps?$custom_wedding_maps:$google_maps_dam_cuoi;
+$party_location         = $custom_party_location?$custom_party_location:$party_location;
+$party_address          = $custom_party_address?$custom_party_address:$party_address;
+$_party_time            = $custom_party_time?$custom_party_time:$_party_time;
+$google_maps_an_co      = $custom_party_maps?$custom_party_maps:$google_maps_an_co;
+
+
+
 # sun-day wedding time
+$wedding_time       = explode(' ', $_wedding_time);
 if ($wedding_time[0]) {
     $time_object        = DateTime::createFromFormat('d/m/Y', $wedding_time[0]);
     $wedding_dayname    = DayName($time_object->format('w'));
@@ -87,10 +109,8 @@ if ($wedding_time[0]) {
     $wedding_month      = $time_object->format('m');
     $wedding_year       = $time_object->format('Y');
     $wedding_moon_date  = ShowLunarDate($time_object, 'ngày dd tháng mm năm MYMY');
-}
-# moon-day wedding time
-if ($wedding_moontime[0]) {
-    $time_object            = DateTime::createFromFormat('d/m/Y', $wedding_moontime[0]);
+    # moon-day wedding time
+    $time_object_moon       = DateTime::createFromFormat('d/m/Y', ShowLunarDate($time_object, 'dd/mm/YYYY'));
     $wedding_moon_day       = $time_object->format('d');
     $wedding_moon_month     = $time_object->format('m');
     $wedding_moon_year      = $time_object->format('Y');
@@ -98,6 +118,7 @@ if ($wedding_moontime[0]) {
 }
 
 # sun-day party time
+$party_time       = explode(' ', $_party_time);
 if ($party_time[0]) {
     $time_object        = DateTime::createFromFormat('d/m/Y', $party_time[0]);
     $party_dayname      = DayName($time_object->format('w'));
@@ -105,10 +126,8 @@ if ($party_time[0]) {
     $party_month        = $time_object->format('m');
     $party_year         = $time_object->format('Y');
     $party_moon_date    = ShowLunarDate($time_object, 'ngày dd tháng mm năm MYMY');
-}
-# moon-day party time
-if ($party_moontime[0]) {
-    $time_object        = DateTime::createFromFormat('d/m/Y', $party_moontime[0]);
+    # moon-day party time
+    $time_object_moon   = DateTime::createFromFormat('d/m/Y', ShowLunarDate($time_object, 'dd/mm/YYYY'));
     $party_moon_day     = $time_object->format('d');
     $party_moon_month   = $time_object->format('m');
     $party_moon_year    = $time_object->format('Y');
@@ -155,9 +174,9 @@ $function_div = '<div id="function_action">
         <a href="#" class="accept_invite invitation" data-answer="Y">Đi được nhé</a>
         <a href="#" class="deny_invite invitation" data-answer="N">Bận mất rồi</a>
     </div>';
-if ($joined =="Y") {
+if ($joined == "Y") {
     $function_div .= '<div class="notification accept">Đã xác nhận tham dự.</div>';
-} else if ($joined =="N") {
+} else if ($joined == "N") {
     $function_div .= '<div class="notification deny">Xác nhận không tham dự được.</div>';
 }
 
@@ -224,10 +243,9 @@ $data_replace = array(
     '{me_chu_re}'   => $groom_mother,
 );
 if ($cardid) {
-    
+
     $html = replace_content($data_replace, $html);
     print_r($html);
-
 } else {
     echo "Lỗi trang 404.";
 }

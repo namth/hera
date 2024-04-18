@@ -151,6 +151,7 @@ if (have_posts()) {
         $link_select_card = get_bloginfo('url') . '/danh-sach-mau/?g=' . $data_token;
         $link_upload = get_bloginfo('url') . '/tai-khach-hang-qua-file-excel/?g=' . $data_token;
         $link_edit_content = get_bloginfo('url') . '/edit-content/?g=' . $data_token;
+        $link_edit_time = get_bloginfo('url') . '/edit-time/?pid=' . $groupid_encode;
 
         $guest_data = [
             'total' => 0,
@@ -224,6 +225,7 @@ if (have_posts()) {
                                     if ($check_groombride && $check_party) {
                                         echo '<a href="' . $link_view_demo . '" target="_blank" class="hera-link"><i class="fa fa-weibo" aria-hidden="true"></i> Xem mẫu</a>';
                                         echo '<a href="' . $link_edit_content . '" class="hera-link"><i class="fa fa-foursquare" aria-hidden="true"></i> Sửa nội dung thiệp</a>';
+                                        echo '<a href="' . $link_edit_time . '" class="hera-link"><i class="fa fa-calendar-plus-o" aria-hidden="true"></i> Tùy chỉnh thời gian, địa điểm</a>';
                                     }
                                 }
                                 ?>
