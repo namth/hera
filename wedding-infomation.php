@@ -85,7 +85,7 @@ $google_api     = get_field('google_maps_api_key', 'option');
                     ?>
                     <div id="main-info">
                         <div class="mui-textfield groom">
-                            <span class="diveditable" contenteditable=true oncut="return false" onpaste="return false" data-field="field_62b13a3d49b34" data-where="<?php echo $where_update; ?>">
+                            <span class="diveditable" contenteditable=true oncut="return false" onpaste="return true" data-field="field_62b13a3d49b34" data-where="<?php echo $where_update; ?>">
                                 <?php echo $groom; ?>
                             </span>
                         </div>
@@ -93,7 +93,7 @@ $google_api     = get_field('google_maps_api_key', 'option');
                             <img src="<?php echo get_template_directory_uri() . '/img/heart-preloader.gif'; ?>" alt="">
                         </div>
                         <div class="mui-textfield bride">
-                            <span class="diveditable" contenteditable=true oncut="return false" onpaste="return false" data-field="field_62b13a4949b35" data-where="<?php echo $where_update; ?>">
+                            <span class="diveditable" contenteditable=true oncut="return false" onpaste="return true" data-field="field_62b13a4949b35" data-where="<?php echo $where_update; ?>">
                                 <?php echo $bride; ?>
                             </span>
                         </div>
@@ -182,10 +182,10 @@ $google_api     = get_field('google_maps_api_key', 'option');
                                                 echo '<div class="has_data">';
 
                                                 if ($groom_father) {
-                                                    echo '<div class="data_item"><i class="fa fa-male"></i> <span class="diveditable" contenteditable=true oncut="return false" onpaste="return false" data-field="field_62b128ec93a7f" data-where="' . $where_update . '">' . $groom_father . '</span></div>';
+                                                    echo '<div class="data_item"><i class="fa fa-male"></i> <span class="diveditable" contenteditable=true oncut="return false" onpaste="return true" data-field="field_62b128ec93a7f" data-where="' . $where_update . '">' . $groom_father . '</span></div>';
                                                 }
                                                 if ($groom_mother) {
-                                                    echo '<div class="data_item"><i class="fa fa-female"></i> <span class="diveditable" contenteditable=true oncut="return false" onpaste="return false" data-field="field_62b129b693a80" data-where="' . $where_update . '">' . $groom_mother . '</span></div>';
+                                                    echo '<div class="data_item"><i class="fa fa-female"></i> <span class="diveditable" contenteditable=true oncut="return false" onpaste="return true" data-field="field_62b129b693a80" data-where="' . $where_update . '">' . $groom_mother . '</span></div>';
                                                 }
                                                 echo "</div>";
                                             } else {
@@ -237,9 +237,9 @@ $google_api     = get_field('google_maps_api_key', 'option');
                                         if ($groom_wedding_adress) {
                                             echo '<div class="has_data">';
                                             echo '<div class="data_item">
-                                                    <i class="fa fa-building"></i> <span class="diveditable" contenteditable=true oncut="return false" onpaste="return false" data-field="field_6568ba0dd5db1" data-where="' . $where_update . '">' . $groom_wedding_location . '</span>
+                                                    <i class="fa fa-building"></i> <span class="diveditable" contenteditable=true oncut="return false" onpaste="return true" data-field="field_6568ba0dd5db1" data-where="' . $where_update . '">' . $groom_wedding_location . '</span>
                                                 </div>';
-                                            echo '<div class="data_item"><i class="fa fa-map-marker"></i> <span class="diveditable" contenteditable=true oncut="return false" onpaste="return false" data-field="field_62b12acd93a81" data-where="' . $where_update . '">' . $groom_wedding_adress . '</span></div>';
+                                            echo '<div class="data_item"><i class="fa fa-map-marker"></i> <span class="diveditable" contenteditable=true oncut="return false" onpaste="return true" data-field="field_62b12acd93a81" data-where="' . $where_update . '">' . $groom_wedding_adress . '</span></div>';
                                             echo '<div class="date_editable data_item">
                                                     <div class="date_data">
                                                         <i class="fa fa-calendar"></i> <span class="diveditable">' . $_groom_wedding_time->format('d/m/Y g:i a') . '</span>
@@ -318,9 +318,9 @@ $google_api     = get_field('google_maps_api_key', 'option');
                                         if ($groom_party_address) {
                                             echo '<div class="has_data">';
                                             echo '<div class="data_item">
-                                                    <i class="fa fa-building"></i> <span class="diveditable" contenteditable=true oncut="return false" onpaste="return false" data-field="field_6568ba25d5db2" data-where="' . $where_update . '">' . $groom_party_location . '</span>
+                                                    <i class="fa fa-building"></i> <span class="diveditable" contenteditable=true oncut="return false" onpaste="return true" data-field="field_6568ba25d5db2" data-where="' . $where_update . '">' . $groom_party_location . '</span>
                                                 </div>';
-                                            echo '<div class="data_item"><i class="fa fa-map-marker"></i> <span class="diveditable" contenteditable=true oncut="return false" onpaste="return false" data-field="field_62b12b4593a82" data-where="' . $where_update . '">' . $groom_party_address . '</span></div>';
+                                            echo '<div class="data_item"><i class="fa fa-map-marker"></i> <span class="diveditable" contenteditable=true oncut="return false" onpaste="return true" data-field="field_62b12b4593a82" data-where="' . $where_update . '">' . $groom_party_address . '</span></div>';
                                             echo '<div class="date_editable data_item">
                                                     <div class="date_data">
                                                         <i class="fa fa-calendar"></i> <span class="diveditable">' . $_groom_party_time->format('d/m/Y g:i a') . '</span>
@@ -428,10 +428,10 @@ $google_api     = get_field('google_maps_api_key', 'option');
                                             if ($bride_father || $bride_mother){
                                                 echo '<div class="has_data">';
                                                 if ($bride_father) {
-                                                    echo '<div class="data_item"><i class="fa fa-male"></i> <span class="diveditable" contenteditable=true oncut="return false" onpaste="return false" data-field="field_62b1363fb0691" data-where="' . $where_update . '">' . $bride_father . '</span></div>';
+                                                    echo '<div class="data_item"><i class="fa fa-male"></i> <span class="diveditable" contenteditable=true oncut="return false" onpaste="return true" data-field="field_62b1363fb0691" data-where="' . $where_update . '">' . $bride_father . '</span></div>';
                                                 }
                                                 if ($bride_mother) {
-                                                    echo '<div class="data_item"><i class="fa fa-female"></i> <span class="diveditable" contenteditable=true oncut="return false" onpaste="return false" data-field="field_62b1363fb069e" data-where="' . $where_update . '">' . $bride_mother . '</span></div>';
+                                                    echo '<div class="data_item"><i class="fa fa-female"></i> <span class="diveditable" contenteditable=true oncut="return false" onpaste="return true" data-field="field_62b1363fb069e" data-where="' . $where_update . '">' . $bride_mother . '</span></div>';
                                                 }
                                                 echo '</div>';
                                             } else {
@@ -483,9 +483,9 @@ $google_api     = get_field('google_maps_api_key', 'option');
                                         if ($bride_wedding_adress) {
                                             echo '<div class="has_data">';
                                             echo '<div class="data_item">
-                                                    <i class="fa fa-building"></i> <span class="diveditable" contenteditable=true oncut="return false" onpaste="return false" data-field="field_6568a76696279" data-where="' . $where_update . '">' . $bride_wedding_location . '</span>
+                                                    <i class="fa fa-building"></i> <span class="diveditable" contenteditable=true oncut="return false" onpaste="return true" data-field="field_6568a76696279" data-where="' . $where_update . '">' . $bride_wedding_location . '</span>
                                                 </div>';
-                                            echo '<div class="data_item"><i class="fa fa-map-marker"></i> <span class="diveditable" contenteditable=true oncut="return false" onpaste="return false" data-field="field_62b1363fb06a6" data-where="' . $where_update . '">' . $bride_wedding_adress . '</span></div>';
+                                            echo '<div class="data_item"><i class="fa fa-map-marker"></i> <span class="diveditable" contenteditable=true oncut="return false" onpaste="return true" data-field="field_62b1363fb06a6" data-where="' . $where_update . '">' . $bride_wedding_adress . '</span></div>';
 
                                             if ($bride_wedding_time) {
                                                 echo '<div class="date_editable data_item">
@@ -567,9 +567,9 @@ $google_api     = get_field('google_maps_api_key', 'option');
                                         if ($bride_party_address) {
                                             echo '<div class="has_data">';
                                             echo '<div class="data_item">
-                                                    <i class="fa fa-building"></i> <span class="diveditable" contenteditable=true oncut="return false" onpaste="return false" data-field="field_6568a8029627a" data-where="' . $where_update . '">' . $bride_party_location . '</span>
+                                                    <i class="fa fa-building"></i> <span class="diveditable" contenteditable=true oncut="return false" onpaste="return true" data-field="field_6568a8029627a" data-where="' . $where_update . '">' . $bride_party_location . '</span>
                                                 </div>';
-                                            echo '<div class="data_item"><i class="fa fa-map-marker"></i> <span class="diveditable" contenteditable=true oncut="return false" onpaste="return false" data-field="field_62b1363fb06bf" data-where="' . $where_update . '">' . $bride_party_address . '</span></div>';
+                                            echo '<div class="data_item"><i class="fa fa-map-marker"></i> <span class="diveditable" contenteditable=true oncut="return false" onpaste="return true" data-field="field_62b1363fb06bf" data-where="' . $where_update . '">' . $bride_party_address . '</span></div>';
                                             echo '<div class="date_editable data_item">
                                                     <div class="date_data">
                                                         <i class="fa fa-calendar"></i> <span class="diveditable">' . $_bride_party_time->format('d/m/Y g:i a') . '</span>

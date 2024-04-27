@@ -70,6 +70,8 @@ function weddingDateInput() {
     $data = parse_str($_POST['data'], $output);
     $solartime_field = $output['solartime_field'];
     $lunartime_field = $output['lunartime_field'];
+    $whereupdate     = $output['whereupdate']?$output['whereupdate'] : 'user_' . $current_user_id;
+    // if (!$whereupdate) $whereupdate = 'user_' . $current_user_id;
     
     if ($output['solartime']) {
         # tính toán ngày tháng 
@@ -79,8 +81,8 @@ function weddingDateInput() {
         $lunartime = new DateTime($lunar);
         
         # cập nhật vào cơ sở dữ liệu
-        update_field($solartime_field, strtotime($output['solartime']), 'user_' . $current_user_id); // thời gian dương lịch
-        update_field($lunartime_field, strtotime($lunar), 'user_' . $current_user_id); // thời gian dương lịch
+        update_field($solartime_field, strtotime($output['solartime']), $whereupdate); // thời gian dương lịch
+        update_field($lunartime_field, strtotime($lunar), $whereupdate); // thời gian dương lịch
     
         # output để hiển thị
         $data['status']      = true;

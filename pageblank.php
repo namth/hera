@@ -13,6 +13,7 @@ if (have_posts()) {
         the_content();
         echo "</div>";
 
+        get_footer('top');
         get_footer();
     }
 }

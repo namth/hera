@@ -60,7 +60,7 @@ if ( isset( $_GET['p'] ) && ($_GET['p'] != "")) {
                         <div class="mui-col-md-3">
                             <h3>Gói sản phẩm đã chọn</h3>
                             <?php
-                                $partner = $_COOKIE['partner'];
+                                $partner = isset($_COOKIE['partner'])?$_COOKIE['partner']:"";
                                 $price = get_field('price', $package_id);
                                 $coupon = get_field('coupon', $package_id);
                                 # check coupon xem có được sử dụng chưa, nếu limit thì set coupon về 0
@@ -73,7 +73,7 @@ if ( isset( $_GET['p'] ) && ($_GET['p'] != "")) {
                                     $final_price = $price;
                                 }
 
-                                $thumbnail_url = get_the_post_thumbnail_url($package_id, 'thumbnail');
+                                $thumbnail_url = get_the_post_thumbnail_url($package_id, 'large');
 
                                 # setup hash
                                 $hash = inova_encrypt(json_encode(array(
