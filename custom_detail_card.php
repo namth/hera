@@ -113,6 +113,7 @@ $google_api     = get_field('google_maps_api_key', 'option');
                                                     <form method="post">
                                                         <input name="solartime" type="datetime-local" value="' . $_custom_wedding_time->format('Y-m-d\TH:i:s') . '">
                                                         <input type="hidden" name="solartime_field" value="field_661d635af6a15">
+                                                        <input type="hidden" name="whereupdate" value="' . $where_update . '">
                                                         <button class="mui-btn mui-btn--small hera-btn">Sửa</button>
                                                         <button class="mui-btn mui-btn--small close-btn-mini">X</button>
                                                     </form>
@@ -190,6 +191,7 @@ $google_api     = get_field('google_maps_api_key', 'option');
                                                     <form method="post">
                                                         <input name="solartime" type="datetime-local" value="' . $_custom_party_time->format('Y-m-d\TH:i:s') . '">
                                                         <input type="hidden" name="solartime_field" value="field_661d631ff6a14">
+                                                        <input type="hidden" name="whereupdate" value="' . $where_update . '">
                                                         <button class="mui-btn mui-btn--small hera-btn">Sửa</button>
                                                         <button class="mui-btn mui-btn--small close-btn-mini">X</button>
                                                     </form>
