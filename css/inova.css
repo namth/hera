@@ -2741,6 +2741,26 @@ img {
   padding: 0;
 }
 
+#single_post {
+  background: #FFFAF4;
+}
+#single_post #post_content {
+  margin-bottom: 30px;
+}
+#single_post #related_posts .page-title {
+  text-align: center;
+  margin: 50px 0 40px;
+  text-transform: uppercase;
+  color: #956149;
+  font-weight: 800;
+}
+#single_post #related_posts .post-item img {
+  height: auto;
+}
+#single_post #related_posts .post-item h3 {
+  text-align: center;
+}
+
 @media screen and (max-width: 2000px) {
   #detail_card {
     width: calc(100% - 256px);
