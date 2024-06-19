@@ -5,7 +5,7 @@
                 <h3>Thông tin liên hệ</h3>
                 <p><i class="fa fa-snowflake-o" aria-hidden="true"></i> : Thiệp cưới online HERA.</p>
                 <p><i class="fa fa-globe" aria-hidden="true"></i> : Số 5 hẻm 95/81/62 Vũ Xuân Thiều, P. Sài Đồng, Q. Long Biên, Hà Nội</p>
-                <p><i class="fa fa-phone" aria-hidden="true"></i> : 056.339.5677</p>
+                <p><i class="fa fa-phone" aria-hidden="true"></i> : 0366 096 339</p>
                 <p><i class="fa fa-envelope-o" aria-hidden="true"></i> : contact@hera.ai.vn</p>
             </div>
             <div class="mui-col-md-3">
@@ -20,7 +20,7 @@
             <div class="mui-col-md-3">
                 <h3>Hỗ trợ khách hàng</h3>
                 <p>09h Sáng - 18h Chiều / Thứ 2 - Thứ 6</p>
-                <p>Zalo: 056 339 5677 </p>
+                <p>Zalo: 0366 096 339</p>
                 <p>Email: hotrokhachhang@hera.ai.vn</p>
             </div>
             <div class="mui-col-md-3">
