@@ -74,8 +74,8 @@ function get_value_after_coupon( $coupon_id, $package_id ){
                 $final_total = ($sub_total > $coupon_value)?($sub_total - $coupon_value):"0";
             }
             return $final_total;
-        } else return false;
-    } else return false;
+        } else return $sub_total;
+    } else return $sub_total;
 }
 
 # Get lastest success order by current user ID

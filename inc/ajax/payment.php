@@ -176,12 +176,105 @@ function activeOrder(){
 add_action('wp_ajax_addCouponCode', 'addCouponCode');
 add_action('wp_ajax_nopriv_addCouponCode', 'addCouponCode');
 function addCouponCode() {
-    $data = $_POST['data'];
+    
+    /**
+     * Process the payment and validate the coupon.
+     *
+     * @param string $_POST['coupon'] The coupon code.
+     * @param string $_POST['package'] The package ID.
+     * @param int $_POST['cards'] The number of cards.
+     *
+     * @return string JSON-encoded data containing the payment status, coupon details, and final total.
+     */
+    $coupon = $_POST['coupon'];
     $package = $_POST['package'];
-    $sub_total = get_field('price', $package);
+    if ($package) {
+        $cards = 0;
+        $sub_total = get_field('price', $package);
+    } else {
+        $cards = $_POST['cards'];
+        $sub_total = $cards * 5000;
+    }
+
+    /* Check if the coupon exists */
+    $id_coupon = search_customfield('coupon', $coupon, 'coupon_name');
+
+    /* If it exists, validate the coupon for expiration and availability */
+    if ($id_coupon) {
+        $expired = get_field('expired', $id_coupon);
+        $coupon_type = get_field('coupon_type', $id_coupon);
+        $coupon_value = get_field('coupon_value', $id_coupon);
+        $coupon_quantity = get_field('coupon_quantity', $id_coupon);
+        
+        /* Validate the coupon data */
+        $today = new DateTime();
+        if (($coupon_quantity > 0) && ($expired >= $today->format('Ymd'))) {
+            $data = array(
+                'status' => true,
+                'coupon' => $coupon,
+                'coupon_value' => $coupon_value,
+                'sub_total' => $sub_total,
+                'package' => $package,
+                'message'=> '<div class="success_notification"><i class="fa fa-check-circle-o" aria-hidden="true"></i> Đã thêm mã coupon thành công.</div>',
+            );
+            if ($coupon_type == "Phần trăm") {
+                /* Calculate the final total after applying the percentage discount */
+                $final_total = $sub_total * (100 - $coupon_value) / 100;
+                /* Save the data */
+                $data['type'] = 'percent';
+                $data['coupon_label'] = '- ' . $coupon_value . '%';
+                $data['final_total'] = $final_total;
+                $data['hash'] = inova_encrypt(json_encode(array(
+                    'id'            => $id_coupon,
+                    'final_total'   => $final_total,
+                    'package_id'    => $package,
+                    'number_of_cards' => $cards,
+                )), 'e');
+            } else {
+                /* Calculate the final total after applying the fixed discount */
+                $final_total = ($sub_total > $coupon_value)?($sub_total - $coupon_value):"0";
+                /* Save the data */
+                $data['type'] = 'fix';
+                $data['coupon_label'] = '- ' . number_format($coupon_value) . ' ₫';
+                $data['final_total'] = $final_total;
+                $data['hash'] = inova_encrypt(json_encode(array(
+                    'id'            => $id_coupon,
+                    'final_total'   => $final_total,
+                    'package_id'    => $package,
+                    'number_of_cards' => $cards,
+                )), 'e');
+            }
+        } else {
+            $check_fail = true;
+            $message = "Mã khuyến mại đã hết hạn hoặc hết số lượng.";
+        }
+
+    } else {
+        $check_fail = true;
+        $message = "Không tìm thấy mã khuyến mại.";
+    }
+
+    if ($check_fail) {
+        $data = array(
+            'status' => false,
+            'message'=> '<div class="error_notification"><i class="fa fa-time-circle-o" aria-hidden="true"></i> ' . $message . '</div>',
+        );
+    }
+
+    echo json_encode($data);
+    exit;
+}
+
+/* ajax function to add coupon code for single card */
+add_action('wp_ajax_addCouponCodeForSingularCard', 'addCouponCodeForSingularCard');
+add_action('wp_ajax_nopriv_addCouponCodeForSingularCard', 'addCouponCodeForSingularCard');
+function addCouponCodeForSingularCard(){
+    $coupon = $_POST['coupon'];
+    $cards = $_POST['cards'];
+    $sub_total = $cards * 5000;
 
     /* Kiểm tra coupon có tồn tại không */
-    $id_coupon = search_customfield('coupon', $data, 'coupon_name');
+    $id_coupon = search_customfield('coupon', $coupon, 'coupon_name');
 
     /* Nếu có thì validate coupon xem đã hết hạn hoặc hết mã chưa */
     if ($id_coupon) {
@@ -194,35 +287,39 @@ function addCouponCode() {
         $today = new DateTime();
         if (($coupon_quantity > 0) && ($expired >= $today->format('Ymd'))) {
             $data = array(
-                'status' => true,
-                'coupon' => $data,
-                'message'=> '<div class="success_notification"><i class="fa fa-check-circle-o" aria-hidden="true"></i> Đã thêm mã coupon thành công.</div>',
+                'status'    => true,
+                'message'   => '<div class="success_notification"><i class="fa fa-check-circle-o" aria-hidden="true"></i> Đã thêm mã coupon thành công.</div>',
+                'coupon'    => $coupon,
+                'value'     => $coupon_value,
+                'sub_total' => $sub_total,
             );
             if ($coupon_type == "Phần trăm") {
                 /* Tính số tiền cuối nhận được */
                 $final_total = $sub_total * (100 - $coupon_value) / 100;
                 /* Lưu vào data */
                 $data['type'] = 'percent';
-                $data['value'] = $coupon_value;
+                // $data['value'] = $coupon_value;
                 $data['coupon_label'] = '- ' . $coupon_value . '%';
                 $data['final_total'] = $final_total;
                 $data['hash'] = inova_encrypt(json_encode(array(
-                    'id'            => $id_coupon,
-                    'final_total'   => $final_total,
-                    'package_id'    => $package,
+                    'id'                => $id_coupon,
+                    'final_total'       => $final_total,
+                    'package_id'        => 0,
+                    'number_of_cards'   => $cards,
                 )), 'e');
             } else {
                 /* Tính số tiền cuối nhận được */
                 $final_total = ($sub_total > $coupon_value)?($sub_total - $coupon_value):"0";
                 /* Lưu vào data */
                 $data['type'] = 'fix';
-                $data['value'] = $coupon_value;
+                // $data['value'] = $coupon_value;
                 $data['coupon_label'] = '- ' . number_format($coupon_value) . ' ₫';
                 $data['final_total'] = $final_total;
                 $data['hash'] = inova_encrypt(json_encode(array(
-                    'id'            => $id_coupon,
-                    'final_total'   => $final_total,
-                    'package_id'    => $package,
+                    'id'                => $id_coupon,
+                    'final_total'       => $final_total,
+                    'package_id'        => 0,
+                    'number_of_cards'   => $cards,
                 )), 'e');
             }
         } else {

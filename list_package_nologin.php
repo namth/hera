@@ -1,10 +1,20 @@
 <?php
 /* 
 * Template Name: List Package Nologin
-*/
+*
+**
+ * FILEPATH: /Users/namtran/Local Sites/hera/app/public/wp-content/themes/hera/list_package_nologin.php
+ * 
+ * This file is responsible for displaying a list of packages when the user is not logged in.
+ * It includes the header, the list of packages, and the footer.
+ * 
+ * @package Hera
+ * @subpackage Theme
+ */
 
 get_header();
 get_header('logocenter');
+
 if (have_posts()) {
     while (have_posts()) {
         the_post();
@@ -32,19 +42,24 @@ if (have_posts()) {
                                 $query->the_post();
                                 
                                 $i++;
-                                $total_card = get_field('total_card');
-                                $price      = get_field('price');
-                                $category   = get_field('category');
-                                $coupon     = get_field('coupon');
-                                $coupon_value = get_value_after_coupon($coupon, get_the_ID());
+                                $total_card     = get_field('total_card');
+                                $price          = get_field('price');
+                                $category       = get_field('category');
+                                $coupon         = get_field('coupon');
+                                $coupon_value   = get_value_after_coupon($coupon, get_the_ID());
 
-                                $percent = round($coupon_value/$price * 100 - 100);
+                                # if $coupon_value greater than 0, then calculate $percent
+                                if($coupon_value < $price){
+                                    $percent = round($coupon_value/$price * 100 - 100);
+                                } else {
+                                    $percent = 0;
+                                }
 
                                 ?>
                                     <div class="mui-col-md-4">
                                         <div class="package_item box">
                                             <?php 
-                                                if ($coupon) {
+                                                if ($coupon_value < $price) {
                                                     echo '<div class="ribbon ribbon-top-right"><span>' . $percent . '%</span></div>';
                                                 }
                                             ?>
@@ -59,7 +74,7 @@ if (have_posts()) {
                                                 <div class="price">
                                                     <span class="label">Đơn giá</span>
                                                     <?php 
-                                                        if ($coupon) {
+                                                        if ($coupon_value < $price) {
                                                             echo '<span class="listed_price">' . number_format($price) . ' đ</span>';
                                                             echo '<span class="value">' . number_format($coupon_value) . ' đ</span>';
                                                         } else {

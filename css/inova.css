@@ -1412,6 +1412,10 @@ img {
 }
 #footer #menu-quick-link {
   padding-left: 15px;
+  margin-top: -4px;
+}
+#footer #menu-quick-link li {
+  padding: 4px;
 }
 #footer #menu-quick-link li a {
   color: #e0d8ce;
@@ -2347,6 +2351,54 @@ img {
   color: #d00e2d;
   margin-bottom: 0;
 }
+#confirm_order .package_box .inova_number_input {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 20px 0;
+}
+#confirm_order .package_box .inova_number_input label {
+  display: block;
+  font-size: 14px;
+  margin-top: -10px;
+}
+#confirm_order .package_box .inova_number_input .input-group {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border: 1px solid #916d45;
+  border-radius: 8px;
+  padding: 0;
+  overflow: hidden;
+}
+#confirm_order .package_box .inova_number_input .input-group input {
+  width: 100px;
+  text-align: center;
+  font-size: 36px;
+  border: none;
+  padding: 5px 0;
+  color: #916d45;
+}
+#confirm_order .package_box .inova_number_input .input-group button {
+  background: #f9f5f0;
+  color: #916d45;
+  border: none;
+  padding: 5px 0;
+  font-size: 36px;
+  width: 50px;
+}
 #confirm_order .package_box .price {
   font-size: 28px;
   font-family: "Quicksand";
@@ -2747,6 +2799,12 @@ img {
 #single_post #post_content {
   margin-bottom: 30px;
 }
+#single_post #related_posts {
+  margin-top: 40px;
+}
+#single_post #related_posts h2 {
+  margin-bottom: 20px;
+}
 #single_post #related_posts .page-title {
   text-align: center;
   margin: 50px 0 40px;
@@ -2754,10 +2812,33 @@ img {
   color: #956149;
   font-weight: 800;
 }
-#single_post #related_posts .post-item img {
+#single_post #related_posts .post-item {
+  margin-bottom: 35px;
+}
+#single_post #related_posts .post-item .post-thumbnail {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+#single_post #related_posts .post-item .post-thumbnail::before {
+  display: block;
+  content: "";
+  width: 100%;
+  padding-top: 75%;
+}
+#single_post #related_posts .post-item .post-thumbnail img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+#single_post #related_posts img {
   height: auto;
 }
-#single_post #related_posts .post-item h3 {
+#single_post #related_posts img h3 {
   text-align: center;
 }
 
