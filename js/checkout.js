@@ -63,18 +63,14 @@ jQuery(document).ready(function ($) {
         });
     }
 
-    /* increase or decrease when click button in class .inova_number_input */
-    $('.inova_number_input .btn-number').click(function () {
-        var plus = $(this).data('plus');
-        var cards = $('.inova_number_input #invite_cards').val();
+    function updateBuyCard(new_cards) {
         var price = $('input[name="price"]').val();
-        var new_cards = parseInt(cards) + plus;
+        var total = new_cards * price;
         var formatter = new Intl.NumberFormat('vi', {
             style: 'currency',
             currency: 'VND',
         });
-        var total = new_cards * price;
-
+        
         if (new_cards > 0) {
             $('.inova_number_input #invite_cards').val(new_cards);
         } else return false;
@@ -87,7 +83,22 @@ jQuery(document).ready(function ($) {
         } else {
             $('.package_box .final_price').html(formatter.format(total));
         }
+    }
+
+    /* increase or decrease when click button in class .inova_number_input */
+    $('.inova_number_input .btn-number').on("click", function () {
+        var plus = $(this).data('plus');
+        var cards = $('.inova_number_input #invite_cards').val();
+        var new_cards = parseInt(cards) + plus;
+        
+        updateBuyCard(new_cards);
         return false;
+    });
+
+    /* update buy cards when change .inova_number_input */
+    $('.inova_number_input #invite_cards').on("change keyup", function () {
+        var new_cards = $(this).val();
+        updateBuyCard(new_cards);
     });
 
     /* Validate input in the number input '.inova_number_input #invite_cards', only allowing numeric input. */
@@ -136,7 +147,7 @@ jQuery(document).ready(function ($) {
                         data: data,
                     },
                     beforeSend: function () {
-        
+                        
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
                         console.log(xhr.status);
@@ -144,8 +155,6 @@ jQuery(document).ready(function ($) {
                         console.log(thrownError);
                     },
                     success: function (resp) {
-                        // console.log(resp);
-                        // $('#checkout').append(resp);
                         window.location.replace(resp);
                     }
                 });
@@ -166,6 +175,62 @@ jQuery(document).ready(function ($) {
                 }
             }, 8000);
         }
+        
+        return false;
+    });
+
+    /* process when click submit buy_cards form */
+    $('form#buy_cards').submit(function () {
+        var customer_name = $("input[name='customer_name']").val();
+        var customer_phone = $("input[name='customer_phone']").val();
+        var customer_email = $("input[name='customer_email']").val();
+        var customer_address = $("input[name='customer_address']").val();
+        var notification = '<i class="fa fa-exclamation-circle" aria-hidden="true"></i> Hãy điền đầy đủ thông tin của bạn.';
+        var valid = false;
+        
+        if (customer_address && customer_email && customer_phone && customer_name) {
+            if (isEmail(customer_email)) {
+                var data = $(this).serialize();
+                var number_of_cards = $('input[name="invite_cards"]').val();
+
+                $.ajax({
+                    type: "POST",
+                    url: AJAX.ajax_url,
+                    data: {
+                        action: "createInvoice",
+                        data: data,
+                        cards: number_of_cards,
+                    },
+                    beforeSend: function () {
+                        
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        console.log(xhr.status);
+                        console.log(xhr.responseText);
+                        console.log(thrownError);
+                    },
+                    success: function (resp) {
+                        window.location.replace(resp);
+                    }
+                });
+                valid = true;            
+            } else {
+                notification = "Email của bạn không đúng, hãy kiểm tra lại.";
+                valid = false;
+            }
+        } else {
+            valid = false;
+        }
+
+        if (!valid) {
+            $("#notificate").html(notification).show();
+            setTimeout(function(){
+                if ($('#notificate').length > 0) {
+                    $('#notificate').hide();
+                }
+            }, 8000);
+        }
+        
         return false;
     });
 });

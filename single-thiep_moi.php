@@ -36,7 +36,9 @@ if (
     wp_verify_nonce($_POST['post_nonce_field'], 'post_nonce')
 ) {
     $guest_name = $_POST['guest_name'];
-    if ( isset($_POST['guest_attach_text']) && ($_POST['guest_attach_text'] != "") ) {
+    $guest_attach_radio = $_POST['guest_attach'];
+    
+    if ( isset($_POST['guest_attach_text']) && ($_POST['guest_attach_text'] != "") && ($guest_attach_radio == "") ) {
         $guest_attach = $_POST['guest_attach_text'];
     } else $guest_attach = $_POST['guest_attach'];
     $vai_ve = $_POST['vai_ve'];
@@ -409,9 +411,9 @@ if (have_posts()) {
                                                             $_icon = $package_id ? '<i class="fa fa-eye"></i>' : '<i class="fa fa-eye-slash"></i>';
                                                             echo '<a href="' . $viewlink . '" target="_blank">' . $_icon . '</a>';
 
-                                                            if (current_user_can('manage_options')) {
+                                                            /* if (current_user_can('manage_options')) {
                                                                 echo '<a href="' . $viewlink . '?key=print_card_temp" target="_blank"><i class="fa fa-envelope-open" aria-hidden="true"></i></a>';
-                                                            }
+                                                            } */
                                                         }
                                                         ?>
 

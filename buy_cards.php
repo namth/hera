@@ -1,6 +1,6 @@
 <?php 
 /* 
-* Template Name: Retail wedding invitation cards
+* Template Name: Mua lẻ thiệp cưới
 */
 get_header();
 get_template_part('header', 'topbar');
@@ -17,6 +17,7 @@ $customer_name = $current_user->display_name;
 $customer_email = $current_user->user_email;
 $customer_phone = get_field('phone', 'user_' . $current_user->ID);
 $customer_address = get_field('address', 'user_' . $current_user->ID);
+$price = 5000;
 
 ?>
 <div class="mui-container-fluid">
@@ -61,7 +62,7 @@ $customer_address = get_field('address', 'user_' . $current_user->ID);
                     # setup hash
                     $hash = inova_encrypt(json_encode(array(
                         'id'            => 0,
-                        'final_total'   => 5000,
+                        'final_total'   => $price,
                         'package_id'    => 0,
                     )), 'e');
 
@@ -89,7 +90,7 @@ $customer_address = get_field('address', 'user_' . $current_user->ID);
                                 
                             </span>
                             <span class="final_price">
-                                5.000 ₫
+                                <?php echo number_format($price) . " ₫"; ?>
                             </span>
                             <div class="view_coupon">
                                 <div class="name">
@@ -107,10 +108,11 @@ $customer_address = get_field('address', 'user_' . $current_user->ID);
                             <div class="coupon_notification"></div>
                         </div>
                     </div>
+                    
                     <div class="mui-col-md-5">
                         <h3>Nhập thông tin mua hàng</h3>
                         <div id="notificate" class="notification"></div>
-                        <form class="mui-form" method="POST" enctype="multipart/form-data" id="confirm_order">
+                        <form class="mui-form" method="POST" enctype="multipart/form-data" id="buy_cards">
                             <div class="hera_input">
                                 <label for="customer_name">Họ và tên</label>
                                 <input type="text" name="customer_name" value="<?php if($customer_name) echo $customer_name; ?>">
@@ -132,7 +134,7 @@ $customer_address = get_field('address', 'user_' . $current_user->ID);
                             ?>
                             <input type="hidden" name="coupon" value="<?php echo $hash; ?>">
                             <input type="hidden" name="partner" value="<?php echo $partner; ?>">
-                            <input type="hidden" name="price" value="5000">
+                            <input type="hidden" name="price" value="<?php echo $price; ?>">
                             <input type="hidden" name="number_of_card" value="1">
                             <input type="hidden" name="package" value="0">
                             <button type="submit" class="mui-btn hera-btn fullwidth">Tiếp tục thanh toán</button>

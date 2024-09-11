@@ -24,7 +24,7 @@ get_template_part('header', 'topbar');
                     <h3>
                         Thanh toán thành công. Bạn có thể quay lại trang chủ để tiếp tục.
                     </h3>
-                    <a href="<?php echo get_bloginfo('url'); ?>" class="mui-btn hera-btn">Về trang chủ</a>    
+                    <a href="<?php echo get_bloginfo('url'); ?>/main/" class="mui-btn hera-btn">Về trang chủ</a>    
                 </div>
 
             </div>
