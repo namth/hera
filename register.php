@@ -2,6 +2,9 @@
 /* 
     Template Name: Register
 */
+$user_exists = false;
+$notification = "";
+
 if (is_user_logged_in()) {
     # redirect sang trang chủ
     wp_redirect(get_bloginfo('url'));
@@ -94,9 +97,11 @@ if (is_user_logged_in()) {
 ?>
 <div id="login">
     <div class="large_left" style="
-        background-image: url('https://source.unsplash.com/1920x1024?hdr,flower,coffee,wedding');
+        background-image: url('<?php echo get_template_directory_uri(); ?>/img/login_bg.webp');
         background-size: cover;
+        filter: grayscale(60%);
     "></div>
+    <!-- https://source.unsplash.com/1920x1024?hdr,flower,coffee,wedding -->
     <div class="small_right mui-panel">
         <img src="<?php echo get_template_directory_uri(); ?>/img/logo_hera.png">
         <?php 

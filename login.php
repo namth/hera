@@ -2,6 +2,8 @@
 /* 
     Template Name: Login
 */
+$error_message = "";
+
 if (is_user_logged_in()) {
     // redirect sang trang chủ
     wp_redirect(get_bloginfo('url'));
@@ -63,9 +65,10 @@ if (is_user_logged_in()) {
 ?>
 <div id="login">
     <div class="large_left" style="
-        background-image: url('https://source.unsplash.com/1920x1024?hdr,wedding,flower');
+        background-image: url('<?php echo get_template_directory_uri(); ?>/img/login_bg.webp');
         background-size: cover;
     "></div>
+    <!-- https://source.unsplash.com/1920x1024?hdr,wedding,flower -->
     <div class="small_right mui-panel">
         <img src="<?php echo get_template_directory_uri(); ?>/img/logo_hera.png">
         <form name="loginform" id="loginform" action="" method="post">
