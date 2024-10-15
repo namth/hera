@@ -265,10 +265,10 @@ if (have_posts()) {
                     ?>
                     <div class="mui-col-md-12" id="payment">
                         <ul class="mui-tabs__bar mui-tabs__bar--justified">
-                            <li class="mui--is-active bank_transfer"><a data-mui-toggle="tab" data-mui-controls="bank_transfer">CHUYỂN KHOẢN NGÂN HÀNG</a></li>
-                            <li class="pay_momo"><a data-mui-toggle="tab" data-mui-controls="pay_momo">THANH TOÁN QUA MOMO</a></li>
+                            <!-- <li class="mui--is-active bank_transfer"><a data-mui-toggle="tab" data-mui-controls="bank_transfer">CHUYỂN KHOẢN NGÂN HÀNG</a></li> -->
+                            <li class="mui--is-active pay_momo"><a data-mui-toggle="tab" data-mui-controls="pay_momo">THANH TOÁN QUA MOMO</a></li>
                         </ul>
-                        <div class="mui-tabs__pane mui--is-active" id="bank_transfer">
+                        <!-- <div class="mui-tabs__pane mui--is-active" id="bank_transfer">
                             <div class="payment_notification">
                                 <h5><b>Lưu ý</b></h5>
                                 <p>Để hệ thống tự động kích hoạt ngay trong 1 phút (ngay sau khi chúng tôi nhận đủ thanh toán qua ngân hàng), quý khách vui lòng thực hiện đủ các bước sau:</p>
@@ -282,13 +282,11 @@ if (have_posts()) {
                                 <div class="bank_info">
                                     <ul>
                                         <li><img src="<?php echo get_template_directory_uri(); ?>/img/tpbank.webp" alt="TPBank" width="250"></li>
-                                        <!-- <li><b>TPBank</b></li> -->
                                         <li>Số tài khoản: <b>14719869999</b></li>
                                         <li>Tên tài khoản: <b>TRAN HAI NAM</b></li>
                                     </ul>
                                     <ul>
                                         <li><img src="<?php echo get_template_directory_uri(); ?>/img/techcombank.svg" alt="Techcombank" width="333"></li>
-                                        <!-- <li><b>Techcombank</b></li> -->
                                         <li>Số tài khoản: <b>19038145926015</b></li>
                                         <li>Tên tài khoản: <b>Công ty TNHH Công Nghệ INOVA</b></li>
                                     </ul>
@@ -305,19 +303,23 @@ if (have_posts()) {
                                     }
                                 ?>
                             </div>
-                        </div>
-                        <div class="mui-tabs__pane" id="pay_momo">
+                        </div> -->
+                        <div class="mui-tabs__pane mui--is-active" id="pay_momo">
+                            <h3 style="text-align: center;">Hệ thống sẽ tự động kích hoạt ngay sau khi chúng tôi nhận đủ thanh toán qua Momo<br> quý khách vui lòng bấm vào nút bên dưới để thanh toán cho đơn hàng:</h3>
+                            <br>
                             <form action="#" method="POST" enctype="multipart/form-data">
                                 <?php wp_nonce_field('momo', 'momo_field'); ?>
                                 <img src="<?php echo get_template_directory_uri() ?>/img/logomomo.png" alt="" width="100px">
                                 <button class="mui-btn hera-btn">Chuyển tới trang thanh toán</button>
                             </form>
+                            <br>
                         </div>
                     </div>
                     <?php 
                         } else {
                             $active_data = inova_encrypt(json_encode([
                                 'package_id'    => $package_id,
+                                'cards'         => get_field('cards'),
                                 'order_id'      => get_the_ID()
                             ]), 'e');
                             # Nếu đã đóng payment mà chưa được kích hoạt thì chuyển đến trang kích hoạt ngay.

@@ -241,7 +241,8 @@ $XL: 2000px
     @else if $canvas == XL
         @media screen and (min-width: $LG)
             #detail_card
-                width: calc(100% - 256px)
+                width: fit-content
+                max-width: calc(100% - 256px)
 
             #guide_section
                 ul.playlist

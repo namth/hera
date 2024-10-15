@@ -23,7 +23,7 @@ $current_user_id = get_current_user_id();
                         <th>Ngày tháng</th>
                         <th>Mã đơn hàng</th>
                         <th>Sản phẩm</th>
-                        <th>Số thiệp</th>
+                        <th>Số lượng</th>
                         <th>Tổng tiền</th>
                         <th>Trạng thái</th>
                     </tr>
@@ -51,6 +51,7 @@ $current_user_id = get_current_user_id();
                                 $final_total = get_field('final_total');
                                 $package_id = get_field('package');
                                 $total_card = get_field('total_card', $package_id);
+                                $product_name = $package_id?get_the_title($package_id):"Thiệp cưới online";
                                 
                                 if ($status=="Chưa thanh toán") {
                                     $status_div = '<span class="error_notification">'. $status .'</span>';
@@ -63,7 +64,7 @@ $current_user_id = get_current_user_id();
                                         <td>" . ++$i . "</td>
                                         <td><a href='" . get_permalink() . "'>". get_the_date('d/m/Y') ."</a></td>
                                         <td><a href='" . get_permalink() . "'>". get_the_title() ."</a></td>
-                                        <td><a href='" . get_permalink() . "'>" . get_the_title($package_id) . "</td>
+                                        <td><a href='" . get_permalink() . "'>" . $product_name . "</td>
                                         <td>" . number_format($total_card) . "</td>
                                         <td>" . number_format($final_total) . "</td>
                                         <td>". $status_div ."</td>

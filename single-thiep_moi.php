@@ -37,7 +37,7 @@ if (
 ) {
     $guest_name = $_POST['guest_name'];
     $guest_attach_radio = $_POST['guest_attach'];
-    
+    // $guest_attach_radio = "on"?"":$guest_attach_radio;
     if ( isset($_POST['guest_attach_text']) && ($_POST['guest_attach_text'] != "") && ($guest_attach_radio == "") ) {
         $guest_attach = $_POST['guest_attach_text'];
     } else $guest_attach = $_POST['guest_attach'];
@@ -488,7 +488,7 @@ if (have_posts()) {
                                 <span>Gia đình</span>
                             </label>
                             <label>
-                                <input type="radio" name="guest_attach" id="guestinput">
+                                <input type="radio" name="guest_attach" id="guestinput" value="">
                                 <span>Tự nhập</span>
                                 <div id="guest_attach">
                                     <input type="text" placeholder="VD: người thương" name="guest_attach_text">

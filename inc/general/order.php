@@ -3,11 +3,17 @@ function activation_package($order_id){
     $user_id    = get_field('customer', $order_id);
     $package_id = get_field('package', $order_id);
     $activate   = get_field('activate', $order_id);
+    # If have package ID, get total card from package
+    # Else get total card from order
+    if ($package_id) {
+        $total_card = get_field('total_card', $package_id);
+    } else {
+        $total_card = get_field('total_card', $order_id);
+    }
+    $category   = get_field('category', $package_id); # Danh mục thiệp
     # Lấy thông tin gói sản phẩm
-    if ($package_id && $user_id && !$activate) {
+    if ($user_id && !$activate) {
         $current_cards = get_field('total_cards', 'user_' . $user_id);
-        $total_card = get_field('total_card', $package_id); # Số lượng thiệp
-        $category   = get_field('category', $package_id); # Danh mục thiệp
         $activation_date = new DateTime(); # Ngày kích hoạt là ngày hôm nay.
         $payment_date = $activation_date->format('Ymd');
 
