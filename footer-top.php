@@ -4,9 +4,11 @@
             <div class="mui-col-md-3 info">
                 <h3>Thông tin liên hệ</h3>
                 <p><i class="fa fa-snowflake-o" aria-hidden="true"></i> : Thiệp cưới online HERA.</p>
-                <p><i class="fa fa-globe" aria-hidden="true"></i> : Số 5 hẻm 95/81/62 Vũ Xuân Thiều, P. Sài Đồng, Q. Long Biên, Hà Nội</p>
+                <p><i class="fa fa-building-o" aria-hidden="true"></i> : Số 5 hẻm 95/81/62 Vũ Xuân Thiều, P. Sài Đồng, Q. Long Biên, Hà Nội</p>
                 <p><i class="fa fa-phone" aria-hidden="true"></i> : 0366 096 339</p>
                 <p><i class="fa fa-envelope-o" aria-hidden="true"></i> : contact@hera.ai.vn</p>
+                <p><i class="fa fa-globe" aria-hidden="true"></i> : www.hera.ai.vn</p>
+                <p><i class="fa fa-globe" aria-hidden="true"></i> : www.am.io.vn</p>
             </div>
             <div class="mui-col-md-3">
                 <h3>Link nhanh</h3>
