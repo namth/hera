@@ -296,10 +296,40 @@ if (have_posts()) {
                             </div>
                             <div class="mui-col-md-12 mb10">
                                 <input type="hidden" name="groupid" value="<?php echo get_the_ID(); ?>">
-                                <button class="mui-btn hera-btn" onclick="activateModal()">
-                                    <i class="fa fa-user-plus"></i> Thêm mới
-                                </button>
-                                <a id="upload_data" href="<?php echo $link_upload; ?>" class="mui-btn"><i class="fa fa-cloud-upload"></i> Upload danh sách</a>
+                                <?php 
+                                    # get limit card of user
+                                    $limit = get_field('total_cards', 'user_' . $author_id);
+                                    $total_customer = 0;
+
+                                    # get total card of user
+                                    $args = array(
+                                        'post_type'     => 'thiep_moi',
+                                        'author'        => $author_id,
+                                        'post_status'   => 'publish',
+                                        'posts_per_page' => -1,
+                                    );
+                                    # get count of card
+                                    $query = new WP_Query($args);
+                                    if ($query->have_posts()) {
+                                        while ($query->have_posts()) {
+                                            $query->the_post();
+
+                                            $customer = get_field('guest_list');
+                                            $_customer = is_array($customer) ? count($customer) : 0;
+                                            $total_customer += $_customer;
+                                        }
+                                    }
+
+                                    # if $total_customer >= $limit then show notification and disable add new customer
+                                    if ($total_customer >= $limit) {
+                                        show_notification('fa-exclamation-circle', 'Bạn đã đạt giới hạn thiệp, hãy nâng cấp gói để thêm khách mời mới', 'fa-gift', get_bloginfo('url') . '/danh-sach-goi-san-pham/', 'Xem gói thiệp');
+                                    } else {
+                                        echo '<button class="mui-btn hera-btn" onclick="activateModal()">
+                                                <i class="fa fa-user-plus"></i> Thêm mới
+                                            </button>
+                                            <a id="upload_data" href="' . $link_upload . '" class="mui-btn"><i class="fa fa-cloud-upload"></i> Upload danh sách</a>';
+                                    }
+                                ?>
                             </div>
                             <div class="mui-col-md-12">
                                 <table class="mui-table" id="list_customer">
