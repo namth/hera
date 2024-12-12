@@ -321,7 +321,7 @@ if (have_posts()) {
                                     }
 
                                     # if $total_customer >= $limit then show notification and disable add new customer
-                                    if ($total_customer >= $limit) {
+                                    if (($total_customer >= $limit) && $limit) {
                                         show_notification('fa-exclamation-circle', 'Bạn đã đạt giới hạn thiệp, hãy nâng cấp gói để thêm khách mời mới', 'fa-gift', get_bloginfo('url') . '/danh-sach-goi-san-pham/', 'Xem gói thiệp');
                                     } else {
                                         echo '<button class="mui-btn hera-btn" onclick="activateModal()">
