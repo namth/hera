@@ -14,7 +14,7 @@ $current_user_id = get_current_user_id();
             get_sidebar();
             ?>
         </div>
-        <div class="mui-col-md-10 mt20">
+        <div class="mui-col-md-8 mt20">
             <div class="mui-panel" id="checkout">
                 <h3 class="title_general mui--divider-bottom">Danh sách đơn hàng</h3>
                 <table class="table">
@@ -48,7 +48,7 @@ $current_user_id = get_current_user_id();
                                 $query->the_post();
 
                                 $status = get_field('status');
-                                $final_total = get_field('final_total');
+                                $final_total = get_field('final_total')?get_field('final_total'):0;
                                 $package_id = get_field('package');
                                 $total_card = get_field('total_card', $package_id);
                                 $product_name = $package_id?get_the_title($package_id):"Thiệp cưới online";
@@ -87,7 +87,28 @@ $current_user_id = get_current_user_id();
                 ?>
             </div>
         </div>
+        <div class="mui-col-md-2 left_sidebar">
+            <?php
+            $menu = 'Hướng dẫn thanh toán';
+            $guideline = wp_nav_menu(array(
+                'menu'          => $menu,
+                'container_id'  => 'guide_section',
+                'container_class'   => '',
+                'items_wrap'    => '<a href="#" class="maximize"><i class="fa fa-external-link" aria-hidden="true"></i> Khôi phục</a><img src="' . get_template_directory_uri() . '/img/thaochi.jpg"><ul class="playlist"><h4>Hướng dẫn nhanh</h4>%3$s</ul><a href="#" class="minimize"><i class="fa fa-level-down" aria-hidden="true"></i> Thu nhỏ</a>',
+                'menu_class'    => 'main_menu mb20',
+                'echo' => FALSE,
+                'fallback_cb' => '__return_false'
+            ));
+
+            if ( ! empty ( $guideline ) ){
+                echo $guideline;
+            }
+            ?>
+        </div>
     </div>
 </div>
+<script src="<?php echo get_template_directory_uri(); ?>/js/soundmanager2-jsmin.js"></script>
+<script src="<?php echo get_template_directory_uri(); ?>/js/soundmanager2-player.js"></script>
+<link href="<?php echo get_template_directory_uri(); ?>/css/soundmanager2-player.css" rel="stylesheet" type="text/css">
 <?php
 get_footer();

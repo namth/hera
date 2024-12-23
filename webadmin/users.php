@@ -53,7 +53,7 @@ $users = $query->get_results();
                 $i++;
                 echo "<tr>";
                 echo "<td>" . $user->ID . "</td>";
-                echo "<td><a href='" . get_bloginfo('url') . "?uid=" . $user->ID . "' target='_blank'>" . $user->display_name . "</a></td>";
+                echo "<td><a href='" . get_bloginfo('url') . "/main?uid=" . $user->ID . "' target='_blank'>" . $user->display_name . "</a></td>";
                 echo "<td>" . $user->user_login . "</td>";
                 echo "<td>" . $user->user_email . "</td>";
                 echo "<td>" . $used_cards . "/" . $total_cards . "</td>";
