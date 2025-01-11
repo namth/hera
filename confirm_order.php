@@ -66,7 +66,15 @@ if ( isset( $_GET['p'] ) && ($_GET['p'] != "")) {
                                 # check coupon xem có được sử dụng chưa, nếu limit thì set coupon về 0
                                 if (!check_coupon_limit($coupon, $current_user->ID)) {
                                     $coupon = 0;
+                                } 
+                                # check validate coupon
+                                $expired = get_field('expired', $coupon);
+                                $coupon_quantity = get_field('coupon_quantity', $coupon);
+                                $today = new DateTime();
+                                if (($coupon_quantity <= 0) || ($expired < $today->format('Ymd'))) {
+                                    $coupon = 0;
                                 }
+
                                 if ($coupon) {
                                     $final_price = get_value_after_coupon( $coupon, $package_id);
                                 } else {
@@ -92,10 +100,13 @@ if ( isset( $_GET['p'] ) && ($_GET['p'] != "")) {
                                 $class_coupon = $coupon?'has_coupon':'';
                             ?>
                             <div class="package_box">
-                                <img src="<?php echo $thumbnail_url; ?>" alt="">
+                                <img src="<?php echo get_template_directory_uri(); ?>/img/hera/wedding_cards.webp" alt="">
                                 <h4><?php echo get_the_title($package_id); ?></h4>
                                 <span class="price <?php echo $class_coupon; ?>">
                                     <?php echo number_format($price) . " ₫"; ?>
+                                </span>
+                                <span class="final_price">
+                                    <?php if ($coupon) echo number_format($final_price) . " ₫"; ?>
                                 </span>
                                 <div class="view_coupon">
                                     <div class="name">
@@ -103,9 +114,6 @@ if ( isset( $_GET['p'] ) && ($_GET['p'] != "")) {
                                         <span class="coupon_name"></span>
                                     </div>
                                 </div>
-                                <span class="final_price">
-                                    <?php if ($final_price != $price) echo number_format($final_price) . " ₫"; ?>
-                                </span>
                             </div>
                             <div class="coupon">
                                 <a href="#" class="coupon_link">Bạn có mã giảm giá?</a>

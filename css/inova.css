@@ -961,7 +961,7 @@ img {
           flex-direction: column;
   padding-top: 66%;
 }
-.heracard_list .addnew_card .fa {
+.heracard_list .addnew_card > .fa {
   font-size: 48px;
   position: absolute;
   top: calc(50% - 24px);
@@ -1412,6 +1412,10 @@ img {
 }
 #footer #menu-quick-link {
   padding-left: 15px;
+  margin-top: -4px;
+}
+#footer #menu-quick-link li {
+  padding: 4px;
 }
 #footer #menu-quick-link li a {
   color: #e0d8ce;
@@ -1763,6 +1767,15 @@ img {
   background: cornsilk;
   color: #9b8060;
 }
+#checkout #payment .mui-tabs__bar {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 10px;
+}
+#checkout #payment .mui-tabs__bar li {
+  width: 100%;
+}
 #checkout #payment .mui-tabs__bar li.mui--is-active {
   border-bottom: none;
 }
@@ -1771,16 +1784,10 @@ img {
   font-size: 18px;
   font-weight: bold;
 }
-#checkout #payment .mui-tabs__bar li.bank_transfer {
-  padding-right: 5px;
-}
 #checkout #payment .mui-tabs__bar li.bank_transfer a {
   background: #0571AD;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
-}
-#checkout #payment .mui-tabs__bar li.pay_momo {
-  padding-left: 5px;
 }
 #checkout #payment .mui-tabs__bar li.pay_momo a {
   background: #A50064;
@@ -1812,7 +1819,7 @@ img {
 }
 #checkout #payment #pay_momo {
   border: 1px solid #A50064;
-  padding: 8px 15px;
+  padding: 30px 15px;
 }
 #checkout #payment #pay_momo form {
   text-align: center;
@@ -1834,6 +1841,10 @@ img {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
@@ -2192,10 +2203,10 @@ img {
   display: block;
 }
 
-#list_product {
+.package {
   padding-bottom: 50px;
 }
-#list_product .package_item {
+.package .package_item {
   border: 1px solid #ddd;
   border-radius: 20px;
   padding: 0 20px 20px;
@@ -2205,20 +2216,20 @@ img {
   position: relative;
   margin: 20px 0;
 }
-#list_product .package_item .ribbon {
+.package .package_item .ribbon {
   width: 110px;
   height: 110px;
   overflow: hidden;
   position: absolute;
 }
-#list_product .package_item .ribbon:before, #list_product .package_item .ribbon:after {
+.package .package_item .ribbon:before, .package .package_item .ribbon:after {
   position: absolute;
   z-index: -1;
   content: "";
   display: block;
   border: 3px solid #d30e0e;
 }
-#list_product .package_item .ribbon span {
+.package .package_item .ribbon span {
   position: absolute;
   display: block;
   width: 165px;
@@ -2227,23 +2238,23 @@ img {
   -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
           box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
 }
-#list_product .package_item .ribbon-top-right {
+.package .package_item .ribbon-top-right {
   top: -3px;
   right: -3px;
 }
-#list_product .package_item .ribbon-top-right:before, #list_product .package_item .ribbon-top-right:after {
+.package .package_item .ribbon-top-right:before, .package .package_item .ribbon-top-right:after {
   border-top-color: transparent;
   border-right-color: transparent;
 }
-#list_product .package_item .ribbon-top-right:before {
+.package .package_item .ribbon-top-right:before {
   top: 0;
   left: 0;
 }
-#list_product .package_item .ribbon-top-right:after {
+.package .package_item .ribbon-top-right:after {
   bottom: 0;
   right: 0;
 }
-#list_product .package_item .ribbon-top-right span {
+.package .package_item .ribbon-top-right span {
   left: -14px;
   top: 24px;
   -webkit-transform: rotate(45deg);
@@ -2254,34 +2265,34 @@ img {
   font-size: 20px;
   font-family: "Quicksand";
 }
-#list_product .package_item .package_content img {
+.package .package_item .package_content img {
   margin: 0 auto;
   height: auto;
   border-radius: 18px;
 }
-#list_product .package_item .package_content .price .label {
+.package .package_item .package_content .price .label {
   display: block;
   margin-top: 35px;
   color: #f55a4e;
   font-size: 12px;
   font-weight: bold;
 }
-#list_product .package_item .package_content .price .value {
+.package .package_item .package_content .price .value {
   display: block;
   font-size: 35px;
   margin-bottom: 15px;
   font-family: "Quicksand";
 }
-#list_product .package_item .package_content .price .no_promote {
+.package .package_item .package_content .price .no_promote {
   margin: 20px 0 24px !important;
 }
-#list_product .package_item .package_content .price .listed_price {
+.package .package_item .package_content .price .listed_price {
   font-size: 20px;
   text-decoration: line-through;
   color: #383838;
   font-family: "Quicksand";
 }
-#list_product .package_item .package_content .package_locked {
+.package .package_item .package_content .package_locked {
   background: #dbdbdb;
   padding: 12px 20px;
   border-radius: 10px;
@@ -2289,19 +2300,19 @@ img {
   display: inline-block;
   color: #a6a6a6;
 }
-#list_product .package_item .package_content ul {
+.package .package_item .package_content ul {
   list-style: none;
   padding: 0;
 }
-#list_product .package_item .package_content ul li {
+.package .package_item .package_content ul li {
   margin: 10px 20px;
 }
-#list_product .package_item .package_content ul li i {
+.package .package_item .package_content ul li i {
   margin-right: 6px;
   font-size: 18px;
   color: coral;
 }
-#list_product .package_item .package_content .mui-btn {
+.package .package_item .package_content .mui-btn {
   margin-top: 30px;
   height: 45px;
   font-size: 16px;
@@ -2346,6 +2357,54 @@ img {
   font-weight: bold;
   color: #d00e2d;
   margin-bottom: 0;
+}
+#confirm_order .package_box .inova_number_input {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 20px 0;
+}
+#confirm_order .package_box .inova_number_input label {
+  display: block;
+  font-size: 14px;
+  margin-top: -10px;
+}
+#confirm_order .package_box .inova_number_input .input-group {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border: 1px solid #916d45;
+  border-radius: 8px;
+  padding: 0;
+  overflow: hidden;
+}
+#confirm_order .package_box .inova_number_input .input-group input {
+  width: 100px;
+  text-align: center;
+  font-size: 36px;
+  border: none;
+  padding: 5px 0;
+  color: #916d45;
+}
+#confirm_order .package_box .inova_number_input .input-group button {
+  background: #f9f5f0;
+  color: #916d45;
+  border: none;
+  padding: 5px 0;
+  font-size: 36px;
+  width: 50px;
 }
 #confirm_order .package_box .price {
   font-size: 28px;
@@ -2747,6 +2806,12 @@ img {
 #single_post #post_content {
   margin-bottom: 30px;
 }
+#single_post #related_posts {
+  margin-top: 40px;
+}
+#single_post #related_posts h2 {
+  margin-bottom: 20px;
+}
 #single_post #related_posts .page-title {
   text-align: center;
   margin: 50px 0 40px;
@@ -2754,16 +2819,42 @@ img {
   color: #956149;
   font-weight: 800;
 }
-#single_post #related_posts .post-item img {
+#single_post #related_posts .post-item {
+  margin-bottom: 35px;
+}
+#single_post #related_posts .post-item .post-thumbnail {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+#single_post #related_posts .post-item .post-thumbnail::before {
+  display: block;
+  content: "";
+  width: 100%;
+  padding-top: 75%;
+}
+#single_post #related_posts .post-item .post-thumbnail img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+#single_post #related_posts img {
   height: auto;
 }
-#single_post #related_posts .post-item h3 {
+#single_post #related_posts img h3 {
   text-align: center;
 }
 
-@media screen and (max-width: 2000px) {
+@media screen and (min-width: 1170px) {
   #detail_card {
-    width: calc(100% - 256px);
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+    max-width: calc(100% - 256px);
   }
   #guide_section ul.playlist h4 {
     font-weight: bold;

@@ -123,19 +123,25 @@ jQuery(document).ready(function ($) {
             },
             success: function (resp) {
                 var obj = JSON.parse(resp);
+                console.log(obj);
               
                 var modalEl = document.getElementById('create_card_form').cloneNode(true);
                 modalEl.style.backgroundColor = '#fff';
                 modalEl.style.display = 'block';
                 modalEl.style.float = 'inherit';
                 
-                modalEl.firstElementChild[0].value = obj['name'];
-                modalEl.firstElementChild[1].value = obj['guest_attach'];
-                modalEl.firstElementChild[2].value = obj['mine'];
-                modalEl.firstElementChild[3].value = obj['your'];
-                modalEl.firstElementChild[4].value = obj['phone'];
-                modalEl.firstElementChild[5].value = '1';
-                modalEl.firstElementChild[6].value = obj['id'];
+                modalEl.firstElementChild[1].value = obj['name'];
+                /* if guest_attach is not empty */
+                if(obj['guest_attach']){
+                  modalEl.firstElementChild[4].value = "";
+                  modalEl.firstElementChild[4].checked = true;
+                  modalEl.firstElementChild[5].value = obj['guest_attach'];
+                }                
+                modalEl.firstElementChild[6].value = obj['mine'];
+                modalEl.firstElementChild[7].value = obj['your'];
+                modalEl.firstElementChild[8].value = obj['phone'];
+                modalEl.firstElementChild[9].value = '1';
+                modalEl.firstElementChild[10].value = obj['id'];
                 console.log(modalEl.firstElementChild);
                 mui.overlay('on', modalEl);
             },

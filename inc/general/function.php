@@ -7,6 +7,9 @@ require_once( $general_dir . '/custom_field.php');
 // require_once( $general_dir . '/secret.php');
 require_once( $general_dir . '/order.php');
 
+/* Package display shortcode */
+require_once( $general_dir . '/package.php');
+
 # convert time
 function convert_time($time, $connect=" giờ ") {
     $time_arr = explode(':', $time);

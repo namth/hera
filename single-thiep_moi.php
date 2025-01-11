@@ -36,7 +36,9 @@ if (
     wp_verify_nonce($_POST['post_nonce_field'], 'post_nonce')
 ) {
     $guest_name = $_POST['guest_name'];
-    if ( isset($_POST['guest_attach_text']) && ($_POST['guest_attach_text'] != "") ) {
+    $guest_attach_radio = $_POST['guest_attach'];
+    // $guest_attach_radio = "on"?"":$guest_attach_radio;
+    if ( isset($_POST['guest_attach_text']) && ($_POST['guest_attach_text'] != "") && ($guest_attach_radio == "") ) {
         $guest_attach = $_POST['guest_attach_text'];
     } else $guest_attach = $_POST['guest_attach'];
     $vai_ve = $_POST['vai_ve'];
@@ -294,10 +296,40 @@ if (have_posts()) {
                             </div>
                             <div class="mui-col-md-12 mb10">
                                 <input type="hidden" name="groupid" value="<?php echo get_the_ID(); ?>">
-                                <button class="mui-btn hera-btn" onclick="activateModal()">
-                                    <i class="fa fa-user-plus"></i> Thêm mới
-                                </button>
-                                <a id="upload_data" href="<?php echo $link_upload; ?>" class="mui-btn"><i class="fa fa-cloud-upload"></i> Upload danh sách</a>
+                                <?php 
+                                    # get limit card of user
+                                    $limit = get_field('total_cards', 'user_' . $author_id);
+                                    $total_customer = 0;
+
+                                    # get total card of user
+                                    $args = array(
+                                        'post_type'     => 'thiep_moi',
+                                        'author'        => $author_id,
+                                        'post_status'   => 'publish',
+                                        'posts_per_page' => -1,
+                                    );
+                                    # get count of card
+                                    $query = new WP_Query($args);
+                                    if ($query->have_posts()) {
+                                        while ($query->have_posts()) {
+                                            $query->the_post();
+
+                                            $customer = get_field('guest_list');
+                                            $_customer = is_array($customer) ? count($customer) : 0;
+                                            $total_customer += $_customer;
+                                        }
+                                    }
+
+                                    # if $total_customer >= $limit then show notification and disable add new customer
+                                    if (($total_customer >= $limit) && $limit) {
+                                        show_notification('fa-exclamation-circle', 'Bạn đã đạt giới hạn thiệp, hãy nâng cấp gói để thêm khách mời mới', 'fa-gift', get_bloginfo('url') . '/danh-sach-goi-san-pham/', 'Xem gói thiệp');
+                                    } else {
+                                        echo '<button class="mui-btn hera-btn" onclick="activateModal()">
+                                                <i class="fa fa-user-plus"></i> Thêm mới
+                                            </button>
+                                            <a id="upload_data" href="' . $link_upload . '" class="mui-btn"><i class="fa fa-cloud-upload"></i> Upload danh sách</a>';
+                                    }
+                                ?>
                             </div>
                             <div class="mui-col-md-12">
                                 <table class="mui-table" id="list_customer">
@@ -409,9 +441,9 @@ if (have_posts()) {
                                                             $_icon = $package_id ? '<i class="fa fa-eye"></i>' : '<i class="fa fa-eye-slash"></i>';
                                                             echo '<a href="' . $viewlink . '" target="_blank">' . $_icon . '</a>';
 
-                                                            if (current_user_can('manage_options')) {
+                                                            /* if (current_user_can('manage_options')) {
                                                                 echo '<a href="' . $viewlink . '?key=print_card_temp" target="_blank"><i class="fa fa-envelope-open" aria-hidden="true"></i></a>';
-                                                            }
+                                                            } */
                                                         }
                                                         ?>
 
@@ -486,7 +518,7 @@ if (have_posts()) {
                                 <span>Gia đình</span>
                             </label>
                             <label>
-                                <input type="radio" name="guest_attach" id="guestinput">
+                                <input type="radio" name="guest_attach" id="guestinput" value="">
                                 <span>Tự nhập</span>
                                 <div id="guest_attach">
                                     <input type="text" placeholder="VD: người thương" name="guest_attach_text">

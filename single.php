@@ -37,29 +37,47 @@ if (have_posts()) {
                         <div id="related_posts">
                             <h2>BÀI VIẾT LIÊN QUAN</h2>
 
-                            <div class="mui-row">
+                            <div class="mui-container">
 
                                 <?php
                                 $args   = array(
                                     'post_type'     => 'post',
-                                    'posts_per_page' => 6,
+                                    'posts_per_page' => 8,
                                     'post_status'   => 'publish',
                                     'category__in' => $cate_in,
                                 );
 
                                 $query = new WP_Query($args);
 
-                                // print_r($query);
+                                echo '<div class="mui-row">';
                                 if ($query->have_posts()) {
+                                    $count = 0;
                                     while ($query->have_posts()) {
                                         $query->the_post();
 
-                                        echo '<div class="mui-col-md-4 post-item">';
-                                        echo    get_the_post_thumbnail();
-                                        echo    '<h3>' . get_the_title() . '</h3>';
+                                        if ($count % 4 == 0) {
+                                            echo '<div class="mui-row">';
+                                        }
+
+                                        echo '<div class="mui-col-md-3 post-item">';
+                                        echo '<div class="post-thumbnail">';
+                                        echo '<a href="' . get_permalink() . '">' . get_the_post_thumbnail() . '</a>';
+                                        echo '</div>';
+                                        echo '<h4><a href="' . get_permalink() . '">' . get_the_title() . '</a></h4>';
+                                        echo '</div>';
+
+                                        if (($count + 1) % 4 == 0) {
+                                            echo '</div>';
+                                        }
+
+                                        $count++;
+                                    }
+
+                                    if ($count % 4 != 0) {
                                         echo '</div>';
                                     }
                                 }
+                                echo '</div>';
                                 ?>
                             </div>
                         </div>

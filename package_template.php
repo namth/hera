@@ -44,13 +44,18 @@ $current_max_card = get_field('total_cards', 'user_' . $current_user_id);
                                 $coupon     = get_field('coupon');
                                 $coupon_value = get_value_after_coupon($coupon, get_the_ID());
 
-                                $percent = round($coupon_value/$price * 100 - 100);
+                                # if $coupon_value greater than 0, then calculate $percent
+                                if($coupon_value < $price){
+                                    $percent = round($coupon_value/$price * 100 - 100);
+                                } else {
+                                    $percent = 0;
+                                }
 
                                 ?>
                                     <div class="mui-col-md-4">
                                         <div class="package_item box">
                                             <?php 
-                                                if ($coupon) {
+                                                if ($coupon_value < $price) {
                                                     echo '<div class="ribbon ribbon-top-right"><span>' . $percent . '%</span></div>';
                                                 }
                                             ?>
@@ -65,7 +70,7 @@ $current_max_card = get_field('total_cards', 'user_' . $current_user_id);
                                                 <div class="price">
                                                     <span class="label">Đơn giá</span>
                                                     <?php 
-                                                        if ($coupon) {
+                                                        if ($coupon_value < $price) {
                                                             echo '<span class="listed_price">' . number_format($price) . ' đ</span>';
                                                             echo '<span class="value">' . number_format($coupon_value) . ' đ</span>';
                                                         } else {
