@@ -48,9 +48,9 @@ $current_user_id = get_current_user_id();
                                 $query->the_post();
 
                                 $status = get_field('status');
-                                $final_total = get_field('final_total')?get_field('final_total'):0;
+                                $final_total = (int) get_field('final_total');
                                 $package_id = get_field('package');
-                                $total_card = get_field('total_card', $package_id);
+                                $total_card = (int) get_field('total_card', $package_id);
                                 $product_name = $package_id?get_the_title($package_id):"Thiệp cưới online";
                                 
                                 if ($status=="Chưa thanh toán") {

@@ -417,3 +417,27 @@ function updateSentFriend() {
     echo $found_customer;
     exit;
 }
+
+/* 
+* Source: link-to-partner.php
+* Liên kết tài khoản partner
+*/
+add_action('wp_ajax_findUser', 'findUser');
+function findUser() {
+    $username = $_POST['username'];
+    $user = get_user_by('login', $username);
+    if ($user) {
+        # get avatar url
+        $link_avatar = get_avatar_url($user->ID, array('size' => '100'));
+        $result = '<div class="user_found">
+                <img src="' . $link_avatar . '" alt="">
+                <span>' . $user->display_name . '</span>
+            </div>';
+        $flag = true;
+    } else {
+        $result = '<div class="error">Không tìm thấy tài khoản.</div>';
+        $flag = false;
+    }
+    echo json_encode(array('result' => $result, 'flag' => $flag));
+    exit;
+}
