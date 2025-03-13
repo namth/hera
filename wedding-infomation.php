@@ -2,9 +2,6 @@
 /* 
 *  Template Name: Wedding Infomation
 */ 
-get_header();
-get_template_part('header', 'topbar');
-// date_default_timezone_set('Asia/Ho_Chi_Minh');
 
 # get some of user infomation
 $current_user_id = get_current_user_id();
@@ -33,15 +30,18 @@ wp_verify_nonce($_POST['post_nonce_field'], 'post_nonce') ) {
         update_field('field_62b13a4949b35', $bride, $where_update);
     }
 
-    wp_redirect(get_permalink());
+    wp_redirect(get_permalink() . "?uid=" . $current_user_id);
+    exit;
 }
 
-$groom  = get_field('groom', $where_update);
-$bride  = get_field('bride', $where_update);
+$groom          = get_field('groom', $where_update);
+$bride          = get_field('bride', $where_update);
 $active_groom   = get_field('active_groom', $where_update);
 $active_bride   = get_field('active_bride', $where_update);
 $google_api     = get_field('google_maps_api_key', 'option');
 
+get_header();
+get_template_part('header', 'topbar');
 ?>
 <div class="mui-container-fluid">
     <div class="mui-row">
@@ -155,11 +155,13 @@ $google_api     = get_field('google_maps_api_key', 'option');
                                         $_groom_wedding_time    = DateTime::createFromFormat('d/m/Y H:i', $groom_wedding_time);
                                     } else {
                                         $_groom_wedding_time    = new DateTime();
+                                        $_groom_wedding_time->setTime(10, 0, 0);
                                     }
                                     if($groom_party_time) {
                                         $_groom_party_time  = DateTime::createFromFormat('d/m/Y H:i', $groom_party_time);
                                     } else {
                                         $_groom_party_time  = new DateTime();
+                                        $_groom_party_time->setTime(10, 0, 0);
                                     }
                                     $_groom_wedding_moontime= DateTime::createFromFormat('d/m/Y H:i', $groom_wedding_moontime);
                                     $_groom_party_moontime  = DateTime::createFromFormat('d/m/Y H:i', $groom_party_moontime);
@@ -403,11 +405,13 @@ $google_api     = get_field('google_maps_api_key', 'option');
                                         $_bride_wedding_time    = DateTime::createFromFormat('d/m/Y H:i', $bride_wedding_time);
                                     } else {
                                         $_bride_wedding_time    = new DateTime();
+                                        $_bride_wedding_time->setTime(10, 0, 0);
                                     }
                                     if ($bride_party_time) {
                                         $_bride_party_time  = DateTime::createFromFormat('d/m/Y H:i', $bride_party_time);
                                     } else {
                                         $_bride_party_time  = new DateTime();
+                                        $_bride_party_time->setTime(10, 0, 0);
                                     }
                                     $_bride_wedding_moontime= DateTime::createFromFormat('d/m/Y H:i', $bride_wedding_moontime);
                                     $_bride_party_moontime  = DateTime::createFromFormat('d/m/Y H:i', $bride_party_moontime);

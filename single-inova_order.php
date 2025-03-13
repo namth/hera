@@ -323,7 +323,7 @@ if (have_posts()) {
                                 'order_id'      => get_the_ID()
                             ]), 'e');
                             # Nếu đã đóng payment mà chưa được kích hoạt thì chuyển đến trang kích hoạt ngay.
-                            if (!$activate) {
+                            if (!$activate && $status == "Đã thanh toán") {
                                 echo '<a href="' . $active_data . '" class="mui-btn hera-btn active_free" style="margin: 5px auto;display: table;">Kích hoạt ngay</a>';
                             }
                         }                  

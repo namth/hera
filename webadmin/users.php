@@ -27,6 +27,7 @@ $users = $query->get_results();
         <th>Tên</th>
         <th>Username</th>
         <th>Email</th>
+        <th>Cô dâu chú rể</th>
         <th>Số lượng thiệp đã sử dụng</th>
         <th>Ngày đăng ký</th>
         <th>Lần login cuối</th>
@@ -46,6 +47,10 @@ $users = $query->get_results();
                 $lastlogin_timestamp = get_user_meta( $user->ID, '_last_login', true );
                 $lastlogin_date = $lastlogin_timestamp?date('Y-m-d H:i:s', $lastlogin_timestamp):"-";
                 $login_amount   = get_user_meta($user->ID, 'login_amount', true);
+                $groom          = get_field('groom', 'user_' . $user->ID);
+                $bride          = get_field('bride', 'user_' . $user->ID);
+                $groom_bride    = ($groom != "" & $bride != "") ? implode(" & ", [$groom,$bride]) : "-";
+
 
                 $total_cards    = $total_cards?$total_cards:"-";
                 $used_cards     = $used_cards?$used_cards:"-";
@@ -53,9 +58,10 @@ $users = $query->get_results();
                 $i++;
                 echo "<tr>";
                 echo "<td>" . $user->ID . "</td>";
-                echo "<td><a href='" . get_bloginfo('url') . "?uid=" . $user->ID . "' target='_blank'>" . $user->display_name . "</a></td>";
+                echo "<td><a href='" . get_bloginfo('url') . "/main?uid=" . $user->ID . "' target='_blank'>" . $user->display_name . "</a></td>";
                 echo "<td>" . $user->user_login . "</td>";
                 echo "<td>" . $user->user_email . "</td>";
+                echo "<td>" . $groom_bride . "</td>";
                 echo "<td>" . $used_cards . "/" . $total_cards . "</td>";
                 echo "<td>" . $user->user_registered . "</td>";
                 echo "<td>" . $lastlogin_date . "</td>";

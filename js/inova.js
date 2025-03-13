@@ -334,4 +334,38 @@ jQuery(document).ready(function ($) {
       }); */
       return false;
     });
+
+    /* 
+    * File: link-to-partner.php
+    * Find user by username
+    * Return avatar and displayname
+    */
+    $(document).on('click', '.link_partner_form .see_pass', function(){
+      var username = $('input[name="username"]').val();
+      $.ajax({
+        type: "POST",
+        url: AJAX.ajax_url,
+        data: {
+          action: "findUser",
+          username: username
+        },
+        beforeSend: function () {
+          $('#partner_username').next().html('<img src="' + AJAX.loading + '" style="width: 20px; height: 20px;"/>');
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+          console.log(xhr.status);
+          console.log(xhr.responseText);
+          console.log(thrownError);
+        },
+        success: function (resp) {
+          var obj = JSON.parse(resp);
+          $('#userFinded').html(obj.result);
+          if(obj.flag){
+            $('button[type="submit"]').removeAttr('disabled');
+          } else {
+            $('button[type="submit"]').attr('disabled', 'disabled');
+          }
+        },
+      });
+    });
 });

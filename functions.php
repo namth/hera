@@ -92,6 +92,7 @@ function inovacards_load_scripts()
         wp_enqueue_script('mui', get_template_directory_uri() . '/js/mui.min.js', array('jquery'), '1.0', true);
         wp_enqueue_script('frontpage', get_template_directory_uri() . '/js/frontpage/frontpage.js', array('jquery', 'mui'), '1.0', true);
         wp_enqueue_script('inova', get_template_directory_uri() . '/js/inova.js', array('jquery', 'mui'), '1.0', true);
+        wp_enqueue_script('phosphor-icon', 'https://unpkg.com/@phosphor-icons/web', array(), '1.0', true);
         wp_localize_script('inova', 'AJAX', array(
             'ajax_url' => admin_url('admin-ajax.php')
         ));

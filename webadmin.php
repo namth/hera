@@ -35,13 +35,20 @@ if ( is_user_logged_in() && current_user_can('administrator') ) {
                     <img src="<?php echo get_template_directory_uri(); ?>/img/top.png" alt="">
                     <ul class="main_menu">
                         <li>
+                            <i class="ph ph-house"></i>
                             <a href="<?php echo get_permalink() . '?direct=index'; ?>">Home</a>
                         </li>
                         <li>
-                            <a href="<?php echo get_permalink() . '?direct=templates'; ?>">Duyệt mẫu mới</a>
+                            <i class="ph ph-file-text"></i>
+                            <a href="<?php echo get_permalink() . '?direct=templates'; ?>"> Duyệt mẫu mới</a>
                         </li>
                         <li>
-                            <a href="<?php echo get_permalink() . '?direct=users'; ?>">Danh sách user</a>
+                            <i class="ph ph-users"></i>
+                            <a href="<?php echo get_permalink() . '?direct=users'; ?>"> Danh sách user</a>
+                        </li>
+                        <li>
+                            <i class="ph ph-shopping-cart"></i>
+                            <a href="<?php echo get_permalink() . '?direct=orders'; ?>"> Danh sách đơn hàng</a>
                         </li>
                     </ul>
                 </div>
@@ -61,6 +68,10 @@ if ( is_user_logged_in() && current_user_can('administrator') ) {
                                 
                                 case 'templates':
                                     require_once( $dir . '/webadmin/templates.php');
+                                    break;
+                                
+                                case 'orders':
+                                    require_once( $dir . '/webadmin/orders.php');
                                     break;
                                 
                                 default:
