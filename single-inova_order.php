@@ -4,6 +4,7 @@ if (have_posts()) {
         the_post();
 
         $popup = false;
+        $coupon_label = $total_label = "";
         $current_user = wp_get_current_user();
         # get data from invoice
         $id_invoice = get_the_title();
@@ -142,9 +143,9 @@ if (have_posts()) {
             get_sidebar();
             ?>
         </div>
-        <div class="mui-col-md-10">
+        <div class="mui-col-md-8">
             <div class="breadcrumb">
-                <a href="<?php echo get_bloginfo('url'); ?>">Trang chủ</a>
+                <a href="<?php echo get_bloginfo('url'); ?>/main">Trang chủ</a>
                 <i class="fa fa-chevron-right"></i>
                 <a href="<?php echo get_bloginfo('url') ."/danh-sach-don-hang/"; ?>">Danh sách hoá đơn</a>
                 <i class="fa fa-chevron-right"></i>
@@ -252,9 +253,11 @@ if (have_posts()) {
                                         $final_total -= $paid; 
                                     }
 
+                                    $final_total_with_format = $final_total?number_format($final_total):0;
+
                                     echo "<tr class='final_total'>
                                             <td style='border-top: 1px solid lightgray;'>" . $total_label . "</td>
-                                            <td style='border-top: 1px solid lightgray;'>" . number_format(abs($final_total)) . " ₫</td>
+                                            <td style='border-top: 1px solid lightgray;'>" . $final_total_with_format . " ₫</td>
                                         </tr>";
                                 ?>
                             </tbody>
@@ -323,13 +326,31 @@ if (have_posts()) {
                                 'order_id'      => get_the_ID()
                             ]), 'e');
                             # Nếu đã đóng payment mà chưa được kích hoạt thì chuyển đến trang kích hoạt ngay.
-                            if (!$activate && $status == "Đã thanh toán") {
+                            if (!$activate && ($status == "Đã thanh toán" || $status == "Thanh toán dư")) {
                                 echo '<a href="' . $active_data . '" class="mui-btn hera-btn active_free" style="margin: 5px auto;display: table;">Kích hoạt ngay</a>';
                             }
                         }                  
                     ?>
                 </div>
             </div>
+        </div>
+        <div class="mui-col-md-2 left_sidebar">
+            <?php
+            $menu = 'Hướng dẫn thanh toán';
+            $guideline = wp_nav_menu(array(
+                'menu'          => $menu,
+                'container_id'  => 'guide_section',
+                'container_class'   => '',
+                'items_wrap'    => '<a href="#" class="maximize"><i class="fa fa-external-link" aria-hidden="true"></i> Khôi phục</a><img src="' . get_template_directory_uri() . '/img/thaochi.jpg"><ul class="playlist"><h4>Hướng dẫn nhanh</h4>%3$s</ul><a href="#" class="minimize"><i class="fa fa-level-down" aria-hidden="true"></i> Thu nhỏ</a>',
+                'menu_class'    => 'main_menu mb20',
+                'echo' => FALSE,
+                'fallback_cb' => '__return_false'
+            ));
+
+            if ( ! empty ( $guideline ) ){
+                echo $guideline;
+            }
+            ?>
         </div>
     </div>
 </div>
@@ -342,6 +363,9 @@ if (have_posts()) {
     </div>
 </div>
 <script src="<?php echo get_template_directory_uri(); ?>/js/single-inova_order.js"></script>
+<script src="<?php echo get_template_directory_uri(); ?>/js/soundmanager2-jsmin.js"></script>
+<script src="<?php echo get_template_directory_uri(); ?>/js/soundmanager2-player.js"></script>
+<link href="<?php echo get_template_directory_uri(); ?>/css/soundmanager2-player.css" rel="stylesheet" type="text/css">
 <?php
     }
 }
