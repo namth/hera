@@ -41,8 +41,14 @@ $query = new WP_Query($args);
                 $status = get_field('status');
                 $final_total = (int) get_field('final_total');
                 $package_id = get_field('package');
+                $activate = get_field('activate');
                 $total_card = (int) get_field('total_card', $package_id);
                 $product_name = $package_id ? get_the_title($package_id) : "Thiệp cưới online";
+                
+                // Change status for free orders
+                if ($status == "Chưa thanh toán" && $final_total == 0) {
+                    $status = "Chưa kích hoạt";
+                }
                 
                 // Get customer info
                 $author_id = get_post_field('post_author', $order_id);
@@ -57,6 +63,17 @@ $query = new WP_Query($args);
                     $status_div = '<span class="notification">'. $status .'</span>';
                 }
                 
+                // Generate activation button if needed
+                $activation_button = '';
+                if (!$activate && ($status != "Huỷ")) {
+                    $active_data = inova_encrypt(json_encode([
+                        'package_id'    => $package_id,
+                        'cards'         => get_field('cards', $order_id),
+                        'order_id'      => $order_id
+                    ]), 'e');
+                    $activation_button = '<a href="' . $active_data . '" class="mui-btn mui-btn--small mui-btn--secondary active_free" title="Kích hoạt"><i class="ph ph-check"></i></a>';
+                }
+                
                 $i++;
                 echo "<tr>
                     <td>" . $i . "</td>
@@ -69,6 +86,7 @@ $query = new WP_Query($args);
                     <td>" . $status_div . "</td>
                     <td>
                         <a href='" . admin_url('post.php?post=' . $order_id . '&action=edit') . "' class='mui-btn mui-btn--small mui-btn--primary' target='_blank' title='Edit'><i class='ph ph-pencil'></i></a>
+                        " . $activation_button . "
                         <a href='" . get_delete_post_link($order_id) . "' class='mui-btn mui-btn--small mui-btn--danger' onclick='return confirm(\"Bạn có chắc chắn muốn xóa đơn hàng này?\")' title='Delete'><i class='ph ph-trash'></i></a>
                     </td>
                 </tr>";
@@ -94,3 +112,5 @@ $query = new WP_Query($args);
     ));
     ?>
 </div>
+
+<script src="<?php echo get_template_directory_uri(); ?>/js/single-inova_order.js"></script>

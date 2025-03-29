@@ -440,6 +440,7 @@ function check_coupon_limit($coupon_id, $user_id){
             $coupon  = get_field('coupon');
             # nếu có mã giảm giá được sử dụng thành công thì trừ giới hạn đi 1
             if ($coupon == $coupon_id) {
+                // the_title();
                 $limit--;
             }
 
@@ -447,7 +448,7 @@ function check_coupon_limit($coupon_id, $user_id){
             if (!$limit) {
                 return $limit;
             }
-        }
+        } wp_reset_postdata();
     }
 
     # nếu check hết mà limit vẫn dương thì trả về limit

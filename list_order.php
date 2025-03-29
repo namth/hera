@@ -53,6 +53,11 @@ $current_user_id = get_current_user_id();
                                 $total_card = (int) get_field('total_card', $package_id);
                                 $product_name = $package_id?get_the_title($package_id):"Thiệp cưới online";
                                 
+                                // Change status for free orders
+                                if ($status == "Chưa thanh toán" && $final_total == 0) {
+                                    $status = "Chưa kích hoạt";
+                                }
+                                
                                 if ($status=="Chưa thanh toán") {
                                     $status_div = '<span class="error_notification">'. $status .'</span>';
                                 } else if ( $status=="Đã thanh toán" ){

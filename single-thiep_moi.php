@@ -122,7 +122,12 @@ if (isset($_GET['d']) && ($_GET['d'] != '')) {
             'ID'            => $delete->groupid,
             'post_status'   => 'private',
         ));
-        wp_redirect(get_bloginfo('url') . "?uid=" . $delete->userid);
+        if ($current_userID == $delete->userid) {
+            wp_redirect(get_bloginfo('url') . "/main");
+        } else {
+            wp_redirect(get_bloginfo('url') . "/main/?uid=" . $delete->userid);
+        }
+        exit;
     }
 }
 

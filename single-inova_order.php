@@ -19,6 +19,11 @@ if (have_posts()) {
         $paid           = get_field('paid');
         $uuid           = get_field('uuid');
 
+        // Change status for free orders
+        if ($status == "Chưa thanh toán" && $final_total == 0) {
+            $status = "Chưa kích hoạt";
+        }
+
         # calculate payment date
         $create_date = get_the_date('U');
         $payment_date = date_i18n('j F Y', strtotime('+7 day', $create_date));
@@ -326,7 +331,7 @@ if (have_posts()) {
                                 'order_id'      => get_the_ID()
                             ]), 'e');
                             # Nếu đã đóng payment mà chưa được kích hoạt thì chuyển đến trang kích hoạt ngay.
-                            if (!$activate && ($status == "Đã thanh toán" || $status == "Thanh toán dư")) {
+                            if (!$activate && ($status == "Đã thanh toán" || $status == "Thanh toán dư" || $status == "Chưa kích hoạt")) {
                                 echo '<a href="' . $active_data . '" class="mui-btn hera-btn active_free" style="margin: 5px auto;display: table;">Kích hoạt ngay</a>';
                             }
                         }                  
